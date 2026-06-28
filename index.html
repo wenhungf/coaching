@@ -2,778 +2,218 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Public Daily Brief — 25 June 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>InkQuest English Coaching — Reading room</title>
+<meta name="description" content="Current-events and feature readings for English learners, with hover/tap glossary notes in English and 繁體中文, graded to CEFR levels.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body { background: #e8ecf2; }
+  :root {
+    --ink: #12141c;          /* deep ink blue-black */
+    --ink-raised: #1a1d28;   /* card surface */
+    --parchment: #f0ead8;    /* headings */
+    --mist: #b9b2a0;         /* body text */
+    --faded: #7d7868;        /* captions, footer */
+    --gold: #c9a554;         /* brand accent */
+    --brief: #6f93d6;        /* Daily Brief accent (briefing navy-blue) */
+    --feature: #c87d2a;      /* BBC feature accent (worklife amber) */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { background: var(--ink) !important; }
+
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
-    color: #1a1a1a; line-height: 1.62; font-size: 16px;
-    padding: 0 0 60px;
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--mist);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
-  /* ---- sticky control bar ---- */
-  #controls {
-    position: sticky; top: 0; z-index: 60;
-    background: rgba(19,40,74,0.97); backdrop-filter: blur(6px);
-    color: #d4dce8; border-bottom: 2px solid #7a1f1f;
-    display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
-    padding: 9px 18px; font-size: 12.5px;
+
+  .wrap { max-width: 680px; margin: 0 auto; padding: 4rem 1.25rem 3rem; }
+
+  /* ---------- Header ---------- */
+  header { text-align: center; margin-bottom: 3rem; }
+
+  .kicker {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--faded);
+    margin-bottom: 0.6rem;
   }
-  #controls .brandmini { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; font-size: 11.5px; }
-  #controls .legend { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-  #controls .key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-  #controls .swatch { width: 22px; height: 0; border-bottom: 2px dotted; display: inline-block; }
-  .sw-v { border-color: #d39a2f; } .sw-p { border-color: #5b9bd5; } .sw-c { border-color: #58c08b; }
-  #controls .hint { color: #93a2bb; }
-  #controls .spacer { flex: 1 1 auto; }
-  #toggle {
-    font: inherit; font-size: 12px; cursor: pointer;
-    background: #1f3a63; color: #dbe6f5; border: 1px solid #34568a;
-    border-radius: 6px; padding: 5px 11px;
+
+  .wordmark {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 9vw, 3.8rem);
+    letter-spacing: 0.01em;
+    color: var(--parchment);
+    line-height: 1;
   }
-  #toggle:hover { background: #294c80; }
-  body.nohl .vb { border-bottom: 0 !important; color: inherit !important; cursor: text !important; }
+  .wordmark .q { color: var(--gold); }
 
-  #doc { max-width: 840px; margin: 22px auto; background: #fff;
-         box-shadow: 0 2px 14px rgba(20,40,70,.12); border-radius: 4px; overflow: hidden; }
-  /* ---- masthead ---- */
-  .mast { background: #13284a; color: #fff; padding: 22px 30px; border-bottom: 3px solid #7a1f1f; }
-  .mast h1 { font-size: 30px; letter-spacing: .01em; line-height: 1.05; }
-  .mast .sub { color: #d4dce8; font-size: 14px; margin-top: 3px; }
-  .mast .date { color: #f3c9c9; font-weight: 700; font-size: 12.5px; letter-spacing: .04em; margin-top: 8px; }
-  .inner { padding: 22px 30px; }
-  @media (max-width: 600px){ .inner, .mast { padding-left: 18px; padding-right: 18px; } .mast h1 { font-size: 23px; } body{font-size:15.5px;} }
-
-  .scope { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #cdd6e2;
-           border: 1px solid #cdd6e2; border-radius: 5px; overflow: hidden; margin-bottom: 12px; }
-  .scope > div { background: #eef2f7; padding: 9px 11px; font-size: 12.5px; color: #41506a; }
-  @media (max-width: 600px){ .scope { grid-template-columns: 1fr; } }
-  .note { font-size: 12.6px; color: #5a6675; font-style: italic; margin: 6px 0 16px; }
-
-  h2.sec { color: #13284a; font-size: 19px; margin: 26px 0 2px; padding-top: 6px; }
-  h2.sec .n { color: #7a1f1f; margin-right: 8px; }
-  .rule { height: 2px; background: #b9c2cf; margin: 5px 0 12px; }
-  .rule.red { background: #7a1f1f; }
-  h2.sec.first { margin-top: 6px; }
-  p { margin: 0 0 11px; }
-  .lbl { color: #7a1f1f; font-weight: 700; }
-  .src { font-size: 11.6px; color: #6a7686; font-style: italic; margin: -4px 0 14px; }
-
-  /* ---- snapshot table ---- */
-  table.snap { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 13.2px; }
-  table.snap th { background: #13284a; color: #fff; text-align: left; padding: 8px 9px; font-size: 12.5px; }
-  table.snap td { border: 1px solid #d7deea; padding: 8px 9px; vertical-align: middle; }
-  table.snap tr:nth-child(even) td { background: #f6f8fb; }
-  td.topic { font-weight: 700; width: 24%; }
-  .chip { display: inline-block; color: #fff; font-weight: 700; font-size: 11px;
-          padding: 3px 7px; border-radius: 4px; white-space: nowrap; letter-spacing: .02em; }
-  .chip.amber { background: #9a6b00; } .chip.red { background: #7a1f1f; }
-  .chip.green { background: #1f6b3a; } .chip.steel { background: #2f4868; }
-  td.st { width: 20%; }
-
-  ul.watch { list-style: none; margin: 4px 0 10px; }
-  ul.watch li { position: relative; padding-left: 18px; margin-bottom: 9px; }
-  ul.watch li::before { content: "▪"; color: #7a1f1f; position: absolute; left: 2px; top: 0; }
-
-  /* ---- reference tables (static, not auto-linked) ---- */
-  .reflead { font-size: 12.6px; color: #5a6675; font-style: italic; margin-bottom: 8px; }
-  table.ref { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
-  table.ref th { color: #fff; text-align: left; padding: 7px 9px; font-size: 12px; }
-  table.ref.concepts th { background: #13284a; } table.ref.vocab th { background: #2f4868; }
-  table.ref td { border: 1px solid #d7deea; padding: 6px 9px; vertical-align: top; }
-  table.ref tr:nth-child(even) td { background: #f6f8fb; }
-  table.ref .en { font-weight: 700; white-space: nowrap; }
-  table.ref .zh { color: #13284a; white-space: nowrap; }
-
-  .persona { font-weight: 700; font-style: italic; color: #2f4868; margin: 14px 0 2px; }
-  .persona + p { font-family: Georgia, "Times New Roman", serif; color: #2a2a2a; }
-
-  footer { max-width: 840px; margin: 0 auto; padding: 16px 30px 0; color: #6a7686;
-           font-size: 11.6px; font-style: italic; text-align: center; }
-
-  /* ---- tooltip target styling ---- */
-  .vb { cursor: help; border-bottom: 1px dotted; padding-bottom: .5px;
-        text-decoration: none; transition: background .12s; }
-  .vb.v { border-color: #d39a2f; }
-  .vb.p { border-color: #5b9bd5; }
-  .vb.c { border-color: #58c08b; }
-  .vb:hover, .vb:focus { background: rgba(122,31,31,.07); outline: none; }
-  .vb.open { background: rgba(122,31,31,.12); }
-
-  /* ---- tooltip ---- */
-  #tip {
-    position: absolute; z-index: 200; width: max-content; max-width: min(320px, 86vw);
-    background: #18222e; border: 1px solid #34465a; border-radius: 9px;
-    padding: 10px 13px 11px; font-size: 13.5px; line-height: 1.5; color: #e4ebf3;
-    box-shadow: 0 10px 28px rgba(0,0,0,.4); display: none; white-space: normal;
+  .coaching {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.95rem; font-weight: 500;
+    letter-spacing: 0.34em; text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.55rem;
   }
-  #tip .cat { display: inline-block; font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
-              padding: 1px 6px; border-radius: 99px; margin-bottom: 5px; font-weight: 700; }
-  #tip .cat.v { background: rgba(211,154,47,.18); color: #f0c873; }
-  #tip .cat.p { background: rgba(91,155,213,.18); color: #9fc6ef; }
-  #tip .cat.c { background: rgba(88,192,139,.18); color: #8fe0b4; }
-  #tip .term { font-weight: 700; color: #fff; }
-  #tip .zh { color: #e0a458; margin-top: 4px; display: block; font-size: 14px; }
+
+  /* signature: an ink stroke that draws itself beneath the wordmark */
+  .stroke { width: min(240px, 60vw); margin: 0.9rem auto 1rem; display: block; }
+  .stroke path {
+    stroke: var(--gold); stroke-width: 3; fill: none; stroke-linecap: round;
+    stroke-dasharray: 260; stroke-dashoffset: 260;
+    animation: draw 1.1s ease-out 0.2s forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+
+  .tagline { font-style: italic; font-size: 1.2rem; color: var(--mist); }
+
+  .intro {
+    margin: 2rem auto 0; max-width: 52ch; text-align: center; color: var(--mist);
+  }
+
+  /* ---------- Reading cards ---------- */
+  .shelf-label {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.85rem; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--faded); text-align: center;
+    margin: 3rem 0 1.5rem;
+  }
+
+  .readings { display: flex; flex-direction: column; gap: 1.25rem; list-style: none; }
+
+  .card {
+    display: block; position: relative;
+    background: var(--ink-raised);
+    border: 1px solid rgba(240, 234, 216, 0.08);
+    border-left: 6px solid var(--accent, var(--gold));
+    border-radius: 10px;
+    padding: 1.5rem 1.5rem 1.4rem 1.75rem;
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  .card:hover, .card:focus-visible {
+    transform: translateX(4px);
+    background: #1f2330;
+    border-color: rgba(240, 234, 216, 0.18);
+    border-left-color: var(--accent, var(--gold));
+  }
+  .card:focus-visible { outline: 2px solid var(--accent, var(--gold)); outline-offset: 3px; }
+
+  .eyebrow {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent, var(--gold)); margin-bottom: 0.35rem;
+  }
+
+  .card h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700; font-size: 1.6rem; line-height: 1.2;
+    color: var(--parchment); margin-bottom: 0.45rem;
+  }
+
+  .card p { color: var(--mist); font-size: 1.05rem; max-width: 50ch; }
+
+  .card-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 1rem; gap: 1rem;
+  }
+
+  .level {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    color: var(--ink); background: var(--accent, var(--gold));
+    border-radius: 999px; padding: 0.2rem 0.75rem; white-space: nowrap;
+  }
+
+  .start {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.95rem; font-weight: 500;
+    color: var(--accent, var(--gold)); white-space: nowrap;
+  }
+  .start::after { content: " →"; transition: margin-left 0.18s ease; }
+  .card:hover .start::after { margin-left: 4px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: 4rem; text-align: center;
+    font-size: 0.92rem; color: var(--faded); line-height: 1.8;
+  }
+  footer a { color: var(--mist); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stroke path { animation: none; stroke-dashoffset: 0; }
+    .card, .start::after { transition: none; }
+  }
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<div id="controls">
-  <span class="brandmini">Public Daily Brief</span>
-  <span class="legend">
-    <span class="key"><span class="swatch sw-v"></span> Vocabulary</span>
-    <span class="key"><span class="swatch sw-p"></span> Proper noun</span>
-    <span class="key"><span class="swatch sw-c"></span> Concept</span>
-  </span>
-  <span class="hint">Hover or tap any underlined word</span>
-  <span class="spacer"></span>
-  <button id="toggle" aria-pressed="false">Highlights: On</button>
+  <header>
+    <p class="kicker">InkQuest</p>
+    <h1 class="wordmark">English&nbsp;<span class="q">Coaching</span></h1>
+    <p class="coaching">Reading room</p>
+    <svg class="stroke" viewBox="0 0 240 16" aria-hidden="true">
+      <path d="M4 11 C 50 3, 90 14, 130 8 S 210 4, 236 9" />
+    </svg>
+    <p class="tagline">Real news, real English — one reading at a time.</p>
+    <p class="intro">
+      Current-events and feature readings built for learners. Hover or tap any
+      underlined word for a plain meaning in English and 繁體中文 — or switch the
+      highlights off and just read.
+    </p>
+  </header>
+
+  <p class="shelf-label">Choose your reading</p>
+
+  <ul class="readings">
+
+    <li>
+      <a class="card" href="Public_Daily_Brief_2026-06-25.html" style="--accent: var(--brief);">
+        <p class="eyebrow">Current events · Issue 25 Jun 2026</p>
+        <h2>Public Daily Brief</h2>
+        <p>Global Risks, State &amp; Corporate Power at a Glance — a weekly world-events
+        briefing. Hover or tap any name, term, or concept for a plain note in English
+        and 繁體中文.</p>
+        <div class="card-foot">
+          <span class="level">B2–C1</span>
+          <span class="start">Read the brief</span>
+        </div>
+      </a>
+    </li>
+
+    <li>
+      <a class="card" href="AI-Jobs-Reading-student.html" style="--accent: var(--feature);">
+        <p class="eyebrow">BBC Worklife · Reading</p>
+        <h2>The Jobs AI Won&rsquo;t Take Yet</h2>
+        <p>Which jobs are safe from AI — for now? Kate Morgan&rsquo;s BBC Worklife
+        feature, set up as a glossary reader with CEFR-leveled words you can hover
+        or tap.</p>
+        <div class="card-foot">
+          <span class="level">B2–C1 · ~930 words</span>
+          <span class="start">Read the article</span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+  <footer>
+    <p>© 2026 Wen-Hung Fang · InkQuest English Coaching. All rights reserved.</p>
+    <p>Readings may include third-party text quoted as a study aid; copyright remains with the original publishers.</p>
+  </footer>
+
 </div>
-
-<div id="doc">
-  <div class="mast">
-    <h1>PUBLIC DAILY BRIEF</h1>
-    <div class="sub">Global Risks, State &amp; Corporate Power at a Glance</div>
-    <div class="date">DATED 25 JUNE 2026 &nbsp;|&nbsp; PRESIDENT&rsquo;S-DAILY-BRIEF FORMAT</div>
-  </div>
-
-  <div class="inner" id="bodywrap">
-    <div class="scope">
-      <div><strong>Scope.</strong> State-of-the-world assessment of the last 7 days, with emphasis on the past 72 hours (to 25 June 2026).</div>
-      <div><strong>Method.</strong> Open-source reporting and official public statements only; facts and assessments separated where possible.</div>
-      <div><strong>Reader aids.</strong> Underlined terms carry hover/tap definitions in English and 繁體中文; bilingual glossaries follow the analysis.</div>
-    </div>
-    <p class="note"><strong>Analytic note.</strong> This brief does not claim access to classified information. Judgments are best-effort open-source assessments as of 25 June 2026, and several fast-moving files (the Iran deal, the Strait of Hormuz, Lebanon) were still shifting hour to hour at the time of writing.</p>
-
-    <h2 class="sec first">Executive Snapshot</h2>
-    <div class="rule red"></div>
-    <table class="snap">
-      <tr class="noxlink"><th>Topic</th><th>Status</th><th>Why it matters</th></tr>
-      <tr>
-        <td class="topic">Middle East — Iran &amp; the US deal</td>
-        <td class="st"><span class="chip amber">IMPROVING / FRAGILE</span></td>
-        <td>A 14-point US–Iran memorandum (signed 17 June) began reopening the Strait of Hormuz and launched a 60-day talks window, but Tehran and Washington publicly disagree over nuclear inspections and missiles.</td>
-      </tr>
-      <tr>
-        <td class="topic">Middle East — Lebanon &amp; Gaza</td>
-        <td class="st"><span class="chip red">WORSE / WATCH</span></td>
-        <td>Israel–Hezbollah and Gaza ceasefires exist on paper but strikes continue; over 1,000 Palestinians killed in Gaza since the October truce.</td>
-      </tr>
-      <tr>
-        <td class="topic">Europe — Russia / Ukraine</td>
-        <td class="st"><span class="chip red">FLUID / ESCALATION RISK</span></td>
-        <td>Ukrainian deep strikes on refineries and Crimea triggered a Russian fuel crisis; analysts warn a cornered Moscow may escalate.</td>
-      </tr>
-      <tr>
-        <td class="topic">Taiwan Strait</td>
-        <td class="st"><span class="chip steel">WATCH</span></td>
-        <td>Air incursions run below 2025 levels, but China presses Taiwan’s buffer zones while a trimmed defence budget cut drone funding.</td>
-      </tr>
-      <tr>
-        <td class="topic">US–China economic ties</td>
-        <td class="st"><span class="chip green">MANAGED</span></td>
-        <td>A fragile post-summit détente holds around rare earths, soybeans and Boeing orders; leverage still tilts to Beijing.</td>
-      </tr>
-      <tr>
-        <td class="topic">AI &amp; compute power</td>
-        <td class="st"><span class="chip red">ALERT</span></td>
-        <td>Hundred-billion-dollar chip-and-power deals keep multiplying as bubble warnings grow; China just took the top supercomputer spot.</td>
-      </tr>
-    </table>
-    <p><span class="lbl">Bottom line.</span> The dominant story of the week is selective de-escalation. Washington has brokered or steadied three Middle East tracks at once — Iran, Lebanon and Gaza — yet each remains a separate, breachable arrangement rather than one settlement. Meanwhile the deeper contests (Russia’s war, the Taiwan Strait, and the race to build AI infrastructure) continue to grind forward on their own clocks.</p>
-
-    <h2 class="sec"><span class="n">1.</span>Middle East — Iran, the US deal, and the Strait of Hormuz</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> On 17 June, US President Donald Trump and Iranian President Masoud Pezeshkian signed a 14-point memorandum of understanding intended to end the war that began with US–Israeli strikes on Iran on 28 February. Trump signed it at Versailles on the margins of the G7; Pezeshkian signed separately in Tehran. The memo starts a 60-day clock for talks on Iran’s nuclear programme, commits Tehran to reopen the Strait of Hormuz and pledge it will not build nuclear weapons, and offers phased sanctions relief and the conditional release of roughly US$24–25 billion in frozen assets. High-level talks then convened in Switzerland (21–22 June), led by Vice-President JD Vance and Iranian parliament speaker Mohammad Bagher Ghalibaf and mediated by Pakistan and Qatar, producing a “roadmap,” a communication line to keep Hormuz open, and a Lebanon “de-confliction cell.”</p>
-    <p class="src">Sources: NBC News, Al Jazeera, CNN, Wikipedia (Iran–US negotiations), 17–24 Jun 2026.</p>
-    <p><span class="lbl">Friction points.</span> The deal is already contested in public. By 23–24 June, Trump claimed Iran had agreed to open-ended nuclear inspections, while Iranian officials denied making that commitment; IAEA chief Rafael Grossi said inspectors would visit enrichment sites under the interim deal, but Tehran insists access comes only after a final agreement. The released text contains no restriction on Iran’s missile programme. Iran briefly threatened to re-close Hormuz over continued Israeli strikes in Lebanon, and on 23 June the US Senate passed a War Powers resolution (50–48, with four Republicans crossing over) seeking to bar further military action against Iran without congressional authorization.</p>
-    <p class="src">Sources: CNN, Al Jazeera, Just Security, WORLD/WNG, 21–24 Jun 2026.</p>
-    <p><span class="lbl">Why it matters.</span> The Strait of Hormuz carries about a fifth of the world’s oil and LNG; its closure since late February stranded thousands of seafarers and rattled energy markets. Brent crude fell roughly 8% on the week as the deal took hold, and the International Maritime Organization began evacuating more than 11,000 stranded crew via a temporary corridor off Oman — though traffic is still a trickle against a pre-war norm of about 110 vessels a day.</p>
-    <p class="src">Sources: NBC News, CNN, Al Jazeera, 19–24 Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> What exists today is a ceasefire architecture, not a peace. The signatures bought a 60-day pause and reopened a vital waterway, but the hardest questions — enrichment, stockpiles, inspections, sanctions sequencing — were deferred, and the two governments cannot yet agree on what they agreed to. A Brookings analyst’s read, that the contradictory accounts show how little is actually settled, captures the risk: the deal’s survival depends less on the text than on whether Lebanon stays quiet.</p>
-    <p class="src">Sources: New York Times via Just Security; Al Jazeera, 22–24 Jun 2026.</p>
-
-    <h2 class="sec"><span class="n">2.</span>Middle East — Lebanon and Gaza</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> Lebanon is the deal’s weakest seam. The US–Iran memo declares an end to operations “on all fronts, including Lebanon,” yet Israeli strikes continued after it was signed; a US-, Qatar- and Iran-facilitated Israel–Hezbollah ceasefire was announced on 19 June, and direct Israel–Lebanon talks were scheduled, with Hezbollah’s disarmament the central dispute. Israel maintains it is not bound by the US–Iran understanding. In Gaza, the October 2025 ceasefire still formally holds, but Gaza’s health ministry reported on 18 June that Israeli operations had killed more than 1,000 Palestinians since the truce began, amid near-daily strikes and stalled phase-two talks on Hamas disarmament and an Israeli withdrawal.</p>
-    <p class="src">Sources: NBC News, Al Jazeera, NPR, OCHA, UN, 5–24 Jun 2026.</p>
-    <p><span class="lbl">Why it matters.</span> These theatres are politically linked but managed separately, so a calm Iran file does not buy calm in Lebanon or Gaza. Israel controls more than half of Gaza; aid is running far below the levels promised (by some counts barely a third of allocated truck-loads), and the Board of Peace envoy has warned that a divided, demilitarization-stalled status quo risks becoming permanent.</p>
-    <p class="src">Sources: Al Jazeera, OCHA Humanitarian Situation Report, UN Security Council briefings, May–Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> The pattern is compartmentalized instability: governments firewall one front from another while the underlying actors stay connected. A ceasefire here functions as a political pause, not an enforceable legal instrument — which is why each can be reinterpreted the moment one side decides it does not apply to the next valley over. Watch the new Lebanon “de-confliction cell” as the first practical test of whether the wider Iran deal can hold.</p>
-    <p class="src">Sources: Al Jazeera (ceasefire-law explainer), 5–22 Jun 2026.</p>
-
-    <h2 class="sec"><span class="n">3.</span>Europe — Russia / Ukraine</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> Ukraine spent the week raising the cost of the war for Russia. A long-range drone campaign struck deep inside Russia — including Gazprom’s Moscow refinery on 18 June and a refinery at Nizhnekamsk — while shorter-range strikes throttled fuel moving into occupied Crimea, where authorities suspended public fuel sales and rationing appeared in St. Petersburg. Putin acknowledged on 12 June that the strikes were hurting Russia’s economy and society. On the ground the picture is mixed: trackers disagree on net movement (DeepState showed small Russian gains over four weeks; ISW showed a small Russian net loss), as Russia pressed toward Kostyantynivka and Ukraine clung to limited gains.</p>
-    <p class="src">Sources: Reuters, ISW, CNBC, Al Jazeera, Russia Matters War Report Card, 12–24 Jun 2026.</p>
-    <p><span class="lbl">Why it matters.</span> Kyiv is targeting the revenue and logistics that sustain the war rather than chasing territory. Analysts quoted this week argued Russia’s remaining territorial agenda has narrowed to the north-western corner of Donetsk, with cities such as Kostyantynivka and Lyman “about to fall,” while Crimea is becoming, in Ukraine’s framing, a “zone of constant losses.” Both sides face the same paradox: visible pressure improves the negotiating optics but raises the odds of escalation.</p>
-    <p class="src">Sources: CNBC (TS Lombard, analysts), Kyiv Independent/SBU, 23–24 Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> The war is not frozen. Zelensky again signalled readiness for a full ceasefire if Russia halts its attacks, but Putin has rejected face-to-face talks and the core territorial impasse over Donbas has not narrowed. The strategic question for the coming weeks is whether a Moscow that is being squeezed at home chooses restraint or a sharper response — especially if diplomatic attention rotates back from the Middle East to Ukraine.</p>
-    <p class="src">Sources: Reuters, ISW, 8–24 Jun 2026.</p>
-
-    <h2 class="sec"><span class="n">4.</span>Taiwan Strait — pressure, politics, and a thinner wallet</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> On 25 June, Taiwan’s defence ministry reported 14 PLA aircraft, six navy vessels and two official ships around the island, with 10 sorties crossing the Strait median line — an uptick within a 2026 pattern that has otherwise run below 2025 levels (121 ADIZ incursions in March, 169 in April, 217 in May). Separately, Taiwan’s first domestically built submarine continued sea trials out of Kaohsiung, including submerged tests. The political backdrop: in early May the legislature passed a special defence budget of about NT$780 billion (US$24.8 billion) — well below the roughly NT$1.25 trillion President Lai Ching-te had sought — and the trimmed version stripped funding for domestic drone procurement and US–Taiwan joint drone development.</p>
-    <p class="src">Sources: Taiwan MND via ANI/Tribune, Focus Taiwan, Bloomberg, AEI/ISW China &amp; Taiwan Update, May–Jun 2026.</p>
-    <p><span class="lbl">Why it matters.</span> Beijing’s coercion is shifting from sheer volume to a quieter erosion of buffers — coast-guard and naval activity inside Taiwan’s contiguous zone and around Kinmen and Pratas — which lowers thresholds and shortens warning time. At the same time, the cut to drone funding is strategically awkward: the very capability the Ukraine war has shown to be decisive, and which Taiwan’s own “democratic drone hub” ambitions rest on, is being slowed by a domestic budget fight.</p>
-    <p class="src">Sources: The Diplomat, AEI/ISW, Global Taiwan Institute, Jan–Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> Taiwan is balancing three pressures at once: the external military threat, a domestic contest over how fast to spend, and a diplomatic contest over who owns the language of “peace” — with KMT chair Cheng Li-wun’s outreach to Beijing feeding the last. The key issue is not the headline spending number but whether budget intent converts into usable readiness on schedule, and whether Taipei avoids being placed “on the menu” of US–China bargaining ahead of the November 2026 local elections.</p>
-    <p class="src">Sources: Reuters, CFR, Bloomberg, 2 Apr–24 Jun 2026.</p>
-
-    <h2 class="sec"><span class="n">5.</span>US–China economic competition — managed rivalry</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> The mid-May Trump–Xi summit in Beijing — Trump’s first mainland visit in nearly a decade — produced an incremental, stabilizing package: Chinese agricultural purchases and resumed US beef and poultry sales, an order the US readout put at about 200 Boeing jets, paired “boards of trade and investment,” and US assurances that China would ease shortages of specific rare earths (yttrium, scandium, neodymium, indium). Beijing emphasized tariff cuts; the readouts did not fully match. A month on, the fragile détente is holding.</p>
-    <p class="src">Sources: CNBC, Foreign Policy, S&amp;P Global, Bloomberg, 14–18 May 2026.</p>
-    <p><span class="lbl">Why it matters.</span> The centre of gravity has moved from tariffs to chokepoints. China still accounts for the overwhelming majority of rare-earth refining (about 91% in 2024 data) and has shown it can throttle supply as a “break-glass” tool; an October 2025 expansion of export controls sits suspended until late 2026. Washington’s rapid expenditure of advanced munitions in the Middle East and Ukraine has deepened its exposure to exactly these inputs, even as it courts Beijing for AI-market access.</p>
-    <p class="src">Sources: CFR (Crebo-Rediker, Setser), IEA via S&amp;P Global, 10 May–22 Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> This is managed competition, not detente in the old sense: maintain commerce where possible, ring-fence security-sensitive sectors, and race to build alternatives in critical minerals. Stability here does not mean trust — it means controlled rivalry whose terms currently favour the side holding the mineral taps. The Taiwan question shadows every transaction.</p>
-    <p class="src">Sources: CFR, CNBC, 18 May–22 Jun 2026.</p>
-
-    <h2 class="sec"><span class="n">6.</span>AI, semiconductors, and corporate power</h2>
-    <div class="rule"></div>
-    <p><span class="lbl">What happened.</span> The build-out kept accelerating. OpenAI is pairing a landmark partnership with NVIDIA (at least 10 gigawatts of systems, with NVIDIA intending to invest up to US$100 billion as capacity is deployed) with a diversifying supply deal with AMD and reported talks to lease a ~10 GW, ~US$500 billion data center campus in Ohio. Broadcom deepened custom-chip work with Google through 2031 and is set to supply Anthropic about 3.5 GW of Google-TPU compute from 2027. At Computex/GTC Taipei, NVIDIA pushed into PC chips and advanced its Rubin platform through Taiwan’s TSMC-led ecosystem. And on 24 June, China was reported to have taken the top spot on the world’s most powerful supercomputer list for the first time since 2017.</p>
-    <p class="src">Sources: NVIDIA, Reuters, CNBC, Britannica, CNN, Feb–Jun 2026.</p>
-    <p><span class="lbl">Why it matters.</span> Governments talk AI strategy, but corporations increasingly shape the terrain through chips, cloud, capital expenditure and electricity. The decisive bottlenecks are no longer only models — they are fabrication capacity, data-center build-out, power, and multi-year commercial alliances that pre-structure outcomes before regulators catch up. Warning lights are blinking: hyperscaler capex is approaching the size of operating cash flow, one major firm is projected to run negative free cash flow this year, and prominent investors have publicly questioned the financing engineering behind some GPU deals.</p>
-    <p class="src">Sources: Bloomberg, AI Weekly tracker, Reuters, Jun 2026.</p>
-    <p><span class="lbl">Assessment.</span> AI competition is becoming an industrial-policy contest run partly through private contracts. For Taiwan the stakes are doubled: its foundries sit at the centre of the build-out (a genuine source of leverage) even as a Strait crisis would put that very capacity at risk — the same “silicon shield” paradox that now extends to drones and AI hardware alike.</p>
-    <p class="src">Sources: Reuters, NVIDIA, Bloomberg, Jun 2026.</p>
-
-    <h2 class="sec">Cross-Cutting Watchpoints</h2>
-    <div class="rule red"></div>
-    <ul class="watch">
-      <li><strong>Iran inspections &amp; the 60-day clock.</strong> Whether the US–Iran gap over IAEA access and missiles is bridged, or whether contradictory public accounts harden into a stalemate before the window closes.</li>
-      <li><strong>The Lebanon de-confliction cell.</strong> The first operational test of the wider deal; renewed Israel–Hezbollah fighting is the most likely trigger to unravel it.</li>
-      <li><strong>US war-powers politics.</strong> Whether the Senate resolution and Republican unease translate into real limits on further action against Iran, or remain symbolic.</li>
-      <li><strong>Russia’s choice.</strong> Whether a squeezed Moscow moderates or escalates as attention rotates back toward Ukraine and Crimea’s fuel crisis deepens.</li>
-      <li><strong>Taiwan readiness.</strong> Whether trimmed drone funding and buffer-zone erosion quietly degrade deterrence even as headline defence spending rises.</li>
-      <li><strong>Rare-earth follow-through.</strong> Whether post-summit assurances actually keep critical minerals flowing, or Beijing keeps the taps as leverage.</li>
-      <li><strong>AI finance vs. physics.</strong> Whether capital keeps outrunning the hard limits of chips, power and grid capacity — and what a re-pricing would do.</li>
-      <li><strong>Quiet emergencies.</strong> A punishing European heat wave (red alerts across France, the UK and Spain) and a fast-growing Ebola outbreak in eastern DR Congo (1,000+ cases, 250+ deaths) are straining systems with little global attention.</li>
-    </ul>
-
-    <h2 class="sec">Key Concepts &amp; Vocabulary</h2>
-    <div class="rule"></div>
-    <p class="reflead">A curated bilingual reference. (Every underlined word in the brief above also carries its own hover/tap definition.)</p>
-    <div class="noxlink">
-    <table class="ref concepts">
-      <tr><th>Concept</th><th>中文</th><th>Why it matters this week</th></tr>
-      <tr><td class="en">Deterrence</td><td class="zh">嚇阻</td><td>Preventing an adversary from acting by convincing it the costs will outweigh the gains.</td></tr>
-      <tr><td class="en">Coercive diplomacy</td><td class="zh">脅迫外交</td><td>Using limited force or its threat to make an opponent change course — the strike-and-talk cycle around Iran.</td></tr>
-      <tr><td class="en">Ceasefire vs. peace</td><td class="zh">停火與和平之別</td><td>A ceasefire pauses fighting to create space for talks; it is usually political and breachable, not a final settlement.</td></tr>
-      <tr><td class="en">De-confliction</td><td class="zh">避免衝突機制</td><td>A channel that lets rival forces avoid accidental clashes — the new Hormuz line and the Lebanon cell.</td></tr>
-      <tr><td class="en">Maritime chokepoint</td><td class="zh">海上咽喉</td><td>A narrow sea passage whose control can restrict global flows; Hormuz carries about a fifth of seaborne oil and LNG.</td></tr>
-      <tr><td class="en">Economic statecraft</td><td class="zh">經濟治略</td><td>Trade, sanctions and export controls used for strategic ends — China’s rare-earth leverage is the prime example.</td></tr>
-      <tr><td class="en">Salami-slicing / gray zone</td><td class="zh">切香腸戰術／灰色地帶</td><td>Small, deniable steps that change facts without open war — PLA pressure on Taiwan’s buffer zones.</td></tr>
-      <tr><td class="en">Attrition</td><td class="zh">消耗戰</td><td>Wearing down an enemy’s resources and will over time — Ukraine’s strikes on Russian refineries and fuel logistics.</td></tr>
-      <tr><td class="en">Managed competition</td><td class="zh">管控式競爭</td><td>Rivalry kept within agreed limits: compete hard, but build guardrails to avoid an uncontrolled rupture.</td></tr>
-      <tr><td class="en">Dual-use technology</td><td class="zh">軍民兩用技術</td><td>Tech with both civilian and military uses — drones, advanced chips and AI infrastructure blur the line.</td></tr>
-      <tr><td class="en">Silicon shield</td><td class="zh">矽盾</td><td>The idea that Taiwan’s indispensability in advanced chips deters attack — now extended to drones and AI hardware.</td></tr>
-      <tr><td class="en">Strategic overstretch</td><td class="zh">戰略過度延伸</td><td>Taking on more commitments than one can sustain; US munitions use in two theatres deepened its rare-earth exposure.</td></tr>
-    </table>
-    <table class="ref vocab">
-      <tr><th>Term</th><th>中文</th><th>Short definition</th></tr>
-      <tr><td class="en">memorandum of understanding</td><td class="zh">諒解備忘錄</td><td>A written framework recording intent; not always a binding treaty.</td></tr>
-      <tr><td class="en">roadmap</td><td class="zh">路線圖／時程規劃</td><td>An agreed sequence of steps toward a larger goal.</td></tr>
-      <tr><td class="en">enrichment</td><td class="zh">濃縮（鈾）</td><td>Raising the concentration of fissile uranium; central to nuclear disputes.</td></tr>
-      <tr><td class="en">stockpile</td><td class="zh">庫存／儲備</td><td>An accumulated reserve, e.g. of enriched uranium.</td></tr>
-      <tr><td class="en">sanctions relief</td><td class="zh">解除制裁</td><td>The easing or lifting of economic penalties.</td></tr>
-      <tr><td class="en">frozen assets</td><td class="zh">凍結資產</td><td>Funds blocked from use, sometimes released as part of a deal.</td></tr>
-      <tr><td class="en">blockade</td><td class="zh">封鎖</td><td>Sealing off access to a place, port or waterway.</td></tr>
-      <tr><td class="en">corridor</td><td class="zh">通道／走廊</td><td>A protected route allowing controlled passage, e.g. for shipping.</td></tr>
-      <tr><td class="en">loitering munition</td><td class="zh">遊蕩彈藥／巡飛彈</td><td>A one-way attack drone that circles before striking a target.</td></tr>
-      <tr><td class="en">attrition</td><td class="zh">消耗</td><td>Gradual loss of strength through sustained pressure.</td></tr>
-      <tr><td class="en">transshipment</td><td class="zh">轉運</td><td>Moving goods through an intermediary point to obscure origin or destination.</td></tr>
-      <tr><td class="en">contiguous zone</td><td class="zh">鄰接區</td><td>A maritime belt just beyond territorial waters where a state may enforce certain laws.</td></tr>
-      <tr><td class="en">median line</td><td class="zh">海峽中線</td><td>The unofficial centre line of the Taiwan Strait that PLA aircraft increasingly cross.</td></tr>
-      <tr><td class="en">sortie</td><td class="zh">架次／出動</td><td>A single mission flown by one military aircraft.</td></tr>
-      <tr><td class="en">readiness</td><td class="zh">戰備</td><td>How prepared forces are to act on short notice.</td></tr>
-      <tr><td class="en">chokepoint</td><td class="zh">咽喉／瓶頸</td><td>A narrow point where control restricts flow.</td></tr>
-      <tr><td class="en">rare earths</td><td class="zh">稀土</td><td>Minerals critical to magnets, electronics, autos and weapons.</td></tr>
-      <tr><td class="en">hyperscaler</td><td class="zh">超大規模雲端業者</td><td>A giant cloud/AI operator building vast data centers.</td></tr>
-      <tr><td class="en">capital expenditure</td><td class="zh">資本支出</td><td>Spending on long-term assets such as chips and data centers.</td></tr>
-      <tr><td class="en">foundry</td><td class="zh">晶圓代工廠</td><td>A factory that manufactures chips designed by others.</td></tr>
-      <tr><td class="en">détente</td><td class="zh">緩和（關係）</td><td>An easing of tension between rivals.</td></tr>
-      <tr><td class="en">guardrails</td><td class="zh">護欄機制</td><td>Limits meant to keep competition from turning into catastrophe.</td></tr>
-    </table>
-    </div>
-
-    <h2 class="sec">Grounded Perspectives</h2>
-    <div class="rule"></div>
-    <p class="reflead">Illustrative commentaries from fictional individuals — how the week’s headlines land in ordinary lives.</p>
-    <div class="persona">An extraterrestrial social scientist studying Earth</div>
-    <p>This week the humans signed a paper to stop a war, then spent three days arguing about what the paper said. One government announced inspections; the other denied agreeing to them; a third agency was sent to find out. Their most striking habit is to treat a pause as if it were peace, and a chokepoint — a single narrow channel of water — as if the whole planet’s economy could be held still by closing it. They are astonishingly interconnected and astonishingly reluctant to admit it.</p>
-    <div class="persona">A white-collar worker in Taipei</div>
-    <p>I followed the Hormuz news mostly through the petrol price and the cost of a flight. When the deal looked real, fuel eased and I started checking fares again. TSMC and the drone-budget headlines never feel like just business: they touch the market, Taiwan’s image, and how safe next year feels. The jets crossing the median line are background noise now — which is exactly what worries me. My pan-blue friends say engagement lowers the temperature; my pan-green friends say only resolve keeps us safe; most of us just want a few weeks where Taiwan is not the centre of the storm.</p>
-    <div class="persona">A shopkeeper in southern Lebanon</div>
-    <p>They keep announcing ceasefires on the television, and we keep hearing the strikes. A paper signed in Switzerland says the fighting should end on all fronts, including ours; then the planes come anyway. We cautiously go back to our homes, sweep the glass, and listen. Peace, for us, is not a signature. It is a week that passes without a funeral.</p>
-    <div class="persona">A middle-class American office worker</div>
-    <p>I don’t wake up thinking about the “international order,” but the Iran war showed up at the gas pump, and now the Senate is fighting over whether the president needed permission. I want the country to be strong without being stretched too thin across three wars and an AI spending race. Mostly I notice that every global story eventually reaches my bills or my retirement account.</p>
-    <div class="persona">A logistics planner at a Gulf port</div>
-    <p>For months our screens showed empty water where a hundred ships a day used to pass. This week a temporary corridor opened and the evacuation of stranded crews began — thousands of seafarers who had been stuck aboard since winter. A trickle is not normal trade, but after this long, a trickle feels like a tide.</p>
-    <div class="persona">A data-center electrician in the US Midwest</div>
-    <p>They’re talking about a campus that needs ten gigawatts — more power than some cities. Good work for years, if the money holds. But I hear the same word from the finance people that I hear about the grid: capacity. Everyone is racing to build faster than the wires and the cash can really carry.</p>
-  </div>
-</div>
-
-<footer>Public Daily Brief — 25 June 2026. Compiled from open-source reporting as of the date of issue. Prepared in President’s-Daily-Brief format for current-events English study; not an official intelligence product.</footer>
-
-<div id="tip" role="tooltip"></div>
-
-<script>
-'use strict';
-
-/* =========================================================================
-   GLOSSARY  —  key (lowercase) -> [English definition, 繁體中文, category]
-   category: 'v' vocabulary · 'p' proper noun · 'c' concept
-   The auto-linker below wraps EVERY occurrence of each key, longest phrase
-   first, so the body text stays clean and unedited.
-   ========================================================================= */
-var VOCAB = {
-  /* ---------- framing / document words ---------- */
-  'brief': ['here: a short official report that sums up important news','簡報；摘要報告','v'],
-  'at a glance': ['quickly, in a single look','一眼即可掌握','v'],
-  'scope': ['the range of what something covers','範圍','v'],
-  'assessment': ['a careful, reasoned judgment','評估；研判','v'],
-  'emphasis': ['extra importance given to something','強調；著重','v'],
-  'open-source': ['based on public, freely available information','公開來源（資訊）','v'],
-  'reader aids': ['tools added to help the reader understand','輔助閱讀的工具','v'],
-  'analytic note': ['a short note explaining the method and limits','分析說明','v'],
-  'classified': ['secret; withheld from the public for security','機密的','v'],
-  'best-effort': ['done as well as possible with what is available','盡力而為的','v'],
-  'fast-moving': ['changing very quickly','變化快速的','v'],
-  'file': ['here: an ongoing issue or topic (a “dossier”) — NOT a paper or computer file','（議題）案卷；專案','v'],
-  'snapshot': ['a quick picture of a situation at one moment','即時概況；快照','v'],
-  'status': ['the current state of something','狀態','v'],
-  'watch': ['here: something to monitor closely','觀察（值得密切注意）','v'],
-  'fragile': ['easily broken or upset','脆弱的','v'],
-  'fluid': ['changing easily; not settled','不穩定的；多變的','v'],
-  'managed': ['kept under control within limits','受控管的','v'],
-  'alert': ['a warning to pay close attention','警戒；警報','v'],
-  'bottom line': ['the single most important point','重點結論','v'],
-  'brokered': ['arranged a deal between opposing sides','斡旋促成','v'],
-  'breachable': ['able to be broken or violated','可能被破壞的','v'],
-  'settlement': ['a final agreement that ends a dispute','和解；定案','v'],
-  'grind forward': ['to move ahead slowly and with effort','緩慢推進','v'],
-
-  /* ---------- diplomacy / security vocabulary ---------- */
-  'memorandum of understanding': ['a written record of what two sides intend to do; not always binding','諒解備忘錄','v'],
-  'memo': ['a short written note or record','備忘錄','v'],
-  'pledge': ['to promise formally','承諾','v'],
-  'phased': ['done in separate stages','分階段的','v'],
-  'sanctions relief': ['easing or lifting of economic penalties','解除制裁','v'],
-  'sanctions': ['economic penalties used to pressure a country','制裁','v'],
-  'frozen assets': ['money or property blocked from use','凍結資產','v'],
-  'conditional': ['happening only if certain terms are met','有條件的','v'],
-  'enrichment': ['raising the level of fissile uranium','（鈾）濃縮','v'],
-  'stockpiles': ['large stored reserves','庫存；儲備','v'],
-  'stockpile': ['a large stored reserve','庫存；儲備','v'],
-  'inspections': ['official checks to verify compliance','查核；檢查','v'],
-  'interim': ['temporary; for the time being','臨時的；過渡的','v'],
-  'roadmap': ['a plan of steps toward a goal','路線圖；時程規劃','v'],
-  'de-confliction cell': ['a small team set up to prevent accidental clashes','避免衝突協調小組','v'],
-  'de-confliction': ['a way to keep rival forces from clashing by accident','避免衝突機制','v'],
-  'contested': ['argued about; disputed','有爭議的','v'],
-  'open-ended': ['with no fixed limit or end','無限制的；開放式的','v'],
-  'war powers resolution': ['a US legal tool to limit the president’s use of military force','戰爭權力決議案','v'],
-  'resolution': ['here: a formal decision voted by a body','決議案','v'],
-  'crossing over': ['switching to the other side in a vote','倒戈；轉向投票','v'],
-  'congressional': ['relating to the US Congress','國會的','v'],
-  'authorization': ['official permission','授權','v'],
-  'mediated': ['helped opposing sides reach agreement','居中斡旋','v'],
-  'ceasefire': ['an agreed stop to fighting','停火','v'],
-  'truce': ['a temporary stop to fighting','休戰','v'],
-  'architecture': ['here: the overall structure of an arrangement','架構','v'],
-  'sequencing': ['the order in which steps happen','排序；先後安排','v'],
-  'deferred': ['put off to a later time','延後處理','v'],
-  'seam': ['here: a weak joining point','接縫；脆弱處','v'],
-  'disarmament': ['giving up weapons','解除武裝','v'],
-  'withdrawal': ['pulling forces out of an area','撤軍；撤出','v'],
-  'compartmentalized': ['kept in separate, sealed-off parts','分隔處理的','v'],
-  'firewall': ['here: to seal off so a problem cannot spread','隔離；防火牆','v'],
-  'enforceable': ['able to be made to happen by rule or law','可強制執行的','v'],
-  'instrument': ['here: a formal legal document or tool','（法律）文書；工具','v'],
-
-  /* ---------- war / military vocabulary ---------- */
-  'deep strikes': ['attacks far inside enemy territory','縱深打擊','v'],
-  'long-range': ['able to reach far-away targets','遠程的','v'],
-  'refineries': ['plants that turn crude oil into fuels','煉油廠','v'],
-  'refinery': ['a plant that turns crude oil into fuels','煉油廠','v'],
-  'throttled': ['reduced or choked off the flow of','扼制；削減','v'],
-  'rationing': ['limiting how much each person may get','配給；限量供應','v'],
-  'trackers': ['groups that monitor and record data','追蹤分析者','v'],
-  'cornered': ['trapped with no easy escape','被逼入絕境的','v'],
-  'logistics': ['the system of moving and supplying things','後勤；物流','v'],
-  'optics': ['here: how a situation looks to others','觀感；外界印象','v'],
-  'restraint': ['holding back from strong action','克制','v'],
-  'munitions': ['weapons and ammunition','彈藥','v'],
-  'incursions': ['sudden entries into another’s territory','侵入；越界','v'],
-  'incursion': ['a sudden entry into another’s territory','侵入；越界','v'],
-  'sorties': ['single missions by one military aircraft each','（單機）出動架次','v'],
-  'sortie': ['a single mission by one military aircraft','（單機）出動架次','v'],
-  'median line': ['the unofficial centre line of the Taiwan Strait','海峽中線','v'],
-  'submerged': ['underwater','潛航的；水下的','v'],
-  'buffer zones': ['neutral areas that reduce the risk of clashes','緩衝區','v'],
-  'buffers': ['neutral areas that reduce the risk of clashes','緩衝地帶','v'],
-  'thresholds': ['the points at which something is triggered','門檻','v'],
-  'coercion': ['forcing someone by threats or pressure','脅迫','v'],
-  'erosion': ['slow wearing-away','侵蝕；逐漸削弱','v'],
-
-  /* ---------- economy / trade / energy ---------- */
-  'lng': ['liquefied natural gas','液化天然氣','v'],
-  'brent crude': ['a main global benchmark for oil prices','布蘭特原油','v'],
-  'stranded': ['stuck and unable to leave','受困的','v'],
-  'seafarers': ['people who work on ships','船員','v'],
-  'rattled': ['made nervous or unstable','使動盪不安','v'],
-  'corridor': ['a protected route for passage','通道；走廊','v'],
-  'trickle': ['a very small, slow flow','涓流；少量','v'],
-  'norm': ['the usual or normal level','常態','v'],
-  'vessels': ['ships or large boats','船隻','v'],
-  'tariffs': ['taxes on imported goods','關稅','v'],
-  'tariff': ['a tax on imported goods','關稅','v'],
-  'détente': ['an easing of tension between rivals','（關係）緩和','v'],
-  'detente': ['an easing of tension between rivals','（關係）緩和','v'],
-  'leverage': ['power to influence outcomes','籌碼；影響力','v'],
-  'centre of gravity': ['the main point where weight or importance lies','重心','v'],
-  'chokepoints': ['narrow points where flow can be blocked','咽喉；瓶頸點','v'],
-  'chokepoint': ['a narrow point where flow can be blocked','咽喉；瓶頸點','v'],
-  'break-glass': ['kept only for emergency use','緊急時才動用的','v'],
-  'export controls': ['rules that limit what may be sold abroad','出口管制','v'],
-  'exposure': ['the degree of risk one is open to','風險暴露','v'],
-  'ring-fence': ['to isolate and protect something','圈護；隔離保護','v'],
-  'critical minerals': ['minerals seen as strategically essential','關鍵礦產','v'],
-  'rare earths': ['minerals vital to magnets, electronics and weapons','稀土','v'],
-  'rare-earth': ['relating to rare earths (magnets, electronics, weapons)','稀土的','v'],
-  'incremental': ['happening in small steps','漸進的','v'],
-  'readouts': ['official summaries released after a meeting','會後聲明（摘要）','v'],
-  'taps': ['here: the supply that can be turned on or off','（供應的）開關','v'],
-  'shadows': ['here: hangs over and affects','籠罩；牽動','v'],
-
-  /* ---------- AI / tech ---------- */
-  'build-out': ['large-scale construction and expansion','大規模建設擴張','v'],
-  'gigawatts': ['units of power equal to one billion watts each','吉瓦（十億瓦）','v'],
-  'gigawatt': ['a unit of power equal to one billion watts','吉瓦（十億瓦）','v'],
-  'data center': ['a building full of computers and storage','資料中心','v'],
-  'data-center': ['relating to a building full of computers and storage','資料中心的','v'],
-  'diversifying': ['spreading across more sources to lower risk','分散（來源）','v'],
-  'custom-chip': ['a chip designed for one specific use','客製化晶片','v'],
-  'compute': ['processing power, especially for AI','運算資源','v'],
-  'capital expenditure': ['spending on long-term assets','資本支出','v'],
-  'capex': ['short for capital expenditure (long-term asset spending)','資本支出','v'],
-  'operating cash flow': ['the cash a firm makes from normal business','營運現金流','v'],
-  'free cash flow': ['cash left after spending on assets','自由現金流','v'],
-  'financing': ['the way money is raised for a deal','融資','v'],
-  'foundries': ['factories that make chips designed by others','晶圓代工廠','v'],
-  'foundry': ['a factory that makes chips designed by others','晶圓代工廠','v'],
-  'bottlenecks': ['narrow points that limit the whole flow','瓶頸','v'],
-  'fabrication': ['the making of chips','（晶片）製造','v'],
-  'pre-structure': ['to shape an outcome in advance','預先形塑','v'],
-  'industrial policy': ['government action to shape key industries','產業政策','v'],
-  'supercomputer': ['an extremely powerful computer','超級電腦','v'],
-  'semiconductors': ['materials/devices used to make computer chips','半導體','v'],
-  'gpu': ['a chip that does the heavy maths for AI and graphics','圖形處理器','v'],
-  'ecosystem': ['here: a network of firms that work together','（產業）生態系','v'],
-
-  /* ---------- watchpoints / misc ---------- */
-  'watchpoints': ['things to keep an eye on','觀察重點','v'],
-  'stalemate': ['a deadlock where neither side can win','僵局','v'],
-  'unravel': ['to come apart; to fall to pieces','瓦解；崩解','v'],
-  'symbolic': ['done for meaning, with little real effect','象徵性的','v'],
-  'degrade': ['to weaken or lower in quality','削弱；降低','v'],
-  'punishing': ['here: extremely harsh','嚴酷的','v'],
-  'straining': ['putting heavy pressure on','使吃緊；使緊繃','v'],
-  'outbreak': ['a sudden rise of a disease','疫情爆發','v'],
-  'illustrative': ['given as an example','示例性的','v'],
-  'commentaries': ['spoken or written opinions on events','評論','v'],
-
-  /* ---------- extra high-frequency terms in this brief ---------- */
-  'ai': ['artificial intelligence','人工智慧','v'],
-  'summit': ['a meeting of top leaders','高峰會','v'],
-  'tracks': ['here: separate strands of negotiation','（談判）軌道／管道','v'],
-  'theatres': ['here: separate areas of conflict','（衝突）戰區','v'],
-  'fronts': ['here: separate areas of fighting','戰線','v'],
-  'front': ['here: an area of fighting','戰線','v'],
-  'agenda': ['the set of aims someone is pursuing','議程；目標','v'],
-  'commerce': ['the buying and selling of goods; trade','商務；貿易','v'],
-  'sectors': ['parts of the economy','（經濟）部門','v'],
-  'crew': ['the people who work on a ship','船員','v'],
-  'waterway': ['a channel that ships travel through','水道；航道','v'],
-  'mainland': ['here: mainland China','中國大陸','v'],
-  'envoy': ['an official sent to represent a government','特使','v'],
-  'demilitarization': ['removing armed forces or weapons','非軍事化','v'],
-  'grid': ['here: the electricity supply network','電網','v'],
-  'cloud': ['here: remote, internet-based computing','雲端運算','v'],
-  'wallet': ['here: the money or budget available','錢包（此處指預算）','v'],
-  'soybeans': ['beans grown as a major food and feed crop','黃豆','v'],
-  'poultry': ['farm birds (chickens, ducks) raised for food','家禽','v'],
-  'reconstruction': ['rebuilding after destruction','重建','v'],
-  'sustain': ['to keep something going over time','維持；支撐','v'],
-  'territorial': ['relating to land that a state controls or claims','領土的','v'],
-
-  /* ---------- concepts (green) ---------- */
-  'deterrence': ['stopping an enemy by making the costs look too high','嚇阻','c'],
-  'coercive diplomacy': ['using force or its threat to make an opponent change course','脅迫外交','c'],
-  'escalation': ['a rise in the intensity or scope of conflict','升級；升高','c'],
-  'gray zone': ['coercion that sits between normal statecraft and open war','灰色地帶','c'],
-  'salami-slicing': ['small steps that change facts without crossing into war','切香腸戰術','c'],
-  'economic statecraft': ['using trade, sanctions and controls for strategic ends','經濟治略','c'],
-  'managed competition': ['rivalry kept within agreed limits to avoid rupture','管控式競爭','c'],
-  'dual-use': ['technology with both civilian and military uses','軍民兩用','c'],
-  'silicon shield': ['the idea chip-making makes Taiwan too valuable to attack','矽盾','c'],
-  'attrition': ['wearing down an enemy’s resources and will over time','消耗','c'],
-  'maritime': ['relating to the sea and shipping','海事的；海上的','c'],
-  'transshipment': ['moving goods via a third point to hide their origin','轉運','c'],
-  'guardrails': ['limits meant to keep competition from turning into disaster','護欄機制','c'],
-  'contiguous zone': ['a sea belt just outside territorial waters','鄰接區','c'],
-  'instability': ['a state of being easily upset or disrupted','不穩定','c'],
-
-  /* ================= PROPER NOUNS (blue) ================= */
-  'donald trump': ['US president; signed the Iran memorandum','美國總統川普','p'],
-  'trump': ['US president; signed the Iran memorandum','（美國總統）川普','p'],
-  'masoud pezeshkian': ['president of Iran','伊朗總統佩澤希基安','p'],
-  'pezeshkian': ['president of Iran','（伊朗總統）佩澤希基安','p'],
-  'jd vance': ['US vice-president; led the Switzerland talks','美國副總統范斯','p'],
-  'vance': ['US vice-president; led the Switzerland talks','（美國副總統）范斯','p'],
-  'mohammad bagher ghalibaf': ['speaker of Iran’s parliament; Iran’s lead negotiator','伊朗國會議長加利巴夫','p'],
-  'ghalibaf': ['speaker of Iran’s parliament; Iran’s lead negotiator','加利巴夫','p'],
-  'rafael grossi': ['head of the IAEA, the UN nuclear watchdog','國際原子能總署署長葛羅西','p'],
-  'grossi': ['head of the IAEA, the UN nuclear watchdog','葛羅西','p'],
-  'benjamin netanyahu': ['prime minister of Israel','以色列總理納坦雅胡','p'],
-  'netanyahu': ['prime minister of Israel','（以色列總理）納坦雅胡','p'],
-  'vladimir putin': ['president of Russia','俄羅斯總統普丁','p'],
-  'putin': ['president of Russia','（俄羅斯總統）普丁','p'],
-  'zelensky': ['president of Ukraine','（烏克蘭總統）澤倫斯基','p'],
-  'lai ching-te': ['president of Taiwan (DPP)','台灣總統賴清德','p'],
-  'cheng li-wun': ['chair of Taiwan’s opposition KMT; favours engaging Beijing','國民黨主席鄭麗文','p'],
-  'xi jinping': ['leader of China','中國領導人習近平','p'],
-  'xi': ['leader of China, Xi Jinping','習近平','p'],
-
-  'united states': ['the United States','美國','p'],
-  'washington': ['here: the US government','華府（美國政府）','p'],
-  'iran': ['Middle East country at the centre of the war','伊朗','p'],
-  'tehran': ['capital of Iran; here means Iran’s government','德黑蘭（伊朗政府）','p'],
-  'israel': ['Middle East country; at war with Iran and Hezbollah','以色列','p'],
-  'lebanon': ['country north of Israel; home to Hezbollah','黎巴嫩','p'],
-  'hezbollah': ['an Iran-backed armed group in Lebanon','真主黨','p'],
-  'gaza': ['Palestinian territory under an Israel–Hamas ceasefire','加薩','p'],
-  'hamas': ['the armed group that governs Gaza','哈瑪斯','p'],
-  'palestinians': ['the people of Gaza and the West Bank','巴勒斯坦人','p'],
-  'iaea': ['the UN’s nuclear watchdog agency','國際原子能總署','p'],
-  'strait of hormuz': ['a narrow sea passage for about a fifth of the world’s oil','荷莫茲海峽','p'],
-  'hormuz': ['short for the Strait of Hormuz, a key oil chokepoint','荷莫茲海峽','p'],
-  'versailles': ['a palace near Paris where Trump signed the memo','凡爾賽宮','p'],
-  'g7': ['the Group of Seven major industrial democracies','七大工業國集團','p'],
-  'switzerland': ['neutral country hosting the Iran–US talks','瑞士','p'],
-  'pakistan': ['a mediator in the Iran–US talks','巴基斯坦','p'],
-  'qatar': ['a Gulf state mediating the Iran–US talks','卡達','p'],
-  'oman': ['Gulf state beside the Strait of Hormuz','阿曼','p'],
-  'international maritime organization': ['the UN agency for shipping','國際海事組織','p'],
-  'brookings': ['a US think tank (Brookings Institution)','布魯金斯研究所','p'],
-
-  'russia': ['the country waging war on Ukraine','俄羅斯','p'],
-  'moscow': ['here: the Russian government','莫斯科（俄國政府）','p'],
-  'ukraine': ['the country invaded by Russia in 2022','烏克蘭','p'],
-  'kyiv': ['capital of Ukraine; here means its government','基輔（烏克蘭政府）','p'],
-  'crimea': ['Ukrainian peninsula occupied by Russia','克里米亞','p'],
-  'gazprom': ['Russia’s huge state gas company','俄羅斯天然氣工業公司','p'],
-  'nizhnekamsk': ['a Russian city with a major refinery','下卡姆斯克（俄國煉油城）','p'],
-  'donbas': ['an eastern Ukrainian region Russia wants','頓巴斯','p'],
-  'donetsk': ['an eastern Ukrainian province','頓內茨克','p'],
-  'kostyantynivka': ['an eastern Ukrainian city under Russian pressure','康斯坦丁尼夫卡','p'],
-  'lyman': ['an eastern Ukrainian town near the front','利曼','p'],
-  'isw': ['Institute for the Study of War, a US think tank','美國戰爭研究所','p'],
-  'deepstate': ['a Ukrainian open-source battlefield mapping group','DeepState（烏克蘭戰情地圖團隊）','p'],
-
-  'taiwan': ['self-governing island claimed by China','台灣','p'],
-  'taiwan strait': ['the sea channel between Taiwan and mainland China','台灣海峽','p'],
-  'beijing': ['here: the government of China','北京（中國政府）','p'],
-  'china': ['the People’s Republic of China','中國','p'],
-  'pla': ['the People’s Liberation Army, China’s military','解放軍','p'],
-  'adiz': ['Air Defence Identification Zone (a monitored airspace)','防空識別區','p'],
-  'kaohsiung': ['a major port city in southern Taiwan','高雄','p'],
-  'kinmen': ['Taiwan-held islands very close to mainland China','金門','p'],
-  'pratas': ['a remote Taiwan-held atoll in the South China Sea','東沙（島礁）','p'],
-  'kmt': ['Taiwan’s main opposition party, friendlier to Beijing','國民黨','p'],
-  'dpp': ['Taiwan’s ruling party, wary of Beijing','民進黨','p'],
-  'taipei': ['capital of Taiwan; here means its government','台北（台灣政府）','p'],
-  'board of peace': ['the US-founded body overseeing the Gaza plan','（美國主導的）和平委員會','p'],
-
-  'boeing': ['the US aircraft maker','波音','p'],
-  'nvidia': ['the leading maker of AI chips (GPUs)','輝達','p'],
-  'openai': ['the AI company that makes ChatGPT','OpenAI（AI 公司）','p'],
-  'amd': ['a US chip maker, a rival to NVIDIA','超微（AMD）','p'],
-  'broadcom': ['a US chip and components giant','博通','p'],
-  'anthropic': ['the AI company that makes Claude','Anthropic（AI 公司）','p'],
-  'google': ['the US tech giant; makes its own AI chips (TPUs)','谷歌','p'],
-  'tsmc': ['Taiwan’s chip maker; the world’s top foundry','台積電','p'],
-  'computex': ['a big computer-industry trade show in Taipei','台北國際電腦展','p'],
-  'reuters': ['an international news agency','路透社','p'],
-  'cfr': ['the Council on Foreign Relations, a US think tank','美國外交關係協會','p'],
-  'ebola': ['a deadly viral disease','伊波拉（病毒）','p'],
-
-  'lebanon’s': ['belonging to Lebanon','黎巴嫩的','p']
-};
-
-/* =========================================================================
-   AUTO-LINKER  (adapted from the InkQuest gamebook linker)
-   ========================================================================= */
-var ROOT = document.getElementById('bodywrap');
-var TIP = document.getElementById('tip');
-var CATLABEL = { v: 'Vocabulary', p: 'Proper noun', c: 'Concept' };
-var TERMS = Object.keys(VOCAB);
-var SKIP_CLASSES = ['src','lbl','chip','noxlink','reflead','scope','note','persona'];
-
-function isWordChar(ch){ return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9'); }
-
-function ciFind(text, term, from){
-  var lt = text.toLowerCase(), lterm = term.toLowerCase();
-  var idx = lt.indexOf(lterm, from);
-  while (idx !== -1){
-    var before = idx>0 ? text.charAt(idx-1) : '';
-    var after  = (idx+term.length<text.length) ? text.charAt(idx+term.length) : '';
-    if (!isWordChar(before) && !isWordChar(after)) return idx;
-    idx = lt.indexOf(lterm, idx+1);
-  }
-  return -1;
-}
-
-function skipNode(node){
-  var p = node.parentNode;
-  while (p && p !== ROOT){
-    if (p.tagName === 'TH' || p.tagName === 'BUTTON') return true;
-    if (p.classList){
-      if (p.classList.contains('vb')) return true;
-      for (var i=0;i<SKIP_CLASSES.length;i++) if (p.classList.contains(SKIP_CLASSES[i])) return true;
-    }
-    p = p.parentNode;
-  }
-  return false;
-}
-
-function processTextNode(node){
-  var text = node.nodeValue;
-  if (!text || !/[A-Za-z]/.test(text)) return;
-  var bestIdx = -1, bestTerm = null;
-  for (var i=0;i<TERMS.length;i++){
-    var term = TERMS[i];
-    var idx = ciFind(text, term, 0);
-    if (idx === -1) continue;
-    if (bestIdx === -1 || idx < bestIdx || (idx === bestIdx && term.length > bestTerm.length)){
-      bestIdx = idx; bestTerm = term;
-    }
-  }
-  if (bestTerm === null) return;
-  var entry = VOCAB[bestTerm];
-  var matchText = text.substr(bestIdx, bestTerm.length);
-  var pre  = text.slice(0, bestIdx);
-  var post = text.slice(bestIdx + bestTerm.length);
-  var span = document.createElement('span');
-  span.className = 'vb ' + entry[2];
-  span.setAttribute('tabindex','0');
-  span.setAttribute('data-d', entry[0]);
-  span.setAttribute('data-z', entry[1]);
-  span.setAttribute('data-t', entry[2]);
-  span.setAttribute('data-w', matchText);
-  span.textContent = matchText;
-  var parent = node.parentNode;
-  if (pre) parent.insertBefore(document.createTextNode(pre), node);
-  parent.insertBefore(span, node);
-  var postNode = document.createTextNode(post);
-  parent.insertBefore(postNode, node);
-  parent.removeChild(node);
-  processTextNode(postNode);   /* continue: wrap ALL further occurrences */
-}
-
-function linkify(){
-  var walker = document.createTreeWalker(ROOT, NodeFilter.SHOW_TEXT, null, false);
-  var nodes = [], n;
-  while ((n = walker.nextNode())) nodes.push(n);
-  for (var i=0;i<nodes.length;i++){
-    if (nodes[i].parentNode && !skipNode(nodes[i])) processTextNode(nodes[i]);
-  }
-}
-
-/* =========================================================================
-   TOOLTIP  —  hover (desktop) + tap/click (mobile), with keyboard focus
-   ========================================================================= */
-var pinned = null;     /* element clicked open */
-var hideTimer = null;
-
-function fillTip(el){
-  TIP.innerHTML =
-    '<span class="cat ' + el.getAttribute('data-t') + '">' + CATLABEL[el.getAttribute('data-t')] + '</span><br>' +
-    '<span class="term">' + el.getAttribute('data-w') + '</span> &mdash; ' + el.getAttribute('data-d') +
-    '<span class="zh">' + el.getAttribute('data-z') + '</span>';
-}
-
-function placeTip(el){
-  TIP.style.display = 'block';
-  TIP.style.left = '0px'; TIP.style.top = '0px';
-  var r = el.getBoundingClientRect();
-  var tw = TIP.offsetWidth, th = TIP.offsetHeight, pad = 10;
-  var x = r.left + r.width/2 - tw/2;
-  x = Math.max(pad, Math.min(x, window.innerWidth - tw - pad));
-  var y = r.top - th - 8;
-  if (y < pad) y = r.bottom + 8;
-  TIP.style.left = (x + window.scrollX) + 'px';
-  TIP.style.top  = (y + window.scrollY) + 'px';
-}
-
-function showTip(el){
-  if (document.body.classList.contains('nohl')) return;
-  if (hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
-  fillTip(el); placeTip(el);
-}
-function hideTip(){
-  TIP.style.display = 'none';
-  if (pinned){ pinned.classList.remove('open'); pinned = null; }
-}
-
-/* hover */
-ROOT.addEventListener('mouseover', function(e){
-  var el = e.target.closest && e.target.closest('.vb');
-  if (el && !pinned) showTip(el);
-});
-ROOT.addEventListener('mouseout', function(e){
-  var el = e.target.closest && e.target.closest('.vb');
-  if (el && !pinned){
-    hideTimer = setTimeout(function(){ TIP.style.display='none'; }, 80);
-  }
-});
-/* keyboard focus */
-ROOT.addEventListener('focusin', function(e){
-  var el = e.target.closest && e.target.closest('.vb');
-  if (el) showTip(el);
-});
-ROOT.addEventListener('focusout', function(){ if (!pinned) TIP.style.display='none'; });
-
-/* click / tap to pin */
-document.addEventListener('click', function(e){
-  var el = e.target.closest && e.target.closest('.vb');
-  if (el){
-    if (pinned === el){ hideTip(); return; }
-    if (pinned) pinned.classList.remove('open');
-    pinned = el; el.classList.add('open');
-    showTip(el);
-    e.stopPropagation();
-    return;
-  }
-  if (!TIP.contains(e.target)) hideTip();
-});
-window.addEventListener('resize', hideTip);
-window.addEventListener('scroll', function(){ if (pinned) placeTip(pinned); }, { passive:true });
-
-/* highlights on/off toggle */
-var toggle = document.getElementById('toggle');
-toggle.addEventListener('click', function(){
-  var off = document.body.classList.toggle('nohl');
-  toggle.textContent = 'Highlights: ' + (off ? 'Off' : 'On');
-  toggle.setAttribute('aria-pressed', off ? 'true' : 'false');
-  if (off) hideTip();
-});
-
-/* ---- boot ---- */
-linkify();
-</script>
 </body>
 </html>

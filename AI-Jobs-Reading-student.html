@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="student"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Jobs AI Won't Take Yet — Glossary Reader</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #e8ecf2; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    color: #1a1a1a; line-height: 1.66; font-size: 16px; padding: 0 0 60px;
+  }
+
+  /* ---- sticky control bar ---- */
+  #controls {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(19,40,74,0.97); backdrop-filter: blur(6px);
+    color: #d4dce8; border-bottom: 2px solid #c2922e;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px;
+    padding: 9px 18px; font-size: 12.5px;
+  }
+  #controls .brandmini { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; font-size: 11.5px; }
+  #controls .legend { display: flex; gap: 13px; flex-wrap: wrap; align-items: center; }
+  #controls .key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #controls .swatch { width: 22px; height: 0; border-bottom: 2px dotted; display: inline-block; }
+  .sw-v { border-color: #d39a2f; } .sw-p { border-color: #5b9bd5; } .sw-c { border-color: #58c08b; }
+  #controls .filters { display:flex; gap:10px; align-items:center; }
+  #controls label.lv { display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
+  #controls .spacer { flex: 1 1 auto; }
+  #controls button {
+    font: inherit; font-size: 12px; cursor: pointer;
+    background: #1f3a63; color: #dbe6f5; border: 1px solid #34568a;
+    border-radius: 6px; padding: 5px 10px;
+  }
+  #controls button:hover { background: #294c80; }
+  body.nohl .vb { border-bottom: 0 !important; color: inherit !important; cursor: text !important; }
+  body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1 { border-bottom: 0; }
+
+  #doc { max-width: 860px; margin: 22px auto; background: #fff;
+         box-shadow: 0 2px 14px rgba(20,40,70,.12); border-radius: 4px; overflow: hidden; }
+
+  /* ---- masthead ---- */
+  .mast { background: #1e2433; color: #fff; padding: 22px 30px; border-bottom: 3px solid #c2922e; }
+  .mast .brand { font-size: 12px; letter-spacing:.22em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
+  .mast h1 { font-size: 28px; letter-spacing: .01em; line-height: 1.08; margin-top:6px; font-family: Georgia, "Times New Roman", serif; }
+  .mast .sub { color: #c8d0de; font-size: 13.5px; margin-top: 6px; }
+  .inner { padding: 22px 30px; }
+  @media (max-width: 600px){ .inner, .mast { padding-left: 18px; padding-right: 18px; } .mast h1 { font-size: 22px; } body{font-size:15.5px;} }
+
+  .scope { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #cdd6e2;
+           border: 1px solid #cdd6e2; border-radius: 5px; overflow: hidden; margin-bottom: 14px; }
+  .scope > div { background: #eef2f7; padding: 9px 11px; font-size: 12.3px; color: #41506a; }
+  @media (max-width: 600px){ .scope { grid-template-columns: 1fr; } }
+
+  /* ---- setup panel (teacher only; stripped from student export) ---- */
+  #setup { border: 1px dashed #b9a06a; background: #fbf7ee; border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; }
+  #setup h3 { font-size: 14px; color: #7a5d1c; margin-bottom: 6px; }
+  #setup p.tip { font-size: 12.5px; color: #6a6450; margin-bottom: 9px; line-height:1.55; }
+  #setup textarea {
+    width: 100%; min-height: 150px; resize: vertical; font: inherit; font-size: 13.5px; line-height:1.5;
+    border: 1px solid #cdbf99; border-radius: 6px; padding: 10px 12px; background:#fff; color:#222;
+  }
+  #setup .row { display:flex; flex-wrap:wrap; gap:9px; margin-top:10px; align-items:center; }
+  #setup button {
+    font: inherit; font-size: 13px; cursor: pointer; border-radius: 6px; padding: 7px 14px; border:1px solid transparent;
+  }
+  #applyBtn { background:#1e2433; color:#fff; }
+  #applyBtn:hover { background:#33405a; }
+  #clearBtn { background:#fff; color:#7a1f1f; border-color:#e0c4c0; }
+  #exportBtn { background:#2f6b46; color:#fff; }
+  #exportBtn:hover { background:#3a805440; }
+  #setup .count { font-size:12px; color:#8a7c55; margin-left:auto; }
+
+  h2.sec { color: #1e2433; font-size: 18px; margin: 24px 0 2px; padding-top: 6px; }
+  h2.sec .n { color: #c2922e; margin-right: 8px; }
+  .rule { height: 2px; background: #c2922e; margin: 5px 0 14px; }
+
+  #bodywrap p { margin: 0 0 13px; }
+  #bodywrap .placeholder { color:#9aa3b2; font-style:italic; text-align:center; padding:30px 10px; border:1px dashed #d3dae6; border-radius:8px; }
+
+  /* ---- glossary list ---- */
+  #glossWrap { margin-top: 8px; }
+  #glossList { column-count: 2; column-gap: 26px; font-size: 13px; }
+  @media (max-width: 600px){ #glossList { column-count: 1; } }
+  #glossList .g { break-inside: avoid; margin-bottom: 8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
+  #glossList .g .t { font-weight: 700; color:#1e2433; }
+  #glossList .g .lv { font-size:9.5px; font-weight:700; letter-spacing:.06em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; }
+  #glossList .g .d { color:#48505f; } #glossList .g .z { color:#1e2433; }
+  .lvb1 { background:#e7f0e9; color:#3c7048; } .lvb2 { background:#eaf0f7; color:#345f8a; } .lvc1 { background:#f6ece0; color:#9a6b22; }
+
+  /* ---- grammar notes ---- */
+  details.gram { border:1px solid #e3e7ef; border-radius:8px; margin-bottom:9px; background:#fafbfd; }
+  details.gram > summary { cursor:pointer; padding:10px 13px; font-weight:700; color:#1e2433; font-size:13.5px; list-style:none; }
+  details.gram > summary::-webkit-details-marker { display:none; }
+  details.gram > summary::before { content:"▸ "; color:#c2922e; }
+  details.gram[open] > summary::before { content:"▾ "; }
+  details.gram .gbody { padding: 2px 14px 12px; font-size:13px; color:#444; line-height:1.6; }
+  details.gram .gbody .ex { color:#2f4868; font-style:italic; }
+  details.gram .gbody .zh { color:#1e2433; }
+
+  footer { max-width: 860px; margin: 0 auto; padding: 16px 30px 0; color: #6a7686;
+           font-size: 11.8px; line-height:1.6; text-align: center; }
+  footer a { color:#3a5a8c; }
+  footer .strong { color:#444; font-style:normal; font-weight:600; }
+
+  /* ---- tooltip target styling ---- */
+  .vb { cursor: help; border-bottom: 1px dotted; padding-bottom: .5px; text-decoration: none; transition: background .12s; }
+  .vb.v { border-color: #d39a2f; } .vb.p { border-color: #5b9bd5; } .vb.c { border-color: #58c08b; }
+  .vb:hover, .vb:focus { background: rgba(194,146,46,.10); outline: none; }
+  .vb.open { background: rgba(194,146,46,.18); }
+
+  /* ---- tooltip ---- */
+  #tip {
+    position: absolute; z-index: 200; width: max-content; max-width: min(330px, 88vw);
+    background: #18222e; border: 1px solid #34465a; border-radius: 9px;
+    padding: 10px 13px 11px; font-size: 13.5px; line-height: 1.5; color: #e4ebf3;
+    box-shadow: 0 10px 28px rgba(0,0,0,.4); display: none; white-space: normal;
+  }
+  #tip .meta { display:flex; gap:6px; align-items:center; margin-bottom:5px; }
+  #tip .cat { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; padding: 1px 6px; border-radius: 99px; font-weight: 700; }
+  #tip .cat.v { background: rgba(211,154,47,.20); color: #f0c873; }
+  #tip .cat.p { background: rgba(91,155,213,.20); color: #9fc6ef; }
+  #tip .cat.c { background: rgba(88,192,139,.20); color: #8fe0b4; }
+  #tip .lvl { font-size: 9.5px; font-weight:700; letter-spacing:.06em; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
+  #tip .term { font-weight: 700; color: #fff; }
+  #tip .zh { color: #e0a458; margin-top: 4px; display: block; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <span class="brandmini">InkQuest&nbsp;Reader</span>
+  <span class="legend">
+    <span class="key"><span class="swatch sw-v"></span> Word</span>
+    <span class="key"><span class="swatch sw-p"></span> Phrase / idiom</span>
+    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
+  </span>
+  <span class="filters">
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked=""> B1</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked=""> B2</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked=""> C1</label>
+  </span>
+  <span class="spacer"></span>
+  <button id="fontMinus" title="Smaller text">A−</button>
+  <button id="fontPlus" title="Larger text">A+</button>
+  <button id="toggle" aria-pressed="false">Highlights: On</button>
+</div>
+
+<div id="doc">
+  <div class="mast">
+    <div class="brand">InkQuest English Coaching · Reading with glossary</div>
+    <h1>The Jobs AI Won't Take Yet</h1>
+    <div class="sub">BBC Worklife · Kate Morgan, 2023 &nbsp;|&nbsp; ~930 words &nbsp;|&nbsp; CEFR&nbsp;B2–C1 &nbsp;|&nbsp; underlined terms carry hover / tap glossary notes (EN&nbsp;+&nbsp;繁中)</div>
+  </div>
+
+  <div class="inner">
+    <div class="scope">
+      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for an English + 繁中 note and its CEFR level.</div>
+      <div><strong>Colours.</strong> <span style="color:#b8860b">amber</span> = word · <span style="color:#3a72b8">blue</span> = phrase / idiom · <span style="color:#2f8d5e">green</span> = grammar pattern.</div>
+      <div><strong>Filters.</strong> Use the B1 / B2 / C1 checkboxes to show only the levels you want, or turn highlights off to read clean.</div>
+    </div>
+
+    <!-- ===== TEACHER SETUP (removed automatically in the exported student copy) ===== -->
+    
+
+    <h2 class="sec" style="margin-top:8px;"><span class="n">§</span>Article</h2>
+    <div class="rule"></div>
+    <div id="bodywrap"><p>The Jobs AI Won't Take Yet</p><p>By Kate Morgan</p><p>9th May 2023</p><p><span class="vb v l-b2" tabindex="0" data-d="in the middle of; during" data-z="在…之中、正值" data-t="v" data-l="B2" data-w="Amid">Amid</span> the talk of artificial intelligence <span class="vb v l-b1" tabindex="0" data-d="taking the place of" data-z="取代" data-t="v" data-l="B1" data-w="replacing">replacing</span> workers, experts say there are some jobs computers aren’t taking – <span class="vb p l-b1" tabindex="0" data-d="not less than; here = for now" data-z="至少;在此指「至少目前」" data-t="p" data-l="B1" data-w="at least">at least</span> <span class="vb p l-b1" tabindex="0" data-d="for a period of time" data-z="一段時間" data-t="p" data-l="B1" data-w="for a while">for a while</span>.</p><p>Since the start of the <span class="vb p l-b2" tabindex="0" data-d="the period of rapid factory-based change from the 1700s" data-z="工業革命" data-t="p" data-l="B2" data-w="industrial revolution">industrial revolution</span>, there have been <span class="vb v l-b1" tabindex="0" data-d="possible dangers" data-z="威脅" data-t="v" data-l="B1" data-w="threats">threats</span> that new machines – from <span class="vb v l-b2" tabindex="0" data-d="made automatic using machines (BrE)" data-z="機械化的" data-t="v" data-l="B2" data-w="mechanised">mechanised</span> <span class="vb v l-c1" tabindex="0" data-d="machines for weaving cloth" data-z="織布機" data-t="v" data-l="C1" data-w="looms">looms</span> to <span class="vb v l-b2" tabindex="0" data-d="tiny computer circuits" data-z="微晶片" data-t="v" data-l="B2" data-w="microchips">microchips</span> – would <span class="vb v l-c1" tabindex="0" data-d="to take someone’s power or position by force" data-z="篡奪、取而代之" data-t="v" data-l="C1" data-w="usurp">usurp</span> human jobs. <span class="vb p l-b2" tabindex="0" data-d="mostly; in most cases" data-z="大致上、多半" data-t="p" data-l="B2" data-w="For the most part">For the most part</span>, the humans have <span class="vb v l-c1" tabindex="0" data-d="won or stayed dominant after a struggle" data-z="（最終）勝出、撐住" data-t="v" data-l="C1" data-w="prevailed">prevailed</span>. Now, say some experts, with AI <span class="vb v l-c1" tabindex="0" data-d="the state of being everywhere at once" data-z="無所不在、普及" data-t="v" data-l="C1" data-w="ubiquity">ubiquity</span> <span class="vb p l-b2" tabindex="0" data-d="likely to happen soon" data-z="即將到來、在眼前" data-t="p" data-l="B2" data-w="on the horizon">on the horizon</span>, the <span class="vb v l-b1" tabindex="0" data-d="a possible danger" data-z="威脅" data-t="v" data-l="B1" data-w="threat">threat</span>’s being <span class="vb v l-b2" tabindex="0" data-d="became real; actually happened (BrE)" data-z="（威脅）成真" data-t="v" data-l="B2" data-w="realised">realised</span>: the robots really are <span class="vb p l-b2" tabindex="0" data-d="trying to take or replace (informal, slightly threatening)" data-z="要來搶（你的工作）" data-t="p" data-l="B2" data-w="coming for">coming for</span> some jobs.</p><p>A March 2023 report from Goldman Sachs <span class="vb v l-b1" tabindex="0" data-d="calculated approximately" data-z="估計" data-t="v" data-l="B1" data-w="estimated">estimated</span> that AI <span class="vb p l-b2" tabindex="0" data-d="able to do something" data-z="有能力（做）…" data-t="p" data-l="B2" data-w="capable of">capable of</span> <span class="vb p l-b2" tabindex="0" data-d="the producing of text, images, etc. by AI" data-z="內容生成" data-t="p" data-l="B2" data-w="content generation">content generation</span> could do <span class="vb p l-b1" tabindex="0" data-d="25% of" data-z="四分之一的" data-t="p" data-l="B1" data-w="a quarter of">a quarter of</span> all the work <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: reduced relative = that is currently done" data-z="文法:省略關係詞的被動修飾" data-t="c" data-l="B2" data-w="currently done">currently done</span> by humans. Across the European Union and US, the report further notes, 300 million jobs could be <span class="vb p l-b2" tabindex="0" data-d="replaced by automated systems" data-z="被自動化取代" data-t="p" data-l="B2" data-w="lost to automation">lost to automation</span>. And that could be <span class="vb v l-c1" tabindex="0" data-d="extremely serious or bad" data-z="危急的、嚴峻的" data-t="v" data-l="C1" data-w="dire">dire</span>, says Martin Ford, author of Rule of the Robots: How Artificial Intelligence Will Transform Everything.</p><p>“It's <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: not just X, but Y (adds emphasis)" data-z="文法:不只…而是…" data-t="c" data-l="B2" data-w="not just that">not just that</span> this would happen to individuals, but it could be <span class="vb v l-b1" tabindex="0" data-d="fairly; quite (informal intensifier)" data-z="相當地（口語）" data-t="v" data-l="B1" data-w="pretty">pretty</span> <span class="vb v l-c1" tabindex="0" data-d="affecting an entire system, not just parts" data-z="系統性的、全面的" data-t="v" data-l="C1" data-w="systemic">systemic</span>,” he says. “It could happen to a lot of people, <span class="vb v l-b2" tabindex="0" data-d="possibly; could happen" data-z="有可能地" data-t="v" data-l="B2" data-w="potentially">potentially</span> quite suddenly, <span class="vb v l-b2" tabindex="0" data-d="possibly; could happen" data-z="有可能地" data-t="v" data-l="B2" data-w="potentially">potentially</span> all at the same time. And that has <span class="vb v l-b2" tabindex="0" data-d="likely effects or consequences" data-z="影響、後果、言外之意" data-t="v" data-l="B2" data-w="implications">implications</span> not just for those individuals, but for the whole economy.”</p><p><span class="vb v l-b2" tabindex="0" data-d="luckily; I’m glad to say" data-z="慶幸地" data-t="v" data-l="B2" data-w="Thankfully">Thankfully</span>, it’s not all bad news. The experts <span class="vb v l-b2" tabindex="0" data-d="to officially give out or announce" data-z="發出（警告/聲明）" data-t="v" data-l="B2" data-w="issue">issue</span> their warnings with a <span class="vb v l-c1" tabindex="0" data-d="a warning or condition added to a statement" data-z="但書、附帶提醒" data-t="v" data-l="C1" data-w="caveat">caveat</span>: there are still things AI isn’t <span class="vb p l-b2" tabindex="0" data-d="able to do something" data-z="有能力（做）…" data-t="p" data-l="B2" data-w="capable of">capable of</span> – tasks that <span class="vb v l-b1" tabindex="0" data-d="to include or require" data-z="牽涉、需要" data-t="v" data-l="B1" data-w="involve">involve</span> <span class="vb p l-c1" tabindex="0" data-d="belonging uniquely to humans" data-z="人類獨有的" data-t="p" data-l="C1" data-w="distinctly human">distinctly human</span> <span class="vb v l-b1" tabindex="0" data-d="characteristics or features" data-z="特質" data-t="v" data-l="B1" data-w="qualities">qualities</span>, like <span class="vb p l-b2" tabindex="0" data-d="the ability to understand and manage emotions" data-z="情緒智商（EQ）" data-t="p" data-l="B2" data-w="emotional intelligence">emotional intelligence</span> and <span class="vb p l-b2" tabindex="0" data-d="creative, unconventional thinking" data-z="跳脫框架的思考" data-t="p" data-l="B2" data-w="outside-the-box thinking">outside-the-box thinking</span>. And moving into <span class="vb v l-b1" tabindex="0" data-d="jobs or positions" data-z="職務、角色" data-t="v" data-l="B1" data-w="roles">roles</span> that centre those skills could help <span class="vb v l-b2" tabindex="0" data-d="to reduce; make smaller" data-z="減少、減輕" data-t="v" data-l="B2" data-w="lessen">lessen</span> the chances of <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: passive gerund (of + being + p.p.)" data-z="文法:被動動名詞" data-t="c" data-l="B2" data-w="being replaced">being replaced</span>.</p><p>“I think there are <span class="vb v l-b1" tabindex="0" data-d="usually; broadly speaking" data-z="一般而言" data-t="v" data-l="B1" data-w="generally">generally</span> three <span class="vb v l-b1" tabindex="0" data-d="groups or types" data-z="類別" data-t="v" data-l="B1" data-w="categories">categories</span> that are going to be <span class="vb v l-b2" tabindex="0" data-d="comparatively; in comparison" data-z="相對地" data-t="v" data-l="B2" data-w="relatively">relatively</span> <span class="vb v l-c1" tabindex="0" data-d="protected so as not to be affected" data-z="受保護、不受影響" data-t="v" data-l="C1" data-w="insulated">insulated</span> in the <span class="vb p l-b2" tabindex="0" data-d="the near future that we can predict" data-z="可預見的未來" data-t="p" data-l="B2" data-w="foreseeable future">foreseeable future</span>,” <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: reporting-verb inversion (verb before subject)" data-z="文法:報導動詞倒裝" data-t="c" data-l="B2" data-w="says Ford">says Ford</span>. “The first would be jobs that are <span class="vb v l-b2" tabindex="0" data-d="really; truly" data-z="真正地" data-t="v" data-l="B2" data-w="genuinely">genuinely</span> <span class="vb v l-b1" tabindex="0" data-d="having or showing new ideas" data-z="有創意的" data-t="v" data-l="B1" data-w="creative">creative</span>: you’re not doing <span class="vb v l-c1" tabindex="0" data-d="following a fixed pattern; unoriginal" data-z="公式化的、套路的" data-t="v" data-l="C1" data-w="formulaic">formulaic</span> work or just <span class="vb v l-b2" tabindex="0" data-d="putting things in a different order" data-z="重新排列" data-t="v" data-l="B2" data-w="rearranging">rearranging</span> things, but you're <span class="vb v l-b2" tabindex="0" data-d="really; truly" data-z="真正地" data-t="v" data-l="B2" data-w="genuinely">genuinely</span> <span class="vb p l-b2" tabindex="0" data-d="thinking of; producing (an idea)" data-z="想出（點子）" data-t="p" data-l="B2" data-w="coming up with">coming up with</span> new ideas and building something new.”</p><p><span class="vb c l-b2" tabindex="0" data-d="ANCHOR: While X, Y = Although (concession)" data-z="文法:讓步句 While=雖然" data-t="c" data-l="B2" data-w="While a robot">While a robot</span> may <span class="vb v l-c1" tabindex="0" data-d="apparently; seemingly (but perhaps not really)" data-z="表面上、看似" data-t="v" data-l="C1" data-w="ostensibly">ostensibly</span> provide a faster <span class="vb v l-b2" tabindex="0" data-d="the identifying of an illness" data-z="診斷" data-t="v" data-l="B2" data-w="diagnosis">diagnosis</span>, patients will still want humans to guide and educate them (Credit: Getty Images)</p><p>That doesn’t <span class="vb v l-b2" tabindex="0" data-d="in every case (often with &quot;not&quot;)" data-z="必然地;not necessarily=未必" data-t="v" data-l="B2" data-w="necessarily">necessarily</span> mean all jobs that are <span class="vb v l-b1" tabindex="0" data-d="regarded as; thought to be" data-z="被認為、被視為" data-t="v" data-l="B1" data-w="considered">considered</span> ‘<span class="vb v l-b1" tabindex="0" data-d="having or showing new ideas" data-z="有創意的" data-t="v" data-l="B1" data-w="creative">creative</span>’ are safe. <span class="vb p l-b1" tabindex="0" data-d="actually; to be exact" data-z="事實上" data-t="p" data-l="B1" data-w="In fact">In fact</span>, things like <span class="vb p l-b1" tabindex="0" data-d="designing visual material (logos, layouts)" data-z="平面設計" data-t="p" data-l="B1" data-w="graphic design">graphic design</span> and <span class="vb p l-b2" tabindex="0" data-d="connected with visual art" data-z="視覺藝術相關的" data-t="p" data-l="B2" data-w="visual art-related">visual art-related</span> <span class="vb v l-b1" tabindex="0" data-d="jobs or positions" data-z="職務、角色" data-t="v" data-l="B1" data-w="roles">roles</span> may be <span class="vb p l-b2" tabindex="0" data-d="among the earliest to disappear" data-z="最先消失的之一" data-t="p" data-l="B2" data-w="among the first to go">among the first to go</span>; basic <span class="vb v l-b2" tabindex="0" data-d="step-by-step rules a computer follows" data-z="演算法" data-t="v" data-l="B2" data-w="algorithms">algorithms</span> can direct a bot to <span class="vb v l-b1" tabindex="0" data-d="to examine in detail (BrE)" data-z="分析" data-t="v" data-l="B1" data-w="analyse">analyse</span> millions of images, allowing AI to <span class="vb p l-c1" tabindex="0" data-d="to fully command visual taste/beauty" data-z="掌握美感" data-t="p" data-l="C1" data-w="master aesthetics">master aesthetics</span> <span class="vb v l-b1" tabindex="0" data-d="immediately; at once" data-z="立刻" data-t="v" data-l="B1" data-w="instantly">instantly</span>. But there’s some <span class="vb v l-b2" tabindex="0" data-d="safety; protection (here: job safety)" data-z="保障、安全感" data-t="v" data-l="B2" data-w="security">security</span> in other kinds of creativity, <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: reporting-verb inversion (verb before subject)" data-z="文法:報導動詞倒裝" data-t="c" data-l="B2" data-w="says Ford">says Ford</span>: “in science, and medicine and law … people whose job is <span class="vb p l-b2" tabindex="0" data-d="thinking of; producing (an idea)" data-z="想出（點子）" data-t="p" data-l="B2" data-w="coming up with">coming up with</span> a new legal <span class="vb v l-b1" tabindex="0" data-d="a plan to achieve a goal" data-z="策略" data-t="v" data-l="B1" data-w="strategy">strategy</span> or business <span class="vb v l-b1" tabindex="0" data-d="a plan to achieve a goal" data-z="策略" data-t="v" data-l="B1" data-w="strategy">strategy</span>. I think that there's going to continue to be a place there for human beings”.</p><p>The second <span class="vb v l-c1" tabindex="0" data-d="protected so as not to be affected" data-z="受保護、不受影響" data-t="v" data-l="C1" data-w="insulated">insulated</span> category, he continues, is jobs that <span class="vb v l-b1" tabindex="0" data-d="to need" data-z="需要" data-t="v" data-l="B1" data-w="require">require</span> <span class="vb v l-c1" tabindex="0" data-d="complex, advanced or refined" data-z="複雜精細的、高階的" data-t="v" data-l="C1" data-w="sophisticated">sophisticated</span> <span class="vb v l-b2" tabindex="0" data-d="between people; social" data-z="人際的" data-t="v" data-l="B2" data-w="interpersonal">interpersonal</span> relationships. He <span class="vb p l-b2" tabindex="0" data-d="mentions as an example" data-z="指出、舉…為例" data-t="p" data-l="B2" data-w="points to">points to</span> nurses, <span class="vb p l-b2" tabindex="0" data-d="experts paid to advise companies" data-z="企業顧問" data-t="p" data-l="B2" data-w="business consultants">business consultants</span> and <span class="vb p l-c1" tabindex="0" data-d="reporters who dig deeply into stories" data-z="調查記者" data-t="p" data-l="C1" data-w="investigative journalists">investigative journalists</span>. These are jobs, he says, “where you need a very deep understanding of people. I think it’ll be <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: it’ll be a long time before… = not for ages" data-z="片語:還要很久才會…" data-t="c" data-l="B2" data-w="a long time before">a long time before</span> AI has the ability to <span class="vb v l-b2" tabindex="0" data-d="to communicate or act together" data-z="互動" data-t="v" data-l="B2" data-w="interact">interact</span> in the kinds of ways that really <span class="vb p l-b1" tabindex="0" data-d="to develop personal connections" data-z="建立關係" data-t="p" data-l="B1" data-w="build relationships">build relationships</span>”.</p><p>The third <span class="vb p l-b2" tabindex="0" data-d="a protected area or category" data-z="安全區" data-t="p" data-l="B2" data-w="safe zone">safe zone</span>, <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: reporting-verb inversion (verb before subject)" data-z="文法:報導動詞倒裝" data-t="c" data-l="B2" data-w="says Ford">says Ford</span>, “are jobs that really <span class="vb v l-b1" tabindex="0" data-d="to need" data-z="需要" data-t="v" data-l="B1" data-w="require">require</span> lots of <span class="vb v l-b2" tabindex="0" data-d="the ability to move around" data-z="移動／靈活移動能力" data-t="v" data-l="B2" data-w="mobility">mobility</span> and <span class="vb v l-c1" tabindex="0" data-d="skill in using the hands" data-z="手部靈巧" data-t="v" data-l="C1" data-w="dexterity">dexterity</span> and <span class="vb p l-b1" tabindex="0" data-d="finding answers to difficult situations" data-z="解決問題（的能力）" data-t="p" data-l="B1" data-w="problem-solving">problem-solving</span> ability in <span class="vb v l-b2" tabindex="0" data-d="that cannot be predicted" data-z="無法預測的" data-t="v" data-l="B2" data-w="unpredictable">unpredictable</span> environments”. Many <span class="vb p l-b2" tabindex="0" data-d="skilled manual jobs (e.g. plumber)" data-z="技術工、技職工作" data-t="p" data-l="B2" data-w="trade jobs">trade jobs</span> – think <span class="vb v l-b1" tabindex="0" data-d="workers who install/repair electrical systems" data-z="電工" data-t="v" data-l="B1" data-w="electricians">electricians</span>, <span class="vb v l-b1" tabindex="0" data-d="workers who fit and repair water pipes" data-z="水電工" data-t="v" data-l="B1" data-w="plumbers">plumbers</span>, <span class="vb v l-b2" tabindex="0" data-d="workers who join metal by melting it" data-z="焊工" data-t="v" data-l="B2" data-w="welders">welders</span> <span class="vb p l-b2" tabindex="0" data-d="and similar things" data-z="諸如此類" data-t="p" data-l="B2" data-w="and the like">and the like</span> – <span class="vb p l-c1" tabindex="0" data-d="belong to this broad category" data-z="歸在這一類" data-t="p" data-l="C1" data-w="fall under this umbrella">fall under this umbrella</span>. “These are the kinds of jobs where you're <span class="vb p l-b1" tabindex="0" data-d="handling; coping with" data-z="處理、應付" data-t="p" data-l="B1" data-w="dealing with">dealing with</span> a new situation <span class="vb p l-b1" tabindex="0" data-d="constantly; always" data-z="一直、總是" data-t="p" data-l="B1" data-w="all the time">all the time</span>,” he adds. “They are probably the <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: superlative + to-infinitive (hardest … to automate)" data-z="文法:最高級＋不定詞" data-t="c" data-l="B2" data-w="hardest of anything">hardest of anything</span> to <span class="vb v l-b2" tabindex="0" data-d="to make a process work by machine" data-z="使自動化" data-t="v" data-l="B2" data-w="automate">automate</span>. <span class="vb p l-b1" tabindex="0" data-d="so as to; for the purpose of" data-z="為了" data-t="p" data-l="B1" data-w="In order to">In order to</span> <span class="vb v l-b2" tabindex="0" data-d="to make a process work by machine" data-z="使自動化" data-t="v" data-l="B2" data-w="automate">automate</span> jobs like this, you would need a <span class="vb p l-b1" tabindex="0" data-d="fiction about future science/technology" data-z="科幻" data-t="p" data-l="B1" data-w="science fiction">science fiction</span> robot. You’d need Star Wars’s C-3PO.”</p><p>While humans will likely <span class="vb v l-b1" tabindex="0" data-d="to stay; continue to be" data-z="維持、留下" data-t="v" data-l="B1" data-w="remain">remain</span> in jobs that <span class="vb p l-b2" tabindex="0" data-d="to belong inside (a range/category)" data-z="屬於（範圍內）" data-t="p" data-l="B2" data-w="fall within">fall within</span> those <span class="vb v l-b1" tabindex="0" data-d="groups or types" data-z="類別" data-t="v" data-l="B1" data-w="categories">categories</span>, that doesn’t mean those <span class="vb v l-b2" tabindex="0" data-d="skilled occupations" data-z="專業職業" data-t="v" data-l="B2" data-w="professions">professions</span> are <span class="vb v l-b1" tabindex="0" data-d="completely; entirely" data-z="完全地" data-t="v" data-l="B1" data-w="totally">totally</span> <span class="vb v l-c1" tabindex="0" data-d="protected so as not to be affected" data-z="受保護、不受影響" data-t="v" data-l="C1" data-w="insulated">insulated</span> from <span class="vb p l-c1" tabindex="0" data-d="the rise of (something)" data-z="…的崛起" data-t="p" data-l="C1" data-w="the ascent of">the ascent of</span> AI. <span class="vb p l-b1" tabindex="0" data-d="actually; to be exact" data-z="事實上" data-t="p" data-l="B1" data-w="In fact">In fact</span>, says Joanne Song McLaughlin, <span class="vb p l-b2" tabindex="0" data-d="a mid-rank university teacher" data-z="副教授" data-t="p" data-l="B2" data-w="associate professor">associate professor</span> of <span class="vb p l-c1" tabindex="0" data-d="the study of work and the job market (BrE)" data-z="勞動經濟學" data-t="p" data-l="C1" data-w="labour economics">labour economics</span> at the University of Buffalo, US, most jobs, <span class="vb p l-b2" tabindex="0" data-d="no matter what; without being affected by" data-z="不論、無論" data-t="p" data-l="B2" data-w="regardless of">regardless of</span> industry, have <span class="vb v l-b2" tabindex="0" data-d="particular parts or features" data-z="面向、層面" data-t="v" data-l="B2" data-w="aspects">aspects</span> that are <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: be likely to + passive" data-z="文法:be likely to＋被動" data-t="c" data-l="B2" data-w="likely to be automated">likely to be automated</span> by the technology.</p><p>“<span class="vb p l-b1" tabindex="0" data-d="often; frequently" data-z="在許多情況下" data-t="p" data-l="B1" data-w="In many cases">In many cases</span>, there’s no <span class="vb v l-b2" tabindex="0" data-d="happening at once; without delay" data-z="立即的" data-t="v" data-l="B2" data-w="immediate">immediate</span> <span class="vb v l-b1" tabindex="0" data-d="a possible danger" data-z="威脅" data-t="v" data-l="B1" data-w="threat">threat</span> to jobs,” she says, “but tasks will change.” Human jobs will become more <span class="vb p l-b1" tabindex="0" data-d="concentrating on" data-z="專注於" data-t="p" data-l="B1" data-w="focused on">focused on</span> <span class="vb v l-b2" tabindex="0" data-d="between people; social" data-z="人際的" data-t="v" data-l="B2" data-w="interpersonal">interpersonal</span> skills, continues Song McLaughlin. “It’s easy to imagine that, <span class="vb p l-b1" tabindex="0" data-d="for example" data-z="例如" data-t="p" data-l="B1" data-w="for instance">for instance</span>, AI will <span class="vb v l-b2" tabindex="0" data-d="to discover or notice something" data-z="偵測、察覺" data-t="v" data-l="B2" data-w="detect">detect</span> cancers <span class="vb p l-b2" tabindex="0" data-d="much better (informal)" data-z="好得多（口語）" data-t="p" data-l="B2" data-w="way better">way better</span> than humans could. In the future, I’m <span class="vb v l-b2" tabindex="0" data-d="supposing; taking as true" data-z="假定、猜想" data-t="v" data-l="B2" data-w="assuming">assuming</span> doctors will use that new technology. But I don’t think the doctor’s whole role <span class="vb c l-b1" tabindex="0" data-d="ANCHOR: future passive (will be + p.p.)" data-z="文法:未來被動" data-t="c" data-l="B1" data-w="will be replaced">will be replaced</span>.”</p><p><span class="vb p l-b2" tabindex="0" data-d="skilled manual jobs (e.g. plumber)" data-z="技術工、技職工作" data-t="p" data-l="B2" data-w="Trade jobs">Trade jobs</span> and jobs that <span class="vb v l-b1" tabindex="0" data-d="to need" data-z="需要" data-t="v" data-l="B1" data-w="require">require</span> a great deal of <span class="vb v l-b2" tabindex="0" data-d="the ability to move around" data-z="移動／靈活移動能力" data-t="v" data-l="B2" data-w="mobility">mobility</span> are more likely to be <span class="vb v l-c1" tabindex="0" data-d="protected so as not to be affected" data-z="受保護、不受影響" data-t="v" data-l="C1" data-w="insulated">insulated</span> from <span class="vb v l-b2" tabindex="0" data-d="the use of machines to do work people once did" data-z="自動化" data-t="v" data-l="B2" data-w="automation">automation</span> (Credit: Getty Images)</p><p><span class="vb c l-b2" tabindex="0" data-d="ANCHOR: While X, Y = Although (concession)" data-z="文法:讓步句 While=雖然" data-t="c" data-l="B2" data-w="While a robot">While a robot</span> may <span class="vb v l-c1" tabindex="0" data-d="apparently; seemingly (but perhaps not really)" data-z="表面上、看似" data-t="v" data-l="C1" data-w="ostensibly">ostensibly</span> do a better job of finding cancer, she says, most people will still want a doctor – a real person – to be the one to tell them about it. That’s <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: that’s true of X = applies to X" data-z="片語:這對…也成立" data-t="c" data-l="B2" data-w="true of">true of</span> almost all jobs, she adds, and so developing those <span class="vb p l-c1" tabindex="0" data-d="belonging uniquely to humans" data-z="人類獨有的" data-t="p" data-l="C1" data-w="distinctly human">distinctly human</span> skills could help people learn to do their jobs <span class="vb v l-b2" tabindex="0" data-d="next to; together with" data-z="與…並肩、一起" data-t="v" data-l="B2" data-w="alongside">alongside</span> AI.</p><p>“I think it’s smart to really think, ‘what kind of tasks within my job <span class="vb c l-b1" tabindex="0" data-d="ANCHOR: future passive (will be + p.p.)" data-z="文法:未來被動" data-t="c" data-l="B1" data-w="will be replaced">will be replaced</span>, or will be better done by computer or AI? And what's my <span class="vb v l-c1" tabindex="0" data-d="completing or adding to something else" data-z="互補的" data-t="v" data-l="C1" data-w="complementary">complementary</span> skill?’” She <span class="vb p l-b2" tabindex="0" data-d="mentions as an example" data-z="指出、舉…為例" data-t="p" data-l="B2" data-w="points to">points to</span> <span class="vb p l-b2" tabindex="0" data-d="staff who serve customers at a bank counter" data-z="銀行行員" data-t="p" data-l="B2" data-w="bank tellers">bank tellers</span>, who once had to be very <span class="vb v l-b1" tabindex="0" data-d="exact; correct" data-z="精確的" data-t="v" data-l="B1" data-w="accurate">accurate</span> money counters. Now, that task has been automated – but there’s <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: there’s still a place for = still needed" data-z="片語:仍有一席之地" data-t="c" data-l="B2" data-w="still a place for">still a place for</span> the <span class="vb v l-b2" tabindex="0" data-d="a bank counter clerk" data-z="銀行行員" data-t="v" data-l="B2" data-w="teller">teller</span>.  “The task of money counting became <span class="vb v l-c1" tabindex="0" data-d="no longer used; out of date" data-z="被淘汰的、過時的" data-t="v" data-l="C1" data-w="obsolete">obsolete</span> because of a machine,” she says. “But now, the tellers are more <span class="vb p l-b1" tabindex="0" data-d="concentrating on" data-z="專注於" data-t="p" data-l="B1" data-w="focused on">focused on</span> <span class="vb p l-b1" tabindex="0" data-d="building a rapport with" data-z="與…建立連結" data-t="p" data-l="B1" data-w="connecting with">connecting with</span> customers and introducing new products. The <span class="vb p l-b1" tabindex="0" data-d="the ability to interact well with people" data-z="社交能力" data-t="p" data-l="B1" data-w="social skill">social skill</span> has become more important.”</p><p>It’s <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: it’s important to note that…" data-z="片語:值得注意的是" data-t="c" data-l="B2" data-w="important to note">important to note</span>, <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: reporting-verb inversion (verb before subject)" data-z="文法:報導動詞倒裝" data-t="c" data-l="B2" data-w="says Ford">says Ford</span>, that an <span class="vb v l-b1" tabindex="0" data-d="high-level; highly developed" data-z="高階的、進階的" data-t="v" data-l="B1" data-w="advanced">advanced</span> education or a <span class="vb p l-b1" tabindex="0" data-d="that pays a lot of money" data-z="高薪的" data-t="p" data-l="B1" data-w="high-paying">high-paying</span> <span class="vb v l-b1" tabindex="0" data-d="a job or post" data-z="職位" data-t="v" data-l="B1" data-w="position">position</span> is not a <span class="vb p l-b2" tabindex="0" data-d="protection against (BrE)" data-z="抵禦…的保護" data-t="p" data-l="B2" data-w="defence against">defence against</span> AI <span class="vb v l-b2" tabindex="0" data-d="the act of taking control" data-z="接管、奪取" data-t="v" data-l="B2" data-w="takeover">takeover</span>. “We might think the person in the <span class="vb p l-b2" tabindex="0" data-d="relating to office / professional work" data-z="白領（的）" data-t="p" data-l="B2" data-w="white-collar">white-collar</span> job is <span class="vb p l-c1" tabindex="0" data-d="higher in the social/work hierarchy (idiom)" data-z="位階更高（食物鏈上層）" data-t="p" data-l="C1" data-w="higher on the food chain">higher on the food chain</span> than someone who drives a car <span class="vb p l-b2" tabindex="0" data-d="as a way of earning money" data-z="維生、賴以為生" data-t="p" data-l="B2" data-w="for a living">for a living</span>,” he says. “But the <span class="vb p l-b2" tabindex="0" data-d="relating to office / professional work" data-z="白領（的）" data-t="p" data-l="B2" data-w="white-collar">white-collar</span> employee’s future is more <span class="vb v l-b1" tabindex="0" data-d="put at risk; endangered" data-z="受到威脅的" data-t="v" data-l="B1" data-w="threatened">threatened</span> than the Uber driver, because we still don’t have <span class="vb p l-b1" tabindex="0" data-d="cars that drive themselves" data-z="自駕車" data-t="p" data-l="B1" data-w="self-driving cars">self-driving cars</span>, but AI can <span class="vb v l-b1" tabindex="0" data-d="definitely; without doubt" data-z="必定、的確" data-t="v" data-l="B1" data-w="certainly">certainly</span> write reports. <span class="vb p l-b1" tabindex="0" data-d="often; frequently" data-z="在許多情況下" data-t="p" data-l="B1" data-w="In many cases">In many cases</span>, more educated workers are going to be <span class="vb v l-b1" tabindex="0" data-d="put at risk; endangered" data-z="受到威脅的" data-t="v" data-l="B1" data-w="threatened">threatened</span> <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: comparative ellipsis (… than the least educated workers)" data-z="文法:省略比較" data-t="c" data-l="B2" data-w="more than the least">more than the least</span> educated workers. <span class="vb p l-b1" tabindex="0" data-d="to consider or picture" data-z="想想看、設想" data-t="p" data-l="B1" data-w="Think of">Think of</span> the person that works cleaning hotel rooms – it's really hard to <span class="vb v l-b2" tabindex="0" data-d="to make a process work by machine" data-z="使自動化" data-t="v" data-l="B2" data-w="automate">automate</span> that job.”</p><p><span class="vb p l-b1" tabindex="0" data-d="to sum up; briefly" data-z="簡言之" data-t="p" data-l="B1" data-w="In short">In short</span>, <span class="vb v l-b2" tabindex="0" data-d="looking for; trying to get" data-z="尋求" data-t="v" data-l="B2" data-w="seeking">seeking</span> <span class="vb v l-b1" tabindex="0" data-d="jobs or positions" data-z="職務、角色" data-t="v" data-l="B1" data-w="roles">roles</span> in <span class="vb v l-b2" tabindex="0" data-d="constantly changing and active" data-z="動態的、充滿變化的" data-t="v" data-l="B2" data-w="dynamic">dynamic</span>, <span class="vb v l-b2" tabindex="0" data-d="changing; moving" data-z="不斷變化的" data-t="v" data-l="B2" data-w="shifting">shifting</span> environments that include <span class="vb v l-b2" tabindex="0" data-d="that cannot be predicted" data-z="無法預測的" data-t="v" data-l="B2" data-w="unpredictable">unpredictable</span> tasks is good way to <span class="vb p l-c1" tabindex="0" data-d="to prevent or delay something bad" data-z="避免、拖延（壞事）" data-t="p" data-l="C1" data-w="stave off">stave off</span> <span class="vb p l-b1" tabindex="0" data-d="the loss of employment" data-z="失業、工作流失" data-t="p" data-l="B1" data-w="job loss">job loss</span> to AI. <span class="vb p l-b1" tabindex="0" data-d="not less than; here = for now" data-z="至少;在此指「至少目前」" data-t="p" data-l="B1" data-w="At least">At least</span>, <span class="vb p l-b1" tabindex="0" data-d="for a period of time" data-z="一段時間" data-t="p" data-l="B1" data-w="for a while">for a while</span>.</p></div>
+
+    <h2 class="sec"><span class="n">§</span>Grammar patterns to watch <span style="font-size:12px;color:#7a8294;font-weight:400;">文法重點</span></h2>
+    <div class="rule"></div>
+    <details class="gram"><summary>1 · Noun + reduced relative clause　名詞後位修飾</summary>
+      <div class="gbody"><span class="ex">the work currently done by humans</span> = the work <b>that is</b> currently done…<br><span class="zh">名詞後面拖一串修飾語，常省略「that is / are」。讀時先找主詞＋主要動詞，把名詞後的修飾括起來。</span></div></details>
+    <details class="gram"><summary>2 · Reporting-verb inversion　報導動詞倒裝</summary>
+      <div class="gbody"><span class="ex">…, says Ford / he adds / she continues</span> — verb before subject inside quotes.<br><span class="zh">引述句中常見「says + 人名」(動詞在前)。別把它當成新句的開頭。</span></div></details>
+    <details class="gram"><summary>3 · The certainty ladder　預測語氣的強弱</summary>
+      <div class="gbody"><span class="ex">could · may · is likely to · is going to · will</span><br><span class="zh">別把這些全讀成「會」。強弱排序大致是 will &gt; is likely to &gt; is going to &gt; could / may。逐句標出可能性高低。</span></div></details>
+    <details class="gram"><summary>4 · <i>While</i> X, Y (concession)　讓步句</summary>
+      <div class="gbody"><span class="ex">While a robot may… , patients will still want…</span> = Although…<br><span class="zh">句首的 While 多半是「雖然…但…」，不是「當…的時候」。看到 While 先預期後面會轉折。</span></div></details>
+    <details class="gram"><summary>5 · Comparative + ellipsis　省略比較</summary>
+      <div class="gbody"><span class="ex">more threatened than the Uber driver ['s future]</span><br><span class="zh">比較句常省略後半重複的字。把 than 後面省略的部分補回來，才不會搞錯「誰跟誰比、比什麼」。</span></div></details>
+
+    <h2 class="sec"><span class="n">§</span>Full glossary <span style="font-size:12px;color:#7a8294;font-weight:400;">詞彙與片語總表</span></h2>
+    <div class="rule"></div>
+    <div id="glossWrap"><div id="glossList"><div class="g"><span class="t">a quarter of</span><span class="lv lvb1">B1</span><div class="d">25% of</div><div class="z">四分之一的</div></div><div class="g"><span class="t">accurate</span><span class="lv lvb1">B1</span><div class="d">exact; correct</div><div class="z">精確的</div></div><div class="g"><span class="t">advanced</span><span class="lv lvb1">B1</span><div class="d">high-level; highly developed</div><div class="z">高階的、進階的</div></div><div class="g"><span class="t">aesthetics</span><span class="lv lvc1">C1</span><div class="d">the sense of beauty or visual style</div><div class="z">美感、美學</div></div><div class="g"><span class="t">algorithms</span><span class="lv lvb2">B2</span><div class="d">step-by-step rules a computer follows</div><div class="z">演算法</div></div><div class="g"><span class="t">all the time</span><span class="lv lvb1">B1</span><div class="d">constantly; always</div><div class="z">一直、總是</div></div><div class="g"><span class="t">alongside</span><span class="lv lvb2">B2</span><div class="d">next to; together with</div><div class="z">與…並肩、一起</div></div><div class="g"><span class="t">amid</span><span class="lv lvb2">B2</span><div class="d">in the middle of; during</div><div class="z">在…之中、正值</div></div><div class="g"><span class="t">among the first to go</span><span class="lv lvb2">B2</span><div class="d">among the earliest to disappear</div><div class="z">最先消失的之一</div></div><div class="g"><span class="t">analyse</span><span class="lv lvb1">B1</span><div class="d">to examine in detail (BrE)</div><div class="z">分析</div></div><div class="g"><span class="t">and the like</span><span class="lv lvb2">B2</span><div class="d">and similar things</div><div class="z">諸如此類</div></div><div class="g"><span class="t">ascent</span><span class="lv lvc1">C1</span><div class="d">a rise to power or importance</div><div class="z">崛起、上升</div></div><div class="g"><span class="t">aspects</span><span class="lv lvb2">B2</span><div class="d">particular parts or features</div><div class="z">面向、層面</div></div><div class="g"><span class="t">associate professor</span><span class="lv lvb2">B2</span><div class="d">a mid-rank university teacher</div><div class="z">副教授</div></div><div class="g"><span class="t">assuming</span><span class="lv lvb2">B2</span><div class="d">supposing; taking as true</div><div class="z">假定、猜想</div></div><div class="g"><span class="t">at least</span><span class="lv lvb1">B1</span><div class="d">not less than; here = for now</div><div class="z">至少;在此指「至少目前」</div></div><div class="g"><span class="t">automate</span><span class="lv lvb2">B2</span><div class="d">to make a process work by machine</div><div class="z">使自動化</div></div><div class="g"><span class="t">automation</span><span class="lv lvb2">B2</span><div class="d">the use of machines to do work people once did</div><div class="z">自動化</div></div><div class="g"><span class="t">bank tellers</span><span class="lv lvb2">B2</span><div class="d">staff who serve customers at a bank counter</div><div class="z">銀行行員</div></div><div class="g"><span class="t">blue-collar</span><span class="lv lvb2">B2</span><div class="d">relating to manual / industrial work</div><div class="z">藍領（的）</div></div><div class="g"><span class="t">build relationships</span><span class="lv lvb1">B1</span><div class="d">to develop personal connections</div><div class="z">建立關係</div></div><div class="g"><span class="t">business consultants</span><span class="lv lvb2">B2</span><div class="d">experts paid to advise companies</div><div class="z">企業顧問</div></div><div class="g"><span class="t">capable of</span><span class="lv lvb2">B2</span><div class="d">able to do something</div><div class="z">有能力（做）…</div></div><div class="g"><span class="t">categories</span><span class="lv lvb1">B1</span><div class="d">groups or types</div><div class="z">類別</div></div><div class="g"><span class="t">caveat</span><span class="lv lvc1">C1</span><div class="d">a warning or condition added to a statement</div><div class="z">但書、附帶提醒</div></div><div class="g"><span class="t">certainly</span><span class="lv lvb1">B1</span><div class="d">definitely; without doubt</div><div class="z">必定、的確</div></div><div class="g"><span class="t">coming for</span><span class="lv lvb2">B2</span><div class="d">trying to take or replace (informal, slightly threatening)</div><div class="z">要來搶（你的工作）</div></div><div class="g"><span class="t">coming up with</span><span class="lv lvb2">B2</span><div class="d">thinking of; producing (an idea)</div><div class="z">想出（點子）</div></div><div class="g"><span class="t">complementary</span><span class="lv lvc1">C1</span><div class="d">completing or adding to something else</div><div class="z">互補的</div></div><div class="g"><span class="t">connecting with</span><span class="lv lvb1">B1</span><div class="d">building a rapport with</div><div class="z">與…建立連結</div></div><div class="g"><span class="t">considered</span><span class="lv lvb1">B1</span><div class="d">regarded as; thought to be</div><div class="z">被認為、被視為</div></div><div class="g"><span class="t">content generation</span><span class="lv lvb2">B2</span><div class="d">the producing of text, images, etc. by AI</div><div class="z">內容生成</div></div><div class="g"><span class="t">creative</span><span class="lv lvb1">B1</span><div class="d">having or showing new ideas</div><div class="z">有創意的</div></div><div class="g"><span class="t">dealing with</span><span class="lv lvb1">B1</span><div class="d">handling; coping with</div><div class="z">處理、應付</div></div><div class="g"><span class="t">defence against</span><span class="lv lvb2">B2</span><div class="d">protection against (BrE)</div><div class="z">抵禦…的保護</div></div><div class="g"><span class="t">detect</span><span class="lv lvb2">B2</span><div class="d">to discover or notice something</div><div class="z">偵測、察覺</div></div><div class="g"><span class="t">dexterity</span><span class="lv lvc1">C1</span><div class="d">skill in using the hands</div><div class="z">手部靈巧</div></div><div class="g"><span class="t">diagnosis</span><span class="lv lvb2">B2</span><div class="d">the identifying of an illness</div><div class="z">診斷</div></div><div class="g"><span class="t">dire</span><span class="lv lvc1">C1</span><div class="d">extremely serious or bad</div><div class="z">危急的、嚴峻的</div></div><div class="g"><span class="t">distinctly</span><span class="lv lvc1">C1</span><div class="d">clearly; unmistakably</div><div class="z">明顯地、獨特地</div></div><div class="g"><span class="t">distinctly human</span><span class="lv lvc1">C1</span><div class="d">belonging uniquely to humans</div><div class="z">人類獨有的</div></div><div class="g"><span class="t">dynamic</span><span class="lv lvb2">B2</span><div class="d">constantly changing and active</div><div class="z">動態的、充滿變化的</div></div><div class="g"><span class="t">electricians</span><span class="lv lvb1">B1</span><div class="d">workers who install/repair electrical systems</div><div class="z">電工</div></div><div class="g"><span class="t">emotional intelligence</span><span class="lv lvb2">B2</span><div class="d">the ability to understand and manage emotions</div><div class="z">情緒智商（EQ）</div></div><div class="g"><span class="t">estimated</span><span class="lv lvb1">B1</span><div class="d">calculated approximately</div><div class="z">估計</div></div><div class="g"><span class="t">fall under</span><span class="lv lvb2">B2</span><div class="d">to belong to (a category)</div><div class="z">歸類於</div></div><div class="g"><span class="t">fall under this umbrella</span><span class="lv lvc1">C1</span><div class="d">belong to this broad category</div><div class="z">歸在這一類</div></div><div class="g"><span class="t">fall within</span><span class="lv lvb2">B2</span><div class="d">to belong inside (a range/category)</div><div class="z">屬於（範圍內）</div></div><div class="g"><span class="t">focused on</span><span class="lv lvb1">B1</span><div class="d">concentrating on</div><div class="z">專注於</div></div><div class="g"><span class="t">for a living</span><span class="lv lvb2">B2</span><div class="d">as a way of earning money</div><div class="z">維生、賴以為生</div></div><div class="g"><span class="t">for a while</span><span class="lv lvb1">B1</span><div class="d">for a period of time</div><div class="z">一段時間</div></div><div class="g"><span class="t">for instance</span><span class="lv lvb1">B1</span><div class="d">for example</div><div class="z">例如</div></div><div class="g"><span class="t">for the most part</span><span class="lv lvb2">B2</span><div class="d">mostly; in most cases</div><div class="z">大致上、多半</div></div><div class="g"><span class="t">foreseeable future</span><span class="lv lvb2">B2</span><div class="d">the near future that we can predict</div><div class="z">可預見的未來</div></div><div class="g"><span class="t">formulaic</span><span class="lv lvc1">C1</span><div class="d">following a fixed pattern; unoriginal</div><div class="z">公式化的、套路的</div></div><div class="g"><span class="t">generally</span><span class="lv lvb1">B1</span><div class="d">usually; broadly speaking</div><div class="z">一般而言</div></div><div class="g"><span class="t">genuinely</span><span class="lv lvb2">B2</span><div class="d">really; truly</div><div class="z">真正地</div></div><div class="g"><span class="t">graphic design</span><span class="lv lvb1">B1</span><div class="d">designing visual material (logos, layouts)</div><div class="z">平面設計</div></div><div class="g"><span class="t">high-paying</span><span class="lv lvb1">B1</span><div class="d">that pays a lot of money</div><div class="z">高薪的</div></div><div class="g"><span class="t">higher on the food chain</span><span class="lv lvc1">C1</span><div class="d">higher in the social/work hierarchy (idiom)</div><div class="z">位階更高（食物鏈上層）</div></div><div class="g"><span class="t">immediate</span><span class="lv lvb2">B2</span><div class="d">happening at once; without delay</div><div class="z">立即的</div></div><div class="g"><span class="t">implications</span><span class="lv lvb2">B2</span><div class="d">likely effects or consequences</div><div class="z">影響、後果、言外之意</div></div><div class="g"><span class="t">in fact</span><span class="lv lvb1">B1</span><div class="d">actually; to be exact</div><div class="z">事實上</div></div><div class="g"><span class="t">in many cases</span><span class="lv lvb1">B1</span><div class="d">often; frequently</div><div class="z">在許多情況下</div></div><div class="g"><span class="t">in order to</span><span class="lv lvb1">B1</span><div class="d">so as to; for the purpose of</div><div class="z">為了</div></div><div class="g"><span class="t">in short</span><span class="lv lvb1">B1</span><div class="d">to sum up; briefly</div><div class="z">簡言之</div></div><div class="g"><span class="t">industrial revolution</span><span class="lv lvb2">B2</span><div class="d">the period of rapid factory-based change from the 1700s</div><div class="z">工業革命</div></div><div class="g"><span class="t">instantly</span><span class="lv lvb1">B1</span><div class="d">immediately; at once</div><div class="z">立刻</div></div><div class="g"><span class="t">insulated</span><span class="lv lvc1">C1</span><div class="d">protected so as not to be affected</div><div class="z">受保護、不受影響</div></div><div class="g"><span class="t">interact</span><span class="lv lvb2">B2</span><div class="d">to communicate or act together</div><div class="z">互動</div></div><div class="g"><span class="t">interpersonal</span><span class="lv lvb2">B2</span><div class="d">between people; social</div><div class="z">人際的</div></div><div class="g"><span class="t">investigative journalists</span><span class="lv lvc1">C1</span><div class="d">reporters who dig deeply into stories</div><div class="z">調查記者</div></div><div class="g"><span class="t">involve</span><span class="lv lvb1">B1</span><div class="d">to include or require</div><div class="z">牽涉、需要</div></div><div class="g"><span class="t">issue</span><span class="lv lvb2">B2</span><div class="d">to officially give out or announce</div><div class="z">發出（警告/聲明）</div></div><div class="g"><span class="t">job loss</span><span class="lv lvb1">B1</span><div class="d">the loss of employment</div><div class="z">失業、工作流失</div></div><div class="g"><span class="t">labour economics</span><span class="lv lvc1">C1</span><div class="d">the study of work and the job market (BrE)</div><div class="z">勞動經濟學</div></div><div class="g"><span class="t">lessen</span><span class="lv lvb2">B2</span><div class="d">to reduce; make smaller</div><div class="z">減少、減輕</div></div><div class="g"><span class="t">looms</span><span class="lv lvc1">C1</span><div class="d">machines for weaving cloth</div><div class="z">織布機</div></div><div class="g"><span class="t">lost to automation</span><span class="lv lvb2">B2</span><div class="d">replaced by automated systems</div><div class="z">被自動化取代</div></div><div class="g"><span class="t">master aesthetics</span><span class="lv lvc1">C1</span><div class="d">to fully command visual taste/beauty</div><div class="z">掌握美感</div></div><div class="g"><span class="t">mechanised</span><span class="lv lvb2">B2</span><div class="d">made automatic using machines (BrE)</div><div class="z">機械化的</div></div><div class="g"><span class="t">microchips</span><span class="lv lvb2">B2</span><div class="d">tiny computer circuits</div><div class="z">微晶片</div></div><div class="g"><span class="t">mobility</span><span class="lv lvb2">B2</span><div class="d">the ability to move around</div><div class="z">移動／靈活移動能力</div></div><div class="g"><span class="t">necessarily</span><span class="lv lvb2">B2</span><div class="d">in every case (often with "not")</div><div class="z">必然地;not necessarily=未必</div></div><div class="g"><span class="t">obsolete</span><span class="lv lvc1">C1</span><div class="d">no longer used; out of date</div><div class="z">被淘汰的、過時的</div></div><div class="g"><span class="t">on the horizon</span><span class="lv lvb2">B2</span><div class="d">likely to happen soon</div><div class="z">即將到來、在眼前</div></div><div class="g"><span class="t">ostensibly</span><span class="lv lvc1">C1</span><div class="d">apparently; seemingly (but perhaps not really)</div><div class="z">表面上、看似</div></div><div class="g"><span class="t">outside-the-box thinking</span><span class="lv lvb2">B2</span><div class="d">creative, unconventional thinking</div><div class="z">跳脫框架的思考</div></div><div class="g"><span class="t">plumbers</span><span class="lv lvb1">B1</span><div class="d">workers who fit and repair water pipes</div><div class="z">水電工</div></div><div class="g"><span class="t">points to</span><span class="lv lvb2">B2</span><div class="d">mentions as an example</div><div class="z">指出、舉…為例</div></div><div class="g"><span class="t">position</span><span class="lv lvb1">B1</span><div class="d">a job or post</div><div class="z">職位</div></div><div class="g"><span class="t">potentially</span><span class="lv lvb2">B2</span><div class="d">possibly; could happen</div><div class="z">有可能地</div></div><div class="g"><span class="t">pretty</span><span class="lv lvb1">B1</span><div class="d">fairly; quite (informal intensifier)</div><div class="z">相當地（口語）</div></div><div class="g"><span class="t">prevail</span><span class="lv lvc1">C1</span><div class="d">to win or remain dominant after a struggle</div><div class="z">（最終）勝出、佔上風</div></div><div class="g"><span class="t">prevailed</span><span class="lv lvc1">C1</span><div class="d">won or stayed dominant after a struggle</div><div class="z">（最終）勝出、撐住</div></div><div class="g"><span class="t">problem-solving</span><span class="lv lvb1">B1</span><div class="d">finding answers to difficult situations</div><div class="z">解決問題（的能力）</div></div><div class="g"><span class="t">professions</span><span class="lv lvb2">B2</span><div class="d">skilled occupations</div><div class="z">專業職業</div></div><div class="g"><span class="t">qualities</span><span class="lv lvb1">B1</span><div class="d">characteristics or features</div><div class="z">特質</div></div><div class="g"><span class="t">realised</span><span class="lv lvb2">B2</span><div class="d">became real; actually happened (BrE)</div><div class="z">（威脅）成真</div></div><div class="g"><span class="t">rearranging</span><span class="lv lvb2">B2</span><div class="d">putting things in a different order</div><div class="z">重新排列</div></div><div class="g"><span class="t">regardless of</span><span class="lv lvb2">B2</span><div class="d">no matter what; without being affected by</div><div class="z">不論、無論</div></div><div class="g"><span class="t">relatively</span><span class="lv lvb2">B2</span><div class="d">comparatively; in comparison</div><div class="z">相對地</div></div><div class="g"><span class="t">remain</span><span class="lv lvb1">B1</span><div class="d">to stay; continue to be</div><div class="z">維持、留下</div></div><div class="g"><span class="t">replace</span><span class="lv lvb1">B1</span><div class="d">take the place of</div><div class="z">取代</div></div><div class="g"><span class="t">replacing</span><span class="lv lvb1">B1</span><div class="d">taking the place of</div><div class="z">取代</div></div><div class="g"><span class="t">require</span><span class="lv lvb1">B1</span><div class="d">to need</div><div class="z">需要</div></div><div class="g"><span class="t">roles</span><span class="lv lvb1">B1</span><div class="d">jobs or positions</div><div class="z">職務、角色</div></div><div class="g"><span class="t">safe zone</span><span class="lv lvb2">B2</span><div class="d">a protected area or category</div><div class="z">安全區</div></div><div class="g"><span class="t">science fiction</span><span class="lv lvb1">B1</span><div class="d">fiction about future science/technology</div><div class="z">科幻</div></div><div class="g"><span class="t">security</span><span class="lv lvb2">B2</span><div class="d">safety; protection (here: job safety)</div><div class="z">保障、安全感</div></div><div class="g"><span class="t">seeking</span><span class="lv lvb2">B2</span><div class="d">looking for; trying to get</div><div class="z">尋求</div></div><div class="g"><span class="t">self-driving cars</span><span class="lv lvb1">B1</span><div class="d">cars that drive themselves</div><div class="z">自駕車</div></div><div class="g"><span class="t">shifting</span><span class="lv lvb2">B2</span><div class="d">changing; moving</div><div class="z">不斷變化的</div></div><div class="g"><span class="t">social skill</span><span class="lv lvb1">B1</span><div class="d">the ability to interact well with people</div><div class="z">社交能力</div></div><div class="g"><span class="t">sophisticated</span><span class="lv lvc1">C1</span><div class="d">complex, advanced or refined</div><div class="z">複雜精細的、高階的</div></div><div class="g"><span class="t">stave off</span><span class="lv lvc1">C1</span><div class="d">to prevent or delay something bad</div><div class="z">避免、拖延（壞事）</div></div><div class="g"><span class="t">strategy</span><span class="lv lvb1">B1</span><div class="d">a plan to achieve a goal</div><div class="z">策略</div></div><div class="g"><span class="t">systemic</span><span class="lv lvc1">C1</span><div class="d">affecting an entire system, not just parts</div><div class="z">系統性的、全面的</div></div><div class="g"><span class="t">takeover</span><span class="lv lvb2">B2</span><div class="d">the act of taking control</div><div class="z">接管、奪取</div></div><div class="g"><span class="t">teller</span><span class="lv lvb2">B2</span><div class="d">a bank counter clerk</div><div class="z">銀行行員</div></div><div class="g"><span class="t">thankfully</span><span class="lv lvb2">B2</span><div class="d">luckily; I’m glad to say</div><div class="z">慶幸地</div></div><div class="g"><span class="t">the ascent of</span><span class="lv lvc1">C1</span><div class="d">the rise of (something)</div><div class="z">…的崛起</div></div><div class="g"><span class="t">think of</span><span class="lv lvb1">B1</span><div class="d">to consider or picture</div><div class="z">想想看、設想</div></div><div class="g"><span class="t">threat</span><span class="lv lvb1">B1</span><div class="d">a possible danger</div><div class="z">威脅</div></div><div class="g"><span class="t">threatened</span><span class="lv lvb1">B1</span><div class="d">put at risk; endangered</div><div class="z">受到威脅的</div></div><div class="g"><span class="t">threats</span><span class="lv lvb1">B1</span><div class="d">possible dangers</div><div class="z">威脅</div></div><div class="g"><span class="t">totally</span><span class="lv lvb1">B1</span><div class="d">completely; entirely</div><div class="z">完全地</div></div><div class="g"><span class="t">trade jobs</span><span class="lv lvb2">B2</span><div class="d">skilled manual jobs (e.g. plumber)</div><div class="z">技術工、技職工作</div></div><div class="g"><span class="t">ubiquity</span><span class="lv lvc1">C1</span><div class="d">the state of being everywhere at once</div><div class="z">無所不在、普及</div></div><div class="g"><span class="t">unpredictable</span><span class="lv lvb2">B2</span><div class="d">that cannot be predicted</div><div class="z">無法預測的</div></div><div class="g"><span class="t">usurp</span><span class="lv lvc1">C1</span><div class="d">to take someone’s power or position by force</div><div class="z">篡奪、取而代之</div></div><div class="g"><span class="t">visual art-related</span><span class="lv lvb2">B2</span><div class="d">connected with visual art</div><div class="z">視覺藝術相關的</div></div><div class="g"><span class="t">way better</span><span class="lv lvb2">B2</span><div class="d">much better (informal)</div><div class="z">好得多（口語）</div></div><div class="g"><span class="t">welders</span><span class="lv lvb2">B2</span><div class="d">workers who join metal by melting it</div><div class="z">焊工</div></div><div class="g"><span class="t">white-collar</span><span class="lv lvb2">B2</span><div class="d">relating to office / professional work</div><div class="z">白領（的）</div></div></div></div>
+  </div>
+</div>
+
+<footer>
+  <span class="strong">Source / 原文出處:</span> “The jobs AI won't take yet,” Kate Morgan, <em>BBC Worklife</em> (2023).<br>
+  Read the original article 閱讀原文:
+  <a href="https://www.bbc.co.uk/worklife/article/20230507-the-jobs-ai-wont-take-yet" target="_blank" rel="noopener">bbc.co.uk/worklife/article/20230507-the-jobs-ai-wont-take-yet</a><br>
+  <span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span>
+  Text &amp; images © BBC; this glossary is an InkQuest study aid. 文字與圖片版權屬 BBC 所有。
+</footer>
+
+<div id="tip" role="tooltip" aria-hidden="true" style="display: none; left: 183.961px; top: 1009.59px;"><div class="meta"><span class="cat c">Grammar / usage</span><span class="lvl">B2</span></div><span class="term">not just that</span> — ANCHOR: not just X, but Y (adds emphasis)<span class="zh">文法:不只…而是…</span></div>
+
+<script>
+/* =========================================================================
+   GLOSSARY  —  key : [English note, 繁體中文, type(v/p/c), CEFR]
+   v = word · p = phrase/idiom · c = grammar/usage anchor
+   Inflected surface forms are included so they light up in the pasted text.
+   ========================================================================= */
+var VOCAB = {
+ /* ---- title / standfirst ---- */
+ 'amid': ['in the middle of; during','在…之中、正值','v','B2'],
+ 'replacing': ['taking the place of','取代','v','B1'],
+ 'replace': ['take the place of','取代','v','B1'],
+ 'at least': ['not less than; here = for now','至少;在此指「至少目前」','p','B1'],
+ 'for a while': ['for a period of time','一段時間','p','B1'],
+
+ /* ---- para 1 ---- */
+ 'industrial revolution': ['the period of rapid factory-based change from the 1700s','工業革命','p','B2'],
+ 'threats': ['possible dangers','威脅','v','B1'],
+ 'threat': ['a possible danger','威脅','v','B1'],
+ 'mechanised': ['made automatic using machines (BrE)','機械化的','v','B2'],
+ 'looms': ['machines for weaving cloth','織布機','v','C1'],
+ 'microchips': ['tiny computer circuits','微晶片','v','B2'],
+ 'usurp': ['to take someone\u2019s power or position by force','篡奪、取而代之','v','C1'],
+ 'for the most part': ['mostly; in most cases','大致上、多半','p','B2'],
+ 'prevailed': ['won or stayed dominant after a struggle','（最終）勝出、撐住','v','C1'],
+ 'prevail': ['to win or remain dominant after a struggle','（最終）勝出、佔上風','v','C1'],
+ 'ubiquity': ['the state of being everywhere at once','無所不在、普及','v','C1'],
+ 'on the horizon': ['likely to happen soon','即將到來、在眼前','p','B2'],
+ 'realised': ['became real; actually happened (BrE)','（威脅）成真','v','B2'],
+ 'coming for': ['trying to take or replace (informal, slightly threatening)','要來搶（你的工作）','p','B2'],
+
+ /* ---- para 2 ---- */
+ 'estimated': ['calculated approximately','估計','v','B1'],
+ 'capable of': ['able to do something','有能力（做）…','p','B2'],
+ 'content generation': ['the producing of text, images, etc. by AI','內容生成','p','B2'],
+ 'a quarter of': ['25% of','四分之一的','p','B1'],
+ 'currently done': ['ANCHOR: reduced relative = that is currently done','文法:省略關係詞的被動修飾','c','B2'],
+ 'automation': ['the use of machines to do work people once did','自動化','v','B2'],
+ 'lost to automation': ['replaced by automated systems','被自動化取代','p','B2'],
+ 'dire': ['extremely serious or bad','危急的、嚴峻的','v','C1'],
+
+ /* ---- para 3 (quote) ---- */
+ 'not just that': ['ANCHOR: not just X, but Y (adds emphasis)','文法:不只…而是…','c','B2'],
+ 'systemic': ['affecting an entire system, not just parts','系統性的、全面的','v','C1'],
+ 'pretty': ['fairly; quite (informal intensifier)','相當地（口語）','v','B1'],
+ 'potentially': ['possibly; could happen','有可能地','v','B2'],
+ 'implications': ['likely effects or consequences','影響、後果、言外之意','v','B2'],
+
+ /* ---- para 4 ---- */
+ 'thankfully': ['luckily; I\u2019m glad to say','慶幸地','v','B2'],
+ 'issue': ['to officially give out or announce','發出（警告/聲明）','v','B2'],
+ 'caveat': ['a warning or condition added to a statement','但書、附帶提醒','v','C1'],
+ 'involve': ['to include or require','牽涉、需要','v','B1'],
+ 'distinctly human': ['belonging uniquely to humans','人類獨有的','p','C1'],
+ 'distinctly': ['clearly; unmistakably','明顯地、獨特地','v','C1'],
+ 'qualities': ['characteristics or features','特質','v','B1'],
+ 'emotional intelligence': ['the ability to understand and manage emotions','情緒智商（EQ）','p','B2'],
+ 'outside-the-box thinking': ['creative, unconventional thinking','跳脫框架的思考','p','B2'],
+ 'roles': ['jobs or positions','職務、角色','v','B1'],
+ 'lessen': ['to reduce; make smaller','減少、減輕','v','B2'],
+ 'being replaced': ['ANCHOR: passive gerund (of + being + p.p.)','文法:被動動名詞','c','B2'],
+
+ /* ---- para 5 (quote) ---- */
+ 'generally': ['usually; broadly speaking','一般而言','v','B1'],
+ 'categories': ['groups or types','類別','v','B1'],
+ 'relatively': ['comparatively; in comparison','相對地','v','B2'],
+ 'insulated': ['protected so as not to be affected','受保護、不受影響','v','C1'],
+ 'foreseeable future': ['the near future that we can predict','可預見的未來','p','B2'],
+ 'says ford': ['ANCHOR: reporting-verb inversion (verb before subject)','文法:報導動詞倒裝','c','B2'],
+ 'genuinely': ['really; truly','真正地','v','B2'],
+ 'creative': ['having or showing new ideas','有創意的','v','B1'],
+ 'formulaic': ['following a fixed pattern; unoriginal','公式化的、套路的','v','C1'],
+ 'rearranging': ['putting things in a different order','重新排列','v','B2'],
+ 'coming up with': ['thinking of; producing (an idea)','想出（點子）','p','B2'],
+
+ /* ---- caption + para 6 ---- */
+ 'while a robot': ['ANCHOR: While X, Y = Although (concession)','文法:讓步句 While=雖然','c','B2'],
+ 'ostensibly': ['apparently; seemingly (but perhaps not really)','表面上、看似','v','C1'],
+ 'diagnosis': ['the identifying of an illness','診斷','v','B2'],
+ 'necessarily': ['in every case (often with "not")','必然地;not necessarily=未必','v','B2'],
+ 'considered': ['regarded as; thought to be','被認為、被視為','v','B1'],
+ 'in fact': ['actually; to be exact','事實上','p','B1'],
+ 'graphic design': ['designing visual material (logos, layouts)','平面設計','p','B1'],
+ 'visual art-related': ['connected with visual art','視覺藝術相關的','p','B2'],
+ 'among the first to go': ['among the earliest to disappear','最先消失的之一','p','B2'],
+ 'algorithms': ['step-by-step rules a computer follows','演算法','v','B2'],
+ 'analyse': ['to examine in detail (BrE)','分析','v','B1'],
+ 'master aesthetics': ['to fully command visual taste/beauty','掌握美感','p','C1'],
+ 'aesthetics': ['the sense of beauty or visual style','美感、美學','v','C1'],
+ 'instantly': ['immediately; at once','立刻','v','B1'],
+ 'security': ['safety; protection (here: job safety)','保障、安全感','v','B2'],
+ 'strategy': ['a plan to achieve a goal','策略','v','B1'],
+
+ /* ---- para 7 ---- */
+ 'require': ['to need','需要','v','B1'],
+ 'sophisticated': ['complex, advanced or refined','複雜精細的、高階的','v','C1'],
+ 'interpersonal': ['between people; social','人際的','v','B2'],
+ 'points to': ['mentions as an example','指出、舉…為例','p','B2'],
+ 'business consultants': ['experts paid to advise companies','企業顧問','p','B2'],
+ 'investigative journalists': ['reporters who dig deeply into stories','調查記者','p','C1'],
+ 'interact': ['to communicate or act together','互動','v','B2'],
+ 'build relationships': ['to develop personal connections','建立關係','p','B1'],
+ 'a long time before': ['ANCHOR: it\u2019ll be a long time before… = not for ages','片語:還要很久才會…','c','B2'],
+
+ /* ---- para 8 ---- */
+ 'safe zone': ['a protected area or category','安全區','p','B2'],
+ 'mobility': ['the ability to move around','移動／靈活移動能力','v','B2'],
+ 'dexterity': ['skill in using the hands','手部靈巧','v','C1'],
+ 'problem-solving': ['finding answers to difficult situations','解決問題（的能力）','p','B1'],
+ 'unpredictable': ['that cannot be predicted','無法預測的','v','B2'],
+ 'trade jobs': ['skilled manual jobs (e.g. plumber)','技術工、技職工作','p','B2'],
+ 'electricians': ['workers who install/repair electrical systems','電工','v','B1'],
+ 'plumbers': ['workers who fit and repair water pipes','水電工','v','B1'],
+ 'welders': ['workers who join metal by melting it','焊工','v','B2'],
+ 'and the like': ['and similar things','諸如此類','p','B2'],
+ 'fall under this umbrella': ['belong to this broad category','歸在這一類','p','C1'],
+ 'fall under': ['to belong to (a category)','歸類於','p','B2'],
+ 'dealing with': ['handling; coping with','處理、應付','p','B1'],
+ 'all the time': ['constantly; always','一直、總是','p','B1'],
+ 'hardest of anything': ['ANCHOR: superlative + to-infinitive (hardest … to automate)','文法:最高級＋不定詞','c','B2'],
+ 'automate': ['to make a process work by machine','使自動化','v','B2'],
+ 'in order to': ['so as to; for the purpose of','為了','p','B1'],
+ 'science fiction': ['fiction about future science/technology','科幻','p','B1'],
+
+ /* ---- para 9 ---- */
+ 'remain': ['to stay; continue to be','維持、留下','v','B1'],
+ 'fall within': ['to belong inside (a range/category)','屬於（範圍內）','p','B2'],
+ 'professions': ['skilled occupations','專業職業','v','B2'],
+ 'totally': ['completely; entirely','完全地','v','B1'],
+ 'the ascent of': ['the rise of (something)','…的崛起','p','C1'],
+ 'ascent': ['a rise to power or importance','崛起、上升','v','C1'],
+ 'associate professor': ['a mid-rank university teacher','副教授','p','B2'],
+ 'labour economics': ['the study of work and the job market (BrE)','勞動經濟學','p','C1'],
+ 'regardless of': ['no matter what; without being affected by','不論、無論','p','B2'],
+ 'aspects': ['particular parts or features','面向、層面','v','B2'],
+ 'likely to be automated': ['ANCHOR: be likely to + passive','文法:be likely to＋被動','c','B2'],
+
+ /* ---- para 10 ---- */
+ 'in many cases': ['often; frequently','在許多情況下','p','B1'],
+ 'immediate': ['happening at once; without delay','立即的','v','B2'],
+ 'for instance': ['for example','例如','p','B1'],
+ 'detect': ['to discover or notice something','偵測、察覺','v','B2'],
+ 'way better': ['much better (informal)','好得多（口語）','p','B2'],
+ 'assuming': ['supposing; taking as true','假定、猜想','v','B2'],
+ 'will be replaced': ['ANCHOR: future passive (will be + p.p.)','文法:未來被動','c','B1'],
+
+ /* ---- para 11 ---- */
+ 'true of': ['ANCHOR: that\u2019s true of X = applies to X','片語:這對…也成立','c','B2'],
+ 'alongside': ['next to; together with','與…並肩、一起','v','B2'],
+
+ /* ---- para 12 ---- */
+ 'complementary': ['completing or adding to something else','互補的','v','C1'],
+ 'bank tellers': ['staff who serve customers at a bank counter','銀行行員','p','B2'],
+ 'teller': ['a bank counter clerk','銀行行員','v','B2'],
+ 'accurate': ['exact; correct','精確的','v','B1'],
+ 'still a place for': ['ANCHOR: there\u2019s still a place for = still needed','片語:仍有一席之地','c','B2'],
+ 'obsolete': ['no longer used; out of date','被淘汰的、過時的','v','C1'],
+ 'focused on': ['concentrating on','專注於','p','B1'],
+ 'connecting with': ['building a rapport with','與…建立連結','p','B1'],
+ 'social skill': ['the ability to interact well with people','社交能力','p','B1'],
+
+ /* ---- para 13 ---- */
+ 'important to note': ['ANCHOR: it\u2019s important to note that…','片語:值得注意的是','c','B2'],
+ 'advanced': ['high-level; highly developed','高階的、進階的','v','B1'],
+ 'high-paying': ['that pays a lot of money','高薪的','p','B1'],
+ 'position': ['a job or post','職位','v','B1'],
+ 'defence against': ['protection against (BrE)','抵禦…的保護','p','B2'],
+ 'takeover': ['the act of taking control','接管、奪取','v','B2'],
+ 'higher on the food chain': ['higher in the social/work hierarchy (idiom)','位階更高（食物鏈上層）','p','C1'],
+ 'for a living': ['as a way of earning money','維生、賴以為生','p','B2'],
+ 'white-collar': ['relating to office / professional work','白領（的）','p','B2'],
+ 'blue-collar': ['relating to manual / industrial work','藍領（的）','p','B2'],
+ 'threatened': ['put at risk; endangered','受到威脅的','v','B1'],
+ 'self-driving cars': ['cars that drive themselves','自駕車','p','B1'],
+ 'certainly': ['definitely; without doubt','必定、的確','v','B1'],
+ 'more than the least': ['ANCHOR: comparative ellipsis (… than the least educated workers)','文法:省略比較','c','B2'],
+ 'think of': ['to consider or picture','想想看、設想','p','B1'],
+
+ /* ---- para 14 ---- */
+ 'in short': ['to sum up; briefly','簡言之','p','B1'],
+ 'seeking': ['looking for; trying to get','尋求','v','B2'],
+ 'dynamic': ['constantly changing and active','動態的、充滿變化的','v','B2'],
+ 'shifting': ['changing; moving','不斷變化的','v','B2'],
+ 'stave off': ['to prevent or delay something bad','避免、拖延（壞事）','p','C1'],
+ 'job loss': ['the loss of employment','失業、工作流失','p','B1']
+};
+
+/* =========================================================================
+   AUTO-LINKER  (adapted from the InkQuest Daily Brief linker)
+   ========================================================================= */
+var ROOT = document.getElementById('bodywrap');
+var TIP  = document.getElementById('tip');
+var CATLABEL = { v:'Word', p:'Phrase / idiom', c:'Grammar / usage' };
+var TERMS = Object.keys(VOCAB).sort(function(a,b){ return b.length - a.length; });
+var hitTotal = 0;
+
+function isWordChar(ch){ return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9'); }
+
+function ciFind(text, term, from){
+  var lt = text.toLowerCase(), lterm = term.toLowerCase();
+  var idx = lt.indexOf(lterm, from);
+  while (idx !== -1){
+    var before = idx>0 ? text.charAt(idx-1) : '';
+    var after  = (idx+term.length<text.length) ? text.charAt(idx+term.length) : '';
+    if (!isWordChar(before) && !isWordChar(after)) return idx;
+    idx = lt.indexOf(lterm, idx+1);
+  }
+  return -1;
+}
+
+function processTextNode(node){
+  var text = node.nodeValue;
+  if (!text || !/[A-Za-z]/.test(text)) return;
+  var bestIdx = -1, bestTerm = null;
+  for (var i=0;i<TERMS.length;i++){
+    var term = TERMS[i];
+    var idx = ciFind(text, term, 0);
+    if (idx === -1) continue;
+    if (bestIdx === -1 || idx < bestIdx || (idx === bestIdx && term.length > bestTerm.length)){
+      bestIdx = idx; bestTerm = term;
+    }
+  }
+  if (bestTerm === null) return;
+  var entry = VOCAB[bestTerm];
+  var matchText = text.substr(bestIdx, bestTerm.length);
+  var pre  = text.slice(0, bestIdx);
+  var post = text.slice(bestIdx + bestTerm.length);
+  var span = document.createElement('span');
+  var lvl = (entry[3]||'').toLowerCase().split('/')[0];
+  span.className = 'vb ' + entry[2] + ' l-' + lvl;
+  span.setAttribute('tabindex','0');
+  span.setAttribute('data-d', entry[0]);
+  span.setAttribute('data-z', entry[1]);
+  span.setAttribute('data-t', entry[2]);
+  span.setAttribute('data-l', entry[3]||'');
+  span.setAttribute('data-w', matchText);
+  span.textContent = matchText;
+  var parent = node.parentNode;
+  if (pre) parent.insertBefore(document.createTextNode(pre), node);
+  parent.insertBefore(span, node);
+  var postNode = document.createTextNode(post);
+  parent.insertBefore(postNode, node);
+  parent.removeChild(node);
+  hitTotal++;
+  processTextNode(postNode);
+}
+
+function linkify(){
+  var walker = document.createTreeWalker(ROOT, NodeFilter.SHOW_TEXT, null, false);
+  var nodes = [], n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  for (var i=0;i<nodes.length;i++){
+    if (nodes[i].parentNode) processTextNode(nodes[i]);
+  }
+}
+
+/* =========================================================================
+   TOOLTIP  —  hover (desktop) + tap/click (mobile) + keyboard focus
+   ========================================================================= */
+var pinned = null, hideTimer = null;
+
+function fillTip(el){
+  var lvl = el.getAttribute('data-l');
+  TIP.innerHTML =
+    '<div class="meta"><span class="cat ' + el.getAttribute('data-t') + '">' + CATLABEL[el.getAttribute('data-t')] + '</span>' +
+    (lvl ? '<span class="lvl">'+lvl+'</span>' : '') + '</div>' +
+    '<span class="term">' + el.getAttribute('data-w') + '</span> &mdash; ' + el.getAttribute('data-d') +
+    '<span class="zh">' + el.getAttribute('data-z') + '</span>';
+}
+function placeTip(el){
+  TIP.style.display = 'block'; TIP.style.left='0'; TIP.style.top='0';
+  var r = el.getBoundingClientRect(), tw = TIP.offsetWidth, th = TIP.offsetHeight, pad = 10;
+  var x = r.left + r.width/2 - tw/2;
+  x = Math.max(pad, Math.min(x, window.innerWidth - tw - pad));
+  var y = r.top - th - 8; if (y < pad) y = r.bottom + 8;
+  TIP.style.left = (x + window.scrollX) + 'px';
+  TIP.style.top  = (y + window.scrollY) + 'px';
+}
+function showTip(el){
+  if (document.body.classList.contains('nohl')) return;
+  if (hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
+  fillTip(el); placeTip(el);
+}
+function hideTip(){ TIP.style.display='none'; if (pinned){ pinned.classList.remove('open'); pinned=null; } }
+
+ROOT.addEventListener('mouseover', function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) showTip(el); });
+ROOT.addEventListener('mouseout',  function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) hideTimer=setTimeout(function(){TIP.style.display='none';},80); });
+ROOT.addEventListener('focusin',   function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el) showTip(el); });
+ROOT.addEventListener('focusout',  function(){ if(!pinned) TIP.style.display='none'; });
+document.addEventListener('click', function(e){
+  var el = e.target.closest && e.target.closest('.vb');
+  if (el){
+    if (pinned===el){ hideTip(); return; }
+    if (pinned) pinned.classList.remove('open');
+    pinned = el; el.classList.add('open'); showTip(el); e.stopPropagation(); return;
+  }
+  if (!TIP.contains(e.target)) hideTip();
+});
+window.addEventListener('resize', hideTip);
+window.addEventListener('scroll', function(){ if(pinned) placeTip(pinned); }, {passive:true});
+
+/* ---- controls: highlight toggle, level filters, font size ---- */
+var toggle = document.getElementById('toggle');
+toggle.addEventListener('click', function(){
+  var off = document.body.classList.toggle('nohl');
+  toggle.textContent = 'Highlights: ' + (off?'Off':'On');
+  toggle.setAttribute('aria-pressed', off?'true':'false');
+  if (off) hideTip();
+});
+Array.prototype.forEach.call(document.querySelectorAll('.lvchk'), function(c){
+  c.addEventListener('change', function(){ document.body.classList.toggle('hide-'+c.getAttribute('data-l'), !c.checked); });
+});
+var scale = 1;
+function setScale(s){ scale = Math.max(0.85, Math.min(1.4, s)); document.getElementById('bodywrap').style.fontSize = scale.toFixed(2)+'em'; }
+document.getElementById('fontPlus').addEventListener('click', function(){ setScale(scale+0.08); });
+document.getElementById('fontMinus').addEventListener('click', function(){ setScale(scale-0.08); });
+
+/* =========================================================================
+   GLOSSARY LIST  (built from VOCAB, A–Z, de-duplicated by 中文+def)
+   ========================================================================= */
+function buildGlossary(){
+  var seen = {}, items = [];
+  for (var k in VOCAB){
+    var e = VOCAB[k];
+    if (e[2]==='c') continue;                 /* grammar anchors live in the grammar section */
+    var sig = e[1]+'|'+e[0];
+    if (seen[sig]) continue; seen[sig]=1;
+    items.push([k, e]);
+  }
+  items.sort(function(a,b){ return a[0].localeCompare(b[0]); });
+  var lvclass = {B1:'lvb1','B2':'lvb2','C1':'lvc1'};
+  var html = '';
+  for (var i=0;i<items.length;i++){
+    var k=items[i][0], e=items[i][1], lv=(e[3]||'').split('/')[0];
+    html += '<div class="g"><span class="t">'+k+'</span>'+
+            (lv?'<span class="lv '+(lvclass[lv]||'lvb2')+'">'+lv+'</span>':'')+
+            '<div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';
+  }
+  document.getElementById('glossList').innerHTML = html;
+}
+
+/* =========================================================================
+   PASTE → RENDER  +  EXPORT student copy
+   ========================================================================= */
+function renderArticle(raw){
+  hitTotal = 0;
+  var clean = (raw||'').replace(/\r/g,'').trim();
+  ROOT.innerHTML = '';
+  if (!clean){ ROOT.innerHTML = '<div class="placeholder">Paste the article above and press “Apply glossary” to see it here with tooltips.</div>'; return; }
+  var parts = clean.split(/\n\s*\n/);
+  if (parts.length < 2) parts = clean.split(/\n/);   /* fall back to single newlines */
+  parts.forEach(function(par){
+    par = par.trim(); if (!par) return;
+    var p = document.createElement('p');
+    p.textContent = par;
+    ROOT.appendChild(p);
+  });
+  linkify();
+  var hc = document.getElementById('hitCount');
+  if (hc) hc.textContent = hitTotal + ' terms linked';
+}
+
+var setup = document.getElementById('setup');
+if (setup){
+  document.getElementById('applyBtn').addEventListener('click', function(){
+    renderArticle(document.getElementById('srcText').value);
+    document.getElementById('bodywrap').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  document.getElementById('clearBtn').addEventListener('click', function(){
+    document.getElementById('srcText').value=''; renderArticle('');
+    document.getElementById('hitCount').textContent='';
+  });
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    if (!ROOT.querySelector('.vb')){ alert('Paste the article and press “Apply glossary” first.'); return; }
+    var clone = document.documentElement.cloneNode(true);
+    clone.setAttribute('data-mode','student');
+    var s = clone.querySelector('#setup'); if (s) s.remove();
+    var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([html], {type:'text/html'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'AI-Jobs-Reading-student.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1200);
+  });
+}
+
+/* ---- boot ---- */
+var STUDENT = document.documentElement.getAttribute('data-mode') === 'student';
+buildGlossary();
+if (STUDENT){
+  if (setup) setup.remove();              /* safety: no setup panel for students */
+  /* article already baked in with .vb spans — do not re-linkify */
+}
+</script>
+
+
+</body></html>
