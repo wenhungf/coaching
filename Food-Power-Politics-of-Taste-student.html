@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="student"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Food, Power and the Politics of Taste — Glossary Reader</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #e8ecf2; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    color: #1a1a1a; line-height: 1.66; font-size: 16px; padding: 0 0 60px;
+  }
+
+  /* ---- sticky control bar ---- */
+  #controls {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(19,40,74,0.97); backdrop-filter: blur(6px);
+    color: #d4dce8; border-bottom: 2px solid #c2922e;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px;
+    padding: 9px 18px; font-size: 12.5px;
+  }
+  #controls .brandmini { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; font-size: 11.5px; }
+  #controls .legend { display: flex; gap: 13px; flex-wrap: wrap; align-items: center; }
+  #controls .key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #controls .swatch { width: 22px; height: 0; border-bottom: 2px dotted; display: inline-block; }
+  .sw-v { border-color: #d39a2f; } .sw-p { border-color: #5b9bd5; } .sw-c { border-color: #58c08b; }
+  #controls .filters { display:flex; gap:10px; align-items:center; }
+  #controls label.lv { display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
+  #controls .spacer { flex: 1 1 auto; }
+  #controls button {
+    font: inherit; font-size: 12px; cursor: pointer;
+    background: #1f3a63; color: #dbe6f5; border: 1px solid #34568a;
+    border-radius: 6px; padding: 5px 10px;
+  }
+  #controls button:hover { background: #294c80; }
+  body.nohl .vb { border-bottom: 0 !important; color: inherit !important; cursor: text !important; }
+  body.hide-a2 .vb.l-a2, body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1 { border-bottom: 0; }
+
+  #doc { max-width: 760px; margin: 22px auto; background: #fff;
+         box-shadow: 0 2px 14px rgba(20,40,70,.12); border-radius: 4px; overflow: hidden; }
+
+  /* ---- masthead ---- */
+  .mast { background: #1e2433; color: #fff; padding: 24px 34px; border-bottom: 3px solid #c2922e; }
+  .mast .brand { font-size: 12px; letter-spacing:.22em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
+  .mast h1 { font-size: 30px; letter-spacing: .01em; line-height: 1.1; margin-top:8px; font-family: Georgia, "Times New Roman", serif; }
+  .mast .sub { color: #c8d0de; font-size: 13.5px; margin-top: 8px; }
+  .inner { padding: 24px 34px; }
+  @media (max-width: 600px){ .inner, .mast { padding-left: 18px; padding-right: 18px; } .mast h1 { font-size: 23px; } body{font-size:15.5px;} }
+
+  .scope { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #cdd6e2;
+           border: 1px solid #cdd6e2; border-radius: 5px; overflow: hidden; margin-bottom: 18px; }
+  .scope > div { background: #eef2f7; padding: 9px 11px; font-size: 12.3px; color: #41506a; }
+  @media (max-width: 600px){ .scope { grid-template-columns: 1fr; } }
+
+  h2.sec { color: #1e2433; font-size: 18px; margin: 26px 0 2px; padding-top: 6px; }
+  h2.sec .n { color: #c2922e; margin-right: 8px; }
+  .rule { height: 2px; background: #c2922e; margin: 5px 0 14px; }
+
+  #bodywrap p { margin: 0 0 15px; }
+  #bodywrap .lead { font-size: 1.06em; color:#2a3242; }
+
+  /* ---- glossary list ---- */
+  #glossWrap { margin-top: 8px; }
+  #glossList { column-count: 2; column-gap: 26px; font-size: 13px; }
+  @media (max-width: 600px){ #glossList { column-count: 1; } }
+  #glossList .g { break-inside: avoid; margin-bottom: 8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
+  #glossList .g .t { font-weight: 700; color:#1e2433; }
+  #glossList .g .lv { font-size:9.5px; font-weight:700; letter-spacing:.06em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; }
+  #glossList .g .d { color:#48505f; } #glossList .g .z { color:#1e2433; }
+  .lva2 { background:#eae7f3; color:#5b4b8a; } .lvb1 { background:#e7f0e9; color:#3c7048; } .lvb2 { background:#eaf0f7; color:#345f8a; } .lvc1 { background:#f6ece0; color:#9a6b22; }
+
+  /* ---- grammar notes ---- */
+  details.gram { border:1px solid #e3e7ef; border-radius:8px; margin-bottom:9px; background:#fafbfd; }
+  details.gram > summary { cursor:pointer; padding:10px 13px; font-weight:700; color:#1e2433; font-size:13.5px; list-style:none; }
+  details.gram > summary::-webkit-details-marker { display:none; }
+  details.gram > summary::before { content:"▸ "; color:#c2922e; }
+  details.gram[open] > summary::before { content:"▾ "; }
+  details.gram .gbody { padding: 2px 14px 12px; font-size:13px; color:#444; line-height:1.6; }
+  details.gram .gbody .ex { color:#2f4868; font-style:italic; }
+  details.gram .gbody .zh { color:#1e2433; }
+
+  /* ---- discussion questions ---- */
+  ol.dq { margin: 4px 0 4px 20px; } ol.dq li { margin-bottom: 9px; }
+
+  footer { max-width: 760px; margin: 0 auto; padding: 16px 34px 0; color: #6a7686;
+           font-size: 11.8px; line-height:1.6; text-align: center; }
+  footer a { color:#3a5a8c; }
+  footer .strong { color:#444; font-style:normal; font-weight:600; }
+
+  /* ---- tooltip target styling ---- */
+  .vb { cursor: help; border-bottom: 1px dotted; padding-bottom: .5px; text-decoration: none; transition: background .12s; }
+  .vb.v { border-color: #d39a2f; } .vb.p { border-color: #5b9bd5; } .vb.c { border-color: #58c08b; }
+  .vb:hover, .vb:focus { background: rgba(194,146,46,.10); outline: none; }
+  .vb.open { background: rgba(194,146,46,.18); }
+
+  /* ---- tooltip ---- */
+  #tip {
+    position: absolute; z-index: 200; width: max-content; max-width: min(330px, 88vw);
+    background: #18222e; border: 1px solid #34465a; border-radius: 9px;
+    padding: 10px 13px 11px; font-size: 13.5px; line-height: 1.5; color: #e4ebf3;
+    box-shadow: 0 10px 28px rgba(0,0,0,.4); display: none; white-space: normal;
+  }
+  #tip .meta { display:flex; gap:6px; align-items:center; margin-bottom:5px; }
+  #tip .cat { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; padding: 1px 6px; border-radius: 99px; font-weight: 700; }
+  #tip .cat.v { background: rgba(211,154,47,.20); color: #f0c873; }
+  #tip .cat.p { background: rgba(91,155,213,.20); color: #9fc6ef; }
+  #tip .cat.c { background: rgba(88,192,139,.20); color: #8fe0b4; }
+  #tip .lvl { font-size: 9.5px; font-weight:700; letter-spacing:.06em; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
+  #tip .term { font-weight: 700; color: #fff; }
+  #tip .zh { color: #e0a458; margin-top: 4px; display: block; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <span class="brandmini">InkQuest Reader</span>
+  <span class="legend">
+    <span class="key"><span class="swatch sw-v"></span> Word</span>
+    <span class="key"><span class="swatch sw-p"></span> Phrase / idiom</span>
+    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
+  </span>
+  <span class="filters">
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="a2" checked=""> A2</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked=""> B1</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked=""> B2</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked=""> C1</label>
+  </span>
+  <span class="spacer"></span>
+  <button id="fontMinus" title="Smaller text">A−</button>
+  <button id="fontPlus" title="Larger text">A+</button>
+  <button id="toggle" aria-pressed="false">Highlights: On</button>
+</div>
+
+<div id="doc">
+  <div class="mast">
+    <div class="brand">InkQuest English Coaching · Reading with glossary</div>
+    <h1>Food, Power and the Politics of Taste</h1>
+    <div class="sub">A discussion article · <em>Taiwan Travelogue</em>, <em>A Tramp Abroad</em> &amp; occupied Okinawa &nbsp;|&nbsp; ~1,050 words &nbsp;|&nbsp; CEFR A2–C1 &nbsp;|&nbsp; underlined terms carry hover / tap notes (EN + 繁中)</div>
+  </div>
+
+  <div class="inner">
+    <div class="scope">
+      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for an English + 繁中 note and its CEFR level.</div>
+      <div><strong>Colors.</strong> <span style="color:#b8860b">amber</span> = word · <span style="color:#3a72b8">blue</span> = phrase / idiom · <span style="color:#2f8d5e">green</span> = grammar pattern.</div>
+      <div><strong>Filters.</strong> Use the A2 / B1 / B2 / C1 checkboxes to show only the levels you want, or turn highlights off to read clean.</div>
+    </div>
+
+    <h2 class="sec"><span class="n">§</span>Discussion article</h2>
+    <div class="rule"></div>
+    <div id="bodywrap">
+<p>When we sit down to eat, we rarely think we are doing anything political. Yet three very different books — a prize-winning Taiwanese novel, a famous American travel book from 1880, and a recent thesis about military-occupied Okinawa — all make the same quiet argument: food is never just food. What we cook, what we praise, who serves whom, and whose <span class="vb v l-a2" tabindex="0" data-d="instructions for making a dish" data-z="食譜" data-t="v" data-l="A2" data-w="recipe">recipe</span> gets called “authentic” are all questions of power. This reading puts the three side by side.</p>
+<p><span class="vb c l-b2" tabindex="0" data-d="ANCHOR: past participle = which is presented as" data-z="文法:過去分詞作後位修飾（被…呈現為）" data-t="c" data-l="B2" data-w="Presented as">Presented as</span> the rediscovered 1954 memoir of a Japanese novelist, Aoyama Chizuko, <em>Taiwan Travelogue</em> is in fact a 2020 novel by the Taiwanese writer Yáng Shuāng-zǐ, brilliantly <span class="vb v l-b1" tabindex="0" data-d="changed into another language" data-z="翻譯（的）" data-t="v" data-l="B1" data-w="translated">translated</span> into English by Lin King. It is a <span class="vb v l-c1" tabindex="0" data-d="fiction that draws attention to its own making" data-z="後設小說" data-t="v" data-l="C1" data-w="metafiction">metafiction</span>: a <span class="vb p l-c1" tabindex="0" data-d="an original work pretending to be a translation" data-z="偽翻譯（作品）" data-t="p" data-l="C1" data-w="pseudo-translation">pseudo-translation</span> wrapped in a <span class="vb v l-b1" tabindex="0" data-d="invented; not real" data-z="虛構的" data-t="v" data-l="B1" data-w="fictional">fictional</span> <span class="vb v l-c1" tabindex="0" data-d="the supporting parts around a main text" data-z="（文本的）裝置、配件" data-t="v" data-l="C1" data-w="apparatus">apparatus</span> of prefaces, footnotes and an <span class="vb v l-b2" tabindex="0" data-d="a short note at the end of a book" data-z="後記" data-t="v" data-l="B2" data-w="afterword">afterword</span>. On the surface it is a warm, mouth-watering <span class="vb v l-b2" tabindex="0" data-d="a piece of writing about travel" data-z="遊記" data-t="v" data-l="B2" data-w="travelogue">travelogue</span> about two women touring 1930s Taiwan — then a colony of Japan — and eating their way through twelve local dishes.</p>
+<p>But the <span class="vb v l-b2" tabindex="0" data-d="the way a story is set up and presented" data-z="框架、設定" data-t="v" data-l="B2" data-w="framing">framing</span> is the point. The narrator, Chizuko, has an enormous <span class="vb v l-b1" tabindex="0" data-d="the desire to eat" data-z="食慾" data-t="v" data-l="B1" data-w="appetite">appetite</span> and an even bigger curiosity. She tells herself she wants to know the “real” Taiwan, not the official version served at government <span class="vb v l-b2" tabindex="0" data-d="a large formal meal for many people" data-z="宴席" data-t="v" data-l="B2" data-w="banquets">banquets</span>. She praises every <span class="vb v l-a2" tabindex="0" data-d="food prepared in a particular way" data-z="菜餚" data-t="v" data-l="A2" data-w="dish">dish</span> she meets. And <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: far from + -ing = not at all" data-z="文法:遠非、絕不（far from）" data-t="c" data-l="B2" data-w="far from">far from</span> being innocent, that praise is exactly what the novel asks us to examine.</p>
+<p>Consider how Chizuko eats. She breaks each dish down into colors, textures and aromas; she compares humble street food to refined Japanese cooking; she turns a bowl of braised pork over rice into a small work of art. Her admiration is real. Yet <span class="vb c l-c1" tabindex="0" data-d="ANCHOR: what-cleft = the thing she is really doing" data-z="文法:what 名詞子句（強調）" data-t="c" data-l="C1" data-w="what she is really doing">what she is really doing</span> is measuring Taiwan against a Japanese standard and then generously giving it her approval. This is <span class="vb p l-c1" tabindex="0" data-d="the powerful way a colonizer looks at the colonized" data-z="殖民凝視" data-t="p" data-l="C1" data-w="the colonial gaze">the colonial gaze</span> in action: the powerful visitor who looks, tastes, and judges, all while believing she is being open-minded. Her warmth is genuine and <span class="vb v l-c1" tabindex="0" data-d="behaving as if you are better than others" data-z="居高臨下的、屈尊的" data-t="v" data-l="C1" data-w="condescending">condescending</span> at the same time — a <span class="vb p l-c1" tabindex="0" data-d="something with both good and bad sides" data-z="雙面刃" data-t="p" data-l="C1" data-w="double-edged sword">double-edged sword</span>.</p>
+<p>Beside her walks her Taiwanese <span class="vb v l-b2" tabindex="0" data-d="a person who translates speech aloud" data-z="口譯員" data-t="v" data-l="B2" data-w="interpreter">interpreter</span>, Wáng Chiēn-hò, whom Chizuko fondly (and a little <span class="vb v l-c1" tabindex="0" data-d="treating someone as less intelligent than you" data-z="高姿態的、看輕人的" data-t="v" data-l="C1" data-w="patronizingly">patronizingly</span>) nicknames Chi-chan. Chi-chan introduces the food but rarely explains what it means to her. Her silence is not emptiness; it is the most eloquent thing in the book. She knows the visitor cannot fully understand what she is eating, and she refuses to perform her own culture on demand. Through her, the novel quietly <span class="vb v l-b2" tabindex="0" data-d="to show something hidden, often bad" data-z="揭穿、暴露" data-t="v" data-l="B2" data-w="exposes">exposes</span> the <span class="vb v l-c1" tabindex="0" data-d="a lack of balance between two sides" data-z="不對稱" data-t="v" data-l="C1" data-w="asymmetry">asymmetry</span> beneath the friendship: one woman is free to <span class="vb v l-c1" tabindex="0" data-d="to enjoy food slowly and fully" data-z="細細品嚐" data-t="v" data-l="C1" data-w="savor">savor</span> and leave; the other lives with the consequences. The food they share is <span class="vb c l-c1" tabindex="0" data-d="ANCHOR: not so much X as Y = less X, more Y" data-z="文法:與其說X不如說Y" data-t="c" data-l="C1" data-w="not so much">not so much</span> a bridge as a mirror.</p>
+<p><span class="vb c l-c1" tabindex="0" data-d="ANCHOR: Having + p.p. = after she had…" data-z="文法:完成式分詞（Having + 過去分詞）" data-t="c" data-l="C1" data-w="Having">Having</span> survived the war and the end of empire, Chi-chan is the one who, decades later, <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: be said to + verb = people say it…" data-z="文法:據說…（be said to）" data-t="c" data-l="B2" data-w="is said to">is said to</span> have translated Chizuko's book — so the <span class="vb p l-c1" tabindex="0" data-d="people ruled by a foreign power" data-z="被殖民者" data-t="p" data-l="C1" data-w="the colonized">the colonized</span> interpreter ends up holding <span class="vb p l-b2" tabindex="0" data-d="the final say; final authority" data-z="最終的決定權" data-t="p" data-l="B2" data-w="the last word">the last word</span>. In a story about who gets to speak, that detail <span class="vb p l-b2" tabindex="0" data-d="to express something for someone" data-z="為…發聲" data-t="p" data-l="B2" data-w="gives voice to">gives voice to</span> the very person the original <span class="vb v l-b2" tabindex="0" data-d="a piece of writing about travel" data-z="遊記" data-t="v" data-l="B2" data-w="travelogue">travelogue</span> had turned into a charming sidekick.</p>
+<p>Now travel back to 1880 and across the world. In <em>A Tramp Abroad</em>, Mark Twain tours Europe and grumbles, gloriously, about the food. European coffee is weak; the steak is like leather; the bread has no character. Then, in a famous chapter, he writes out a long <span class="vb v l-b2" tabindex="0" data-d="a complete list of things" data-z="清單、列表" data-t="v" data-l="B2" data-w="inventory">inventory</span> of the American dishes he is homesick for — fried chicken, Virginia ham, buckwheat cakes with maple syrup, corn on the cob.</p>
+<p>Twain's tone is the opposite of Chizuko's. Where she is gentle and admiring, he is loud, <span class="vb v l-c1" tabindex="0" data-d="not showing respect; cheeky" data-z="不敬的、戲謔的" data-t="v" data-l="C1" data-w="irreverent">irreverent</span> and full of <span class="vb v l-c1" tabindex="0" data-d="deliberate exaggeration for effect" data-z="誇飾" data-t="v" data-l="C1" data-w="hyperbole">hyperbole</span>. He uses <span class="vb v l-c1" tabindex="0" data-d="making fun of someone or something" data-z="嘲弄" data-t="v" data-l="C1" data-w="mockery">mockery</span> to tear down European <span class="vb v l-c1" tabindex="0" data-d="the claim to be more important than one is" data-z="自命不凡、做作" data-t="v" data-l="C1" data-w="pretension">pretension</span>, and then he builds American identity back up through food. <span class="vb p l-b1" tabindex="0" data-d="showing a clear difference" data-z="相較之下" data-t="p" data-l="B1" data-w="In contrast">In contrast</span> to the polished European table, his <span class="vb v l-c1" tabindex="0" data-d="rough, strong and plain" data-z="粗獷的" data-t="v" data-l="C1" data-w="rugged">rugged</span>, generous home cooking becomes proof of national character. His <span class="vb v l-b2" tabindex="0" data-d="a strong feeling of wanting something" data-z="渴望" data-t="v" data-l="B2" data-w="longing">longing</span> for a real American breakfast is really an <span class="vb v l-c1" tabindex="0" data-d="a firm, confident statement" data-z="主張" data-t="v" data-l="C1" data-w="assertion">assertion</span> of <span class="vb v l-a2" tabindex="0" data-d="a feeling of satisfaction in oneself" data-z="驕傲、自豪" data-t="v" data-l="A2" data-w="pride">pride</span> — the <span class="vb v l-c1" tabindex="0" data-d="open refusal to obey" data-z="違抗、不屈" data-t="v" data-l="C1" data-w="defiance">defiance</span> of a young, <span class="vb v l-c1" tabindex="0" data-d="to develop industry on a large scale" data-z="工業化" data-t="v" data-l="C1" data-w="industrializing">industrializing</span> nation that refuses to bow to old Europe.</p>
+<p>So both books use food to draw a border between “us” and “them.” But the direction of power runs the opposite way. Chizuko looks <em>down</em> on a colony with affection; Twain looks <em>up</em> at an older culture and sticks out his tongue. <span class="vb v l-b2" tabindex="0" data-d="while in comparison (formal)" data-z="然而、反之" data-t="v" data-l="B2" data-w="Whereas">Whereas</span> Chizuko's praise quietly <span class="vb v l-b2" tabindex="0" data-d="to hide" data-z="隱藏" data-t="v" data-l="B2" data-w="conceals">conceals</span> control, Twain's complaints openly <span class="vb v l-b2" tabindex="0" data-d="to make fun of" data-z="嘲弄" data-t="v" data-l="B2" data-w="mock">mock</span> it. Reading them together <span class="vb v l-b1" tabindex="0" data-d="to show something hidden" data-z="揭露" data-t="v" data-l="B1" data-w="reveals">reveals</span> the same tool — the <span class="vb v l-b2" tabindex="0" data-d="a piece of writing about travel" data-z="遊記" data-t="v" data-l="B2" data-w="travelogue">travelogue</span> — being used for two different kinds of <span class="vb p l-b2" tabindex="0" data-d="the way power works between people" data-z="權力關係" data-t="p" data-l="B2" data-w="power dynamics">power dynamics</span>.</p>
+<p>The third text turns the theme from fiction to history. A 2022 thesis from the University of the Ryukyus traces how American food entered Okinawa under U.S. military <span class="vb v l-b2" tabindex="0" data-d="the control of a place by foreign military force" data-z="佔領" data-t="v" data-l="B2" data-w="occupation">occupation</span> after the <span class="vb p l-b1" tabindex="0" data-d="in the period after a war" data-z="戰後的" data-t="p" data-l="B1" data-w="war">war</span>. Its argument is that food was, from the start, a tool of governance.</p>
+<p>In the first years after 1945, Okinawans faced <span class="vb v l-b2" tabindex="0" data-d="an extreme shortage of food" data-z="饑荒" data-t="v" data-l="B2" data-w="famine">famine</span>. Many had been taught the Americans were monsters — and then a U.S. soldier handed over a can of food. One survivor called that first taste “the taste of heaven.” But the <span class="vb v l-b2" tabindex="0" data-d="help given to people in need" data-z="救濟" data-t="v" data-l="B2" data-w="relief food">relief food</span> came with a condition: people worked on military projects in exchange for <span class="vb v l-b2" tabindex="0" data-d="a fixed amount of food given out" data-z="配給（口糧）" data-t="v" data-l="B2" data-w="rations">rations</span>. Refuse the labor, and the <span class="vb v l-b1" tabindex="0" data-d="help, especially food or money" data-z="援助" data-t="v" data-l="B1" data-w="aid">aid</span> could stop. <span class="vb p l-c1" tabindex="0" data-d="hidden behind the appearance of" data-z="打著…的旗號、披著…外衣" data-t="p" data-l="C1" data-w="Under the guise of">Under the guise of</span> charity, food became <span class="vb v l-c1" tabindex="0" data-d="the use of force to make someone do something" data-z="強制、脅迫" data-t="v" data-l="C1" data-w="coercion">coercion</span>. The warm feeling of <span class="vb v l-b2" tabindex="0" data-d="the feeling of being thankful" data-z="感激" data-t="v" data-l="B2" data-w="gratitude">gratitude</span> and the hard fact of <span class="vb v l-b2" tabindex="0" data-d="the state of relying on something" data-z="依賴" data-t="v" data-l="B2" data-w="dependence">dependence</span> arrived together.</p>
+<p>Over the following decades, that history was slowly <span class="vb v l-c1" tabindex="0" data-d="to make something seem normal" data-z="使正常化" data-t="v" data-l="C1" data-w="normalized">normalized</span>. Foods born of the bases — luncheon meat (SPAM), taco rice, A&amp;W root beer, Blue Seal ice cream — became beloved local <span class="vb v l-b2" tabindex="0" data-d="a mixing of two different things" data-z="融合" data-t="v" data-l="B2" data-w="fusion">fusion</span> dishes. Today they are sold to visitors as the taste of a charming, <span class="vb v l-b2" tabindex="0" data-d="strange and exciting because from a far place" data-z="異國情調的" data-t="v" data-l="B2" data-w="exotic">exotic</span> island. The thesis calls this a process of <span class="vb v l-c1" tabindex="0" data-d="stripped of political meaning" data-z="被去政治化的" data-t="v" data-l="C1" data-w="depoliticization">depoliticization</span>: the <span class="vb v l-b2" tabindex="0" data-d="the control of a place by foreign military force" data-z="佔領" data-t="v" data-l="B2" data-w="occupation">occupation</span> is <span class="vb v l-c1" tabindex="0" data-d="turned into a product for sale" data-z="被商品化的" data-t="v" data-l="C1" data-w="commodified">commodified</span> into a <span class="vb v l-b2" tabindex="0" data-d="fondly remembering the past" data-z="懷舊的" data-t="v" data-l="B2" data-w="nostalgic">nostalgic</span> <span class="vb v l-b1" tabindex="0" data-d="a thing kept to remember a place" data-z="紀念品" data-t="v" data-l="B1" data-w="souvenir">souvenir</span>, and the memory of <span class="vb v l-c1" tabindex="0" data-d="the use of force to make someone do something" data-z="強制、脅迫" data-t="v" data-l="C1" data-w="coercion">coercion</span> is quietly <span class="vb v l-c1" tabindex="0" data-d="the act of removing all trace" data-z="抹除" data-t="v" data-l="C1" data-w="erased">erased</span>. What looks like a friendly local speciality is, on closer reading, a <span class="vb p l-c1" tabindex="0" data-d="very different from" data-z="與…相去甚遠" data-t="p" data-l="C1" data-w="far cry from">far cry from</span> a neutral plate of food.</p>
+<p>Put the three together and a pattern appears. In each case a powerful outsider <span class="vb v l-c1" tabindex="0" data-d="to take and use as one’s own (here: a verb)" data-z="挪用" data-t="v" data-l="C1" data-w="appropriates">appropriates</span> a local food culture and renames it on their own terms — as something to admire, to look down on, or to sell. In each case the people being looked at are pushed into a <span class="vb v l-c1" tabindex="0" data-d="lower in rank or position" data-z="下屬的、次要的" data-t="v" data-l="C1" data-w="subordinate">subordinate</span> role, their own meanings <span class="vb p l-b2" tabindex="0" data-d="to fail to notice the value of" data-z="視為理所當然" data-t="p" data-l="B2" data-w="taken for granted">taken for granted</span> or ignored. And in each case the politics is easy to <span class="vb p l-c1" tabindex="0" data-d="to ignore something on purpose" data-z="視而不見" data-t="p" data-l="C1" data-w="turn a blind eye to">turn a blind eye to</span>, precisely because food feels so warm, so personal, so harmless.</p>
+<p>This is where <em>Taiwan Travelogue</em> is at its sharpest. It <span class="vb p l-b2" tabindex="0" data-d="to prepare the way for" data-z="為…鋪路" data-t="p" data-l="B2" data-w="sets the stage">sets the stage</span> for exactly these questions, and then refuses to answer them for us. Chizuko never quite <span class="vb p l-c1" tabindex="0" data-d="to accept something difficult" data-z="接受、與…和解" data-t="p" data-l="C1" data-w="comes to terms with">comes to terms with</span> her own power; the novel leaves that work to the reader. So the next time a dish is described as “authentic,” “exotic,” or “just like home,” it is worth asking the <span class="vb v l-b2" tabindex="0" data-d="a piece of writing about travel" data-z="遊記" data-t="v" data-l="B2" data-w="travelogue">travelogue</span>'s real question: <span class="vb c l-c1" tabindex="0" data-d="ANCHOR: it-cleft for emphasis = this is where…" data-z="文法:強調句（it is here that）" data-t="c" data-l="C1" data-w="whose home, and who is doing the calling?">whose home, and who is doing the calling?</span></p>
+    </div>
+
+    <h2 class="sec"><span class="n">§</span>Grammar patterns to watch <span style="font-size:12px;color:#7a8294;font-weight:400;">文法重點</span></h2>
+    <div class="rule"></div>
+    <details class="gram"><summary>1 · Past participle as a reduced clause　過去分詞作後位修飾</summary>
+      <div class="gbody"><span class="ex">Presented as a memoir, the book is…</span> = <b>(Although it is)</b> presented as a memoir…<br><span class="zh">句首的過去分詞（Presented / Translated / Written…）等於省略了「which is / although it is」。先找真正的主詞與主要動詞，再把分詞片語當作補充說明。</span></div></details>
+    <details class="gram"><summary>2 · <i>What</i>-cleft for emphasis　what 名詞子句（強調）</summary>
+      <div class="gbody"><span class="ex">What she is really doing is measuring Taiwan…</span><br><span class="zh">「What + 主詞 + 動詞 + is…」用來把焦點放在後面那件事，等於「她真正在做的，其實是…」。寫作時可用來製造強調效果。</span></div></details>
+    <details class="gram"><summary>3 · <i>not so much</i> X <i>as</i> Y　與其說X不如說Y</summary>
+      <div class="gbody"><span class="ex">The food is not so much a bridge as a mirror.</span><br><span class="zh">否定前者、肯定後者：「與其說是橋樑，不如說是一面鏡子。」常用來修正或精準化一個比喻。</span></div></details>
+    <details class="gram"><summary>4 · <i>Having</i> + p.p.　完成式分詞</summary>
+      <div class="gbody"><span class="ex">Having survived the war, Chi-chan is the one who…</span> = After she had survived…<br><span class="zh">「Having + 過去分詞」表示比主要動詞「更早發生」的事。讀時自動補上「在…之後」。</span></div></details>
+    <details class="gram"><summary>5 · <i>far from</i> + -ing　遠非、絕不</summary>
+      <div class="gbody"><span class="ex">Far from being innocent, that praise…</span> = It is not innocent at all…<br><span class="zh">「Far from + 動名詞/形容詞」是強烈否定：「不但不…，反而…」。看到 far from 先預期一個反轉。</span></div></details>
+    <details class="gram"><summary>6 · <i>It is here that…</i>　it 強調句</summary>
+      <div class="gbody"><span class="ex">It is here that the real question appears.</span><br><span class="zh">「It is + 強調的部分 + that…」把句中某一成分挑出來強調。此處強調「就在這裡 / 正是在這一點上」。</span></div></details>
+
+    <h2 class="sec"><span class="n">§</span>Questions for discussion <span style="font-size:12px;color:#7a8294;font-weight:400;">討論題</span></h2>
+    <div class="rule"></div>
+    <ol class="dq">
+      <li>Chizuko believes she is being open-minded when she praises Taiwanese food. Can admiration and power exist at the same time? Have you ever felt “praised” in a way that was also a little condescending?</li>
+      <li>Why do you think the novel keeps Chi-chan so silent for most of the book — and then gives her the final word as the “translator”? What is the writer arguing through that structure?</li>
+      <li>Twain attacks European food and praises American food. Is national pride through cuisine harmless fun, or can it also be a kind of border-building? Think of an example from your own culture.</li>
+      <li>In Okinawa, the same can of food meant both survival and control. Can a gift be generous and coercive at once? Where do you see “gifts with conditions” today?</li>
+      <li>The Okinawa thesis says military history was “depoliticized” into a tourist souvenir. Are there foods or places in Taiwan whose difficult history has been turned into something cute or marketable?</li>
+      <li>After reading all three texts, has your view of the word “authentic” on a menu changed? Who usually decides what counts as authentic?</li>
+    </ol>
+
+    <h2 class="sec"><span class="n">§</span>Full glossary <span style="font-size:12px;color:#7a8294;font-weight:400;">詞彙與片語總表</span></h2>
+    <div class="rule"></div>
+    <div id="glossWrap"><div id="glossList"></div></div>
+  </div>
+</div>
+
+<footer>
+  <span class="strong">About this reading:</span> an original InkQuest discussion article for English learners. It draws on <em>Taiwan Travelogue</em> by Yáng Shuāng-zǐ (trans. Lin King), Mark Twain’s <em>A Tramp Abroad</em> (1880), and Rika Yonamine’s 2022 thesis on U.S.-military food culture in Okinawa (University of the Ryukyus).<br>
+  <span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span>
+  Quoted titles and ideas remain the property of their authors and publishers. 文中提及之著作與觀點版權屬原作者與出版社。
+</footer>
+
+<div id="tip" role="tooltip" aria-hidden="true"></div>
+
+<script>
+/* =========================================================================
+   GLOSSARY  —  key : [English note, 繁體中文, type(v/p/c), CEFR]
+   v = word · p = phrase/idiom · c = grammar/usage anchor
+   ========================================================================= */
+var VOCAB = {
+ 'afterword': ['a short note at the end of a book','後記','v','B2'],
+ 'aid': ['help, especially food or money','援助','v','B1'],
+ 'apparatus': ['the supporting parts around a main text','（文本的）裝置、配件','v','C1'],
+ 'appetite': ['the desire to eat','食慾','v','B1'],
+ 'appropriate': ['to take and use as one’s own (here: a verb)','挪用','v','C1'],
+ 'appropriation': ['taking something from another culture as one’s own','挪用','v','C1'],
+ 'assert': ['to state firmly and confidently','主張、宣稱','v','B2'],
+ 'assertion': ['a firm, confident statement','主張','v','C1'],
+ 'asymmetrical': ['not equal or balanced','不對稱的','v','C1'],
+ 'asymmetry': ['a lack of balance between two sides','不對稱','v','C1'],
+ 'at first glance': ['when first looked at','乍看之下','p','B2'],
+ 'banquet': ['a large formal meal for many people','宴席','v','B2'],
+ 'benevolent': ['kind and well-meaning','善意的、仁慈的','v','C1'],
+ 'coercion': ['the use of force to make someone do something','強制、脅迫','v','C1'],
+ 'coercive': ['using force or threats','強制的','v','C1'],
+ 'colonial': ['relating to control of one country by another','殖民的','v','B2'],
+ 'colonialism': ['the policy of one country controlling another','殖民主義','v','B2'],
+ 'come to terms with': ['to accept something difficult','接受、與…和解','p','C1'],
+ 'commodified': ['turned into a product for sale','被商品化的','v','C1'],
+ 'commodify': ['to turn something into a product to sell','商品化','v','C1'],
+ 'conceal': ['to hide','隱藏','v','B2'],
+ 'condescending': ['behaving as if you are better than others','居高臨下的、屈尊的','v','C1'],
+ 'cuisine': ['a style of cooking','料理、菜系','v','B2'],
+ 'defiance': ['open refusal to obey','違抗、不屈','v','C1'],
+ 'dependence': ['the state of relying on something','依賴','v','B2'],
+ 'depoliticize': ['to remove the political meaning from something','去政治化','v','C1'],
+ 'depoliticized': ['stripped of political meaning','被去政治化的','v','C1'],
+ 'dish': ['food prepared in a particular way','菜餚','v','A2'],
+ 'double-edged sword': ['something with both good and bad sides','雙面刃','p','C1'],
+ 'echo': ['to repeat or reflect an idea','呼應','v','B2'],
+ 'empire': ['a group of countries ruled by one power','帝國','v','B1'],
+ 'erase': ['to remove all trace of something','抹去','v','B2'],
+ 'erasure': ['the act of removing all trace','抹除','v','C1'],
+ 'exotic': ['strange and exciting because from a far place','異國情調的','v','B2'],
+ 'exoticism': ['treating another culture as strange and thrilling','異國情調（的想像）','v','C1'],
+ 'expose': ['to show something hidden, often bad','揭穿、暴露','v','B2'],
+ 'famine': ['an extreme shortage of food','饑荒','v','B2'],
+ 'far cry from': ['very different from','與…相去甚遠','p','C1'],
+ 'far from': ['ANCHOR: far from + -ing = not at all','文法:遠非、絕不（far from）','c','B2'],
+ 'fictional': ['invented; not real','虛構的','v','B1'],
+ 'framing': ['the way a story is set up and presented','框架、設定','v','B2'],
+ 'fusion': ['a mixing of two different things','融合','v','B2'],
+ 'gaze': ['a long, steady look; here = a way of seeing','凝視','v','B2'],
+ 'give voice to': ['to express something for someone','為…發聲','p','B2'],
+ 'gratitude': ['the feeling of being thankful','感激','v','B2'],
+ 'having': ['ANCHOR: Having + p.p. = after she had…','文法:完成式分詞（Having + 過去分詞）','c','C1'],
+ 'hierarchy': ['a system that ranks people by status','階級制度','v','B2'],
+ 'hyperbole': ['deliberate exaggeration for effect','誇飾','v','C1'],
+ 'imperial': ['relating to an empire','帝國的','v','B2'],
+ 'in contrast': ['showing a clear difference','相較之下','p','B1'],
+ 'industrialize': ['to develop industry on a large scale','工業化','v','C1'],
+ 'ingredient': ['one of the foods used to make a dish','食材','v','B1'],
+ 'interpreter': ['a person who translates speech aloud','口譯員','v','B2'],
+ 'inventory': ['a complete list of things','清單、列表','v','B2'],
+ 'irreverent': ['not showing respect; cheeky','不敬的、戲謔的','v','C1'],
+ 'is said to': ['ANCHOR: be said to + verb = people say it…','文法:據說…（be said to）','c','B2'],
+ 'it is here that': ['ANCHOR: it-cleft for emphasis = this is where…','文法:強調句（it is here that）','c','C1'],
+ 'leftovers': ['food not eaten at a meal, kept for later','剩菜','v','B1'],
+ 'longing': ['a strong feeling of wanting something','渴望','v','B2'],
+ 'metafiction': ['fiction that draws attention to its own making','後設小說','v','C1'],
+ 'mirror': ['to copy or reflect closely','映照、如鏡反射','v','B2'],
+ 'mock': ['to make fun of','嘲弄','v','B2'],
+ 'mockery': ['making fun of someone or something','嘲弄','v','C1'],
+ 'narrator': ['the person telling the story','敘事者','v','B2'],
+ 'nested': ['placed one inside another','層層嵌套的','v','C1'],
+ 'normalize': ['to make something seem normal','使正常化','v','C1'],
+ 'nostalgia': ['a fond longing for the past','懷舊','v','B2'],
+ 'nostalgic': ['fondly remembering the past','懷舊的','v','B2'],
+ 'not so much': ['ANCHOR: not so much X as Y = less X, more Y','文法:與其說X不如說Y','c','C1'],
+ 'occupation': ['the control of a place by foreign military force','佔領','v','B2'],
+ 'occupied': ['controlled by a foreign army','被佔領的','v','B2'],
+ 'on the surface': ['when first seen, without deeper thought','表面上','p','B1'],
+ 'only to': ['ANCHOR: only to + verb = and then (a letdown)','文法:結果卻…（only to）','c','B2'],
+ 'palate': ['the sense of taste; what one likes to eat','味覺、口味','v','C1'],
+ 'parallel': ['very similar; matching','平行的、相似的','v','B2'],
+ 'paratext': ['the material around a text (preface, notes, etc.)','副文本','v','C1'],
+ 'patronizing': ['treating someone as less intelligent than you','高姿態的、看輕人的','v','C1'],
+ 'post-war': ['in the period after a war','戰後的','p','B1'],
+ 'power dynamics': ['the way power works between people','權力關係','p','B2'],
+ 'presented as': ['ANCHOR: past participle = which is presented as','文法:過去分詞作後位修飾（被…呈現為）','c','B2'],
+ 'pretension': ['the claim to be more important than one is','自命不凡、做作','v','C1'],
+ 'pretentious': ['trying to seem important or cultured','裝腔作勢的','v','C1'],
+ 'pride': ['a feeling of satisfaction in oneself','驕傲、自豪','v','A2'],
+ 'pseudo-translation': ['an original work pretending to be a translation','偽翻譯（作品）','p','C1'],
+ 'ration': ['a fixed amount of food given out','配給（口糧）','v','B2'],
+ 'recipe': ['instructions for making a dish','食譜','v','A2'],
+ 'relief': ['help given to people in need','救濟','v','B2'],
+ 'reveal': ['to show something hidden','揭露','v','B1'],
+ 'rugged': ['rough, strong and plain','粗獷的','v','C1'],
+ 'savor': ['to enjoy food slowly and fully','細細品嚐','v','C1'],
+ 'set the stage for': ['to prepare the way for','為…鋪路','p','B2'],
+ 'souvenir': ['a thing kept to remember a place','紀念品','v','B1'],
+ 'staple': ['a basic, everyday food','主食','v','B2'],
+ 'starvation': ['suffering or death from lack of food','飢餓、餓死','v','B2'],
+ 'subordinate': ['lower in rank or position','下屬的、次要的','v','C1'],
+ 'surrender': ['to stop fighting and give in','投降','v','B2'],
+ 'take for granted': ['to fail to notice the value of','視為理所當然','p','B2'],
+ 'the colonial gaze': ['the powerful way a colonizer looks at the colonized','殖民凝視','p','C1'],
+ 'the colonized': ['people ruled by a foreign power','被殖民者','p','C1'],
+ 'the colonizer': ['the country or person doing the ruling','殖民者','p','C1'],
+ 'the last word': ['the final say; final authority','最終的決定權','p','B2'],
+ 'tourist trap': ['a place that exploits visitors','觀光陷阱','p','B2'],
+ 'translated': ['changed into another language','翻譯（的）','v','B1'],
+ 'travelogue': ['a piece of writing about travel','遊記','v','B2'],
+ 'turn a blind eye': ['to ignore something on purpose','視而不見','p','C1'],
+ 'under the guise of': ['hidden behind the appearance of','打著…的旗號、披著…外衣','p','C1'],
+ 'underlying': ['hidden beneath the surface','潛在的、底層的','v','B2'],
+ 'unequal': ['not the same in power or status','不平等的','v','B1'],
+ 'what she is really doing': ['ANCHOR: what-cleft = the thing she is really doing','文法:what 名詞子句（強調）','c','C1'],
+ 'whereas': ['while in comparison (formal)','然而、反之','v','B2'],
+};
+
+var CATLABEL = { v:'Word', p:'Phrase / idiom', c:'Grammar / usage' };
+var ROOT = document.getElementById('bodywrap');
+var TIP  = document.getElementById('tip');
+
+/* =========================================================================
+   TOOLTIP  —  hover (desktop) + tap/click (mobile) + keyboard focus
+   ========================================================================= */
+var pinned = null, hideTimer = null;
+function fillTip(el){
+  var lvl = el.getAttribute('data-l');
+  TIP.innerHTML =
+    '<div class="meta"><span class="cat ' + el.getAttribute('data-t') + '">' + CATLABEL[el.getAttribute('data-t')] + '</span>' +
+    (lvl ? '<span class="lvl">'+lvl+'</span>' : '') + '</div>' +
+    '<span class="term">' + el.getAttribute('data-w') + '</span> &mdash; ' + el.getAttribute('data-d') +
+    '<span class="zh">' + el.getAttribute('data-z') + '</span>';
+}
+function placeTip(el){
+  TIP.style.display = 'block'; TIP.style.left='0'; TIP.style.top='0';
+  var r = el.getBoundingClientRect(), tw = TIP.offsetWidth, th = TIP.offsetHeight, pad = 10;
+  var x = r.left + r.width/2 - tw/2;
+  x = Math.max(pad, Math.min(x, window.innerWidth - tw - pad));
+  var y = r.top - th - 8; if (y < pad) y = r.bottom + 8;
+  TIP.style.left = (x + window.scrollX) + 'px';
+  TIP.style.top  = (y + window.scrollY) + 'px';
+}
+function showTip(el){
+  if (document.body.classList.contains('nohl')) return;
+  if (hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
+  fillTip(el); placeTip(el);
+}
+function hideTip(){ TIP.style.display='none'; if (pinned){ pinned.classList.remove('open'); pinned=null; } }
+
+ROOT.addEventListener('mouseover', function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) showTip(el); });
+ROOT.addEventListener('mouseout',  function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) hideTimer=setTimeout(function(){TIP.style.display='none';},80); });
+ROOT.addEventListener('focusin',   function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el) showTip(el); });
+ROOT.addEventListener('focusout',  function(){ if(!pinned) TIP.style.display='none'; });
+document.addEventListener('click', function(e){
+  var el = e.target.closest && e.target.closest('.vb');
+  if (el){
+    if (pinned===el){ hideTip(); return; }
+    if (pinned) pinned.classList.remove('open');
+    pinned = el; el.classList.add('open'); showTip(el); e.stopPropagation(); return;
+  }
+  if (!TIP.contains(e.target)) hideTip();
+});
+window.addEventListener('resize', hideTip);
+window.addEventListener('scroll', function(){ if(pinned) placeTip(pinned); }, {passive:true});
+
+/* ---- controls: highlight toggle, level filters, font size ---- */
+var toggle = document.getElementById('toggle');
+toggle.addEventListener('click', function(){
+  var off = document.body.classList.toggle('nohl');
+  toggle.textContent = 'Highlights: ' + (off?'Off':'On');
+  toggle.setAttribute('aria-pressed', off?'true':'false');
+  if (off) hideTip();
+});
+Array.prototype.forEach.call(document.querySelectorAll('.lvchk'), function(c){
+  c.addEventListener('change', function(){ document.body.classList.toggle('hide-'+c.getAttribute('data-l'), !c.checked); });
+});
+var scale = 1;
+function setScale(s){ scale = Math.max(0.85, Math.min(1.4, s)); document.getElementById('bodywrap').style.fontSize = scale.toFixed(2)+'em'; }
+document.getElementById('fontPlus').addEventListener('click', function(){ setScale(scale+0.08); });
+document.getElementById('fontMinus').addEventListener('click', function(){ setScale(scale-0.08); });
+
+/* =========================================================================
+   GLOSSARY LIST  (built from VOCAB, A–Z, de-duplicated by 中文+def)
+   ========================================================================= */
+function buildGlossary(){
+  var seen = {}, items = [];
+  for (var k in VOCAB){
+    var e = VOCAB[k];
+    if (e[2]==='c') continue;                 /* grammar anchors live in the grammar section */
+    var sig = e[1]+'|'+e[0];
+    if (seen[sig]) continue; seen[sig]=1;
+    items.push([k, e]);
+  }
+  items.sort(function(a,b){ return a[0].localeCompare(b[0]); });
+  var lvclass = {A2:'lva2',B1:'lvb1','B2':'lvb2','C1':'lvc1'};
+  var html = '';
+  for (var i=0;i<items.length;i++){
+    var k=items[i][0], e=items[i][1], lv=(e[3]||'').split('/')[0];
+    html += '<div class="g"><span class="t">'+k+'</span>'+
+            (lv?'<span class="lv '+(lvclass[lv]||'lvb2')+'">'+lv+'</span>':'')+
+            '<div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';
+  }
+  document.getElementById('glossList').innerHTML = html;
+}
+
+buildGlossary();
+</script>
+
+</body></html>
