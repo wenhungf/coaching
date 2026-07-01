@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="student"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Europe's Heatwave — Glossary Reader</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: #e8ecf2; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif;
+    color: #1a1a1a; line-height: 1.66; font-size: 16px; padding: 0 0 60px;
+  }
+
+  /* ---- sticky control bar ---- */
+  #controls {
+    position: sticky; top: 0; z-index: 60;
+    background: rgba(19,40,74,0.97); backdrop-filter: blur(6px);
+    color: #d4dce8; border-bottom: 2px solid #c2922e;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px;
+    padding: 9px 18px; font-size: 12.5px;
+  }
+  #controls .brandmini { font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #fff; font-size: 11.5px; }
+  #controls .legend { display: flex; gap: 13px; flex-wrap: wrap; align-items: center; }
+  #controls .key { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  #controls .swatch { width: 22px; height: 0; border-bottom: 2px dotted; display: inline-block; }
+  .sw-v { border-color: #d39a2f; } .sw-p { border-color: #5b9bd5; } .sw-c { border-color: #58c08b; }
+  #controls .filters { display:flex; gap:10px; align-items:center; }
+  #controls label.lv { display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
+  #controls .spacer { flex: 1 1 auto; }
+  #controls button {
+    font: inherit; font-size: 12px; cursor: pointer;
+    background: #1f3a63; color: #dbe6f5; border: 1px solid #34568a;
+    border-radius: 6px; padding: 5px 10px;
+  }
+  #controls button:hover { background: #294c80; }
+  body.nohl .vb { border-bottom: 0 !important; color: inherit !important; cursor: text !important; }
+  body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1 { border-bottom: 0; }
+
+  #doc { max-width: 860px; margin: 22px auto; background: #fff;
+         box-shadow: 0 2px 14px rgba(20,40,70,.12); border-radius: 4px; overflow: hidden; }
+
+  /* ---- masthead ---- */
+  .mast { background: #1e2433; color: #fff; padding: 22px 30px; border-bottom: 3px solid #c2922e; }
+  .mast .brand { font-size: 12px; letter-spacing:.22em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
+  .mast h1 { font-size: 28px; letter-spacing: .01em; line-height: 1.08; margin-top:6px; font-family: Georgia, "Times New Roman", serif; }
+  .mast .sub { color: #c8d0de; font-size: 13.5px; margin-top: 6px; }
+  .inner { padding: 22px 30px; }
+  @media (max-width: 600px){ .inner, .mast { padding-left: 18px; padding-right: 18px; } .mast h1 { font-size: 22px; } body{font-size:15.5px;} }
+
+  .scope { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: #cdd6e2;
+           border: 1px solid #cdd6e2; border-radius: 5px; overflow: hidden; margin-bottom: 14px; }
+  .scope > div { background: #eef2f7; padding: 9px 11px; font-size: 12.3px; color: #41506a; }
+  @media (max-width: 600px){ .scope { grid-template-columns: 1fr; } }
+
+  /* ---- setup panel (teacher only; stripped from student export) ---- */
+  #setup { border: 1px dashed #b9a06a; background: #fbf7ee; border-radius: 8px; padding: 14px 16px; margin-bottom: 18px; }
+  #setup h3 { font-size: 14px; color: #7a5d1c; margin-bottom: 6px; }
+  #setup p.tip { font-size: 12.5px; color: #6a6450; margin-bottom: 9px; line-height:1.55; }
+  #setup textarea {
+    width: 100%; min-height: 150px; resize: vertical; font: inherit; font-size: 13.5px; line-height:1.5;
+    border: 1px solid #cdbf99; border-radius: 6px; padding: 10px 12px; background:#fff; color:#222;
+  }
+  #setup .row { display:flex; flex-wrap:wrap; gap:9px; margin-top:10px; align-items:center; }
+  #setup button {
+    font: inherit; font-size: 13px; cursor: pointer; border-radius: 6px; padding: 7px 14px; border:1px solid transparent;
+  }
+  #applyBtn { background:#1e2433; color:#fff; }
+  #applyBtn:hover { background:#33405a; }
+  #clearBtn { background:#fff; color:#7a1f1f; border-color:#e0c4c0; }
+  #exportBtn { background:#2f6b46; color:#fff; }
+  #exportBtn:hover { background:#3a805440; }
+  #setup .count { font-size:12px; color:#8a7c55; margin-left:auto; }
+
+  h2.sec { color: #1e2433; font-size: 18px; margin: 24px 0 2px; padding-top: 6px; }
+  h2.sec .n { color: #c2922e; margin-right: 8px; }
+  .rule { height: 2px; background: #c2922e; margin: 5px 0 14px; }
+
+  #bodywrap p { margin: 0 0 13px; }
+  #bodywrap .placeholder { color:#9aa3b2; font-style:italic; text-align:center; padding:30px 10px; border:1px dashed #d3dae6; border-radius:8px; }
+
+  /* ---- glossary list ---- */
+  #glossWrap { margin-top: 8px; }
+  #glossList { column-count: 2; column-gap: 26px; font-size: 13px; }
+  @media (max-width: 600px){ #glossList { column-count: 1; } }
+  #glossList .g { break-inside: avoid; margin-bottom: 8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
+  #glossList .g .t { font-weight: 700; color:#1e2433; }
+  #glossList .g .lv { font-size:9.5px; font-weight:700; letter-spacing:.06em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; }
+  #glossList .g .d { color:#48505f; } #glossList .g .z { color:#1e2433; }
+  .lvb1 { background:#e7f0e9; color:#3c7048; } .lvb2 { background:#eaf0f7; color:#345f8a; } .lvc1 { background:#f6ece0; color:#9a6b22; }
+
+  /* ---- grammar notes ---- */
+  details.gram { border:1px solid #e3e7ef; border-radius:8px; margin-bottom:9px; background:#fafbfd; }
+  details.gram > summary { cursor:pointer; padding:10px 13px; font-weight:700; color:#1e2433; font-size:13.5px; list-style:none; }
+  details.gram > summary::-webkit-details-marker { display:none; }
+  details.gram > summary::before { content:"▸ "; color:#c2922e; }
+  details.gram[open] > summary::before { content:"▾ "; }
+  details.gram .gbody { padding: 2px 14px 12px; font-size:13px; color:#444; line-height:1.6; }
+  details.gram .gbody .ex { color:#2f4868; font-style:italic; }
+  details.gram .gbody .zh { color:#1e2433; }
+
+  footer { max-width: 860px; margin: 0 auto; padding: 16px 30px 0; color: #6a7686;
+           font-size: 11.8px; line-height:1.6; text-align: center; }
+  footer a { color:#3a5a8c; }
+  footer .strong { color:#444; font-style:normal; font-weight:600; }
+
+  /* ---- tooltip target styling ---- */
+  .vb { cursor: help; border-bottom: 1px dotted; padding-bottom: .5px; text-decoration: none; transition: background .12s; }
+  .vb.v { border-color: #d39a2f; } .vb.p { border-color: #5b9bd5; } .vb.c { border-color: #58c08b; }
+  .vb:hover, .vb:focus { background: rgba(194,146,46,.10); outline: none; }
+  .vb.open { background: rgba(194,146,46,.18); }
+
+  /* ---- tooltip ---- */
+  #tip {
+    position: absolute; z-index: 200; width: max-content; max-width: min(330px, 88vw);
+    background: #18222e; border: 1px solid #34465a; border-radius: 9px;
+    padding: 10px 13px 11px; font-size: 13.5px; line-height: 1.5; color: #e4ebf3;
+    box-shadow: 0 10px 28px rgba(0,0,0,.4); display: none; white-space: normal;
+  }
+  #tip .meta { display:flex; gap:6px; align-items:center; margin-bottom:5px; }
+  #tip .cat { font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; padding: 1px 6px; border-radius: 99px; font-weight: 700; }
+  #tip .cat.v { background: rgba(211,154,47,.20); color: #f0c873; }
+  #tip .cat.p { background: rgba(91,155,213,.20); color: #9fc6ef; }
+  #tip .cat.c { background: rgba(88,192,139,.20); color: #8fe0b4; }
+  #tip .lvl { font-size: 9.5px; font-weight:700; letter-spacing:.06em; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
+  #tip .term { font-weight: 700; color: #fff; }
+  #tip .zh { color: #e0a458; margin-top: 4px; display: block; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div id="controls">
+  <span class="brandmini">InkQuest&nbsp;Reader</span>
+  <span class="legend">
+    <span class="key"><span class="swatch sw-v"></span> Word</span>
+    <span class="key"><span class="swatch sw-p"></span> Phrase / idiom</span>
+    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
+  </span>
+  <span class="filters">
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked=""> B1</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked=""> B2</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked=""> C1</label>
+  </span>
+  <span class="spacer"></span>
+  <button id="fontMinus" title="Smaller text">A−</button>
+  <button id="fontPlus" title="Larger text">A+</button>
+  <button id="toggle" aria-pressed="false">Highlights: On</button>
+</div>
+
+<div id="doc">
+  <div class="mast">
+    <div class="brand">InkQuest English Coaching · Reading with glossary</div>
+    <h1>Europe Is Battling a Record-Breaking Heatwave</h1>
+    <div class="sub">The Conversation · Andrew B. Watkins (Monash University), 2026 &nbsp;|&nbsp; ~940 words &nbsp;|&nbsp; glossary CEFR&nbsp;B1–C1 &nbsp;|&nbsp; underlined terms carry hover / tap notes (EN&nbsp;+&nbsp;繁中)</div>
+  </div>
+
+  <div class="inner">
+    <div class="scope">
+      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for an English + 繁中 note and its CEFR level.</div>
+      <div><strong>Colours.</strong> <span style="color:#b8860b">amber</span> = word · <span style="color:#3a72b8">blue</span> = phrase / idiom · <span style="color:#2f8d5e">green</span> = grammar pattern.</div>
+      <div><strong>Filters.</strong> Use the B1 / B2 / C1 checkboxes to show only the levels you want, or turn highlights off to read clean.</div>
+    </div>
+
+    <!-- ===== TEACHER SETUP (removed automatically in the exported student copy) ===== -->
+    
+
+    <h2 class="sec" style="margin-top:8px;"><span class="n">§</span>Article</h2>
+    <div class="rule"></div>
+    <div id="bodywrap"><p>Europe is <span class="vb v l-b2" tabindex="0" data-d="struggling hard against something" data-z="對抗、苦戰" data-t="v" data-l="B2" data-w="battling">battling</span> a record‑breaking <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>. What’s making it <span class="vb p l-b1" tabindex="0" data-d="so serious/intense" data-z="如此嚴重" data-t="p" data-l="B1" data-w="so severe">so severe</span>?</p><p>Published: June 25, 2026 6.56am BST</p><p>Updated: June 29, 2026 2.56am BST</p><p>Author: Andrew B. Watkins, Adjunct Professor (Practice) in the School of Earth, <span class="vb v l-b2" tabindex="0" data-d="the layer of gases surrounding the Earth" data-z="大氣（層）" data-t="v" data-l="B2" data-w="Atmosphere">Atmosphere</span> and Environment, Monash University</p><p><span class="vb v l-c1" tabindex="0" data-d="unpleasantly and oppressively hot" data-z="悶熱難耐的" data-t="v" data-l="C1" data-w="Sweltering">Sweltering</span> temperatures are <span class="vb p l-b2" tabindex="0" data-d="dramatically breaking records" data-z="大幅打破紀錄" data-t="p" data-l="B2" data-w="shattering records">shattering records</span> across Europe, as <span class="vb v l-b1" tabindex="0" data-d="the large landmass — here, Europe" data-z="大陸（此指歐洲）" data-t="v" data-l="B1" data-w="the continent">the continent</span> <span class="vb v l-b2" tabindex="0" data-d="struggles hard against" data-z="對抗、苦戰" data-t="v" data-l="B2" data-w="battles">battles</span> a <span class="vb v l-b2" tabindex="0" data-d="likely to cause death" data-z="致命的" data-t="v" data-l="B2" data-w="deadly">deadly</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>.</p><p>On Tuesday and Wednesday, France <span class="vb v l-b2" tabindex="0" data-d="suffered through; lasted through" data-z="忍受、熬過" data-t="v" data-l="B2" data-w="endured">endured</span> its hottest days in history, with western regions <span class="vb p l-b1" tabindex="0" data-d="hitting maximum temperatures of" data-z="高溫達到" data-t="p" data-l="B1" data-w="reaching highs of">reaching highs of</span> between 39°C and 43°C. Wednesday was the United Kingdom’s warmest June day <span class="vb p l-b2" tabindex="0" data-d="in all of recorded history" data-z="有紀錄以來" data-t="p" data-l="B2" data-w="on record">on record</span>, with <span class="vb p l-c1" tabindex="0" data-d="the temperature (as read on a thermometer)" data-z="水銀柱、氣溫" data-t="p" data-l="C1" data-w="the mercury">the mercury</span> <span class="vb p l-b1" tabindex="0" data-d="rising to" data-z="攀升至" data-t="p" data-l="B1" data-w="climbing to">climbing to</span> 36.1°C. And according to early data, Spain, Germany, Austria, the Netherlands and Switzerland have all <span class="vb v l-b1" tabindex="0" data-d="beaten (a record)" data-z="打破（紀錄）" data-t="v" data-l="B1" data-w="broken">broken</span> June temperature records at several <span class="vb v l-b1" tabindex="0" data-d="places; measuring locations" data-z="地點、測站" data-t="v" data-l="B1" data-w="sites">sites</span>. And the event is not over yet.</p><p><span class="vb v l-b2" tabindex="0" data-d="in a very sad, distressing way" data-z="令人痛心地" data-t="v" data-l="B2" data-w="Tragically">Tragically</span>, <span class="vb p l-b2" tabindex="0" data-d="people have already died" data-z="已有人喪生" data-t="p" data-l="B2" data-w="lives have already been lost">lives have already been lost</span>, including <span class="vb p l-b1" tabindex="0" data-d="many; tens of" data-z="數十個" data-t="p" data-l="B1" data-w="dozens of">dozens of</span> people who have <span class="vb v l-b2" tabindex="0" data-d="died under water" data-z="溺斃" data-t="v" data-l="B2" data-w="drowned">drowned</span> in France in the past week, while trying to <span class="vb p l-b1" tabindex="0" data-d="become or make cooler" data-z="降溫、消暑" data-t="p" data-l="B1" data-w="cool down">cool down</span> in the <span class="vb p l-c1" tabindex="0" data-d="extremely harsh, exhausting heat" data-z="難耐的酷熱" data-t="p" data-l="C1" data-w="punishing heat">punishing heat</span>.</p><p>But this <span class="vb v l-b2" tabindex="0" data-d="important or memorable in history" data-z="歷史性的（罕見重大）" data-t="v" data-l="B2" data-w="historic">historic</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> is not happening <span class="vb p l-b2" tabindex="0" data-d="on its own; separately from other things" data-z="孤立地、單獨地" data-t="p" data-l="B2" data-w="in isolation">in isolation</span>. It comes days after the <span class="vb p l-b2" tabindex="0" data-d="the temperature of the ocean’s top layer worldwide" data-z="全球海表溫度" data-t="p" data-l="B2" data-w="global sea surface temperature">global sea surface temperature</span> again <span class="vb p l-b1" tabindex="0" data-d="risen to the highest ever measured" data-z="達到創紀錄的水準" data-t="p" data-l="B1" data-w="reached record levels">reached record levels</span>. <span class="vb v l-b1" tabindex="0" data-d="at the same time" data-z="與此同時" data-t="v" data-l="B1" data-w="Meanwhile">Meanwhile</span>, Australia’s <span class="vb p l-b2" tabindex="0" data-d="a national weather office/agency" data-z="氣象局" data-t="p" data-l="B2" data-w="weather bureau">weather bureau</span> has <span class="vb v l-b1" tabindex="0" data-d="officially announced" data-z="（正式）宣布" data-t="v" data-l="B1" data-w="declared">declared</span> <span class="vb p l-b2" tabindex="0" data-d="a natural climate cycle in which the eastern Pacific Ocean warms up every few years, shifting weather worldwide — often bringing hotter, drier conditions to Australia and Asia, and heavier rain to the Americas. Its cool opposite is La Niña. Here it adds extra warmth on top of climate change." data-z="聖嬰現象:太平洋東部海面每隔數年異常變暖的自然氣候循環,會牽動全球天氣——常使澳洲、亞洲更熱更乾,美洲部分地區降雨增多;相反的冷相位稱「反聖嬰」(La Niña)。此處它在氣候變遷之上再添額外熱能。" data-t="p" data-l="B2" data-w="El Niño">El Niño</span> <span class="vb v l-b1" tabindex="0" data-d="in effect; operating" data-z="活躍中、生效中" data-t="v" data-l="B1" data-w="active">active</span>, making a hotter, drier year in Australia, Asia and the South Pacific much more likely. And since April, India and Pakistan have been <span class="vb v l-b2" tabindex="0" data-d="struggling hard against something" data-z="對抗、苦戰" data-t="v" data-l="B2" data-w="battling">battling</span> a <span class="vb v l-c1" tabindex="0" data-d="continuing steadily over a long time" data-z="持續的" data-t="v" data-l="C1" data-w="sustained">sustained</span> and <span class="vb v l-b2" tabindex="0" data-d="in the end; finally" data-z="最終" data-t="v" data-l="B2" data-w="ultimately">ultimately</span> <span class="vb v l-b2" tabindex="0" data-d="likely to cause death" data-z="致命的" data-t="v" data-l="B2" data-w="deadly">deadly</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>.</p><p>So what’s <span class="vb p l-b2" tabindex="0" data-d="causing; powering (what’s driving X = what’s causing X)" data-z="驅動、造成" data-t="p" data-l="B2" data-w="driving">driving</span> this <span class="vb v l-b1" tabindex="0" data-d="most recent" data-z="最新的" data-t="v" data-l="B1" data-w="latest">latest</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>? And why is it <span class="vb p l-b1" tabindex="0" data-d="so serious/intense" data-z="如此嚴重" data-t="p" data-l="B1" data-w="so severe">so severe</span>?</p><p>An unusual <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span></p><p>A <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> <span class="vb v l-b2" tabindex="0" data-d="happens; takes place" data-z="發生" data-t="v" data-l="B2" data-w="occurs">occurs</span> when the average temperature is <span class="vb v l-b1" tabindex="0" data-d="more than is normal; abnormally" data-z="異常地" data-t="v" data-l="B1" data-w="unusually">unusually</span> hot for three or more days <span class="vb p l-b1" tabindex="0" data-d="one after another; consecutively" data-z="連續地" data-t="p" data-l="B1" data-w="in a row">in a row</span>. That’s compared to past weather data taken from the same location.</p><p>But scientists are <span class="vb p l-c1" tabindex="0" data-d="worrying a great deal about (idiom)" data-z="為…憂心、寢食難安" data-t="p" data-l="C1" data-w="losing sleep over">losing sleep over</span> the <span class="vb v l-b1" tabindex="0" data-d="happening now; present" data-z="目前的" data-t="v" data-l="B1" data-w="current">current</span> European <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>, for two main reasons.</p><p>1. <span class="vb v l-b2" tabindex="0" data-d="the moment when something happens" data-z="時機、時間點" data-t="v" data-l="B2" data-w="Timing">Timing</span></p><p>In Europe, the hottest time of year comes in mid- to late July, about a month after the <span class="vb p l-c1" tabindex="0" data-d="the longest day of the year (about 21 June)" data-z="夏至" data-t="p" data-l="C1" data-w="summer solstice">summer solstice</span>. However, recent research suggests days of <span class="vb v l-b2" tabindex="0" data-d="very strong or extreme" data-z="劇烈的、強烈的" data-t="v" data-l="B2" data-w="intense">intense</span> <span class="vb p l-b2" tabindex="0" data-d="physical strain the body suffers from excessive heat" data-z="熱緊迫、熱壓力" data-t="p" data-l="B2" data-w="heat stress">heat stress</span> are now starting to arrive in June. Since 1950, only one other <span class="vb v l-b1" tabindex="0" data-d="very large or important" data-z="重大的" data-t="v" data-l="B1" data-w="major">major</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> has arrived earlier than the <span class="vb v l-b1" tabindex="0" data-d="happening now; present" data-z="目前的" data-t="v" data-l="B1" data-w="current">current</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span>, which is <span class="vb v l-c1" tabindex="0" data-d="gradually developing or happening" data-z="逐漸展開、正在發生" data-t="v" data-l="C1" data-w="unfolding">unfolding</span> weeks before <span class="vb p l-b1" tabindex="0" data-d="the highest point of" data-z="…的高峰" data-t="p" data-l="B1" data-w="the peak of">the peak of</span> the European summer.</p><p><span class="vb v l-b1" tabindex="0" data-d="happening now; present" data-z="目前的" data-t="v" data-l="B1" data-w="Current">Current</span> <span class="vb v l-b1" tabindex="0" data-d="facts that prove something" data-z="證據" data-t="v" data-l="B1" data-w="evidence">evidence</span> shows <span class="vb p l-b1" tabindex="0" data-d="long-term change in Earth’s weather patterns" data-z="氣候變遷" data-t="p" data-l="B1" data-w="climate change">climate change</span> is making heatwaves more <span class="vb v l-b2" tabindex="0" data-d="happening often" data-z="頻繁的" data-t="v" data-l="B2" data-w="frequent">frequent</span> and <span class="vb v l-b2" tabindex="0" data-d="very strong or extreme" data-z="劇烈的、強烈的" data-t="v" data-l="B2" data-w="intense">intense</span>. One study <span class="vb v l-b2" tabindex="0" data-d="studied or inspected closely" data-z="檢視、研究" data-t="v" data-l="B2" data-w="examined">examined</span> the <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> that <span class="vb v l-b1" tabindex="0" data-d="struck; badly affected" data-z="侵襲、重創" data-t="v" data-l="B1" data-w="hit">hit</span> southeast England in June 2025. It found that without the effect of <span class="vb p l-b2" tabindex="0" data-d="caused by people, not nature" data-z="人為的" data-t="p" data-l="B2" data-w="human-made">human-made</span> <span class="vb p l-b2" tabindex="0" data-d="heat-trapping gases (like CO₂) released by human activity" data-z="溫室氣體排放" data-t="p" data-l="B2" data-w="greenhouse gas emissions">greenhouse gas emissions</span>, <span class="vb v l-b1" tabindex="0" data-d="of this kind" data-z="這類的" data-t="v" data-l="B1" data-w="such">such</span> a <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> <span class="vb c l-b2" tabindex="0" data-d="ANCHOR: unreal conditional — imagining a world without climate change" data-z="文法:與現實相反的假設（第二條件句）" data-t="c" data-l="B2" data-w="would only happen">would only happen</span> once every 50 years. But when the researchers <span class="vb p l-c1" tabindex="0" data-d="took into account; included in the calculation" data-z="把…計入、納入考量" data-t="p" data-l="C1" data-w="accounted for">accounted for</span> the temperature increase of 1.3°C caused by <span class="vb p l-c1" tabindex="0" data-d="brought about by human activity" data-z="人為造成的" data-t="p" data-l="C1" data-w="human-induced">human-induced</span> <span class="vb p l-b1" tabindex="0" data-d="long-term change in Earth’s weather patterns" data-z="氣候變遷" data-t="p" data-l="B1" data-w="climate change">climate change</span>, this became at least once every five years.</p><p>2. <span class="vb v l-c1" tabindex="0" data-d="how serious or intense something is" data-z="嚴重程度" data-t="v" data-l="C1" data-w="Severity">Severity</span></p><p><span class="vb c l-b2" tabindex="0" data-d="ANCHOR: sets up an unreal/hypothetical comparison" data-z="文法:假想一個不存在的情況來對比" data-t="c" data-l="B2" data-w="In a world without">In a world without</span> <span class="vb p l-b1" tabindex="0" data-d="long-term change in Earth’s weather patterns" data-z="氣候變遷" data-t="p" data-l="B1" data-w="climate change">climate change</span>, this <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> would <span class="vb p l-c1" tabindex="0" data-d="almost never" data-z="幾乎從不" data-t="p" data-l="C1" data-w="rarely if ever">rarely if ever</span> happen so early in the year. And it also would not be <span class="vb p l-c1" tabindex="0" data-d="knocking over; here, breaking (records)" data-z="推翻、打破（紀錄）" data-t="p" data-l="C1" data-w="toppling">toppling</span> temperature records, and by <span class="vb v l-b1" tabindex="0" data-d="of this kind" data-z="這類的" data-t="v" data-l="B1" data-w="such">such</span> <span class="vb v l-c1" tabindex="0" data-d="so large it is shocking" data-z="驚人的" data-t="v" data-l="C1" data-w="staggering">staggering</span> <span class="vb v l-b1" tabindex="0" data-d="quantities; sizes" data-z="數量、幅度" data-t="v" data-l="B1" data-w="amounts">amounts</span>.</p><p>Tuesday and Wednesday were France’s hottest days <span class="vb p l-b2" tabindex="0" data-d="since measurement/keeping records started" data-z="自有紀錄以來" data-t="p" data-l="B2" data-w="since records began">since records began</span> in 1947, with an average temperature of 29.9°C across the country. On Tuesday, 147 French towns <span class="vb v l-b1" tabindex="0" data-d="struck; badly affected" data-z="侵襲、重創" data-t="v" data-l="B1" data-w="hit">hit</span> <span class="vb p l-b2" tabindex="0" data-d="the highest levels ever recorded" data-z="歷史新高" data-t="p" data-l="B2" data-w="all-time highs">all-time highs</span> for June, with 41 local <span class="vb p l-b2" tabindex="0" data-d="places that measure and record the weather" data-z="氣象測站" data-t="p" data-l="B2" data-w="weather stations">weather stations</span> recording <span class="vb v l-b2" tabindex="0" data-d="numbers; recorded data" data-z="數字、數據" data-t="v" data-l="B2" data-w="figures">figures</span> above 43°C.</p><p>France also slept through its warmest night ever from Tuesday into Wednesday, with a national average temperature of 21.6°C. The <span class="vb v l-b1" tabindex="0" data-d="during the night" data-z="夜間（的）" data-t="v" data-l="B1" data-w="overnight">overnight</span> heat was enough to make some rivers so warm they could not be safely used to cool <span class="vb p l-b2" tabindex="0" data-d="stations that make electricity from nuclear energy" data-z="核能發電廠" data-t="p" data-l="B2" data-w="nuclear power plants">nuclear power plants</span>.</p><p>In the same week, Spain also set <span class="vb v l-b2" tabindex="0" data-d="many; more than one" data-z="多個的" data-t="v" data-l="B2" data-w="multiple">multiple</span> daytime and nighttime records, with one location enduring three <span class="vb v l-b2" tabindex="0" data-d="following one after another without a break" data-z="連續的" data-t="v" data-l="B2" data-w="consecutive">consecutive</span> nights of 30°C or above. Parts of Spain have seen temperatures <span class="vb v l-c1" tabindex="0" data-d="to go beyond; exceed" data-z="超過、突破" data-t="v" data-l="C1" data-w="surpass">surpass</span> 45°C.</p><p>In western Europe, the <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> <span class="vb p l-b1" tabindex="0" data-d="is predicted/likely to" data-z="預計會" data-t="p" data-l="B1" data-w="is expected to">is expected to</span> <span class="vb v l-b2" tabindex="0" data-d="to reach the highest point" data-z="達到高峰" data-t="v" data-l="B2" data-w="peak">peak</span> in the middle of this week before <span class="vb v l-b2" tabindex="0" data-d="moving; changing position" data-z="移動、轉移" data-t="v" data-l="B2" data-w="shifting">shifting</span> east, with <span class="vb v l-b2" tabindex="0" data-d="predictions of future weather" data-z="預報" data-t="v" data-l="B2" data-w="forecasts">forecasts</span> suggesting Poland and Germany will <span class="vb p l-c1" tabindex="0" data-d="to suffer the worst part of something" data-z="首當其衝、承受最重的衝擊" data-t="p" data-l="C1" data-w="bear the brunt">bear the brunt</span> over the weekend.</p><p>What caused it?</p><p><span class="vb p l-c1" tabindex="0" data-d="looking at a small, nearby area" data-z="在地方（小）尺度上" data-t="p" data-l="C1" data-w="At the local scale">At the local scale</span>, heatwaves <span class="vb v l-b2" tabindex="0" data-d="to happen; take place" data-z="發生" data-t="v" data-l="B2" data-w="occur">occur</span> when a <span class="vb p l-b2" tabindex="0" data-d="an area of sinking, dense air that brings clear, hot weather" data-z="高壓系統" data-t="p" data-l="B2" data-w="high-pressure system">high-pressure system</span> <span class="vb p l-b2" tabindex="0" data-d="moves in and stays over (an area)" data-z="停滯籠罩於" data-t="p" data-l="B2" data-w="settles over">settles over</span> a region. These systems <span class="vb p l-b1" tabindex="0" data-d="to work or function as" data-z="充當、扮演…的角色" data-t="p" data-l="B1" data-w="act as">act as</span> “<span class="vb v l-b1" tabindex="0" data-d="covers; here, caps that trap heat" data-z="蓋子" data-t="v" data-l="B1" data-w="lids">lids</span>” that <span class="vb p l-b2" tabindex="0" data-d="to hold heat in and stop it escaping" data-z="把熱困住" data-t="p" data-l="B2" data-w="trap heat">trap heat</span> and push it closer to <span class="vb v l-b1" tabindex="0" data-d="the top layer; ground level" data-z="地表、表面" data-t="v" data-l="B1" data-w="the surface">the surface</span>. They also <span class="vb v l-c1" tabindex="0" data-d="to scatter or break up" data-z="驅散、消散" data-t="v" data-l="C1" data-w="disperse">disperse</span> clouds to allow more sunlight to <span class="vb p l-b2" tabindex="0" data-d="to flow in steadily" data-z="湧入、流入" data-t="p" data-l="B2" data-w="stream in">stream in</span>.</p><p><span class="vb p l-c1" tabindex="0" data-d="looking at a much wider view" data-z="在更大的尺度上" data-t="p" data-l="C1" data-w="On a broader scale">On a broader scale</span>, <span class="vb p l-b1" tabindex="0" data-d="long-term change in Earth’s weather patterns" data-z="氣候變遷" data-t="p" data-l="B1" data-w="climate change">climate change</span> from the burning of oil, <span class="vb v l-b1" tabindex="0" data-d="a black rock burned as fossil fuel" data-z="煤" data-t="v" data-l="B1" data-w="coal">coal</span> and gas is <span class="vb v l-c1" tabindex="0" data-d="changing the form or pattern of" data-z="重塑、改變" data-t="v" data-l="C1" data-w="reshaping">reshaping</span> how and when heatwaves <span class="vb v l-b1" tabindex="0" data-d="to develop; take shape" data-z="形成" data-t="v" data-l="B1" data-w="form">form</span>. This is because the <span class="vb v l-b2" tabindex="0" data-d="extra; added" data-z="額外的" data-t="v" data-l="B2" data-w="additional">additional</span> heat <span class="vb v l-b2" tabindex="0" data-d="held in; unable to escape" data-z="被困住的" data-t="v" data-l="B2" data-w="trapped">trapped</span> in the <span class="vb v l-b2" tabindex="0" data-d="the layer of gases surrounding the Earth" data-z="大氣（層）" data-t="v" data-l="B2" data-w="atmosphere">atmosphere</span> also changes <span class="vb p l-b2" tabindex="0" data-d="happening over a wide area" data-z="大規模的" data-t="p" data-l="B2" data-w="large-scale">large-scale</span> <span class="vb p l-b2" tabindex="0" data-d="the usual way weather behaves over an area" data-z="天氣型態" data-t="p" data-l="B2" data-w="weather patterns">weather patterns</span>, which <span class="vb v l-b2" tabindex="0" data-d="usually; normally" data-z="通常" data-t="v" data-l="B2" data-w="typically">typically</span> move west to east, allowing more <span class="vb p l-b1" tabindex="0" data-d="moving slowly" data-z="移動緩慢的" data-t="p" data-l="B1" data-w="slow-moving">slow-moving</span> high-pressure systems to <span class="vb v l-b1" tabindex="0" data-d="to develop; take shape" data-z="形成" data-t="v" data-l="B1" data-w="form">form</span>. This <span class="vb p l-b2" tabindex="0" data-d="as a result; consequently" data-z="進而、接著" data-t="p" data-l="B2" data-w="in turn">in turn</span> <span class="vb p l-b1" tabindex="0" data-d="makes something bad more likely" data-z="提高…的風險" data-t="p" data-l="B1" data-w="increases the risk of">increases the risk of</span> heatwaves.</p><p>Research shows in the five <span class="vb v l-b2" tabindex="0" data-d="periods of ten years" data-z="數十年" data-t="v" data-l="B2" data-w="decades">decades</span> between 1950 and 1999, Europe <span class="vb v l-b2" tabindex="0" data-d="suffered through; lasted through" data-z="忍受、熬過" data-t="v" data-l="B2" data-w="endured">endured</span> five <span class="vb v l-b2" tabindex="0" data-d="very strong or extreme" data-z="劇烈的、強烈的" data-t="v" data-l="B2" data-w="intense">intense</span> heatwaves. Between 2000 and 2021, there were 18 <span class="vb v l-b1" tabindex="0" data-d="of this kind" data-z="這類的" data-t="v" data-l="B1" data-w="such">such</span> heatwaves. Add to that the <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> heatwaves of 2022, 2023 and 2025, and this figure <span class="vb p l-b1" tabindex="0" data-d="increases to" data-z="上升至" data-t="p" data-l="B1" data-w="rises to">rises to</span> more than 20 <span class="vb v l-b2" tabindex="0" data-d="very serious or intense" data-z="嚴重的、劇烈的" data-t="v" data-l="B2" data-w="severe">severe</span> heatwaves in just 25 years. So the <span class="vb v l-b1" tabindex="0" data-d="facts that prove something" data-z="證據" data-t="v" data-l="B1" data-w="evidence">evidence</span> is clear – European heatwaves are happening far more often.</p><p>How are people <span class="vb v l-b2" tabindex="0" data-d="managing a difficult situation" data-z="應對、承受" data-t="v" data-l="B2" data-w="coping">coping</span>?</p><p>This <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> has already <span class="vb v l-b2" tabindex="0" data-d="in a very sad, distressing way" data-z="令人痛心地" data-t="v" data-l="B2" data-w="tragically">tragically</span> <span class="vb p l-c1" tabindex="0" data-d="caused dozens of deaths" data-z="奪走數十條性命" data-t="p" data-l="C1" data-w="claimed dozens of lives">claimed dozens of lives</span> in France, where people have <span class="vb v l-b2" tabindex="0" data-d="died under water" data-z="溺斃" data-t="v" data-l="B2" data-w="drowned">drowned</span>.</p><p>According to the European Climate <span class="vb p l-b2" tabindex="0" data-d="an evaluation of possible dangers" data-z="風險評估" data-t="p" data-l="B2" data-w="Risk Assessment">Risk Assessment</span>, heatwaves already <span class="vb p l-c1" tabindex="0" data-d="present a very serious danger to health" data-z="構成嚴重的健康威脅" data-t="p" data-l="C1" data-w="pose a critical health risk">pose a critical health risk</span> to people across southern Europe. And in coming years, communities in southern and western-central Europe will be most <span class="vb p l-b1" tabindex="0" data-d="in danger of harm" data-z="面臨風險、有危險" data-t="p" data-l="B1" data-w="at risk">at risk</span> of <span class="vb p l-b2" tabindex="0" data-d="connected with or caused by heat" data-z="與高溫相關的" data-t="p" data-l="B2" data-w="heat-related">heat-related</span> <span class="vb v l-b1" tabindex="0" data-d="a disease or period of being unwell" data-z="疾病" data-t="v" data-l="B1" data-w="illness">illness</span> and death.</p><p>What makes this <span class="vb v l-b1" tabindex="0" data-d="a long spell of unusually hot weather" data-z="熱浪" data-t="v" data-l="B1" data-w="heatwave">heatwave</span> <span class="vb p l-b1" tabindex="0" data-d="so serious/intense" data-z="如此嚴重" data-t="p" data-l="B1" data-w="so severe">so severe</span> is <span class="vb p l-b1" tabindex="0" data-d="two or more things acting together" data-z="…的結合" data-t="p" data-l="B1" data-w="the combination of">the combination of</span> <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> temperatures and high <span class="vb v l-b2" tabindex="0" data-d="the amount of water vapour in the air" data-z="濕度" data-t="v" data-l="B2" data-w="humidity">humidity</span>, which is completely <span class="vb v l-b1" tabindex="0" data-d="different from; not like" data-z="不同於" data-t="v" data-l="B1" data-w="unlike">unlike</span> the <span class="vb v l-b1" tabindex="0" data-d="usual; representative" data-z="典型的" data-t="v" data-l="B1" data-w="typical">typical</span> dry summers experienced in southern Australia.</p><p>Children and <span class="vb p l-b1" tabindex="0" data-d="old people (as a group)" data-z="老年人" data-t="p" data-l="B1" data-w="the elderly">the elderly</span> are most <span class="vb p l-b1" tabindex="0" data-d="in danger of harm" data-z="面臨風險、有危險" data-t="p" data-l="B1" data-w="at risk">at risk</span> of <span class="vb p l-b2" tabindex="0" data-d="connected with or caused by heat" data-z="與高溫相關的" data-t="p" data-l="B2" data-w="heat-related">heat-related</span> <span class="vb v l-b1" tabindex="0" data-d="a disease or period of being unwell" data-z="疾病" data-t="v" data-l="B1" data-w="illness">illness</span>. Their bodies are less able to <span class="vb v l-b2" tabindex="0" data-d="to turn from liquid into vapour" data-z="蒸發" data-t="v" data-l="B2" data-w="evaporate">evaporate</span> <span class="vb v l-b1" tabindex="0" data-d="moisture the body releases to cool down" data-z="汗、流汗" data-t="v" data-l="B1" data-w="sweat">sweat</span> and <span class="vb v l-c1" tabindex="0" data-d="to control or keep steady" data-z="調節、調控" data-t="v" data-l="C1" data-w="regulate">regulate</span> their <span class="vb v l-b2" tabindex="0" data-d="inside (here, of the body)" data-z="體內的、內部的" data-t="v" data-l="B2" data-w="internal">internal</span> temperature. For these <span class="vb v l-b2" tabindex="0" data-d="groups of people" data-z="族群、人口群" data-t="v" data-l="B2" data-w="populations">populations</span>, <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> heat <span class="vb p l-c1" tabindex="0" data-d="combined with; together with" data-z="加上、與…結合" data-t="p" data-l="C1" data-w="coupled with">coupled with</span> <span class="vb v l-b2" tabindex="0" data-d="the amount of water vapour in the air" data-z="濕度" data-t="v" data-l="B2" data-w="humidity">humidity</span> can be <span class="vb p l-b2" tabindex="0" data-d="capable of causing death" data-z="危及生命的" data-t="p" data-l="B2" data-w="life-threatening">life-threatening</span>.</p><p>What about the next southern <span class="vb v l-b2" tabindex="0" data-d="one half of the Earth" data-z="半球" data-t="v" data-l="B2" data-w="hemisphere">hemisphere</span> summer?</p><p><span class="vb v l-b2" tabindex="0" data-d="in the past; through history" data-z="歷來、過去" data-t="v" data-l="B2" data-w="Historically">Historically</span>, heatwaves in Europe aren’t <span class="vb p l-b1" tabindex="0" data-d="connected with" data-z="與…相關" data-t="p" data-l="B1" data-w="related to">related to</span> heatwaves in <span class="vb v l-b1" tabindex="0" data-d="the next" data-z="接下來的" data-t="v" data-l="B1" data-w="the following">the following</span> southern <span class="vb v l-b2" tabindex="0" data-d="one half of the Earth" data-z="半球" data-t="v" data-l="B2" data-w="hemisphere">hemisphere</span> summer.</p><p>However, <span class="vb p l-b1" tabindex="0" data-d="long-term change in Earth’s weather patterns" data-z="氣候變遷" data-t="p" data-l="B1" data-w="climate change">climate change</span> is increasing the risk of <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> heat <span class="vb p l-c1" tabindex="0" data-d="in any particular year you choose" data-z="在任一年份" data-t="p" data-l="C1" data-w="in any given year">in any given year</span>. <span class="vb v l-b1" tabindex="0" data-d="to join or mix together" data-z="結合" data-t="v" data-l="B1" data-w="Combine">Combine</span> this with the effects of <span class="vb p l-b2" tabindex="0" data-d="a natural climate cycle in which the eastern Pacific Ocean warms up every few years, shifting weather worldwide — often bringing hotter, drier conditions to Australia and Asia, and heavier rain to the Americas. Its cool opposite is La Niña. Here it adds extra warmth on top of climate change." data-z="聖嬰現象:太平洋東部海面每隔數年異常變暖的自然氣候循環,會牽動全球天氣——常使澳洲、亞洲更熱更乾,美洲部分地區降雨增多;相反的冷相位稱「反聖嬰」(La Niña)。此處它在氣候變遷之上再添額外熱能。" data-t="p" data-l="B2" data-w="El Niño">El Niño</span>, and global average temperatures will be at <span class="vb p l-b2" tabindex="0" data-d="close to the highest ever" data-z="接近紀錄的" data-t="p" data-l="B2" data-w="near-record">near-record</span> levels for both 2026 and 2027.</p><p>In our changing climate, the risk of <span class="vb v l-b1" tabindex="0" data-d="at the greatest possible degree" data-z="極端的" data-t="v" data-l="B1" data-w="extreme">extreme</span> heat – Australia’s deadliest <span class="vb p l-b2" tabindex="0" data-d="a natural danger such as flood, fire or heat" data-z="自然災害" data-t="p" data-l="B2" data-w="natural hazard">natural hazard</span> – is now <span class="vb p l-b2" tabindex="0" data-d="something now true everywhere" data-z="全球普遍的現實" data-t="p" data-l="B2" data-w="a global reality">a global reality</span>.</p><p><span class="vb v l-b1" tabindex="0" data-d="a change that fixes a mistake" data-z="更正" data-t="v" data-l="B1" data-w="Correction">Correction</span>: this article <span class="vb v l-b1" tabindex="0" data-d="at first; in the beginning" data-z="原本、起初" data-t="v" data-l="B1" data-w="originally">originally</span> <span class="vb v l-b2" tabindex="0" data-d="said or expressed formally" data-z="陳述、指出" data-t="v" data-l="B2" data-w="stated">stated</span> large scale weather systems <span class="vb v l-b2" tabindex="0" data-d="usually; normally" data-z="通常" data-t="v" data-l="B2" data-w="typically">typically</span> move from east to west. This has been corrected to west to east.</p></div>
+
+    <h2 class="sec"><span class="n">§</span>Grammar patterns to watch <span style="font-size:12px;color:#7a8294;font-weight:400;">文法重點（少量）</span></h2>
+    <div class="rule"></div>
+    <details class="gram"><summary>1 · Unreal conditional — imagining a world without climate change　與現實相反的假設</summary>
+      <div class="gbody"><span class="ex">In a world without climate change, this heatwave would rarely happen.</span> · <span class="ex">Without … emissions, such a heatwave would only happen once every 50 years.</span><br><span class="zh">用「假想一個沒有…的世界」＋ would 來做「與事實相反」的推論（第二條件句）。看到 <b>without / in a world without … would …</b>，就是在拿現實跟一個不存在的情況對比。</span></div></details>
+    <details class="gram"><summary>2 · Cause-and-effect chain　因果鏈連接詞</summary>
+      <div class="gbody"><span class="ex">This is because…</span> (reason) → <span class="ex">…which in turn increases the risk…</span> (next link) → <span class="ex">This in turn…</span><br><span class="zh">這篇把「原因 → 結果 → 再造成下一個結果」用連接詞串起來。讀的時候把 <b>because / in turn / this in turn / as a result</b> 圈出來，整條因果鏈就清楚了。</span></div></details>
+
+    <h2 class="sec"><span class="n">§</span>Full glossary <span style="font-size:12px;color:#7a8294;font-weight:400;">詞彙與片語總表</span></h2>
+    <div class="rule"></div>
+    <div id="glossWrap"><div id="glossList"><div class="g"><span class="t">a global reality</span><span class="lv lvb2">B2</span><div class="d">something now true everywhere</div><div class="z">全球普遍的現實</div></div><div class="g"><span class="t">accounted for</span><span class="lv lvc1">C1</span><div class="d">took into account; included in the calculation</div><div class="z">把…計入、納入考量</div></div><div class="g"><span class="t">act as</span><span class="lv lvb1">B1</span><div class="d">to work or function as</div><div class="z">充當、扮演…的角色</div></div><div class="g"><span class="t">active</span><span class="lv lvb1">B1</span><div class="d">in effect; operating</div><div class="z">活躍中、生效中</div></div><div class="g"><span class="t">additional</span><span class="lv lvb2">B2</span><div class="d">extra; added</div><div class="z">額外的</div></div><div class="g"><span class="t">all-time highs</span><span class="lv lvb2">B2</span><div class="d">the highest levels ever recorded</div><div class="z">歷史新高</div></div><div class="g"><span class="t">amounts</span><span class="lv lvb1">B1</span><div class="d">quantities; sizes</div><div class="z">數量、幅度</div></div><div class="g"><span class="t">at risk</span><span class="lv lvb1">B1</span><div class="d">in danger of harm</div><div class="z">面臨風險、有危險</div></div><div class="g"><span class="t">at the local scale</span><span class="lv lvc1">C1</span><div class="d">looking at a small, nearby area</div><div class="z">在地方（小）尺度上</div></div><div class="g"><span class="t">atmosphere</span><span class="lv lvb2">B2</span><div class="d">the layer of gases surrounding the Earth</div><div class="z">大氣（層）</div></div><div class="g"><span class="t">battles</span><span class="lv lvb2">B2</span><div class="d">struggles hard against</div><div class="z">對抗、苦戰</div></div><div class="g"><span class="t">battling</span><span class="lv lvb2">B2</span><div class="d">struggling hard against something</div><div class="z">對抗、苦戰</div></div><div class="g"><span class="t">bear the brunt</span><span class="lv lvc1">C1</span><div class="d">to suffer the worst part of something</div><div class="z">首當其衝、承受最重的衝擊</div></div><div class="g"><span class="t">broader</span><span class="lv lvb2">B2</span><div class="d">wider; more general</div><div class="z">更廣的</div></div><div class="g"><span class="t">broken</span><span class="lv lvb1">B1</span><div class="d">beaten (a record)</div><div class="z">打破（紀錄）</div></div><div class="g"><span class="t">claimed</span><span class="lv lvc1">C1</span><div class="d">(of a disaster) caused the death of</div><div class="z">奪走（性命）</div></div><div class="g"><span class="t">claimed dozens of lives</span><span class="lv lvc1">C1</span><div class="d">caused dozens of deaths</div><div class="z">奪走數十條性命</div></div><div class="g"><span class="t">climate change</span><span class="lv lvb1">B1</span><div class="d">long-term change in Earth’s weather patterns</div><div class="z">氣候變遷</div></div><div class="g"><span class="t">climbing</span><span class="lv lvb1">B1</span><div class="d">rising steadily</div><div class="z">攀升</div></div><div class="g"><span class="t">climbing to</span><span class="lv lvb1">B1</span><div class="d">rising to</div><div class="z">攀升至</div></div><div class="g"><span class="t">coal</span><span class="lv lvb1">B1</span><div class="d">a black rock burned as fossil fuel</div><div class="z">煤</div></div><div class="g"><span class="t">combine</span><span class="lv lvb1">B1</span><div class="d">to join or mix together</div><div class="z">結合</div></div><div class="g"><span class="t">consecutive</span><span class="lv lvb2">B2</span><div class="d">following one after another without a break</div><div class="z">連續的</div></div><div class="g"><span class="t">cool down</span><span class="lv lvb1">B1</span><div class="d">become or make cooler</div><div class="z">降溫、消暑</div></div><div class="g"><span class="t">coping</span><span class="lv lvb2">B2</span><div class="d">managing a difficult situation</div><div class="z">應對、承受</div></div><div class="g"><span class="t">correction</span><span class="lv lvb1">B1</span><div class="d">a change that fixes a mistake</div><div class="z">更正</div></div><div class="g"><span class="t">coupled with</span><span class="lv lvc1">C1</span><div class="d">combined with; together with</div><div class="z">加上、與…結合</div></div><div class="g"><span class="t">critical</span><span class="lv lvb2">B2</span><div class="d">extremely serious; crucial</div><div class="z">嚴重的、關鍵的</div></div><div class="g"><span class="t">current</span><span class="lv lvb1">B1</span><div class="d">happening now; present</div><div class="z">目前的</div></div><div class="g"><span class="t">deadly</span><span class="lv lvb2">B2</span><div class="d">likely to cause death</div><div class="z">致命的</div></div><div class="g"><span class="t">decades</span><span class="lv lvb2">B2</span><div class="d">periods of ten years</div><div class="z">數十年</div></div><div class="g"><span class="t">declared</span><span class="lv lvb1">B1</span><div class="d">officially announced</div><div class="z">（正式）宣布</div></div><div class="g"><span class="t">disperse</span><span class="lv lvc1">C1</span><div class="d">to scatter or break up</div><div class="z">驅散、消散</div></div><div class="g"><span class="t">dozens of</span><span class="lv lvb1">B1</span><div class="d">many; tens of</div><div class="z">數十個</div></div><div class="g"><span class="t">driving</span><span class="lv lvb2">B2</span><div class="d">causing; powering (what’s driving X = what’s causing X)</div><div class="z">驅動、造成</div></div><div class="g"><span class="t">drowned</span><span class="lv lvb2">B2</span><div class="d">died under water</div><div class="z">溺斃</div></div><div class="g"><span class="t">el niño</span><span class="lv lvb2">B2</span><div class="d">a natural climate cycle in which the eastern Pacific Ocean warms up every few years, shifting weather worldwide — often bringing hotter, drier conditions to Australia and Asia, and heavier rain to the Americas. Its cool opposite is La Niña. Here it adds extra warmth on top of climate change.</div><div class="z">聖嬰現象:太平洋東部海面每隔數年異常變暖的自然氣候循環,會牽動全球天氣——常使澳洲、亞洲更熱更乾,美洲部分地區降雨增多;相反的冷相位稱「反聖嬰」(La Niña)。此處它在氣候變遷之上再添額外熱能。</div></div><div class="g"><span class="t">emissions</span><span class="lv lvb2">B2</span><div class="d">gases or substances released into the air</div><div class="z">排放（物）</div></div><div class="g"><span class="t">endured</span><span class="lv lvb2">B2</span><div class="d">suffered through; lasted through</div><div class="z">忍受、熬過</div></div><div class="g"><span class="t">evaporate</span><span class="lv lvb2">B2</span><div class="d">to turn from liquid into vapour</div><div class="z">蒸發</div></div><div class="g"><span class="t">evidence</span><span class="lv lvb1">B1</span><div class="d">facts that prove something</div><div class="z">證據</div></div><div class="g"><span class="t">examined</span><span class="lv lvb2">B2</span><div class="d">studied or inspected closely</div><div class="z">檢視、研究</div></div><div class="g"><span class="t">extreme</span><span class="lv lvb1">B1</span><div class="d">at the greatest possible degree</div><div class="z">極端的</div></div><div class="g"><span class="t">figures</span><span class="lv lvb2">B2</span><div class="d">numbers; recorded data</div><div class="z">數字、數據</div></div><div class="g"><span class="t">forecasts</span><span class="lv lvb2">B2</span><div class="d">predictions of future weather</div><div class="z">預報</div></div><div class="g"><span class="t">form</span><span class="lv lvb1">B1</span><div class="d">to develop; take shape</div><div class="z">形成</div></div><div class="g"><span class="t">frequent</span><span class="lv lvb2">B2</span><div class="d">happening often</div><div class="z">頻繁的</div></div><div class="g"><span class="t">global sea surface temperature</span><span class="lv lvb2">B2</span><div class="d">the temperature of the ocean’s top layer worldwide</div><div class="z">全球海表溫度</div></div><div class="g"><span class="t">greenhouse gas emissions</span><span class="lv lvb2">B2</span><div class="d">heat-trapping gases (like CO₂) released by human activity</div><div class="z">溫室氣體排放</div></div><div class="g"><span class="t">heat stress</span><span class="lv lvb2">B2</span><div class="d">physical strain the body suffers from excessive heat</div><div class="z">熱緊迫、熱壓力</div></div><div class="g"><span class="t">heat-related</span><span class="lv lvb2">B2</span><div class="d">connected with or caused by heat</div><div class="z">與高溫相關的</div></div><div class="g"><span class="t">heatwave</span><span class="lv lvb1">B1</span><div class="d">a long spell of unusually hot weather</div><div class="z">熱浪</div></div><div class="g"><span class="t">hemisphere</span><span class="lv lvb2">B2</span><div class="d">one half of the Earth</div><div class="z">半球</div></div><div class="g"><span class="t">high-pressure system</span><span class="lv lvb2">B2</span><div class="d">an area of sinking, dense air that brings clear, hot weather</div><div class="z">高壓系統</div></div><div class="g"><span class="t">highs</span><span class="lv lvb2">B2</span><div class="d">the highest temperatures</div><div class="z">最高溫</div></div><div class="g"><span class="t">historic</span><span class="lv lvb2">B2</span><div class="d">important or memorable in history</div><div class="z">歷史性的（罕見重大）</div></div><div class="g"><span class="t">historically</span><span class="lv lvb2">B2</span><div class="d">in the past; through history</div><div class="z">歷來、過去</div></div><div class="g"><span class="t">hit</span><span class="lv lvb1">B1</span><div class="d">struck; badly affected</div><div class="z">侵襲、重創</div></div><div class="g"><span class="t">human-induced</span><span class="lv lvc1">C1</span><div class="d">brought about by human activity</div><div class="z">人為造成的</div></div><div class="g"><span class="t">human-made</span><span class="lv lvb2">B2</span><div class="d">caused by people, not nature</div><div class="z">人為的</div></div><div class="g"><span class="t">humidity</span><span class="lv lvb2">B2</span><div class="d">the amount of water vapour in the air</div><div class="z">濕度</div></div><div class="g"><span class="t">illness</span><span class="lv lvb1">B1</span><div class="d">a disease or period of being unwell</div><div class="z">疾病</div></div><div class="g"><span class="t">in a row</span><span class="lv lvb1">B1</span><div class="d">one after another; consecutively</div><div class="z">連續地</div></div><div class="g"><span class="t">in any given year</span><span class="lv lvc1">C1</span><div class="d">in any particular year you choose</div><div class="z">在任一年份</div></div><div class="g"><span class="t">in isolation</span><span class="lv lvb2">B2</span><div class="d">on its own; separately from other things</div><div class="z">孤立地、單獨地</div></div><div class="g"><span class="t">in turn</span><span class="lv lvb2">B2</span><div class="d">as a result; consequently</div><div class="z">進而、接著</div></div><div class="g"><span class="t">increases the risk of</span><span class="lv lvb1">B1</span><div class="d">makes something bad more likely</div><div class="z">提高…的風險</div></div><div class="g"><span class="t">intense</span><span class="lv lvb2">B2</span><div class="d">very strong or extreme</div><div class="z">劇烈的、強烈的</div></div><div class="g"><span class="t">internal</span><span class="lv lvb2">B2</span><div class="d">inside (here, of the body)</div><div class="z">體內的、內部的</div></div><div class="g"><span class="t">is expected to</span><span class="lv lvb1">B1</span><div class="d">is predicted/likely to</div><div class="z">預計會</div></div><div class="g"><span class="t">large-scale</span><span class="lv lvb2">B2</span><div class="d">happening over a wide area</div><div class="z">大規模的</div></div><div class="g"><span class="t">latest</span><span class="lv lvb1">B1</span><div class="d">most recent</div><div class="z">最新的</div></div><div class="g"><span class="t">lids</span><span class="lv lvb1">B1</span><div class="d">covers; here, caps that trap heat</div><div class="z">蓋子</div></div><div class="g"><span class="t">life-threatening</span><span class="lv lvb2">B2</span><div class="d">capable of causing death</div><div class="z">危及生命的</div></div><div class="g"><span class="t">lives have already been lost</span><span class="lv lvb2">B2</span><div class="d">people have already died</div><div class="z">已有人喪生</div></div><div class="g"><span class="t">losing sleep over</span><span class="lv lvc1">C1</span><div class="d">worrying a great deal about (idiom)</div><div class="z">為…憂心、寢食難安</div></div><div class="g"><span class="t">major</span><span class="lv lvb1">B1</span><div class="d">very large or important</div><div class="z">重大的</div></div><div class="g"><span class="t">meanwhile</span><span class="lv lvb1">B1</span><div class="d">at the same time</div><div class="z">與此同時</div></div><div class="g"><span class="t">multiple</span><span class="lv lvb2">B2</span><div class="d">many; more than one</div><div class="z">多個的</div></div><div class="g"><span class="t">natural hazard</span><span class="lv lvb2">B2</span><div class="d">a natural danger such as flood, fire or heat</div><div class="z">自然災害</div></div><div class="g"><span class="t">near-record</span><span class="lv lvb2">B2</span><div class="d">close to the highest ever</div><div class="z">接近紀錄的</div></div><div class="g"><span class="t">nuclear power plants</span><span class="lv lvb2">B2</span><div class="d">stations that make electricity from nuclear energy</div><div class="z">核能發電廠</div></div><div class="g"><span class="t">occur</span><span class="lv lvb2">B2</span><div class="d">to happen; take place</div><div class="z">發生</div></div><div class="g"><span class="t">occurs</span><span class="lv lvb2">B2</span><div class="d">happens; takes place</div><div class="z">發生</div></div><div class="g"><span class="t">on a broader scale</span><span class="lv lvc1">C1</span><div class="d">looking at a much wider view</div><div class="z">在更大的尺度上</div></div><div class="g"><span class="t">on record</span><span class="lv lvb2">B2</span><div class="d">in all of recorded history</div><div class="z">有紀錄以來</div></div><div class="g"><span class="t">originally</span><span class="lv lvb1">B1</span><div class="d">at first; in the beginning</div><div class="z">原本、起初</div></div><div class="g"><span class="t">overnight</span><span class="lv lvb1">B1</span><div class="d">during the night</div><div class="z">夜間（的）</div></div><div class="g"><span class="t">peak</span><span class="lv lvb2">B2</span><div class="d">to reach the highest point</div><div class="z">達到高峰</div></div><div class="g"><span class="t">populations</span><span class="lv lvb2">B2</span><div class="d">groups of people</div><div class="z">族群、人口群</div></div><div class="g"><span class="t">pose</span><span class="lv lvc1">C1</span><div class="d">to present (a threat, risk or problem)</div><div class="z">構成、帶來</div></div><div class="g"><span class="t">pose a critical health risk</span><span class="lv lvc1">C1</span><div class="d">present a very serious danger to health</div><div class="z">構成嚴重的健康威脅</div></div><div class="g"><span class="t">punishing</span><span class="lv lvc1">C1</span><div class="d">extremely harsh and demanding</div><div class="z">嚴酷的、折磨人的</div></div><div class="g"><span class="t">punishing heat</span><span class="lv lvc1">C1</span><div class="d">extremely harsh, exhausting heat</div><div class="z">難耐的酷熱</div></div><div class="g"><span class="t">rarely if ever</span><span class="lv lvc1">C1</span><div class="d">almost never</div><div class="z">幾乎從不</div></div><div class="g"><span class="t">reached record levels</span><span class="lv lvb1">B1</span><div class="d">risen to the highest ever measured</div><div class="z">達到創紀錄的水準</div></div><div class="g"><span class="t">reaching highs of</span><span class="lv lvb1">B1</span><div class="d">hitting maximum temperatures of</div><div class="z">高溫達到</div></div><div class="g"><span class="t">record-breaking</span><span class="lv lvb2">B2</span><div class="d">beating every previous record</div><div class="z">破紀錄的</div></div><div class="g"><span class="t">regulate</span><span class="lv lvc1">C1</span><div class="d">to control or keep steady</div><div class="z">調節、調控</div></div><div class="g"><span class="t">related to</span><span class="lv lvb1">B1</span><div class="d">connected with</div><div class="z">與…相關</div></div><div class="g"><span class="t">reshaping</span><span class="lv lvc1">C1</span><div class="d">changing the form or pattern of</div><div class="z">重塑、改變</div></div><div class="g"><span class="t">rises to</span><span class="lv lvb1">B1</span><div class="d">increases to</div><div class="z">上升至</div></div><div class="g"><span class="t">risk assessment</span><span class="lv lvb2">B2</span><div class="d">an evaluation of possible dangers</div><div class="z">風險評估</div></div><div class="g"><span class="t">settles over</span><span class="lv lvb2">B2</span><div class="d">moves in and stays over (an area)</div><div class="z">停滯籠罩於</div></div><div class="g"><span class="t">severe</span><span class="lv lvb2">B2</span><div class="d">very serious or intense</div><div class="z">嚴重的、劇烈的</div></div><div class="g"><span class="t">severity</span><span class="lv lvc1">C1</span><div class="d">how serious or intense something is</div><div class="z">嚴重程度</div></div><div class="g"><span class="t">shattering</span><span class="lv lvb2">B2</span><div class="d">breaking violently; smashing</div><div class="z">擊碎、打破</div></div><div class="g"><span class="t">shattering records</span><span class="lv lvb2">B2</span><div class="d">dramatically breaking records</div><div class="z">大幅打破紀錄</div></div><div class="g"><span class="t">shifting</span><span class="lv lvb2">B2</span><div class="d">moving; changing position</div><div class="z">移動、轉移</div></div><div class="g"><span class="t">since records began</span><span class="lv lvb2">B2</span><div class="d">since measurement/keeping records started</div><div class="z">自有紀錄以來</div></div><div class="g"><span class="t">sites</span><span class="lv lvb1">B1</span><div class="d">places; measuring locations</div><div class="z">地點、測站</div></div><div class="g"><span class="t">slow-moving</span><span class="lv lvb1">B1</span><div class="d">moving slowly</div><div class="z">移動緩慢的</div></div><div class="g"><span class="t">so severe</span><span class="lv lvb1">B1</span><div class="d">so serious/intense</div><div class="z">如此嚴重</div></div><div class="g"><span class="t">staggering</span><span class="lv lvc1">C1</span><div class="d">so large it is shocking</div><div class="z">驚人的</div></div><div class="g"><span class="t">stated</span><span class="lv lvb2">B2</span><div class="d">said or expressed formally</div><div class="z">陳述、指出</div></div><div class="g"><span class="t">stream in</span><span class="lv lvb2">B2</span><div class="d">to flow in steadily</div><div class="z">湧入、流入</div></div><div class="g"><span class="t">such</span><span class="lv lvb1">B1</span><div class="d">of this kind</div><div class="z">這類的</div></div><div class="g"><span class="t">summer solstice</span><span class="lv lvc1">C1</span><div class="d">the longest day of the year (about 21 June)</div><div class="z">夏至</div></div><div class="g"><span class="t">surpass</span><span class="lv lvc1">C1</span><div class="d">to go beyond; exceed</div><div class="z">超過、突破</div></div><div class="g"><span class="t">sustained</span><span class="lv lvc1">C1</span><div class="d">continuing steadily over a long time</div><div class="z">持續的</div></div><div class="g"><span class="t">sweat</span><span class="lv lvb1">B1</span><div class="d">moisture the body releases to cool down</div><div class="z">汗、流汗</div></div><div class="g"><span class="t">sweltering</span><span class="lv lvc1">C1</span><div class="d">unpleasantly and oppressively hot</div><div class="z">悶熱難耐的</div></div><div class="g"><span class="t">the combination of</span><span class="lv lvb1">B1</span><div class="d">two or more things acting together</div><div class="z">…的結合</div></div><div class="g"><span class="t">the continent</span><span class="lv lvb1">B1</span><div class="d">the large landmass — here, Europe</div><div class="z">大陸（此指歐洲）</div></div><div class="g"><span class="t">the elderly</span><span class="lv lvb1">B1</span><div class="d">old people (as a group)</div><div class="z">老年人</div></div><div class="g"><span class="t">the following</span><span class="lv lvb1">B1</span><div class="d">the next</div><div class="z">接下來的</div></div><div class="g"><span class="t">the mercury</span><span class="lv lvc1">C1</span><div class="d">the temperature (as read on a thermometer)</div><div class="z">水銀柱、氣溫</div></div><div class="g"><span class="t">the peak of</span><span class="lv lvb1">B1</span><div class="d">the highest point of</div><div class="z">…的高峰</div></div><div class="g"><span class="t">the southern hemisphere</span><span class="lv lvb2">B2</span><div class="d">the half of the Earth south of the equator</div><div class="z">南半球</div></div><div class="g"><span class="t">the surface</span><span class="lv lvb1">B1</span><div class="d">the top layer; ground level</div><div class="z">地表、表面</div></div><div class="g"><span class="t">timing</span><span class="lv lvb2">B2</span><div class="d">the moment when something happens</div><div class="z">時機、時間點</div></div><div class="g"><span class="t">toppling</span><span class="lv lvc1">C1</span><div class="d">knocking over; here, breaking (records)</div><div class="z">推翻、打破（紀錄）</div></div><div class="g"><span class="t">tragically</span><span class="lv lvb2">B2</span><div class="d">in a very sad, distressing way</div><div class="z">令人痛心地</div></div><div class="g"><span class="t">trap heat</span><span class="lv lvb2">B2</span><div class="d">to hold heat in and stop it escaping</div><div class="z">把熱困住</div></div><div class="g"><span class="t">trapped</span><span class="lv lvb2">B2</span><div class="d">held in; unable to escape</div><div class="z">被困住的</div></div><div class="g"><span class="t">typical</span><span class="lv lvb1">B1</span><div class="d">usual; representative</div><div class="z">典型的</div></div><div class="g"><span class="t">typically</span><span class="lv lvb2">B2</span><div class="d">usually; normally</div><div class="z">通常</div></div><div class="g"><span class="t">ultimately</span><span class="lv lvb2">B2</span><div class="d">in the end; finally</div><div class="z">最終</div></div><div class="g"><span class="t">unfolding</span><span class="lv lvc1">C1</span><div class="d">gradually developing or happening</div><div class="z">逐漸展開、正在發生</div></div><div class="g"><span class="t">unlike</span><span class="lv lvb1">B1</span><div class="d">different from; not like</div><div class="z">不同於</div></div><div class="g"><span class="t">unusually</span><span class="lv lvb1">B1</span><div class="d">more than is normal; abnormally</div><div class="z">異常地</div></div><div class="g"><span class="t">weather bureau</span><span class="lv lvb2">B2</span><div class="d">a national weather office/agency</div><div class="z">氣象局</div></div><div class="g"><span class="t">weather patterns</span><span class="lv lvb2">B2</span><div class="d">the usual way weather behaves over an area</div><div class="z">天氣型態</div></div><div class="g"><span class="t">weather stations</span><span class="lv lvb2">B2</span><div class="d">places that measure and record the weather</div><div class="z">氣象測站</div></div></div></div>
+  </div>
+</div>
+
+<footer>
+  <span class="strong">Source / 原文出處:</span> “Europe is battling a record-breaking heatwave. What’s making it so severe?” by Andrew B. Watkins, Monash University.<br>
+  Published by <em>The Conversation</em> (25 June 2026, updated 29 June 2026) under a Creative Commons (CC&nbsp;BY-ND) licence.<br>
+  Read the original article 閱讀原文:
+  <a href="https://theconversation.com/europe-is-battling-a-record-breaking-heatwave-whats-making-it-so-severe-286019" target="_blank" rel="noopener">theconversation.com/europe-is-battling-a-record-breaking-heatwave-whats-making-it-so-severe-286019</a><br>
+  <span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span>
+  Text © The Conversation / the author; this glossary is an InkQuest study aid. 文字版權屬原作者與 The Conversation 所有。
+</footer>
+
+<div id="tip" role="tooltip" aria-hidden="true" style="display: none; left: 347.211px; top: 2638.8px;"><div class="meta"><span class="cat v">Word</span><span class="lvl">B1</span></div><span class="term">typical</span> — usual; representative<span class="zh">典型的</span></div>
+
+<script>
+/* =========================================================================
+   GLOSSARY  —  key : [English note, 繁體中文, type(v/p/c), CEFR]
+   v = word · p = phrase/idiom · c = grammar/usage anchor
+   Inflected surface forms are included so they light up in the pasted text.
+   ========================================================================= */
+var VOCAB = {
+ /* ---- headline / intro ---- */
+ 'battling': ['struggling hard against something','對抗、苦戰','v','B2'],
+ 'battles': ['struggles hard against','對抗、苦戰','v','B2'],
+ 'record-breaking': ['beating every previous record','破紀錄的','p','B2'],
+ 'heatwave': ['a long spell of unusually hot weather','熱浪','v','B1'],
+ 'severe': ['very serious or intense','嚴重的、劇烈的','v','B2'],
+ 'so severe': ['so serious/intense','如此嚴重','p','B1'],
+ 'atmosphere': ['the layer of gases surrounding the Earth','大氣（層）','v','B2'],
+ 'sweltering': ['unpleasantly and oppressively hot','悶熱難耐的','v','C1'],
+ 'shattering records': ['dramatically breaking records','大幅打破紀錄','p','B2'],
+ 'shattering': ['breaking violently; smashing','擊碎、打破','v','B2'],
+ 'the continent': ['the large landmass — here, Europe','大陸（此指歐洲）','v','B1'],
+ 'deadly': ['likely to cause death','致命的','v','B2'],
+
+ /* ---- temperature records ---- */
+ 'endured': ['suffered through; lasted through','忍受、熬過','v','B2'],
+ 'reaching highs of': ['hitting maximum temperatures of','高溫達到','p','B1'],
+ 'highs': ['the highest temperatures','最高溫','v','B2'],
+ 'on record': ['in all of recorded history','有紀錄以來','p','B2'],
+ 'the mercury': ['the temperature (as read on a thermometer)','水銀柱、氣溫','p','C1'],
+ 'climbing to': ['rising to','攀升至','p','B1'],
+ 'climbing': ['rising steadily','攀升','v','B1'],
+ 'broken': ['beaten (a record)','打破（紀錄）','v','B1'],
+ 'sites': ['places; measuring locations','地點、測站','v','B1'],
+
+ /* ---- casualties ---- */
+ 'tragically': ['in a very sad, distressing way','令人痛心地','v','B2'],
+ 'lives have already been lost': ['people have already died','已有人喪生','p','B2'],
+ 'dozens of': ['many; tens of','數十個','p','B1'],
+ 'drowned': ['died under water','溺斃','v','B2'],
+ 'cool down': ['become or make cooler','降溫、消暑','p','B1'],
+ 'punishing heat': ['extremely harsh, exhausting heat','難耐的酷熱','p','C1'],
+ 'punishing': ['extremely harsh and demanding','嚴酷的、折磨人的','v','C1'],
+
+ /* ---- wider context ---- */
+ 'historic': ['important or memorable in history','歷史性的（罕見重大）','v','B2'],
+ 'in isolation': ['on its own; separately from other things','孤立地、單獨地','p','B2'],
+ 'global sea surface temperature': ['the temperature of the ocean\u2019s top layer worldwide','全球海表溫度','p','B2'],
+ 'reached record levels': ['risen to the highest ever measured','達到創紀錄的水準','p','B1'],
+ 'meanwhile': ['at the same time','與此同時','v','B1'],
+ 'weather bureau': ['a national weather office/agency','氣象局','p','B2'],
+ 'declared': ['officially announced','（正式）宣布','v','B1'],
+ 'el niño': ['a natural climate cycle in which the eastern Pacific Ocean warms up every few years, shifting weather worldwide \u2014 often bringing hotter, drier conditions to Australia and Asia, and heavier rain to the Americas. Its cool opposite is La Ni\u00f1a. Here it adds extra warmth on top of climate change.','聖嬰現象:太平洋東部海面每隔數年異常變暖的自然氣候循環,會牽動全球天氣\u2014\u2014常使澳洲、亞洲更熱更乾,美洲部分地區降雨增多;相反的冷相位稱「反聖嬰」(La Ni\u00f1a)。此處它在氣候變遷之上再添額外熱能。','p','B2'],
+ 'active': ['in effect; operating','活躍中、生效中','v','B1'],
+ 'sustained': ['continuing steadily over a long time','持續的','v','C1'],
+ 'ultimately': ['in the end; finally','最終','v','B2'],
+ 'driving': ['causing; powering (what\u2019s driving X = what\u2019s causing X)','驅動、造成','p','B2'],
+ 'latest': ['most recent','最新的','v','B1'],
+
+ /* ---- definition of a heatwave ---- */
+ 'unusually': ['more than is normal; abnormally','異常地','v','B1'],
+ 'occurs': ['happens; takes place','發生','v','B2'],
+ 'occur': ['to happen; take place','發生','v','B2'],
+ 'in a row': ['one after another; consecutively','連續地','p','B1'],
+ 'losing sleep over': ['worrying a great deal about (idiom)','為…憂心、寢食難安','p','C1'],
+ 'current': ['happening now; present','目前的','v','B1'],
+
+ /* ---- timing ---- */
+ 'timing': ['the moment when something happens','時機、時間點','v','B2'],
+ 'summer solstice': ['the longest day of the year (about 21 June)','夏至','p','C1'],
+ 'intense': ['very strong or extreme','劇烈的、強烈的','v','B2'],
+ 'heat stress': ['physical strain the body suffers from excessive heat','熱緊迫、熱壓力','p','B2'],
+ 'major': ['very large or important','重大的','v','B1'],
+ 'unfolding': ['gradually developing or happening','逐漸展開、正在發生','v','C1'],
+ 'the peak of': ['the highest point of','…的高峰','p','B1'],
+ 'evidence': ['facts that prove something','證據','v','B1'],
+ 'climate change': ['long-term change in Earth\u2019s weather patterns','氣候變遷','p','B1'],
+ 'frequent': ['happening often','頻繁的','v','B2'],
+ 'examined': ['studied or inspected closely','檢視、研究','v','B2'],
+ 'hit': ['struck; badly affected','侵襲、重創','v','B1'],
+ 'human-made': ['caused by people, not nature','人為的','p','B2'],
+ 'human-induced': ['brought about by human activity','人為造成的','p','C1'],
+ 'greenhouse gas emissions': ['heat-trapping gases (like CO\u2082) released by human activity','溫室氣體排放','p','B2'],
+ 'emissions': ['gases or substances released into the air','排放（物）','v','B2'],
+ 'accounted for': ['took into account; included in the calculation','把…計入、納入考量','p','C1'],
+
+ /* ---- severity ---- */
+ 'severity': ['how serious or intense something is','嚴重程度','v','C1'],
+ 'extreme': ['at the greatest possible degree','極端的','v','B1'],
+ 'rarely if ever': ['almost never','幾乎從不','p','C1'],
+ 'toppling': ['knocking over; here, breaking (records)','推翻、打破（紀錄）','p','C1'],
+ 'staggering': ['so large it is shocking','驚人的','v','C1'],
+ 'amounts': ['quantities; sizes','數量、幅度','v','B1'],
+ 'since records began': ['since measurement/keeping records started','自有紀錄以來','p','B2'],
+ 'all-time highs': ['the highest levels ever recorded','歷史新高','p','B2'],
+ 'weather stations': ['places that measure and record the weather','氣象測站','p','B2'],
+ 'figures': ['numbers; recorded data','數字、數據','v','B2'],
+ 'overnight': ['during the night','夜間（的）','v','B1'],
+ 'nuclear power plants': ['stations that make electricity from nuclear energy','核能發電廠','p','B2'],
+ 'multiple': ['many; more than one','多個的','v','B2'],
+ 'consecutive': ['following one after another without a break','連續的','v','B2'],
+ 'surpass': ['to go beyond; exceed','超過、突破','v','C1'],
+ 'is expected to': ['is predicted/likely to','預計會','p','B1'],
+ 'peak': ['to reach the highest point','達到高峰','v','B2'],
+ 'shifting': ['moving; changing position','移動、轉移','v','B2'],
+ 'forecasts': ['predictions of future weather','預報','v','B2'],
+ 'bear the brunt': ['to suffer the worst part of something','首當其衝、承受最重的衝擊','p','C1'],
+
+ /* ---- the mechanism ---- */
+ 'at the local scale': ['looking at a small, nearby area','在地方（小）尺度上','p','C1'],
+ 'on a broader scale': ['looking at a much wider view','在更大的尺度上','p','C1'],
+ 'high-pressure system': ['an area of sinking, dense air that brings clear, hot weather','高壓系統','p','B2'],
+ 'settles over': ['moves in and stays over (an area)','停滯籠罩於','p','B2'],
+ 'act as': ['to work or function as','充當、扮演…的角色','p','B1'],
+ 'lids': ['covers; here, caps that trap heat','蓋子','v','B1'],
+ 'trap heat': ['to hold heat in and stop it escaping','把熱困住','p','B2'],
+ 'trapped': ['held in; unable to escape','被困住的','v','B2'],
+ 'the surface': ['the top layer; ground level','地表、表面','v','B1'],
+ 'disperse': ['to scatter or break up','驅散、消散','v','C1'],
+ 'stream in': ['to flow in steadily','湧入、流入','p','B2'],
+ 'broader': ['wider; more general','更廣的','v','B2'],
+ 'coal': ['a black rock burned as fossil fuel','煤','v','B1'],
+ 'reshaping': ['changing the form or pattern of','重塑、改變','v','C1'],
+ 'form': ['to develop; take shape','形成','v','B1'],
+ 'additional': ['extra; added','額外的','v','B2'],
+ 'large-scale': ['happening over a wide area','大規模的','p','B2'],
+ 'weather patterns': ['the usual way weather behaves over an area','天氣型態','p','B2'],
+ 'typically': ['usually; normally','通常','v','B2'],
+ 'slow-moving': ['moving slowly','移動緩慢的','p','B1'],
+ 'in turn': ['as a result; consequently','進而、接著','p','B2'],
+ 'increases the risk of': ['makes something bad more likely','提高…的風險','p','B1'],
+ 'decades': ['periods of ten years','數十年','v','B2'],
+ 'such': ['of this kind','這類的','v','B1'],
+ 'rises to': ['increases to','上升至','p','B1'],
+
+ /* ---- coping / health ---- */
+ 'coping': ['managing a difficult situation','應對、承受','v','B2'],
+ 'claimed dozens of lives': ['caused dozens of deaths','奪走數十條性命','p','C1'],
+ 'claimed': ['(of a disaster) caused the death of','奪走（性命）','v','C1'],
+ 'risk assessment': ['an evaluation of possible dangers','風險評估','p','B2'],
+ 'pose a critical health risk': ['present a very serious danger to health','構成嚴重的健康威脅','p','C1'],
+ 'pose': ['to present (a threat, risk or problem)','構成、帶來','v','C1'],
+ 'critical': ['extremely serious; crucial','嚴重的、關鍵的','v','B2'],
+ 'at risk': ['in danger of harm','面臨風險、有危險','p','B1'],
+ 'heat-related': ['connected with or caused by heat','與高溫相關的','p','B2'],
+ 'illness': ['a disease or period of being unwell','疾病','v','B1'],
+ 'the combination of': ['two or more things acting together','…的結合','p','B1'],
+ 'humidity': ['the amount of water vapour in the air','濕度','v','B2'],
+ 'unlike': ['different from; not like','不同於','v','B1'],
+ 'typical': ['usual; representative','典型的','v','B1'],
+ 'the elderly': ['old people (as a group)','老年人','p','B1'],
+ 'evaporate': ['to turn from liquid into vapour','蒸發','v','B2'],
+ 'sweat': ['moisture the body releases to cool down','汗、流汗','v','B1'],
+ 'regulate': ['to control or keep steady','調節、調控','v','C1'],
+ 'internal': ['inside (here, of the body)','體內的、內部的','v','B2'],
+ 'populations': ['groups of people','族群、人口群','v','B2'],
+ 'coupled with': ['combined with; together with','加上、與…結合','p','C1'],
+ 'life-threatening': ['capable of causing death','危及生命的','p','B2'],
+
+ /* ---- southern hemisphere / outlook ---- */
+ 'the southern hemisphere': ['the half of the Earth south of the equator','南半球','p','B2'],
+ 'hemisphere': ['one half of the Earth','半球','v','B2'],
+ 'historically': ['in the past; through history','歷來、過去','v','B2'],
+ 'related to': ['connected with','與…相關','p','B1'],
+ 'the following': ['the next','接下來的','v','B1'],
+ 'in any given year': ['in any particular year you choose','在任一年份','p','C1'],
+ 'combine': ['to join or mix together','結合','v','B1'],
+ 'near-record': ['close to the highest ever','接近紀錄的','p','B2'],
+ 'natural hazard': ['a natural danger such as flood, fire or heat','自然災害','p','B2'],
+ 'a global reality': ['something now true everywhere','全球普遍的現實','p','B2'],
+ 'correction': ['a change that fixes a mistake','更正','v','B1'],
+ 'originally': ['at first; in the beginning','原本、起初','v','B1'],
+ 'stated': ['said or expressed formally','陳述、指出','v','B2'],
+
+ /* ---- minimal grammar anchors ---- */
+ 'would only happen': ['ANCHOR: unreal conditional \u2014 imagining a world without climate change','文法:與現實相反的假設（第二條件句）','c','B2'],
+ 'in a world without': ['ANCHOR: sets up an unreal/hypothetical comparison','文法:假想一個不存在的情況來對比','c','B2']
+};
+
+/* =========================================================================
+   AUTO-LINKER  (adapted from the InkQuest Daily Brief linker)
+   ========================================================================= */
+var ROOT = document.getElementById('bodywrap');
+var TIP  = document.getElementById('tip');
+var CATLABEL = { v:'Word', p:'Phrase / idiom', c:'Grammar / usage' };
+var TERMS = Object.keys(VOCAB).sort(function(a,b){ return b.length - a.length; });
+var hitTotal = 0;
+
+function isWordChar(ch){ return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9'); }
+
+function ciFind(text, term, from){
+  var lt = text.toLowerCase(), lterm = term.toLowerCase();
+  var idx = lt.indexOf(lterm, from);
+  while (idx !== -1){
+    var before = idx>0 ? text.charAt(idx-1) : '';
+    var after  = (idx+term.length<text.length) ? text.charAt(idx+term.length) : '';
+    if (!isWordChar(before) && !isWordChar(after)) return idx;
+    idx = lt.indexOf(lterm, idx+1);
+  }
+  return -1;
+}
+
+function processTextNode(node){
+  var text = node.nodeValue;
+  if (!text || !/[A-Za-z]/.test(text)) return;
+  var bestIdx = -1, bestTerm = null;
+  for (var i=0;i<TERMS.length;i++){
+    var term = TERMS[i];
+    var idx = ciFind(text, term, 0);
+    if (idx === -1) continue;
+    if (bestIdx === -1 || idx < bestIdx || (idx === bestIdx && term.length > bestTerm.length)){
+      bestIdx = idx; bestTerm = term;
+    }
+  }
+  if (bestTerm === null) return;
+  var entry = VOCAB[bestTerm];
+  var matchText = text.substr(bestIdx, bestTerm.length);
+  var pre  = text.slice(0, bestIdx);
+  var post = text.slice(bestIdx + bestTerm.length);
+  var span = document.createElement('span');
+  var lvl = (entry[3]||'').toLowerCase().split('/')[0];
+  span.className = 'vb ' + entry[2] + ' l-' + lvl;
+  span.setAttribute('tabindex','0');
+  span.setAttribute('data-d', entry[0]);
+  span.setAttribute('data-z', entry[1]);
+  span.setAttribute('data-t', entry[2]);
+  span.setAttribute('data-l', entry[3]||'');
+  span.setAttribute('data-w', matchText);
+  span.textContent = matchText;
+  var parent = node.parentNode;
+  if (pre) parent.insertBefore(document.createTextNode(pre), node);
+  parent.insertBefore(span, node);
+  var postNode = document.createTextNode(post);
+  parent.insertBefore(postNode, node);
+  parent.removeChild(node);
+  hitTotal++;
+  processTextNode(postNode);
+}
+
+function linkify(){
+  var walker = document.createTreeWalker(ROOT, NodeFilter.SHOW_TEXT, null, false);
+  var nodes = [], n;
+  while ((n = walker.nextNode())) nodes.push(n);
+  for (var i=0;i<nodes.length;i++){
+    if (nodes[i].parentNode) processTextNode(nodes[i]);
+  }
+}
+
+/* =========================================================================
+   TOOLTIP  —  hover (desktop) + tap/click (mobile) + keyboard focus
+   ========================================================================= */
+var pinned = null, hideTimer = null;
+
+function fillTip(el){
+  var lvl = el.getAttribute('data-l');
+  TIP.innerHTML =
+    '<div class="meta"><span class="cat ' + el.getAttribute('data-t') + '">' + CATLABEL[el.getAttribute('data-t')] + '</span>' +
+    (lvl ? '<span class="lvl">'+lvl+'</span>' : '') + '</div>' +
+    '<span class="term">' + el.getAttribute('data-w') + '</span> &mdash; ' + el.getAttribute('data-d') +
+    '<span class="zh">' + el.getAttribute('data-z') + '</span>';
+}
+function placeTip(el){
+  TIP.style.display = 'block'; TIP.style.left='0'; TIP.style.top='0';
+  var r = el.getBoundingClientRect(), tw = TIP.offsetWidth, th = TIP.offsetHeight, pad = 10;
+  var x = r.left + r.width/2 - tw/2;
+  x = Math.max(pad, Math.min(x, window.innerWidth - tw - pad));
+  var y = r.top - th - 8; if (y < pad) y = r.bottom + 8;
+  TIP.style.left = (x + window.scrollX) + 'px';
+  TIP.style.top  = (y + window.scrollY) + 'px';
+}
+function showTip(el){
+  if (document.body.classList.contains('nohl')) return;
+  if (hideTimer){ clearTimeout(hideTimer); hideTimer = null; }
+  fillTip(el); placeTip(el);
+}
+function hideTip(){ TIP.style.display='none'; if (pinned){ pinned.classList.remove('open'); pinned=null; } }
+
+ROOT.addEventListener('mouseover', function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) showTip(el); });
+ROOT.addEventListener('mouseout',  function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el&&!pinned) hideTimer=setTimeout(function(){TIP.style.display='none';},80); });
+ROOT.addEventListener('focusin',   function(e){ var el=e.target.closest&&e.target.closest('.vb'); if(el) showTip(el); });
+ROOT.addEventListener('focusout',  function(){ if(!pinned) TIP.style.display='none'; });
+document.addEventListener('click', function(e){
+  var el = e.target.closest && e.target.closest('.vb');
+  if (el){
+    if (pinned===el){ hideTip(); return; }
+    if (pinned) pinned.classList.remove('open');
+    pinned = el; el.classList.add('open'); showTip(el); e.stopPropagation(); return;
+  }
+  if (!TIP.contains(e.target)) hideTip();
+});
+window.addEventListener('resize', hideTip);
+window.addEventListener('scroll', function(){ if(pinned) placeTip(pinned); }, {passive:true});
+
+/* ---- controls: highlight toggle, level filters, font size ---- */
+var toggle = document.getElementById('toggle');
+toggle.addEventListener('click', function(){
+  var off = document.body.classList.toggle('nohl');
+  toggle.textContent = 'Highlights: ' + (off?'Off':'On');
+  toggle.setAttribute('aria-pressed', off?'true':'false');
+  if (off) hideTip();
+});
+Array.prototype.forEach.call(document.querySelectorAll('.lvchk'), function(c){
+  c.addEventListener('change', function(){ document.body.classList.toggle('hide-'+c.getAttribute('data-l'), !c.checked); });
+});
+var scale = 1;
+function setScale(s){ scale = Math.max(0.85, Math.min(1.4, s)); document.getElementById('bodywrap').style.fontSize = scale.toFixed(2)+'em'; }
+document.getElementById('fontPlus').addEventListener('click', function(){ setScale(scale+0.08); });
+document.getElementById('fontMinus').addEventListener('click', function(){ setScale(scale-0.08); });
+
+/* =========================================================================
+   GLOSSARY LIST  (built from VOCAB, A–Z, de-duplicated by 中文+def)
+   ========================================================================= */
+function buildGlossary(){
+  var seen = {}, items = [];
+  for (var k in VOCAB){
+    var e = VOCAB[k];
+    if (e[2]==='c') continue;                 /* grammar anchors live in the grammar section */
+    var sig = e[1]+'|'+e[0];
+    if (seen[sig]) continue; seen[sig]=1;
+    items.push([k, e]);
+  }
+  items.sort(function(a,b){ return a[0].localeCompare(b[0]); });
+  var lvclass = {B1:'lvb1','B2':'lvb2','C1':'lvc1'};
+  var html = '';
+  for (var i=0;i<items.length;i++){
+    var k=items[i][0], e=items[i][1], lv=(e[3]||'').split('/')[0];
+    html += '<div class="g"><span class="t">'+k+'</span>'+
+            (lv?'<span class="lv '+(lvclass[lv]||'lvb2')+'">'+lv+'</span>':'')+
+            '<div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';
+  }
+  document.getElementById('glossList').innerHTML = html;
+}
+
+/* =========================================================================
+   PASTE → RENDER  +  EXPORT student copy
+   ========================================================================= */
+function renderArticle(raw){
+  hitTotal = 0;
+  var clean = (raw||'').replace(/\r/g,'').trim();
+  ROOT.innerHTML = '';
+  if (!clean){ ROOT.innerHTML = '<div class="placeholder">Paste the article above and press “Apply glossary” to see it here with tooltips.</div>'; return; }
+  var parts = clean.split(/\n\s*\n/);
+  if (parts.length < 2) parts = clean.split(/\n/);   /* fall back to single newlines */
+  parts.forEach(function(par){
+    par = par.trim(); if (!par) return;
+    var p = document.createElement('p');
+    p.textContent = par;
+    ROOT.appendChild(p);
+  });
+  linkify();
+  var hc = document.getElementById('hitCount');
+  if (hc) hc.textContent = hitTotal + ' terms linked';
+}
+
+var setup = document.getElementById('setup');
+if (setup){
+  document.getElementById('applyBtn').addEventListener('click', function(){
+    renderArticle(document.getElementById('srcText').value);
+    document.getElementById('bodywrap').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  document.getElementById('clearBtn').addEventListener('click', function(){
+    document.getElementById('srcText').value=''; renderArticle('');
+    document.getElementById('hitCount').textContent='';
+  });
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    if (!ROOT.querySelector('.vb')){ alert('Paste the article and press “Apply glossary” first.'); return; }
+    var clone = document.documentElement.cloneNode(true);
+    clone.setAttribute('data-mode','student');
+    var s = clone.querySelector('#setup'); if (s) s.remove();
+    var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([html], {type:'text/html'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'AI-Jobs-Reading-student.html';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1200);
+  });
+}
+
+/* ---- boot ---- */
+var STUDENT = document.documentElement.getAttribute('data-mode') === 'student';
+buildGlossary();
+if (STUDENT){
+  if (setup) setup.remove();              /* safety: no setup panel for students */
+  /* article already baked in with .vb spans — do not re-linkify */
+}
+</script>
+
+
+</body></html>
