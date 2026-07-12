@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blade Doctors — InkQuest Reading Room</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B;
+    --rule:#DED6C4; --accent:#0E7C86; --accent-deep:#0A5960;
+    --tech:#B8863B; --tech-soft:#F0E4C9;
+    --vocab:#0E7C86; --vocab-soft:#D9EDEF;
+    --idiom:#8A5AA8; --idiom-soft:#EDE2F3;
+    --serif: "Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han: "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 8px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--tech)}
+
+  .legend{font-family:var(--sans);font-size:13px;background:var(--panel);border:1px solid var(--rule);border-radius:12px;
+    padding:13px 16px;margin:18px 0 4px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;line-height:1.4}
+  .legend .lg{display:flex;align-items:center;gap:7px}
+  .legend .sw{width:26px;flex:none}
+  .legend .sw.t{border-bottom:2px dotted var(--tech)}
+  .legend .sw.v{border-bottom:2px dashed var(--vocab)}
+  .legend .sw.i{border-bottom:2px solid var(--idiom)}
+  .legend .cap{font-weight:700;color:var(--ink)}
+  .legend .zh{font-family:var(--han);color:var(--soft-ink)}
+  .legend .hint{color:var(--soft-ink);flex-basis:100%;font-size:12.5px}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent-deep)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◆";color:var(--tech);font-size:11px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--tech);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;line-height:1.2;transition:background .12s}
+  button.gl.tech{color:var(--accent-deep);border-bottom:2px dotted var(--tech)}
+  button.gl.vocab{color:var(--accent-deep);border-bottom:2px dashed var(--vocab)}
+  button.gl.idiom{color:#6E4488;border-bottom:2px solid var(--idiom)}
+  button.gl.tech:hover,button.gl.tech[aria-expanded="true"]{background:var(--tech-soft)}
+  button.gl.vocab:hover,button.gl.vocab[aria-expanded="true"]{background:var(--vocab-soft)}
+  button.gl.idiom:hover,button.gl.idiom[aria-expanded="true"]{background:var(--idiom-soft)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+    padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.tech{background:var(--tech);color:#2b1f08}
+  #pop .tag.vocab{background:#5FC6D0;color:#04333a}
+  #pop .tag.idiom{background:#C79EE0;color:#3a1f4a}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#7FD4DC;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lit{font-size:12.5px;line-height:1.5;color:#A9A296;margin-top:8px;padding-top:8px;border-top:1px solid #3a352c;font-style:italic;display:none}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none}
+  #scrim.show{display:block}
+
+  .panel{background:var(--panel);border:1px solid var(--rule);border-radius:16px;padding:26px 26px 8px;margin:44px 0 0}
+  .panel.disc{border-top:5px solid var(--accent)}
+  .panel h3{font-family:var(--sans);font-weight:800;font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+  .panel .sub{font-family:var(--sans);font-size:13.5px;color:var(--soft-ink);margin:0 0 20px}
+  .qgroup{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent-deep);margin:22px 0 10px}
+  ol.q{margin:0;padding:0;counter-reset:q;list-style:none}
+  ol.q li{position:relative;padding:0 0 18px 42px;font-size:17.5px;line-height:1.55}
+  ol.q li::before{counter-increment:q;content:counter(q);position:absolute;left:0;top:1px;width:28px;height:28px;
+    background:var(--tech-soft);color:var(--tech);font-family:var(--sans);font-weight:800;font-size:14px;
+    border-radius:8px;display:flex;align-items:center;justify-content:center}
+
+  .pdfnote{font-family:var(--sans);font-size:13.5px;background:var(--tech-soft);border:1px solid #E4D2A6;color:#6b5424;
+    border-radius:12px;padding:13px 16px;margin:22px 0 6px;line-height:1.5}
+  .pdfnote b{color:#523f16}
+
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    margin:26px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pipbadge{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.t{color:#8a6420} .wbhead.t .pipbadge{background:var(--tech)}
+  .wbhead.v{color:var(--accent-deep)} .wbhead.v .pipbadge{background:var(--vocab)}
+  .wbhead.i{color:#6E4488} .wbhead.i .pipbadge{background:var(--idiom)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:48px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink)}
+  footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px}
+    h1{font-size:31px}
+    .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none}
+    #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Science &amp; Technology</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Green Energy · Field Report</div>
+    <h1>Blade Doctors</h1>
+    <p class="deck">A hundred metres up, on a spinning giant, someone has to fix the cracks. Inside the Kaohsiung school training Taiwan's newest <button class="gl" data-g="greencollar">green-collar</button> specialists.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span>Level: <b>B1–C1</b></span><span class="dot">◆</span><span>About <b>5 min</b> read</span></div>
+    <div class="legend">
+      <span class="lg"><span class="sw t"></span><span><span class="cap">Technical</span> <span class="zh">專業術語</span></span></span>
+      <span class="lg"><span class="sw v"></span><span><span class="cap">Vocabulary</span> <span class="zh">進階單字</span></span></span>
+      <span class="lg"><span class="sw i"></span><span><span class="cap">Idiom / phrase</span> <span class="zh">慣用語</span></span></span>
+      <span class="hint">Tap any underlined word for its meaning, Chinese equivalent, and an explanation. 點選畫線文字即可查看中英解釋。</span>
+    </div>
+  </header>
+
+  <article>
+    <p class="lead">Stand at the foot of a modern wind <button class="gl" data-g="turbine">turbine</button> and look up. The three <button class="gl" data-g="blade">blades</button> sweeping overhead are among the largest single moving objects humans have ever built — the longest now stretch beyond 140 metres, longer than a <button class="gl" data-g="pitch">football pitch</button>, yet each is light enough to <button class="gl" data-g="flex">flex</button> in a strong <button class="gl" data-g="gust">gust</button> like a diving board. Multiply that by the thousands of turbines now spinning off the world's coastlines and you begin to <button class="gl" data-g="grasp">grasp</button> the scale of the machine we have <button class="gl" data-g="bolted">bolted to</button> the planet.</p>
+
+    <p>The world recently crossed a <button class="gl" data-g="milestone">milestone</button>: total wind-power capacity passed 1.1 <button class="gl" data-g="watt">terawatts</button> — more than a trillion watts — and wind now supplies over a tenth of global electricity. <button class="gl" data-g="appeal">The appeal is plain.</button> Every turbine that spins is one that isn't burning imported coal or gas, and in an age of <button class="gl" data-g="volatile">volatile</button> fuel prices and a warming climate, that mix of cleaner air and <button class="gl" data-g="renewable">energy security</button> is <button class="gl" data-g="hardargue">hard to argue with</button>.</p>
+
+    <p>Few places feel this more sharply than Taiwan. The island is crowded and short of flat land, but the Taiwan Strait <button class="gl" data-g="funnel">funnels</button> some of the most reliable winds on Earth. So Taiwan <button class="gl" data-g="wenttosea">went to sea</button>. Since Formosa 1, the country's first commercial <button class="gl" data-g="offshore">offshore wind farm</button>, switched on in 2020, project after project has risen from the waves — the vast Greater Changhua farms off the west coast, whose newest 920-megawatt phase sells its power straight to <button class="gl" data-g="chipmaker">chip-maker</button> TSMC, and the 640-megawatt Yunlin <button class="gl" data-g="array">array</button> that reached full output in 2025. Outside China, Taiwan is now Asia's biggest offshore-wind market, aiming for well over 13 gigawatts by 2030.</p>
+
+    <p>But building the giants is <button class="gl" data-g="halfstory">only half the story</button>. Out at sea, salt, rain, ultraviolet light and blade tips travelling at nearly 300 kilometres an hour <button class="gl" data-g="punish">punish</button> the machines every second they run. <button class="gl" data-g="soonerlater">Sooner or later</button>, every blade needs a doctor — and that is where a low building beside Kaohsiung's Xingda Harbour comes in. The Maritime Technology Innovation Center (MTIC), run by the Metal Industries Research &amp; Development Centre, is one of Taiwan's hubs for training offshore-wind workers, so the country can maintain its own turbines rather than fly in specialists. Among its courses is a demanding ten-day programme certified by the <button class="gl" data-g="gwo">Global Wind Organisation</button>: Blade Repair.</p>
+
+    <h2>Built like a bridge, shaped like a wing</h2>
+    <p>To fix a blade, you first have to know <button class="gl" data-g="howborn">how it is born</button>. A turbine blade is not metal but <button class="gl" data-g="composite">composite</button> — layers of glass or carbon <button class="gl" data-g="fibre">fibre</button> soaked in <button class="gl" data-g="epoxy">epoxy resin</button> and hardened in a giant <button class="gl" data-g="mould">mould</button>. Many makers <button class="gl" data-g="infusion">infuse</button> the resin under vacuum, then glue two half-shells together; others inflate a bag inside a single mould to form the whole blade in one <button class="gl" data-g="seamless">seamless</button> piece.</p>
+
+    <p>Inside, the design <button class="gl" data-g="borrow">borrows from</button> bridges and aircraft. A central beam called the <button class="gl" data-g="sparcap">spar cap</button> runs the length of the blade, <button class="gl" data-g="brace">braced</button> by vertical <button class="gl" data-g="shearweb">shear webs</button> into a stiff I-beam that carries the load. The curved skin is the <button class="gl" data-g="aerofoil">aerofoil</button>: a sharp <button class="gl" data-g="edge">leading edge</button> slices the wind and a thin trailing edge follows behind, while lightweight <button class="gl" data-g="balsa">balsa</button>-wood or foam <button class="gl" data-g="core">cores</button> keep the panels <button class="gl" data-g="rigid">rigid</button> without adding weight.</p>
+
+    <div class="pull">A turbine blade is not built so much as baked — glass, glue and air, cured into a wing the length of a city block.</div>
+
+    <h2>Where blades get hurt</h2>
+    <p>Blades fail in <button class="gl" data-g="handful">a handful of</button> familiar ways, and trainees learn to <button class="gl" data-g="readdamage">read</button> each one. The leading edge, struck by rain and <button class="gl" data-g="grit">grit</button> at enormous speed, slowly wears away — a process called <button class="gl" data-g="erosion">erosion</button> — <button class="gl" data-g="stoneriver">like a stone in a river</button>. Layers can peel apart inside, known as <button class="gl" data-g="delam">delamination</button>, or the glued <button class="gl" data-g="seam">seam</button> can split along the <button class="gl" data-g="bondline">bond line</button>. Lightning, which strikes blades often, can blast damage deep inside where the eye cannot see, so the <button class="gl" data-g="lps">lightning protection system</button> must be tested after every hit. <button class="gl" data-g="leftalone">Left alone</button>, a small <button class="gl" data-g="flaw">flaw</button> grows — <button class="gl" data-g="rob">robbing</button> the turbine of efficiency or, <button class="gl" data-g="atworst">at worst</button>, tearing a blade apart.</p>
+
+    <h2>The repair kit</h2>
+    <p>Fixing composite means rebuilding it. Technicians <button class="gl" data-g="grind">grind</button> away the damage, then lay fresh fibre and resin layer by layer, restoring the blade's original shape and strength. For critical repairs they use <button class="gl" data-g="vacuum">vacuum bagging</button> to squeeze out trapped air and a <button class="gl" data-g="blanket">heating blanket</button> to <button class="gl" data-g="cure">cure</button> the resin properly. To find hidden trouble they carry a surprisingly simple toolkit: a coin-sized hammer for the <button class="gl" data-g="taptest">tap test</button> — listening for the dull note of a <button class="gl" data-g="void">void</button> — a <button class="gl" data-g="barcol">hardness tester</button> to confirm the resin has cured, and a meter to check the lightning <button class="gl" data-g="conductor">conductors</button>. Finally, <button class="gl" data-g="filler">filler</button> and a fresh <button class="gl" data-g="gelcoat">gelcoat</button> restore the smooth outer skin.</p>
+
+    <h2>Respect the chemistry</h2>
+    <p>The riskiest part of the job isn't the height — it's the chemistry. Curing resin <button class="gl" data-g="giveoff">gives off</button> heat as it hardens, the <button class="gl" data-g="exotherm">exotherm</button> reaction, and a large <button class="gl" data-g="batch">batch</button> can grow hot enough to smoke or even catch fire. The same resins can <button class="gl" data-g="trigger">trigger</button> a lifelong allergy called <button class="gl" data-g="sensitisation">sensitisation</button>, or painful <button class="gl" data-g="dermatitis">dermatitis</button>, from a single careless splash. So the course <button class="gl" data-g="drill">drills</button> safety hard: <button class="gl" data-g="respirator">respirators</button> against <button class="gl" data-g="fumes">fumes</button> and dust, gloves and suits as <button class="gl" data-g="ppe">personal protective equipment</button>, good <button class="gl" data-g="ventilation">ventilation</button>, careful chemical storage, and <button class="gl" data-g="loto">locking machines off</button> before anyone climbs. Even the leftovers are controlled — sticky rollers and waste resin cannot <button class="gl" data-g="downdrain">go down the drain</button>, but must be cured solid and sent for proper <button class="gl" data-g="disposal">disposal</button>.</p>
+
+    <p>Ten days later, a successful trainee can inspect a blade, <button class="gl" data-g="document">document</button> its damage and carry out a certified repair — up on the <button class="gl" data-g="ropes">ropes</button>, a hundred metres above the sea. It is difficult, chemical-soaked, <button class="gl" data-g="weatherbeaten">weather-beaten</button> work. It is also, increasingly, one of the <button class="gl" data-g="greeneconomy">green economy</button>'s most <button class="gl" data-g="futureproof">future-proof</button> careers.</p>
+  </article>
+
+  <section class="panel disc" aria-labelledby="disc-h">
+    <h3 id="disc-h">Discussion Questions</h3>
+    <p class="sub">Discuss in pairs or groups, then write your own answers. There are no single correct answers — give reasons and examples.</p>
+
+    <div class="qgroup">Wind power &amp; the environment</div>
+    <ol class="q">
+      <li>Offshore wind farms are often called “clean,” yet building and running them still affects the sea. What positive <em>and</em> negative effects might a large offshore farm have on marine life, fishing communities, and the coastal view?</li>
+      <li>Some critics say that the noise, the risk to birds, and the problem of disposing of worn-out blades make wind power “less green than it looks.” How would you answer that argument?</li>
+    </ol>
+
+    <div class="qgroup">Comparing energy sources</div>
+    <ol class="q" start="3">
+      <li>What are the main advantages and disadvantages of wind power compared with solar, hydroelectric, and nuclear energy? If you advised Taiwan's government, which mix would you choose, and why?</li>
+      <li>Wind is <em>intermittent</em> — it does not blow on demand. What are some ways a country can deal with this problem, and how convincing do you find them?</li>
+    </ol>
+
+    <div class="qgroup">Resins in everyday life</div>
+    <ol class="q" start="5">
+      <li>The same <button class="gl" data-g="epoxy">epoxy</button> and <button class="gl" data-g="uv">UV resins</button> used to repair turbine blades are popular in handicrafts — resin jewellery, keychains, coasters, and <button class="gl" data-g="orgonite">orgonites</button>. Why do you think these materials are so useful for both heavy industry and delicate crafts?</li>
+      <li>If you made resin accessories at home, which safety lessons from this article would you apply? Think about skin contact, curing, and the workspace.</li>
+    </ol>
+
+    <div class="qgroup">Safety: heat, air &amp; waste</div>
+    <ol class="q" start="7">
+      <li>Curing resin releases heat (the <button class="gl" data-g="exotherm">exotherm</button> reaction) and fumes. Why is good ventilation so important when working with resin — whether in a factory or at a hobby desk by a window?</li>
+      <li>Leftover resin, sticky rollers, and off-cuts cannot simply be poured down the drain. What would responsible disposal look like for <em>(a)</em> a wind-farm repair team and <em>(b)</em> a home crafter?</li>
+    </ol>
+
+    <div class="qgroup">People &amp; the future</div>
+    <ol class="q" start="9">
+      <li>“Blade doctors” often work on ropes, high above the sea. What personal qualities and skills do you think the job demands? Would it appeal to you — why or why not?</li>
+      <li>Taiwan is training its own blade-repair technicians instead of relying on foreign experts. Why might a country want to “localise” this kind of skilled work?</li>
+    </ol>
+
+    <div class="pdfnote"><b>Worksheet:</b> A fillable PDF version of these ten questions accompanies this article, with space to type or write your answers — handy for homework or class submission. 本文附有可填寫的 PDF 作業單，方便作答與繳交。</div>
+  </section>
+
+  <section class="panel" aria-labelledby="wb-h">
+    <h3 id="wb-h">Word Bank</h3>
+    <p class="sub">Every glossary item from the article, grouped by type. 文中所有術語、單字與慣用語總整理。</p>
+    <div id="wordbank"></div>
+  </section>
+
+  <footer>
+    <div>InkQuest Reading Room · “Blade Doctors.” Written for intermediate-to-advanced English learners. Figures on global and Taiwanese wind power reflect industry reporting through early 2026 and will keep changing.</div>
+    <div class="han" style="margin-top:6px">本篇為 InkQuest 閱讀室文章，適合中高階英語學習者。全球與台灣風電數據隨產業發展持續更新。</div>
+  </footer>
+</div>
+
+<div id="scrim"></div>
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">×</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lit" id="pop-lit"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+
+<script>
+/* t: tech | vocab | idiom ; lit = optional usage note */
+const GLOSS={
+  /* ---------- TECHNICAL ---------- */
+  turbine:{t:"tech",h:"wind turbine",zh:"風力發電機／風機",d:"The whole machine: a tall tower, a housing at the top, and three rotating blades. Wind turns the blades, which spin a generator that makes electricity."},
+  blade:{t:"tech",h:"blade",zh:"葉片",d:"One of the three long, wing-shaped arms of a turbine. It is the part that catches the wind — and the part this whole article is about repairing."},
+  watt:{t:"tech",h:"gigawatt (GW) & terawatt (TW)",zh:"千兆瓦（GW）與兆瓦（TW）",d:"Units of electrical power. One gigawatt is a billion watts; one terawatt is a thousand gigawatts. A single large offshore turbine is rated at roughly 14 megawatts (0.014 GW), so 1.1 TW represents an enormous global fleet."},
+  renewable:{t:"tech",h:"renewable energy / energy security",zh:"再生能源／能源安全",d:"Renewable energy comes from sources nature replaces — wind, sun, water, geothermal heat — not from finite fossil fuels. “Energy security” means depending less on imported fuel whose price and supply a country cannot control."},
+  offshore:{t:"tech",h:"offshore wind farm",zh:"離岸風電場",d:"A group of wind turbines built at sea rather than on land. Sea winds are stronger and steadier, and building offshore saves scarce land — a big advantage for a crowded island like Taiwan."},
+  array:{t:"tech",h:"array",zh:"陣列（機組群）",d:"An organised group of things arranged in a pattern. Here it means the set of turbines making up one wind farm."},
+  gwo:{t:"tech",h:"GWO (Global Wind Organisation)",zh:"全球風能組織",d:"A non-profit founded by turbine owners and manufacturers that writes the industry's safety and skill standards. A GWO certificate is effectively the passport that lets a technician work on turbines worldwide."},
+  composite:{t:"tech",h:"composite (GFRP)",zh:"複合材料（玻璃纖維強化塑膠）",d:"A material made by combining two others: strong fibres (glass or carbon) set inside a plastic resin. The fibres carry the load; the resin holds them in shape. Strong, yet light enough to bend."},
+  fibre:{t:"tech",h:"fibre",zh:"纖維",d:"A very thin thread of glass or carbon. Thousands are woven into cloth, then soaked in resin — the fibres give a blade nearly all of its strength. (US spelling: “fiber.”)"},
+  epoxy:{t:"tech",h:"epoxy resin",zh:"環氧樹脂",d:"A tough two-part plastic that starts as a liquid and hardens (“cures”) when a hardener is mixed in. It grips glass fibre superbly, which is why it forms the body of a turbine blade — and, in small amounts, a crafter's casting resin."},
+  mould:{t:"tech",h:"mould",zh:"模具",d:"The precisely shaped, often heated tool a blade is formed inside. Fibre and resin are laid in and cured, so the blade takes the mould's exact aerodynamic curve. (US spelling: “mold.”)"},
+  infusion:{t:"tech",h:"resin infusion / to infuse",zh:"樹脂灌注",d:"A method where dry fibre is sealed under a vacuum bag and liquid resin is pulled through it, filling every gap with almost no trapped air — giving a strong, even material."},
+  sparcap:{t:"tech",h:"spar cap",zh:"翼樑帽",d:"The thick, stiff backbone running down the middle of a blade, built from many fibre layers all pointing lengthwise. It carries most of the bending force as the blade flexes."},
+  shearweb:{t:"tech",h:"shear web",zh:"抗剪腹板",d:"An internal wall joining the upper and lower spar caps. Together they form an “I-beam” — the same shape engineers use in bridges and skyscrapers to resist bending."},
+  aerofoil:{t:"tech",h:"aerofoil",zh:"翼型",d:"The curved wing shape that generates lift when air flows over it. A turbine blade is an aerofoil, exactly like an aeroplane wing — which is why it can pull power out of moving air. (US: “airfoil.”)"},
+  edge:{t:"tech",h:"leading edge & trailing edge",zh:"前緣與後緣",d:"The leading edge is the front of the blade, which meets the wind first; the trailing edge is the thin rear edge. The leading edge suffers the worst erosion; the trailing edge can split along its glued seam."},
+  balsa:{t:"tech",h:"balsa",zh:"輕木",d:"A famously light, soft wood — the kind used in model aeroplanes. Slices of it are sandwiched inside blade panels to add stiffness with almost no weight."},
+  core:{t:"tech",h:"sandwich core",zh:"夾層芯材",d:"A lightweight filling — balsa wood or rigid foam — placed between two fibre skins. Like corrugated cardboard, it makes a panel far stiffer without making it heavy."},
+  erosion:{t:"tech",h:"erosion",zh:"腐蝕（侵蝕）",d:"The slow wearing-away of a surface. On a blade it is worst at the fast-moving leading edge, where rain and grit strike at hundreds of kilometres per hour. A rough, eroded blade loses efficiency."},
+  delam:{t:"tech",h:"delamination",zh:"脫層",d:"When the bonded layers of a composite peel apart, like the pages of a book left in water. It weakens the blade and usually cannot be seen from outside — which is what the tap test is for."},
+  bondline:{t:"tech",h:"bond line",zh:"黏合線",d:"The glued joint where two moulded halves of a blade meet. It is only as strong as the adhesive, so a failing bond line is a serious defect needing prompt repair."},
+  lps:{t:"tech",h:"lightning protection system (LPS)",zh:"雷擊防護系統",d:"Metal “receptors” on the blade surface and conductors inside it that catch a lightning strike and carry the current safely down to earth. After a strike, technicians test that this path is unbroken."},
+  conductor:{t:"tech",h:"conductor",zh:"導體",d:"A material — usually metal — that electricity flows through easily. Inside a blade, conductors carry a lightning strike safely away."},
+  vacuum:{t:"tech",h:"vacuum bagging",zh:"真空袋壓",d:"Sealing a fresh repair under an airtight bag and pumping the air out. Atmospheric pressure then presses the layers together, squeezing out bubbles to leave a dense, strong repair."},
+  blanket:{t:"tech",h:"heating blanket",zh:"加熱毯",d:"A controllable electric heat pad laid over a repair. Epoxy usually needs warmth to cure fully and reach its designed strength, so the blanket supplies a precise, monitored temperature."},
+  cure:{t:"tech",h:"to cure",zh:"固化",d:"To harden from liquid into solid through a chemical reaction — not by drying out. Once resin has cured, the change is permanent and cannot be undone."},
+  taptest:{t:"tech",h:"tap test",zh:"敲擊測試",d:"A simple inspection: tapping the surface with a small hammer and listening. Solid laminate rings sharply; a void or delamination underneath sounds dull — an old but reliable way to find hidden damage."},
+  void:{t:"tech",h:"void",zh:"氣孔／空洞",d:"An empty pocket of trapped air inside the material where there should be solid resin and fibre. Voids weaken a blade — and they are exactly what the tap test hunts for."},
+  barcol:{t:"tech",h:"hardness tester (Barcol)",zh:"巴氏硬度計",d:"A tool that presses a sharp point into cured resin to measure how hard it is. Hardness reveals whether the resin cured properly — too soft means a weak, under-cured repair."},
+  filler:{t:"tech",h:"filler",zh:"補土",d:"A thick paste spread over a repair to rebuild the surface shape. It adds no strength — its job is to restore the smooth aerodynamic profile before the final coat goes on."},
+  gelcoat:{t:"tech",h:"gelcoat",zh:"膠衣",d:"The smooth, tough outer coating that seals a blade against water and ultraviolet light. A repair is finished with filler and a fresh protective coat to restore this skin."},
+  exotherm:{t:"tech",h:"exotherm reaction",zh:"放熱反應",d:"The heat given off as resin cures. A thin layer is harmless, but a large cup of mixed resin can get hot enough to smoke or catch fire — a real hazard that ventilation and small batches help control."},
+  sensitisation:{t:"tech",h:"sensitisation",zh:"致敏（過敏）",d:"An immune reaction in which repeated — or one heavy — exposure to epoxy makes a person permanently allergic to it, potentially ending a career in composites. Gloves and skin protection prevent it."},
+  dermatitis:{t:"tech",h:"dermatitis",zh:"皮膚炎",d:"Red, itchy, or blistered skin caused by contact with resins, hardeners, or sanding dust. Unlike sensitisation it is usually temporary — but it is painful, and avoidable."},
+  ppe:{t:"tech",h:"PPE (personal protective equipment)",zh:"個人防護裝備",d:"Gloves, suits, glasses, boots, and masks — the “last line of defence” worn on the body. Good practice removes or contains a hazard first, and relies on PPE only for the risk that remains."},
+  respirator:{t:"tech",h:"respirator",zh:"呼吸防護具（口罩／面罩）",d:"A mask that filters harmful vapour or dust out of the air, or supplies clean air from elsewhere. Choosing the right filter — and shaving for a good seal — matters around resin fumes."},
+  loto:{t:"tech",h:"Lock Out, Tag Out (LOTO)",zh:"上鎖掛牌",d:"A safety routine that physically locks a machine's power off and hangs a warning tag on it, so a turbine cannot suddenly start while someone is working on or inside it."},
+  ventilation:{t:"tech",h:"ventilation",zh:"通風",d:"Moving fresh air through a workspace to carry fumes and dust away. It is the cheapest protection available when working with resin — in a factory or at a hobby desk by an open window."},
+  disposal:{t:"tech",h:"disposal",zh:"廢棄物處置",d:"The controlled throwing-away of waste. Chemical waste must be cured solid and sent to an approved facility — never poured down a drain, where it would pollute the water."},
+  ropes:{t:"tech",h:"rope access",zh:"繩索作業（繩降技術）",d:"Working while hanging from ropes, like a climber, to reach places no ladder or platform can. Blade technicians inspect and repair turbines this way, high above the ground or sea."},
+  uv:{t:"tech",h:"UV resin",zh:"紫外光固化樹脂",d:"A resin that stays liquid until ultraviolet light hits it, then hardens within minutes. Popular for small crafts and jewellery because it cures on demand — but it still gives off fumes and needs ventilation and skin care."},
+  orgonite:{t:"tech",h:"orgonite",zh:"奧根能量塔",d:"A craft object made by casting metal shavings and crystals into resin. It has no proven scientific effect, but it is a very popular hobby use of the same casting resins discussed here."},
+  chipmaker:{t:"tech",h:"chip-maker",zh:"晶片製造商",d:"A company that manufactures semiconductor chips — the tiny “brains” inside phones and computers. Taiwan's TSMC is the world's largest, and its factories consume enormous amounts of electricity."},
+
+  /* ---------- VOCABULARY ---------- */
+  pitch:{t:"vocab",h:"football pitch",zh:"足球場",d:"The field a football (soccer) match is played on — about 100 metres long. Writers use it as a familiar yardstick so readers can picture a large size without thinking in numbers.",lit:"British English says “pitch”; American English says “field.”"},
+  flex:{t:"vocab",h:"to flex",zh:"彎曲；撓曲",d:"To bend without breaking, then spring back. A blade is designed to flex in the wind — a completely stiff blade would snap."},
+  gust:{t:"vocab",h:"gust",zh:"陣風",d:"A sudden, short, strong rush of wind. Not a steady breeze — a burst that arrives and dies away."},
+  grasp:{t:"vocab",h:"to grasp",zh:"領會；理解",d:"To fully understand something, especially something large or difficult.",lit:"Physical meaning: to grip tightly with the hand. Figurative meaning: to understand — you “get hold of” an idea."},
+  bolted:{t:"vocab",h:"bolted to",zh:"以螺栓固定於",d:"Fastened down with bolts — heavy metal screws. Saying humans have “bolted a machine to the planet” is a vivid, slightly dramatic way of saying we have built something permanent and enormous on the Earth."},
+  milestone:{t:"vocab",h:"milestone",zh:"里程碑",d:"An important point of progress. Originally a real stone beside a road marking the distance travelled; now it means any significant achievement or turning point."},
+  volatile:{t:"vocab",h:"volatile",zh:"波動劇烈的；不穩定的",d:"Changing suddenly and unpredictably. “Volatile fuel prices” jump up and down, making it hard for countries and businesses to plan ahead."},
+  funnel:{t:"vocab",h:"to funnel",zh:"匯集；導引",d:"To channel something through a narrow space so it becomes concentrated and faster — the way a kitchen funnel guides liquid. The Taiwan Strait funnels wind, squeezing and speeding it up."},
+  punish:{t:"vocab",h:"to punish (something)",zh:"摧殘；不斷重擊",d:"Normally “to punish” means to penalise a person. Here it is figurative: the sea and weather treat the machines harshly, wearing them down day after day."},
+  borrow:{t:"vocab",h:"to borrow from",zh:"借鑑；取法於",d:"To take an idea from elsewhere and use it in your own work. Blade designers borrow from bridges and aircraft — they did not invent the I-beam, they adopted it."},
+  brace:{t:"vocab",h:"to brace",zh:"支撐；加固",d:"To support or strengthen a structure so it will not bend or collapse — for example, by adding a bar between two parts."},
+  rigid:{t:"vocab",h:"rigid",zh:"堅硬的；不易彎曲的",d:"Stiff and firm; not bending easily — the opposite of flexible. A blade must be rigid enough to hold its shape, yet still able to flex."},
+  seamless:{t:"vocab",h:"seamless",zh:"無接縫的",d:"With no visible join or seam. A seamless blade is made in one piece, so there is no glued line that might later come apart."},
+  seam:{t:"vocab",h:"seam",zh:"接縫",d:"The line where two pieces are joined — the same word used for the stitched line in clothing. In a blade it is a glued join, and like a seam in a shirt, it can split."},
+  grit:{t:"vocab",h:"grit",zh:"沙塵；細砂",d:"Tiny hard particles of sand or dust. Harmless one at a time — but striking a blade at hundreds of km/h, grit acts like sandpaper."},
+  flaw:{t:"vocab",h:"flaw",zh:"瑕疵；缺陷",d:"A fault or weakness — often small, but capable of causing failure. A tiny flaw in a blade can grow into a crack."},
+  grind:{t:"vocab",h:"to grind",zh:"研磨；磨掉",d:"To wear material away with a rough, fast-spinning tool. Technicians grind out damaged composite before rebuilding it."},
+  batch:{t:"vocab",h:"batch",zh:"一批（份量）",d:"An amount of something made or mixed at one time. Mixing resin in small batches keeps the exotherm heat safely low."},
+  trigger:{t:"vocab",h:"to trigger",zh:"引發；觸發",d:"To cause something to start suddenly — like pulling the trigger of a gun. Resin can trigger an allergy: one exposure sets off a lasting reaction."},
+  giveoff:{t:"vocab",h:"to give off",zh:"散發出；釋放",d:"To release something into the air — heat, smoke, light, or a smell. Curing resin gives off heat.",lit:"A phrasal verb: “give off heat” = emit heat."},
+  fumes:{t:"vocab",h:"fumes",zh:"揮發氣體；煙氣",d:"Harmful gas or vapour given off by chemicals. Often invisible — which is exactly why they are dangerous, and why ventilation matters."},
+  drill:{t:"vocab",h:"to drill (someone)",zh:"反覆操練",d:"To teach by strict, repeated practice until the correct response becomes automatic — the way soldiers or athletes are drilled. “The course drills safety hard” means safety is trained relentlessly.",lit:"Different from the tool “a drill” (電鑽), which makes holes."},
+  document:{t:"vocab",h:"to document",zh:"記錄；建檔",d:"To record something officially in writing and photographs, so that others can check it later.",lit:"As a verb the stress moves: DOC-u-ment (noun) → doc-u-MENT (verb)."},
+  weatherbeaten:{t:"vocab",h:"weather-beaten",zh:"飽經風霜的",d:"Worn, roughened, or marked by long exposure to sun, wind, and rain. It describes rocks, faces — and here, the work itself."},
+  greencollar:{t:"vocab",h:"green-collar",zh:"綠領（環保產業工作者）",d:"A worker in the environmental or clean-energy economy.",lit:"Coined by analogy: “blue-collar” = manual work, “white-collar” = office work, so “green-collar” = a hands-on job in green industry."},
+  greeneconomy:{t:"vocab",h:"green economy",zh:"綠色經濟",d:"The part of the economy built around environmental sustainability — renewable energy, recycling, clean transport — and the jobs it creates."},
+  handful:{t:"vocab",h:"a handful of",zh:"少數幾個",d:"A small number — as many as one hand can hold. “A handful of familiar ways” means only a few, and they are well known."},
+
+  /* ---------- IDIOMS & PHRASES ---------- */
+  appeal:{t:"idiom",h:"the appeal is plain",zh:"吸引力顯而易見",d:"“Appeal” here means attractiveness — not a legal appeal or a request. “Plain” means obvious. So: it is easy to see why people find this attractive.",lit:"Compare: “the reason is plain” = the reason is obvious."},
+  hardargue:{t:"idiom",h:"hard to argue with",zh:"難以反駁；無可辯駁",d:"So reasonable or convincing that you cannot easily disagree with it.",lit:"A form of understatement — the writer really means “this is obviously right.”"},
+  wenttosea:{t:"idiom",h:"to go to sea",zh:"（轉向）走向海洋",d:"Traditionally “to go to sea” means to become a sailor. Here the writer stretches it playfully: Taiwan, short of land, moved its wind farms out onto the ocean.",lit:"A pun on the sailor's phrase."},
+  halfstory:{t:"idiom",h:"only half the story",zh:"只是故事的一半；並非全貌",d:"Something important is missing from the picture. Building the turbines is impressive — but maintaining them is the other, less glamorous half.",lit:"Often used to introduce the missing side: “But that's only half the story…”"},
+  soonerlater:{t:"idiom",h:"sooner or later",zh:"遲早",d:"It will certainly happen eventually — you just don't know exactly when. Every blade will need repair at some point."},
+  howborn:{t:"idiom",h:"how it is born",zh:"（它）是如何誕生的",d:"A metaphor: machines are not really “born.” Treating the blade as a living thing runs through this whole article.",lit:"Watch the extended metaphor: it is born → it gets hurt → it needs a doctor."},
+  stoneriver:{t:"idiom",h:"like a stone in a river",zh:"如同河中的石頭",d:"A simile. A river slowly smooths and shrinks a stone over years, one drop at a time — exactly how rain wears down a blade's leading edge."},
+  leftalone:{t:"idiom",h:"left alone",zh:"放著不管",d:"If nothing is done about it; if it is ignored. “Left alone, a small flaw grows” = if you don't fix it, it will get worse."},
+  rob:{t:"idiom",h:"to rob X of Y",zh:"奪走 X 的 Y",d:"To take something valuable away from someone or something. Damage “robs the turbine of efficiency” — it steals performance the machine should have had."},
+  atworst:{t:"idiom",h:"at worst",zh:"最糟的情況下",d:"In the worst possible case. It introduces the most serious outcome — here, an entire blade tearing apart.",lit:"Opposite: “at best.”"},
+  downdrain:{t:"idiom",h:"to go down the drain",zh:"倒入排水孔（此處為字面義）",d:"Careful — this phrase has two meanings. As an idiom it means “to be wasted” (“all my work went down the drain”). Here it is literal: the resin must not be poured into the sink.",lit:"Used literally in this article — but the idiomatic meaning is worth knowing."},
+  futureproof:{t:"idiom",h:"future-proof",zh:"不怕被淘汰的；面向未來的",d:"Designed or chosen so that it will still be useful and needed many years from now. A “future-proof career” is one unlikely to disappear."},
+  readdamage:{t:"idiom",h:"to read (damage)",zh:"判讀（損傷）",d:"To interpret signs and understand what they mean — as you “read” a person's face, or read the weather. Trainees learn to read damage: to look at a mark and know its cause."}
+};
+
+/* ---- popover ---- */
+const pop=document.getElementById('pop'), scrim=document.getElementById('scrim');
+const pT=document.getElementById('pop-tag'), pH=document.getElementById('pop-h'), pZ=document.getElementById('pop-zh');
+const pD=document.getElementById('pop-d'), pL=document.getElementById('pop-lit'), pArr=document.getElementById('pop-arrow');
+const LABEL={tech:"Technical 專業術語",vocab:"Vocabulary 進階單字",idiom:"Idiom / Phrase 慣用語"};
+let openBtn=null;
+
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){
+  const g=GLOSS[btn.dataset.g]; if(!g)return;
+  pT.className='tag '+g.t; pT.textContent=LABEL[g.t];
+  pH.textContent=g.h; pZ.textContent=g.zh; pD.textContent=g.d;
+  if(g.lit){pL.textContent=g.lit;pL.style.display='block';}else{pL.style.display='none';}
+  pop.classList.add('show');
+  const mobile=window.matchMedia('(max-width:600px)').matches;
+  if(mobile){scrim.classList.add('show');pArr.style.display='none';}
+  else{
+    pArr.style.display='block';
+    const r=btn.getBoundingClientRect(), pw=pop.offsetWidth, ph=pop.offsetHeight;
+    const sx=window.scrollX, sy=window.scrollY, vw=document.documentElement.clientWidth;
+    let left=sx+r.left+r.width/2-pw/2;
+    left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    let top=sy+r.bottom+12, below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+    let ax=sx+r.left+r.width/2-left-7;
+    ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';
+    pArr.style.top=below?'-7px':(ph-7)+'px';
+  }
+  btn.setAttribute('aria-expanded','true'); openBtn=btn;
+}
+
+/* colour each term by type, then wire it up */
+document.querySelectorAll('button.gl').forEach(b=>{
+  const g=GLOSS[b.dataset.g];
+  if(g) b.classList.add(g.t);
+  b.setAttribute('aria-expanded','false');
+  b.addEventListener('click',e=>{e.stopPropagation();if(openBtn===b){closePop();}else{closePop();openPop(b);}});
+});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('click',e=>{if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+/* ---- word bank, grouped by type ---- */
+const wbEl=document.getElementById('wordbank');
+const GROUPS=[["tech","t","Technical terms","專業術語"],["vocab","v","Vocabulary","進階單字"],["idiom","i","Idioms & phrases","慣用語"]];
+wbEl.innerHTML=GROUPS.map(function(G){
+  const type=G[0], cls=G[1], en=G[2], zh=G[3];
+  const items=Object.keys(GLOSS).filter(k=>GLOSS[k].t===type);
+  const cards=items.map(k=>{const g=GLOSS[k];
+    return '<div class="wb"><span class="t">'+g.h+'</span> · <span class="z">'+g.zh+'</span><span class="x">'+g.d+'</span></div>';}).join('');
+  return '<div class="wbhead '+cls+'"><span class="pipbadge"></span>'+en+' <span style="font-family:var(--han);font-weight:600">'+zh+'</span><span class="n">'+items.length+' items</span></div>'+
+         '<div class="wordbank">'+cards+'</div>';
+}).join('');
+</script>
+</body>
+</html>
