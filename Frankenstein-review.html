@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Frankenstein, reviewed — InkQuest Reader</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { background:#e8ecf2; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif; color:#1a1a1a; line-height:1.68; font-size:16px; padding:0 0 60px; }
+  #controls { position:sticky; top:0; z-index:60; background:rgba(19,40,74,0.97); backdrop-filter:blur(6px); color:#d4dce8; border-bottom:2px solid #c2922e; display:flex; flex-wrap:wrap; align-items:center; gap:9px 15px; padding:9px 18px; font-size:12.5px; }
+  #controls .brandmini { font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#fff; font-size:11.5px; }
+  #controls .legend { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  #controls .key { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
+  #controls .swatch { width:20px; height:0; border-bottom:2px dotted; display:inline-block; }
+  .sw-v{border-color:#d39a2f;} .sw-p{border-color:#5b9bd5;} .sw-c{border-color:#58c08b;} .sw-f{border-color:#b06a8f;}
+  #controls .filters{ display:flex; gap:9px; align-items:center; }
+  #controls label.lv{ display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
+  #controls .spacer{ flex:1 1 auto; }
+  #controls button{ font:inherit; font-size:12px; cursor:pointer; background:#1f3a63; color:#dbe6f5; border:1px solid #34568a; border-radius:6px; padding:5px 10px; }
+  #controls button:hover{ background:#294c80; }
+  body.nohl .vb{ border-bottom:0 !important; color:inherit !important; cursor:text !important; }
+  body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1{ border-bottom:0; }
+  #doc{ max-width:760px; margin:22px auto; background:#fff; box-shadow:0 2px 14px rgba(20,40,70,.12); border-radius:4px; overflow:hidden; }
+  .mast{ background:#1e2433; color:#fff; padding:24px 34px; border-bottom:3px solid #c2922e; }
+  .mast .brand{ font-size:11.5px; letter-spacing:.2em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
+  .mast .styled{ display:inline-block; font-size:10px; letter-spacing:.04em; color:#1e2433; background:#c9b48a; border-radius:20px; padding:2px 10px; font-weight:700; margin-top:12px; }
+  .mast h1{ font-family:Georgia,"Times New Roman",serif; font-size:30px; line-height:1.12; margin-top:10px; letter-spacing:.005em; }
+  .mast .sub{ color:#c8d0de; font-size:13px; margin-top:10px; line-height:1.5; }
+  .inner{ padding:26px 34px 30px; }
+  @media (max-width:600px){ .inner,.mast{ padding-left:20px; padding-right:20px; } .mast h1{ font-size:24px; } body{font-size:15.5px;} }
+  .dek{ font-family:Georgia,serif; font-style:italic; font-size:17px; color:#4a5568; line-height:1.5; border-left:3px solid #c2922e; padding-left:15px; margin-bottom:22px; }
+  #bodywrap p{ margin:0 0 15px; }
+  #bodywrap h3.sub{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:26px 0 10px; padding-top:4px; }
+  #bodywrap h3.sub::before{ content:""; display:block; width:38px; height:2px; background:#c2922e; margin-bottom:9px; }
+  .howto{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#cdd6e2; border:1px solid #cdd6e2; border-radius:5px; overflow:hidden; margin-bottom:22px; }
+  .howto > div{ background:#eef2f7; padding:9px 11px; font-size:12px; color:#41506a; }
+  @media (max-width:600px){ .howto{ grid-template-columns:1fr; } }
+  h2.sec{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:28px 0 2px; }
+  h2.sec .n{ color:#c2922e; margin-right:8px; }
+  .rule{ height:2px; background:#c2922e; margin:5px 0 14px; }
+  #glossList{ column-count:2; column-gap:26px; font-size:13px; }
+  @media (max-width:600px){ #glossList{ column-count:1; } }
+  #glossList .g{ break-inside:avoid; margin-bottom:8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
+  #glossList .g .t{ font-weight:700; color:#1e2433; }
+  #glossList .g .b{ font-size:9px; font-weight:700; letter-spacing:.05em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; text-transform:uppercase; }
+  .bt-v{background:#f6ecd9;color:#8a6414;} .bt-p{background:#e7eff8;color:#345f8a;} .bt-f{background:#f3e8ef;color:#8a4d70;}
+  #glossList .g .d{ color:#48505f; } #glossList .g .z{ color:#1e2433; }
+  footer{ max-width:760px; margin:0 auto; padding:16px 34px 0; color:#6a7686; font-size:11.6px; line-height:1.65; text-align:center; }
+  footer a{ color:#3a5a8c; } footer .strong{ color:#444; font-weight:600; }
+  .vb{ cursor:help; border-bottom:1px dotted; padding-bottom:.5px; text-decoration:none; transition:background .12s; }
+  .vb.v{border-color:#d39a2f;} .vb.p{border-color:#5b9bd5;} .vb.c{border-color:#58c08b;} .vb.f{border-color:#b06a8f;}
+  .vb:hover,.vb:focus{ background:rgba(194,146,46,.10); outline:none; }
+  .vb.f:hover{ background:rgba(176,106,143,.12); }
+  .vb.open{ background:rgba(194,146,46,.18); }
+  #tip{ position:absolute; z-index:200; width:max-content; max-width:min(340px,88vw); background:#18222e; border:1px solid #34465a; border-radius:9px; padding:10px 13px 11px; font-size:13.5px; line-height:1.5; color:#e4ebf3; box-shadow:0 10px 28px rgba(0,0,0,.4); display:none; white-space:normal; }
+  #tip .meta{ display:flex; gap:6px; align-items:center; margin-bottom:5px; }
+  #tip .cat{ font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:1px 6px; border-radius:99px; font-weight:700; }
+  #tip .cat.v{background:rgba(211,154,47,.20);color:#f0c873;} #tip .cat.p{background:rgba(91,155,213,.20);color:#9fc6ef;}
+  #tip .cat.c{background:rgba(88,192,139,.20);color:#8fe0b4;} #tip .cat.f{background:rgba(176,106,143,.24);color:#e6a9cb;}
+  #tip .lvl{ font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
+  #tip .term{ font-weight:700; color:#fff; }
+  #tip .zh{ color:#e0a458; margin-top:4px; display:block; font-size:14px; }
+</style>
+</head>
+<body>
+<div id="controls">
+  <span class="brandmini">InkQuest&nbsp;Reader</span>
+  <span class="legend">
+    <span class="key"><span class="swatch sw-v"></span> Word</span>
+    <span class="key"><span class="swatch sw-p"></span> Phrase</span>
+    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
+    <span class="key"><span class="swatch sw-f"></span> Culture</span>
+  </span>
+  <span class="filters">
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked> B1</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked> B2</label>
+    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked> C1</label>
+  </span>
+  <span class="spacer"></span>
+  <button id="fontMinus" title="Smaller text">A&minus;</button>
+  <button id="fontPlus" title="Larger text">A+</button>
+  <button id="toggle" aria-pressed="false">Highlights: On</button>
+</div>
+<div id="doc">
+  <div class="mast">
+    <div class="brand">InkQuest English Coaching · Book, reviewed</div>
+    <span class="styled">In the style of Nature (the journal)</span>
+    <h1>Frankenstein: A Peer Review, 200 Years Late</h1>
+    <div class="sub">Frankenstein &middot; Mary Shelley &middot; ~600 words &middot; glossary B1&ndash;C1 &middot; word · phrase · grammar · culture notes</div>
+  </div>
+  <div class="inner">
+    <div class="howto">
+      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for a note in English + 繁中 and its CEFR level.</div>
+      <div><strong>Colours.</strong> <span style="color:#b8860b">word</span> · <span style="color:#3a72b8">phrase</span> · <span style="color:#2f8d5e">grammar</span> · <span style="color:#9c5a80">culture note</span>. Toggle highlights off to read clean.</div>
+    </div>
+    <div class="dek">Two hundred years on, Mary Shelley's lab notebook remains the most cited cautionary tale in science. We reassess the methods &mdash; and the appalling lack of ethical oversight.</div>
+    <div id="bodywrap"><p>In the summer of 1816, a nineteen-year-old set a challenge in motion that the scientific community has yet to fully answer: if you can create life, are you then responsible for it? Mary Shelley's "Frankenstein" is routinely miscited &mdash; the creature has no name; "Frankenstein" is the scientist &mdash; but its central finding has only grown more relevant. This is not a horror story about a monster. It is a case study in what happens when a brilliant researcher ships a product with no safety review and no plan for aftercare.</p><h3 class="sub">Background</h3><p>Victor Frankenstein, an ambitious young natural philosopher, becomes obsessed with the "principle of life." Working alone, in secret, and increasingly sleep-deprived &mdash; a methodology this journal cannot endorse &mdash; he assembles a living being from salvaged parts and animates it. The exact protocol is, conveniently, never disclosed: Shelley infuses a spark and moves on, sparing us the wiring diagram. (Reproducibility: poor.)</p><h3 class="sub">Results</h3><p>The experiment succeeds, which is precisely the problem. Confronted with the living result of his own work, Frankenstein does the one thing no responsible principal investigator ever should: he flees the lab in disgust and abandons the subject entirely. The creature &mdash; abandoned, articulate, and heartbreakingly reasonable &mdash; teaches itself to speak and read, asks only to be treated with kindness, and turns to violence solely after every human being recoils from it. The horror, Shelley argues, is not the creation. It is the neglect.</p><h3 class="sub">Discussion</h3><p>Here the paper earns its two centuries of citations. Strip away the gothic weather and "Frankenstein" is an ethics seminar in disguise, and its questions land harder every year: who is accountable for what they build? Does creating something intelligent oblige you to care for it? Silicon Valley, currently assembling minds it does not fully understand and releasing them at midnight, might benefit from a careful re-read. Shelley got there first, and in a ballgown.</p><h3 class="sub">Limitations</h3><p>Peer review, however, must note some flaws. The creature's education is implausibly rapid &mdash; it masters Milton and moral philosophy essentially by eavesdropping, a learning curve that strains belief. The narrative structure &mdash; a letter, containing a story, containing another story &mdash; is the literary equivalent of nested parentheses, and just as easy to get lost in. Victor himself is an exhausting narrator: he faints, he laments, he takes very little responsibility, and he never once considers simply talking to the being he made. By modern standards, the melodrama runs hot.</p><h3 class="sub">Conclusion</h3><p>Nonetheless, the work stands. "Frankenstein" founded science fiction and, more importantly, gave the field its conscience &mdash; the nagging reminder that the question is never only "can we?" but "and then what?" Two hundred years later, no one has bettered it. Recommended reading, with a single condition: this time, do not abandon what you start.</p></div>
+    <h2 class="sec"><span class="n">§</span>Glossary &amp; culture notes <span style="font-size:12px;color:#7a8294;">詞彙與文化補充</span></h2>
+    <div class="rule"></div>
+    <div id="glossList"></div>
+  </div>
+</div>
+<footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the deadpan register of a science journal (Nature). “Frankenstein” by Mary Shelley (1818) is in the <strong>public domain</strong>; the few quoted phrases are used as a study aid. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+<div id="tip" role="tooltip" aria-hidden="true"></div>
+<script>
+var VOCAB = {"cautionary tale": ["a story told as a warning against something", "警世故事、前車之鑑", "p", "B2"], "ethical oversight": ["monitoring to make sure ethical rules are followed", "倫理監督、把關", "p", "C1"], "set ... in motion": ["to start a process going", "啟動、使…開始運轉", "p", "B2"], "routinely": ["regularly; as a matter of course", "例行地、經常地", "v", "B2"], "miscited": ["wrongly quoted or referred to", "誤引、引用錯誤", "v", "C1"], "the creature": ["the created being (note: not named in the book)", "那個造物、生物(書中未命名)", "v", "B2"], "central finding": ["the main result or conclusion", "核心發現、主要結論", "p", "B2"], "case study": ["culture: a detailed examination of one example, used in research/teaching", "文化:個案研究(對單一案例的詳細分析)", "f", "B2"], "ships a product": ["culture: tech slang for releasing a product to users", "文化:科技業黑話——把產品推出上市", "f", "B2"], "safety review": ["a check to make sure something is safe before release", "安全審查", "p", "B2"], "aftercare": ["care given after a treatment or procedure", "後續照護、善後照顧", "v", "B2"], "natural philosopher": ["culture: an old term for a scientist (before 'scientist' existed)", "文化:自然哲學家(科學家的舊稱)", "f", "C1"], "obsessed with": ["unable to stop thinking about; fixated on", "執迷於、著魔於", "p", "B2"], "sleep-deprived": ["not getting enough sleep", "睡眠不足的", "p", "B2"], "methodology": ["the system of methods used in research", "研究方法、方法論", "v", "C1"], "assembles": ["puts together from parts", "組裝、拼組", "v", "B2"], "salvaged": ["recovered from waste, ruin or the dead", "撿拾回收來的、拼撿的", "v", "C1"], "animates": ["brings to life; makes move", "賦予生命、使其活動", "v", "C1"], "protocol": ["culture: the exact step-by-step procedure of an experiment", "文化:實驗流程、標準規程", "f", "C1"], "disclosed": ["revealed; made known", "揭露、公開", "v", "B2"], "the wiring diagram": ["the technical how-to (here: the missing method details)", "線路圖(引申:被省略的實作細節)", "p", "B2"], "Reproducibility": ["culture: whether an experiment can be repeated for the same result — a core scientific standard", "文化:可重現性(實驗能否重做得到同樣結果——科學核心標準)", "f", "C1"], "which is precisely the problem": ["grammar: 'which' referring back to the whole previous idea", "文法:which 指前面「整句話」", "c", "B2"], "Confronted with": ["faced with; forced to deal with", "面對、被迫面對", "p", "B2"], "principal investigator": ["culture: the lead scientist responsible for a research project (a 'PI')", "文化:主持研究計畫的首席科學家(PI)", "f", "C1"], "flees": ["runs away from", "逃離、逃走", "v", "B2"], "in disgust": ["with strong dislike and revulsion", "厭惡地、反感地", "p", "B2"], "abandons": ["deserts; leaves behind for good", "拋棄、遺棄", "v", "B2"], "articulate": ["able to express ideas clearly and fluently", "口齒清晰、能言善道的", "v", "C1"], "heartbreakingly": ["in a way that causes deep sadness", "令人心碎地", "v", "B2"], "recoils from": ["draws back suddenly in fear or disgust", "嚇得退避、避之唯恐不及", "p", "C1"], "neglect": ["failure to care for or pay attention to", "疏於照顧、忽視", "v", "B2"], "citations": ["culture: mentions of a work in later research — a measure of its influence", "文化:引用(被後續研究引述,代表影響力)", "f", "B2"], "Strip away": ["remove (a surface layer) to reveal what is underneath", "剝去、去掉表層以見真章", "p", "B2"], "gothic": ["culture: a genre of gloomy, eerie horror and romance", "文化:哥德式(陰森詭譎的驚悚浪漫文類)", "f", "B2"], "in disguise": ["hidden behind a different appearance", "偽裝的、喬裝的", "p", "B2"], "accountable": ["responsible and required to explain your actions", "需負責、當責的", "v", "B2"], "oblige": ["to make something (morally) necessary for someone", "使有義務、責成", "v", "C1"], "Silicon Valley": ["culture: the California hub of the tech industry; here = today's AI companies", "文化:矽谷(美國科技業重鎮;此指當今的 AI 公司)", "f", "B2"], "releasing them at midnight": ["launching quietly and abruptly, with little warning", "半夜悄悄發布、突然上線", "p", "B2"], "got there first": ["idiom: thought of or did it before everyone else", "早就搶先想到 / 做到了", "p", "B2"], "in a ballgown": ["culture: the wry joke that Shelley did serious science-ethics as a Romantic-era teenager", "文化:一句俏皮話——雪萊在19世紀少女之身，就搶先思考科學倫理", "f", "C1"], "Peer review": ["culture: the checking of research by other experts before it is published", "文化:同儕審查(論文發表前由其他專家把關)", "f", "C1"], "implausibly": ["in a way that is hard to believe", "難以置信地", "v", "C1"], "masters": ["becomes highly skilled at", "精通、掌握", "v", "B2"], "Milton": ["culture: John Milton, whose epic 'Paradise Lost' the creature reads and identifies with", "文化:米爾頓(其史詩《失樂園》正是造物所讀、所自況的書)", "f", "C1"], "moral philosophy": ["the branch of study concerned with right and wrong", "道德哲學、倫理學", "p", "B2"], "eavesdropping": ["secretly listening to others' conversations", "偷聽", "v", "B2"], "learning curve": ["the rate at which someone learns something new", "學習曲線、上手速度", "p", "B2"], "strains belief": ["idiom: is so extreme it is hard to believe", "令人難以採信、太扯", "p", "C1"], "narrative structure": ["the way a story is organized and told", "敘事結構", "p", "B2"], "nested": ["placed one inside another, in layers", "層層嵌套的", "v", "C1"], "parentheses": ["round brackets ( ) used within a sentence", "括號", "v", "B2"], "exhausting": ["extremely tiring (here, to read)", "令人心累的、累人的", "v", "B2"], "laments": ["expresses grief or regret loudly", "哀嘆、悲鳴", "v", "C1"], "takes very little responsibility": ["accepts almost no blame or duty for his actions", "幾乎不為自己的作為負責", "p", "B1"], "the melodrama runs hot": ["the exaggerated emotional drama is turned up too high", "煽情灑狗血、火力全開", "p", "C1"], "founded": ["established; created (a field or genre)", "開創、奠定", "v", "B2"], "science fiction": ["culture: the genre this novel is widely credited with founding", "文化:科幻小說(公認由本書開創的文類)", "f", "B2"], "conscience": ["the inner sense of what is right and wrong", "良知、良心", "v", "B2"], "the question is never only": ["grammar: not only X but (also) Y — weighing two questions", "文法:not (only) X but Y(不只問 X，還要問 Y)", "c", "B2"], "nagging": ["persistent and quietly troubling", "揮之不去的、擾人的", "v", "B2"], "bettered": ["surpassed; done better than", "超越、勝過", "v", "C1"], "has yet to": ["has still not (done something) up to now", "至今仍未、還沒能", "p", "B2"], "ambitious": ["strongly wanting success or achievement", "雄心勃勃的、有野心的", "v", "B2"], "endorse": ["to approve of or officially support", "認可、背書、支持", "v", "C1"], "sparing us": ["saving us from (something unpleasant or tedious)", "省去我們(某種麻煩)、讓我們免於", "p", "B2"], "the subject": ["the person or thing being studied in an experiment", "(實驗中的)受試對象", "v", "B2"], "solely": ["only; entirely", "僅僅、純粹只因", "v", "B2"], "turns to": ["resorts to; starts using as a solution", "轉而訴諸、開始採取", "p", "B2"], "the paper": ["here: the novel jokingly treated as a research paper", "此處玩笑地把小說當成一篇「研究論文」", "f", "B2"], "land harder": ["idiom: hit with greater force or impact", "衝擊更強、更打中人心", "p", "C1"], "seminar": ["a small class or discussion group on a topic", "專題研討課、討論會", "v", "B2"], "flaws": ["faults; weak points", "瑕疵、缺點", "v", "B2"], "equivalent": ["a thing that is equal to or corresponds to another", "對等物、相當於…的東西", "v", "B2"], "get lost in": ["to become confused or absorbed inside something", "在…裡迷失、看到暈頭轉向", "p", "B2"], "faints": ["suddenly loses consciousness", "昏倒、暈厥", "v", "B2"], "never once": ["not even a single time", "一次也沒有、從未", "p", "B2"], "by modern standards": ["judged by today's norms", "以現代的標準來看", "p", "B2"], "Nonetheless": ["in spite of that; nevertheless", "儘管如此、話雖如此", "v", "C1"], "the work stands": ["idiom: the work remains valid and respected", "這部作品依然屹立、經得起時間考驗", "p", "C1"]};
+var ROOT=document.getElementById('bodywrap'), TIP=document.getElementById('tip');
+var CATLABEL={v:'Word',p:'Phrase / idiom',c:'Grammar / usage',f:'Culture / context'};
+var TERMS=Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term,from){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm,from);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t,0);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var s=document.createElement('span');var lvl=(e[3]||'').toLowerCase().split('/')[0];
+  s.className='vb '+e[2]+' l-'+lvl;s.setAttribute('tabindex','0');
+  s.setAttribute('data-d',e[0]);s.setAttribute('data-z',e[1]);s.setAttribute('data-t',e[2]);s.setAttribute('data-l',e[3]||'');s.setAttribute('data-w',m);
+  s.textContent=m;var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(s,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){var w=document.createTreeWalker(ROOT,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}}
+var pinned=null,hideTimer=null;
+function fillTip(el){var lvl=el.getAttribute('data-l');
+  TIP.innerHTML='<div class="meta"><span class="cat '+el.getAttribute('data-t')+'">'+CATLABEL[el.getAttribute('data-t')]+'</span>'+(lvl?'<span class="lvl">'+lvl+'</span>':'')+'</div><span class="term">'+el.getAttribute('data-w')+'</span> &mdash; '+el.getAttribute('data-d')+'<span class="zh">'+el.getAttribute('data-z')+'</span>';}
+function placeTip(el){TIP.style.display='block';TIP.style.left='0';TIP.style.top='0';var r=el.getBoundingClientRect(),tw=TIP.offsetWidth,th=TIP.offsetHeight,pad=10;
+  var x=r.left+r.width/2-tw/2;x=Math.max(pad,Math.min(x,window.innerWidth-tw-pad));
+  var y=r.top-th-8;if(y<pad)y=r.bottom+8;TIP.style.left=(x+window.scrollX)+'px';TIP.style.top=(y+window.scrollY)+'px';}
+function showTip(el){if(document.body.classList.contains('nohl'))return;if(hideTimer){clearTimeout(hideTimer);hideTimer=null;}fillTip(el);placeTip(el);}
+function hideTip(){TIP.style.display='none';if(pinned){pinned.classList.remove('open');pinned=null;}}
+ROOT.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)showTip(el);});
+ROOT.addEventListener('mouseout',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)hideTimer=setTimeout(function(){TIP.style.display='none';},80);});
+ROOT.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el)showTip(el);});
+ROOT.addEventListener('focusout',function(){if(!pinned)TIP.style.display='none';});
+document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('.vb');
+  if(el){if(pinned===el){hideTip();return;}if(pinned)pinned.classList.remove('open');pinned=el;el.classList.add('open');showTip(el);e.stopPropagation();return;}
+  if(!TIP.contains(e.target))hideTip();});
+window.addEventListener('resize',hideTip);window.addEventListener('scroll',function(){if(pinned)placeTip(pinned);},{passive:true});
+var toggle=document.getElementById('toggle');
+toggle.addEventListener('click',function(){var off=document.body.classList.toggle('nohl');toggle.textContent='Highlights: '+(off?'Off':'On');toggle.setAttribute('aria-pressed',off?'true':'false');if(off)hideTip();});
+Array.prototype.forEach.call(document.querySelectorAll('.lvchk'),function(c){c.addEventListener('change',function(){document.body.classList.toggle('hide-'+c.getAttribute('data-l'),!c.checked);});});
+var scale=1;function setScale(s){scale=Math.max(.85,Math.min(1.4,s));ROOT.style.fontSize=scale.toFixed(2)+'em';}
+document.getElementById('fontPlus').addEventListener('click',function(){setScale(scale+.08);});
+document.getElementById('fontMinus').addEventListener('click',function(){setScale(scale-.08);});
+function buildGlossary(){var seen={},items=[];for(var k in VOCAB){var e=VOCAB[k];if(e[2]==='c')continue;var sig=e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;items.push([k,e]);}
+  items.sort(function(a,b){return a[0].localeCompare(b[0]);});var bc={v:'bt-v',p:'bt-p',f:'bt-f'};var cl={v:'word',p:'phrase',f:'culture'};var html='';
+  for(var i=0;i<items.length;i++){var k=items[i][0],e=items[i][1];
+    html+='<div class="g"><span class="t">'+k+'</span><span class="b '+bc[e[2]]+'">'+cl[e[2]]+'</span><div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';}
+  document.getElementById('glossList').innerHTML=html;}
+buildGlossary(); linkify();
+</script>
+</body>
+</html>
