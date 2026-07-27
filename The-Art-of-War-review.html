@@ -2,169 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>The Art of War, reviewed — InkQuest Reader</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body { background:#e8ecf2; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif; color:#1a1a1a; line-height:1.68; font-size:16px; padding:0 0 60px; }
-  #controls { position:sticky; top:0; z-index:60; background:rgba(19,40,74,0.97); backdrop-filter:blur(6px); color:#d4dce8; border-bottom:2px solid #c2922e; display:flex; flex-wrap:wrap; align-items:center; gap:9px 15px; padding:9px 18px; font-size:12.5px; }
-  #controls .brandmini { font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#fff; font-size:11.5px; }
-  #controls .legend { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-  #controls .key { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
-  #controls .swatch { width:20px; height:0; border-bottom:2px dotted; display:inline-block; }
-  .sw-v{border-color:#d39a2f;} .sw-p{border-color:#5b9bd5;} .sw-c{border-color:#58c08b;} .sw-f{border-color:#b06a8f;}
-  #controls .filters{ display:flex; gap:9px; align-items:center; }
-  #controls label.lv{ display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
-  #controls .spacer{ flex:1 1 auto; }
-  #controls button{ font:inherit; font-size:12px; cursor:pointer; background:#1f3a63; color:#dbe6f5; border:1px solid #34568a; border-radius:6px; padding:5px 10px; }
-  #controls button:hover{ background:#294c80; }
-  body.nohl .vb{ border-bottom:0 !important; color:inherit !important; cursor:text !important; }
-  body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1{ border-bottom:0; }
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#A23A2E; --accent-deep:#7C2A21;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
 
-  #doc{ max-width:760px; margin:22px auto; background:#fff; box-shadow:0 2px 14px rgba(20,40,70,.12); border-radius:4px; overflow:hidden; }
-  .mast{ background:#1e2433; color:#fff; padding:24px 34px; border-bottom:3px solid #c2922e; }
-  .mast .brand{ font-size:11.5px; letter-spacing:.2em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
-  .mast .styled{ display:inline-block; font-size:10px; letter-spacing:.04em; color:#1e2433; background:#c9b48a; border-radius:20px; padding:2px 10px; font-weight:700; margin-top:12px; }
-  .mast h1{ font-family:Georgia,"Times New Roman",serif; font-size:30px; line-height:1.12; margin-top:10px; letter-spacing:.005em; }
-  .mast .sub{ color:#c8d0de; font-size:13px; margin-top:10px; line-height:1.5; }
-  .inner{ padding:26px 34px 30px; }
-  @media (max-width:600px){ .inner,.mast{ padding-left:20px; padding-right:20px; } .mast h1{ font-size:24px; } body{font-size:15.5px;} }
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
 
-  .dek{ font-family:Georgia,serif; font-style:italic; font-size:17px; color:#4a5568; line-height:1.5; border-left:3px solid #c2922e; padding-left:15px; margin-bottom:22px; }
-  #bodywrap p{ margin:0 0 15px; }
-  #bodywrap h3.sub{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:26px 0 10px; padding-top:4px; }
-  #bodywrap h3.sub::before{ content:""; display:block; width:38px; height:2px; background:#c2922e; margin-bottom:9px; }
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
 
-  .howto{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#cdd6e2; border:1px solid #cdd6e2; border-radius:5px; overflow:hidden; margin-bottom:22px; }
-  .howto > div{ background:#eef2f7; padding:9px 11px; font-size:12px; color:#41506a; }
-  @media (max-width:600px){ .howto{ grid-template-columns:1fr; } }
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◆";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
 
-  h2.sec{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:28px 0 2px; }
-  h2.sec .n{ color:#c2922e; margin-right:8px; }
-  .rule{ height:2px; background:#c2922e; margin:5px 0 14px; }
-  #glossList{ column-count:2; column-gap:26px; font-size:13px; }
-  @media (max-width:600px){ #glossList{ column-count:1; } }
-  #glossList .g{ break-inside:avoid; margin-bottom:8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
-  #glossList .g .t{ font-weight:700; color:#1e2433; }
-  #glossList .g .b{ font-size:9px; font-weight:700; letter-spacing:.05em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; text-transform:uppercase; }
-  .bt-v{background:#f6ecd9;color:#8a6414;} .bt-p{background:#e7eff8;color:#345f8a;} .bt-f{background:#f3e8ef;color:#8a4d70;}
-  #glossList .g .d{ color:#48505f; } #glossList .g .z{ color:#1e2433; }
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
 
-  footer{ max-width:760px; margin:0 auto; padding:16px 34px 0; color:#6a7686; font-size:11.6px; line-height:1.65; text-align:center; }
-  footer a{ color:#3a5a8c; } footer .strong{ color:#444; font-weight:600; }
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
 
-  .vb{ cursor:help; border-bottom:1px dotted; padding-bottom:.5px; text-decoration:none; transition:background .12s; }
-  .vb.v{border-color:#d39a2f;} .vb.p{border-color:#5b9bd5;} .vb.c{border-color:#58c08b;} .vb.f{border-color:#b06a8f;}
-  .vb:hover,.vb:focus{ background:rgba(194,146,46,.10); outline:none; }
-  .vb.f:hover{ background:rgba(176,106,143,.12); }
-  .vb.open{ background:rgba(194,146,46,.18); }
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
 
-  #tip{ position:absolute; z-index:200; width:max-content; max-width:min(340px,88vw); background:#18222e; border:1px solid #34465a; border-radius:9px; padding:10px 13px 11px; font-size:13.5px; line-height:1.5; color:#e4ebf3; box-shadow:0 10px 28px rgba(0,0,0,.4); display:none; white-space:normal; }
-  #tip .meta{ display:flex; gap:6px; align-items:center; margin-bottom:5px; }
-  #tip .cat{ font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:1px 6px; border-radius:99px; font-weight:700; }
-  #tip .cat.v{background:rgba(211,154,47,.20);color:#f0c873;} #tip .cat.p{background:rgba(91,155,213,.20);color:#9fc6ef;}
-  #tip .cat.c{background:rgba(88,192,139,.20);color:#8fe0b4;} #tip .cat.f{background:rgba(176,106,143,.24);color:#e6a9cb;}
-  #tip .lvl{ font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
-  #tip .term{ font-weight:700; color:#fff; }
-  #tip .zh{ color:#e0a458; margin-top:4px; display:block; font-size:14px; }
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div id="controls">
-  <span class="brandmini">InkQuest&nbsp;Reader</span>
-  <span class="legend">
-    <span class="key"><span class="swatch sw-v"></span> Word</span>
-    <span class="key"><span class="swatch sw-p"></span> Phrase</span>
-    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
-    <span class="key"><span class="swatch sw-f"></span> Culture</span>
-  </span>
-  <span class="filters">
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked> B1</label>
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked> B2</label>
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked> C1</label>
-  </span>
-  <span class="spacer"></span>
-  <button id="fontMinus" title="Smaller text">A&minus;</button>
-  <button id="fontPlus" title="Larger text">A+</button>
-  <button id="toggle" aria-pressed="false">Highlights: On</button>
-</div>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
 
-<div id="doc">
-  <div class="mast">
-    <div class="brand">InkQuest English Coaching · Book, reviewed</div>
-    <span class="styled">In the style of The Economist / HBR</span>
+  <header class="article">
+    <div class="kicker">Book, reviewed · The Economist / HBR voice</div>
     <h1>Sun Tzu, Management Consultant</h1>
-    <div class="sub">The Art of War &middot; Sun Tzu &middot; ~570 words &middot; glossary B1&ndash;C1 &middot; word · phrase · grammar · culture notes</div>
-  </div>
-  <div class="inner">
-    <div class="howto">
-      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for a note in English + 繁中 and its CEFR level.</div>
-      <div><strong>Colours.</strong> <span style="color:#b8860b">word</span> · <span style="color:#3a72b8">phrase</span> · <span style="color:#2f8d5e">grammar</span> · <span style="color:#9c5a80">culture note</span>. Toggle highlights off to read clean.</div>
-    </div>
-    <div class="dek">Why a Warring States general still gets quoted in boardrooms &mdash; and why half of those quotes miss the point.</div>
-    <div id="bodywrap"><p>Walk into any strategy offsite and wait. Within an hour, someone will invoke Sun Tzu &mdash; usually the line about knowing your enemy and yourself, delivered as if it settled the argument. "The Art of War" has become the little black dress of business books: always in fashion, endlessly accessorized, and rarely read to the end.</p><p>That is a pity, because the book deserves better than its fan club.</p><p>Written around the fifth century BC and running to a mere thirteen short chapters, "The Art of War" is less a war manual than a treatise on decision-making under uncertainty. Strip away the chariots and it reads like a memo on operations, information, and self-knowledge. Sun Tzu's central claim is almost heretical to the hustle culture that worships him: the supreme skill is not to fight at all. To subdue the enemy without fighting, he argues, is the real height of skill. In corporate terms, the best deal is the one your rival concedes before the meeting even starts.</p><p>Three ideas have aged remarkably well. The first is positioning: choose the ground before the contest, so that victory is settled before the first move. The second is information asymmetry &mdash; know yourself, know your opponent, and you need not fear the outcome. The third is tempo: speed, deception, and the discipline to strike weakness rather than strength. A venture capitalist would call all three an "unfair advantage." Sun Tzu called them Tuesday.</p><h3 class="sub">Where the gospel wobbles</h3><p>And yet the reverence is overdone. The text is gnomic to the point of a Rorschach blot: its aphorisms are so compressed that they can justify almost any decision after the fact, which is precisely why executives love them. Told to shape their strategy "like water," a manager can rationalize both a bold pivot and a cowardly retreat. A theory that explains everything predicts nothing.</p><p>Then there is the ethics problem, which the LinkedIn crowd tends to skip. Sun Tzu is candid that war rests on deception &mdash; "all warfare is based on deception" is his flattest line &mdash; and importing that logic wholesale into a marketing team, or a marriage, tends to produce exactly the results you would fear. The book is a scalpel; a great many readers wield it as a chainsaw.</p><p>Finally, a caveat about provenance. What Western readers quote is usually Lionel Giles's 1910 translation, itself an interpretation of a text layered over centuries. The crisp "Sun Tzu says" often flatters a passage that is far murkier in the original. We are quoting a translation of a compilation attributed to a general who may be half legend.</p><h3 class="sub">The verdict</h3><p>So should it stay on the shelf? Absolutely &mdash; but as philosophy, not playbook. Read for temperament rather than tactics, "The Art of War" is a bracing corrective to the modern instinct to charge at every problem head-on. Its real lesson is patience: win the argument about the terrain, and you may never have to fight the battle. Just don't expect a 2,500-year-old general to close your Q3 pipeline. That part, unfortunately, is on you.</p></div>
+    <p class="deck">Why a Warring States general still gets quoted in boardrooms &mdash; and why half of those quotes miss the point.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Sun Tzu</b>, The Art of War</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
 
-    <h2 class="sec"><span class="n">§</span>Glossary &amp; culture notes <span style="font-size:12px;color:#7a8294;">詞彙與文化補充</span></h2>
-    <div class="rule"></div>
-    <div id="glossList"></div>
+  <article>
+    <p class="lead">Walk into any strategy offsite and wait. Within an hour, someone will invoke Sun Tzu &mdash; usually the line about knowing your enemy and yourself, delivered as if it settled the argument. "The Art of War" has become the little black dress of business books: always in fashion, endlessly accessorized, and rarely read to the end.</p><p>That is a pity, because the book deserves better than its fan club.</p><p>Written around the fifth century BC and running to a mere thirteen short chapters, "The Art of War" is less a war manual than a treatise on decision-making under uncertainty. Strip away the chariots and it reads like a memo on operations, information, and self-knowledge. Sun Tzu's central claim is almost heretical to the hustle culture that worships him: the supreme skill is not to fight at all. To subdue the enemy without fighting, he argues, is the real height of skill. In corporate terms, the best deal is the one your rival concedes before the meeting even starts.</p><p>Three ideas have aged remarkably well. The first is positioning: choose the ground before the contest, so that victory is settled before the first move. The second is information asymmetry &mdash; know yourself, know your opponent, and you need not fear the outcome. The third is tempo: speed, deception, and the discipline to strike weakness rather than strength. A venture capitalist would call all three an "unfair advantage." Sun Tzu called them Tuesday.</p><h2>Where the gospel wobbles</h2><p>And yet the reverence is overdone. The text is gnomic to the point of a Rorschach blot: its aphorisms are so compressed that they can justify almost any decision after the fact, which is precisely why executives love them. Told to shape their strategy "like water," a manager can rationalize both a bold pivot and a cowardly retreat. A theory that explains everything predicts nothing.</p><p>Then there is the ethics problem, which the LinkedIn crowd tends to skip. Sun Tzu is candid that war rests on deception &mdash; "all warfare is based on deception" is his flattest line &mdash; and importing that logic wholesale into a marketing team, or a marriage, tends to produce exactly the results you would fear. The book is a scalpel; a great many readers wield it as a chainsaw.</p><p>Finally, a caveat about provenance. What Western readers quote is usually Lionel Giles's 1910 translation, itself an interpretation of a text layered over centuries. The crisp "Sun Tzu says" often flatters a passage that is far murkier in the original. We are quoting a translation of a compilation attributed to a general who may be half legend.</p><div class="pull">The book is a scalpel; a great many readers wield it as a chainsaw.</div>
+        <h2>The verdict</h2><p>So should it stay on the shelf? Absolutely &mdash; but as philosophy, not playbook. Read for temperament rather than tactics, "The Art of War" is a bracing corrective to the modern instinct to charge at every problem head-on. Its real lesson is patience: win the argument about the terrain, and you may never have to fight the battle. Just don't expect a 2,500-year-old general to close your Q3 pipeline. That part, unfortunately, is on you.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
   </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review essay written in the register of the business press (The Economist / HBR). “The Art of War” (Sun Tzu, c. 5th century BC) is in the <strong>public domain</strong>; the few quoted lines follow Lionel Giles’s 1910 translation. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
 </div>
-<footer><span class="strong">An original InkQuest reading</span> &mdash; a review essay written in the register of the business press (The Economist / HBR). “The Art of War” (Sun Tzu, c. 5th century BC) is in the <strong>public domain</strong>; the few quoted lines follow Lionel Giles’s 1910 translation. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
-<div id="tip" role="tooltip" aria-hidden="true"></div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
 
 <script>
 var VOCAB = {"offsite": ["a work meeting or retreat held away from the office", "異地會議 / 共識營", "p", "B2"], "invoke": ["to cite something as an authority to support your point", "援引、搬出（權威）", "v", "C1"], "the little black dress": ["culture: the LBD is fashion's ultimate versatile classic; here = an all-purpose go-to", "文化梗:小黑洋裝(百搭經典);此處指「萬用款」", "f", "C1"], "in fashion": ["popular; currently admired", "流行、當紅", "p", "B1"], "accessorized": ["decorated with added extras", "加上配件裝飾", "v", "C1"], "fan club": ["its group of enthusiastic admirers", "粉絲群、擁護者", "p", "B1"], "less a war manual than": ["grammar: less X than Y = more Y than X (it's really Y)", "文法:與其說是 X，不如說是 Y", "c", "B2"], "treatise": ["a long, formal piece of writing on a subject", "論著、專論", "v", "C1"], "decision-making under uncertainty": ["choosing wisely when you don't have full information", "不確定情境下的決策", "p", "B2"], "chariots": ["ancient two-wheeled horse-drawn war carts", "戰車", "v", "B2"], "reads like": ["seems similar to when you read it", "讀起來像是", "p", "B1"], "memo": ["a short internal business note", "備忘錄", "v", "B1"], "operations": ["the day-to-day running of a business", "營運", "v", "B2"], "self-knowledge": ["understanding of your own nature and limits", "自我認識", "v", "B2"], "heretical": ["against widely accepted belief", "離經叛道的、大逆不道的", "v", "C1"], "hustle culture": ["culture: the modern glorification of relentless, non-stop work", "文化:崇尚拼命工作、無止境奮鬥的「拼搏文化」", "f", "C1"], "worships": ["admires so much it becomes uncritical", "（過度）崇拜", "v", "B2"], "supreme": ["highest; greatest", "至高的、最高的", "v", "B2"], "subdue": ["to defeat or bring under control", "制伏、降伏", "v", "C1"], "concedes": ["gives up or admits defeat on something", "讓步、認輸", "v", "C1"], "aged remarkably well": ["idiom: has stayed valid/good over a long time", "（觀點）歷久彌新、經得起時間考驗", "p", "B2"], "positioning": ["choosing where you stand so you have the advantage", "定位、佈局", "v", "B2"], "the ground": ["the terrain; here, the situation you fight on", "戰場、地勢（引申為局勢）", "p", "B2"], "information asymmetry": ["when one side knows more than the other", "資訊不對稱", "p", "C1"], "tempo": ["the pace or speed of action", "節奏、步調", "v", "B2"], "deception": ["the act of deliberately misleading", "欺敵、蒙蔽", "v", "C1"], "discipline": ["self-control and consistency", "紀律、自制", "v", "B2"], "venture capitalist": ["culture: an investor who funds risky startups for a stake", "文化:創投(投資新創、換取股份的投資人)", "f", "B2"], "unfair advantage": ["business slang: an edge rivals can't easily copy", "商業用語:對手難以複製的「不公平優勢」", "p", "B2"], "you need not fear": ["grammar: need not = need not / do not have to (formal)", "文法:need not = 不必(較正式)", "c", "B2"], "gospel": ["absolute, unquestioned truth (from the religious 'gospel')", "金科玉律、奉為聖經的真理", "v", "C1"], "wobbles": ["becomes shaky or unsteady", "動搖、站不穩", "v", "B2"], "reverence": ["deep respect verging on worship", "崇敬、敬畏", "v", "C1"], "overdone": ["taken too far; excessive", "過頭的、太over", "v", "B2"], "gnomic": ["mysteriously short and hard to interpret", "隱晦精簡、費解的", "v", "C1"], "a Rorschach blot": ["culture: the inkblot psychology test — people 'see' whatever they bring to it", "文化:羅夏克墨漬測驗(各自投射、各自解讀)", "f", "C1"], "aphorisms": ["short, clever sayings that state a truth", "格言、警句", "v", "C1"], "compressed": ["condensed into very few words", "濃縮的、壓縮的", "v", "B2"], "justify": ["to show that something is reasonable or right", "合理化、為…辯護", "v", "B2"], "after the fact": ["after something has already happened", "事後", "p", "B2"], "executives": ["senior managers in a company", "高階主管", "v", "B2"], "like water": ["culture: Sun Tzu's metaphor — good strategy has no fixed shape, it fits the ground", "文化:孫子「兵形象水」——上乘之策沒有固定形狀，隨局勢而變", "f", "B2"], "rationalize": ["to invent reasons that make a choice look sensible", "（找藉口）合理化", "v", "C1"], "pivot": ["business term: a sudden change of strategic direction", "商業用語:策略上的急轉向", "p", "B2"], "cowardly": ["lacking courage", "懦弱的", "v", "B2"], "retreat": ["a withdrawal from a fight or position", "撤退", "v", "B2"], "the LinkedIn crowd": ["culture: the self-promoting professionals of the networking site", "文化:領英上那群愛自我行銷的職場人", "f", "B2"], "candid": ["honest and direct, even about awkward things", "坦率的、直言的", "v", "C1"], "rests on": ["depends on; is built upon", "建立於、取決於", "p", "B2"], "flattest": ["most blunt and plain-spoken", "最直白的", "v", "B2"], "wholesale": ["completely and without discrimination", "全盤地、不加篩選地", "v", "C1"], "scalpel": ["a surgeon's small precise knife (here = a tool of precision)", "手術刀（比喻精準的工具）", "v", "B2"], "wield": ["to hold and use (a tool, weapon, or power)", "揮舞、運用", "v", "C1"], "chainsaw": ["a brutal cutting tool (here = crude, destructive use)", "電鋸（比喻粗暴、破壞性的用法）", "v", "B2"], "caveat": ["a warning or condition attached to a statement", "但書、提醒", "v", "C1"], "provenance": ["the origin and history of something", "來源、出處、來歷", "v", "C1"], "layered over centuries": ["built up in many layers across hundreds of years", "歷經數百年層層疊加", "p", "C1"], "crisp": ["clear, sharp and clean", "俐落清晰的", "v", "B2"], "flatters": ["makes something look better than it really is", "美化、抬高", "v", "C1"], "murkier": ["less clear; more obscure", "更模糊、更晦澀", "v", "C1"], "compilation": ["a collection assembled from many pieces", "彙編、輯錄", "v", "C1"], "attributed to": ["said to have been created by", "據稱出自、歸於", "p", "B2"], "half legend": ["partly historical, partly myth", "半屬傳說、半真半假", "p", "B2"], "on the shelf": ["kept but unused (also a pun: literally on the bookshelf)", "束之高閣（此處雙關「留在書架上」）", "p", "B2"], "playbook": ["business term: a fixed set of go-to tactics", "商業用語:戰術手冊、既定套路", "v", "B2"], "temperament": ["a person's basic character and disposition", "性情、心態", "v", "C1"], "tactics": ["specific short-term methods for winning", "戰術、招數", "v", "B2"], "bracing": ["refreshing and energizing (often a cold, clarifying jolt)", "令人清醒振奮的", "v", "C1"], "corrective": ["something that fixes a fault or tendency", "矯正、糾偏之物", "v", "C1"], "charge at": ["to rush aggressively and directly at", "橫衝直撞地衝向", "p", "B2"], "head-on": ["directly and forcefully, without avoiding", "正面硬碰、迎頭", "p", "B2"], "terrain": ["the physical land; here, the strategic situation", "地形（引申為局勢）", "v", "B2"], "Q3 pipeline": ["culture: business slang — the third-quarter sales you still need to close", "文化:商業黑話——第三季還沒到手的業績", "f", "C1"], "Warring States": ["culture: the era of Sun Tzu, an age of rival Chinese states (c. 5th–3rd c. BC)", "文化:孫子所處的戰國時代(約公元前5–3世紀)", "f", "B2"], "running to": ["amounting to / extending to (a length or number)", "(篇幅/數量)僅有、達到", "p", "C1"], "a mere": ["only; no more than (stressing how small)", "僅僅、不過", "p", "B2"], "Strip away": ["remove the outer layer to reveal what is underneath", "剝去表層、去掉包裝以見本質", "p", "B2"], "in corporate terms": ["put into the language of business", "用商業的話來說", "p", "B2"], "rival": ["a competitor; someone you compete against", "對手、競爭者", "v", "B2"], "opponent": ["the person or side you are up against", "對手、敵手", "v", "B2"], "strike": ["to attack, especially suddenly", "出擊、攻打", "v", "B2"], "called them Tuesday": ["joke: to call something 'Tuesday' is to treat it as an ordinary, everyday thing", "玩笑話:把某事說成「星期二」= 當成再平常不過的日常", "p", "C1"], "to the point of": ["so much that it reaches (an extreme)", "到了…的地步", "p", "B2"], "tends to": ["usually does; is inclined to", "往往會、傾向於", "p", "B2"], "a great many": ["a very large number of", "為數眾多的", "p", "B2"], "passage": ["a short section of a text", "(文章的)一段、段落", "v", "B2"], "instinct": ["a natural, automatic urge or reaction", "直覺、本能反應", "v", "B2"], "is on you": ["idiom: is your responsibility", "(這部分)得靠你自己、是你的責任", "p", "B2"], "a pity": ["a shame; something unfortunate", "可惜、遺憾的事", "p", "B1"], "settled the argument": ["ended the debate for good", "一舉定案、終結爭論", "p", "B2"], "height of skill": ["the highest, most refined form of skill", "技藝的最高境界", "p", "B2"]};
-var ROOT=document.getElementById('bodywrap'), TIP=document.getElementById('tip');
-var CATLABEL={v:'Word',p:'Phrase / idiom',c:'Grammar / usage',f:'Culture / context'};
-var TERMS=Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
 function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
-function ciFind(text,term,from){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm,from);
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
   while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
     if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
 function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
   var bestIdx=-1,bestTerm=null;
-  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t,0);if(idx===-1)continue;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
     if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
   if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
   var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
-  var s=document.createElement('span');var lvl=(e[3]||'').toLowerCase().split('/')[0];
-  s.className='vb '+e[2]+' l-'+lvl;s.setAttribute('tabindex','0');
-  s.setAttribute('data-d',e[0]);s.setAttribute('data-z',e[1]);s.setAttribute('data-t',e[2]);s.setAttribute('data-l',e[3]||'');s.setAttribute('data-w',m);
-  s.textContent=m;var p=node.parentNode;
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
   if(pre)p.insertBefore(document.createTextNode(pre),node);
-  p.insertBefore(s,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
   processTextNode(pn);}
-function linkify(){var w=document.createTreeWalker(ROOT,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
-  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}}
-var pinned=null,hideTimer=null;
-function fillTip(el){var lvl=el.getAttribute('data-l');
-  TIP.innerHTML='<div class="meta"><span class="cat '+el.getAttribute('data-t')+'">'+CATLABEL[el.getAttribute('data-t')]+'</span>'+(lvl?'<span class="lvl">'+lvl+'</span>':'')+'</div><span class="term">'+el.getAttribute('data-w')+'</span> &mdash; '+el.getAttribute('data-d')+'<span class="zh">'+el.getAttribute('data-z')+'</span>';}
-function placeTip(el){TIP.style.display='block';TIP.style.left='0';TIP.style.top='0';var r=el.getBoundingClientRect(),tw=TIP.offsetWidth,th=TIP.offsetHeight,pad=10;
-  var x=r.left+r.width/2-tw/2;x=Math.max(pad,Math.min(x,window.innerWidth-tw-pad));
-  var y=r.top-th-8;if(y<pad)y=r.bottom+8;TIP.style.left=(x+window.scrollX)+'px';TIP.style.top=(y+window.scrollY)+'px';}
-function showTip(el){if(document.body.classList.contains('nohl'))return;if(hideTimer){clearTimeout(hideTimer);hideTimer=null;}fillTip(el);placeTip(el);}
-function hideTip(){TIP.style.display='none';if(pinned){pinned.classList.remove('open');pinned=null;}}
-ROOT.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)showTip(el);});
-ROOT.addEventListener('mouseout',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)hideTimer=setTimeout(function(){TIP.style.display='none';},80);});
-ROOT.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el)showTip(el);});
-ROOT.addEventListener('focusout',function(){if(!pinned)TIP.style.display='none';});
-document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('.vb');
-  if(el){if(pinned===el){hideTip();return;}if(pinned)pinned.classList.remove('open');pinned=el;el.classList.add('open');showTip(el);e.stopPropagation();return;}
-  if(!TIP.contains(e.target))hideTip();});
-window.addEventListener('resize',hideTip);window.addEventListener('scroll',function(){if(pinned)placeTip(pinned);},{passive:true});
-var toggle=document.getElementById('toggle');
-toggle.addEventListener('click',function(){var off=document.body.classList.toggle('nohl');toggle.textContent='Highlights: '+(off?'Off':'On');toggle.setAttribute('aria-pressed',off?'true':'false');if(off)hideTip();});
-Array.prototype.forEach.call(document.querySelectorAll('.lvchk'),function(c){c.addEventListener('change',function(){document.body.classList.toggle('hide-'+c.getAttribute('data-l'),!c.checked);});});
-var scale=1;function setScale(s){scale=Math.max(.85,Math.min(1.4,s));ROOT.style.fontSize=scale.toFixed(2)+'em';}
-document.getElementById('fontPlus').addEventListener('click',function(){setScale(scale+.08);});
-document.getElementById('fontMinus').addEventListener('click',function(){setScale(scale-.08);});
-function buildGlossary(){var seen={},items=[];for(var k in VOCAB){var e=VOCAB[k];if(e[2]==='c')continue;var sig=e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;items.push([k,e]);}
-  items.sort(function(a,b){return a[0].localeCompare(b[0]);});var bc={v:'bt-v',p:'bt-p',f:'bt-f'};var cl={v:'word',p:'phrase',f:'culture'};var html='';
-  for(var i=0;i<items.length;i++){var k=items[i][0],e=items[i][1];
-    html+='<div class="g"><span class="t">'+k+'</span><span class="b '+bc[e[2]]+'">'+cl[e[2]]+'</span><div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';}
-  document.getElementById('glossList').innerHTML=html;}
-buildGlossary(); linkify();
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
 </script>
 </body>
 </html>

@@ -2,169 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>The Great Gatsby, reviewed — InkQuest Reader</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body { background:#e8ecf2; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif; color:#1a1a1a; line-height:1.68; font-size:16px; padding:0 0 60px; }
-  #controls { position:sticky; top:0; z-index:60; background:rgba(19,40,74,0.97); backdrop-filter:blur(6px); color:#d4dce8; border-bottom:2px solid #c2922e; display:flex; flex-wrap:wrap; align-items:center; gap:9px 15px; padding:9px 18px; font-size:12.5px; }
-  #controls .brandmini { font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#fff; font-size:11.5px; }
-  #controls .legend { display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
-  #controls .key { display:inline-flex; align-items:center; gap:5px; white-space:nowrap; }
-  #controls .swatch { width:20px; height:0; border-bottom:2px dotted; display:inline-block; }
-  .sw-v{border-color:#d39a2f;} .sw-p{border-color:#5b9bd5;} .sw-c{border-color:#58c08b;} .sw-f{border-color:#b06a8f;}
-  #controls .filters{ display:flex; gap:9px; align-items:center; }
-  #controls label.lv{ display:inline-flex; gap:4px; align-items:center; cursor:pointer; user-select:none; }
-  #controls .spacer{ flex:1 1 auto; }
-  #controls button{ font:inherit; font-size:12px; cursor:pointer; background:#1f3a63; color:#dbe6f5; border:1px solid #34568a; border-radius:6px; padding:5px 10px; }
-  #controls button:hover{ background:#294c80; }
-  body.nohl .vb{ border-bottom:0 !important; color:inherit !important; cursor:text !important; }
-  body.hide-b1 .vb.l-b1, body.hide-b2 .vb.l-b2, body.hide-c1 .vb.l-c1{ border-bottom:0; }
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#A8862B; --accent-deep:#7E6318;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
 
-  #doc{ max-width:760px; margin:22px auto; background:#fff; box-shadow:0 2px 14px rgba(20,40,70,.12); border-radius:4px; overflow:hidden; }
-  .mast{ background:#1e2433; color:#fff; padding:24px 34px; border-bottom:3px solid #c2922e; }
-  .mast .brand{ font-size:11.5px; letter-spacing:.2em; color:#c9b48a; font-weight:700; text-transform:uppercase; }
-  .mast .styled{ display:inline-block; font-size:10px; letter-spacing:.04em; color:#1e2433; background:#c9b48a; border-radius:20px; padding:2px 10px; font-weight:700; margin-top:12px; }
-  .mast h1{ font-family:Georgia,"Times New Roman",serif; font-size:30px; line-height:1.12; margin-top:10px; letter-spacing:.005em; }
-  .mast .sub{ color:#c8d0de; font-size:13px; margin-top:10px; line-height:1.5; }
-  .inner{ padding:26px 34px 30px; }
-  @media (max-width:600px){ .inner,.mast{ padding-left:20px; padding-right:20px; } .mast h1{ font-size:24px; } body{font-size:15.5px;} }
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
 
-  .dek{ font-family:Georgia,serif; font-style:italic; font-size:17px; color:#4a5568; line-height:1.5; border-left:3px solid #c2922e; padding-left:15px; margin-bottom:22px; }
-  #bodywrap p{ margin:0 0 15px; }
-  #bodywrap h3.sub{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:26px 0 10px; padding-top:4px; }
-  #bodywrap h3.sub::before{ content:""; display:block; width:38px; height:2px; background:#c2922e; margin-bottom:9px; }
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
 
-  .howto{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:#cdd6e2; border:1px solid #cdd6e2; border-radius:5px; overflow:hidden; margin-bottom:22px; }
-  .howto > div{ background:#eef2f7; padding:9px 11px; font-size:12px; color:#41506a; }
-  @media (max-width:600px){ .howto{ grid-template-columns:1fr; } }
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"✦";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
 
-  h2.sec{ font-family:Georgia,serif; font-size:19px; color:#1e2433; margin:28px 0 2px; }
-  h2.sec .n{ color:#c2922e; margin-right:8px; }
-  .rule{ height:2px; background:#c2922e; margin:5px 0 14px; }
-  #glossList{ column-count:2; column-gap:26px; font-size:13px; }
-  @media (max-width:600px){ #glossList{ column-count:1; } }
-  #glossList .g{ break-inside:avoid; margin-bottom:8px; padding-bottom:7px; border-bottom:1px solid #eef1f6; }
-  #glossList .g .t{ font-weight:700; color:#1e2433; }
-  #glossList .g .b{ font-size:9px; font-weight:700; letter-spacing:.05em; padding:1px 5px; border-radius:99px; margin-left:6px; vertical-align:1px; text-transform:uppercase; }
-  .bt-v{background:#f6ecd9;color:#8a6414;} .bt-p{background:#e7eff8;color:#345f8a;} .bt-f{background:#f3e8ef;color:#8a4d70;}
-  #glossList .g .d{ color:#48505f; } #glossList .g .z{ color:#1e2433; }
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
 
-  footer{ max-width:760px; margin:0 auto; padding:16px 34px 0; color:#6a7686; font-size:11.6px; line-height:1.65; text-align:center; }
-  footer a{ color:#3a5a8c; } footer .strong{ color:#444; font-weight:600; }
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
 
-  .vb{ cursor:help; border-bottom:1px dotted; padding-bottom:.5px; text-decoration:none; transition:background .12s; }
-  .vb.v{border-color:#d39a2f;} .vb.p{border-color:#5b9bd5;} .vb.c{border-color:#58c08b;} .vb.f{border-color:#b06a8f;}
-  .vb:hover,.vb:focus{ background:rgba(194,146,46,.10); outline:none; }
-  .vb.f:hover{ background:rgba(176,106,143,.12); }
-  .vb.open{ background:rgba(194,146,46,.18); }
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
 
-  #tip{ position:absolute; z-index:200; width:max-content; max-width:min(340px,88vw); background:#18222e; border:1px solid #34465a; border-radius:9px; padding:10px 13px 11px; font-size:13.5px; line-height:1.5; color:#e4ebf3; box-shadow:0 10px 28px rgba(0,0,0,.4); display:none; white-space:normal; }
-  #tip .meta{ display:flex; gap:6px; align-items:center; margin-bottom:5px; }
-  #tip .cat{ font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; padding:1px 6px; border-radius:99px; font-weight:700; }
-  #tip .cat.v{background:rgba(211,154,47,.20);color:#f0c873;} #tip .cat.p{background:rgba(91,155,213,.20);color:#9fc6ef;}
-  #tip .cat.c{background:rgba(88,192,139,.20);color:#8fe0b4;} #tip .cat.f{background:rgba(176,106,143,.24);color:#e6a9cb;}
-  #tip .lvl{ font-size:9.5px; font-weight:700; padding:1px 6px; border-radius:99px; background:#2a3645; color:#cdd6e2; }
-  #tip .term{ font-weight:700; color:#fff; }
-  #tip .zh{ color:#e0a458; margin-top:4px; display:block; font-size:14px; }
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div id="controls">
-  <span class="brandmini">InkQuest&nbsp;Reader</span>
-  <span class="legend">
-    <span class="key"><span class="swatch sw-v"></span> Word</span>
-    <span class="key"><span class="swatch sw-p"></span> Phrase</span>
-    <span class="key"><span class="swatch sw-c"></span> Grammar</span>
-    <span class="key"><span class="swatch sw-f"></span> Culture</span>
-  </span>
-  <span class="filters">
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="b1" checked> B1</label>
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="b2" checked> B2</label>
-    <label class="lv"><input type="checkbox" class="lvchk" data-l="c1" checked> C1</label>
-  </span>
-  <span class="spacer"></span>
-  <button id="fontMinus" title="Smaller text">A&minus;</button>
-  <button id="fontPlus" title="Larger text">A+</button>
-  <button id="toggle" aria-pressed="false">Highlights: On</button>
-</div>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
 
-<div id="doc">
-  <div class="mast">
-    <div class="brand">InkQuest English Coaching · Book, reviewed</div>
-    <span class="styled">In the style of People / Cosmopolitan</span>
+  <header class="article">
+    <div class="kicker">Book, reviewed · People / Cosmo voice</div>
     <h1>He Threw the Wildest Parties in New York &mdash; for One Woman</h1>
-    <div class="sub">The Great Gatsby &middot; F. Scott Fitzgerald &middot; ~620 words &middot; glossary B1&ndash;C1 &middot; word · phrase · grammar · culture notes</div>
-  </div>
-  <div class="inner">
-    <div class="howto">
-      <div><strong>How to read.</strong> Hover (desktop) or tap (mobile) any underlined term for a note in English + 繁中 and its CEFR level.</div>
-      <div><strong>Colours.</strong> <span style="color:#b8860b">word</span> · <span style="color:#3a72b8">phrase</span> · <span style="color:#2f8d5e">grammar</span> · <span style="color:#9c5a80">culture note</span>. Toggle highlights off to read clean.</div>
-    </div>
-    <div class="dek">A century on, “The Great Gatsby” is still the ultimate cautionary tale about loving an ex too much. Grab a cocktail; it gets messy.</div>
-    <div id="bodywrap"><p>Picture the most exclusive party of the summer. A mansion on the water, a live orchestra, champagne like a waterfall, and a guest list that mostly shows up uninvited. At the center of it all: a devastatingly handsome host nobody actually knows. Who is Jay Gatsby? Where did the money come from? And why does he stare across the bay every night at a single green light?</p><p>Reader, he is not okay. And by the end, neither are we.</p><p>Here is the tea. Welcome to the Jazz Age &mdash; Prohibition, new money, and parties on Long Island that never seem to stop. Gatsby &mdash; real name James Gatz, a poor farm kid who reinvented himself from scratch &mdash; made a fortune (don't ask how; fine, it's bootlegging) for exactly one reason: to win back Daisy, the golden girl he loved before the war. The catch? Daisy is married. To Tom Buchanan: old money, broad-shouldered, and cheating on her without an ounce of guilt. Gatsby's plan is pure rom-com delusion &mdash; throw enough glittering parties, and maybe one night she'll wander in.</p><h3 class="sub">The romance we can't look away from</h3><p>Let's be honest about why this endures. It's the fantasy of the ex who never got over you &mdash; the one who built an empire just to earn a second chance. Gatsby's devotion is intoxicating, and Fitzgerald writes longing better than almost anyone alive or dead: that green light at the end of Daisy's dock has become shorthand for wanting what you cannot have. When Gatsby finally reunites with Daisy and knocks a clock off the mantel in his nerves, it is the most relatable he ever gets.</p><p>But &mdash; and Cosmo would like to stage an intervention &mdash; this is not a love story. It is a red-flag parade.</p><h3 class="sub">The part nobody wants to admit</h3><p>Because Daisy, up close, is a letdown. She is lovely, her voice is "full of money," and she is careless in the way only the very rich can afford to be. Gatsby isn't in love with a woman; he is in love with a version of her he invented at seventeen, and he would rather die for the fantasy than update it. That is not romance. That is a man dating a memory.</p><p>The book has its critics, and they have a point. The women are thinly drawn; Daisy in particular is more symbol than person. Our narrator, Nick, spends the whole novel judging everyone while doing almost nothing to stop the wreck he sees coming &mdash; the original passive bystander. And at barely 200 pages, "Gatsby" is plot-light: mostly mood, gorgeous sentences, and a slow build of dread.</p><p>Which is, oddly, the point. Fitzgerald isn't selling the romance; he is exposing it. Underneath the parties, everyone here is chasing status, and the American Dream they were sold turns out to be a green light that keeps receding.</p><h3 class="sub">The takeaway</h3><p>A hundred years on, "The Great Gatsby" survives because it named a very modern ache: we fall for the highlight reel, not the person. Gatsby threw the greatest parties in literature and died almost alone. If a friend told you this story about her ex, you would quietly take away her phone. Read it anyway &mdash; for the sentences, for the glamour, and for the warning stitched into every gorgeous line: be careful what you turn a person into.</p></div>
+    <p class="deck">A century on, “The Great Gatsby” is still the ultimate cautionary tale about loving an ex too much. Grab a cocktail; it gets messy.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>F. Scott Fitzgerald</b>, The Great Gatsby</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
 
-    <h2 class="sec"><span class="n">§</span>Glossary &amp; culture notes <span style="font-size:12px;color:#7a8294;">詞彙與文化補充</span></h2>
-    <div class="rule"></div>
-    <div id="glossList"></div>
+  <article>
+    <p class="lead">Picture the most exclusive party of the summer. A mansion on the water, a live orchestra, champagne like a waterfall, and a guest list that mostly shows up uninvited. At the center of it all: a devastatingly handsome host nobody actually knows. Who is Jay Gatsby? Where did the money come from? And why does he stare across the bay every night at a single green light?</p><p>Reader, he is not okay. And by the end, neither are we.</p><p>Here is the tea. Welcome to the Jazz Age &mdash; Prohibition, new money, and parties on Long Island that never seem to stop. Gatsby &mdash; real name James Gatz, a poor farm kid who reinvented himself from scratch &mdash; made a fortune (don't ask how; fine, it's bootlegging) for exactly one reason: to win back Daisy, the golden girl he loved before the war. The catch? Daisy is married. To Tom Buchanan: old money, broad-shouldered, and cheating on her without an ounce of guilt. Gatsby's plan is pure rom-com delusion &mdash; throw enough glittering parties, and maybe one night she'll wander in.</p><h2>The romance we can't look away from</h2><p>Let's be honest about why this endures. It's the fantasy of the ex who never got over you &mdash; the one who built an empire just to earn a second chance. Gatsby's devotion is intoxicating, and Fitzgerald writes longing better than almost anyone alive or dead: that green light at the end of Daisy's dock has become shorthand for wanting what you cannot have. When Gatsby finally reunites with Daisy and knocks a clock off the mantel in his nerves, it is the most relatable he ever gets.</p><p>But &mdash; and Cosmo would like to stage an intervention &mdash; this is not a love story. It is a red-flag parade.</p><div class="pull">This is not a love story. It is a red-flag parade.</div>
+        <h2>The part nobody wants to admit</h2><p>Because Daisy, up close, is a letdown. She is lovely, her voice is "full of money," and she is careless in the way only the very rich can afford to be. Gatsby isn't in love with a woman; he is in love with a version of her he invented at seventeen, and he would rather die for the fantasy than update it. That is not romance. That is a man dating a memory.</p><p>The book has its critics, and they have a point. The women are thinly drawn; Daisy in particular is more symbol than person. Our narrator, Nick, spends the whole novel judging everyone while doing almost nothing to stop the wreck he sees coming &mdash; the original passive bystander. And at barely 200 pages, "Gatsby" is plot-light: mostly mood, gorgeous sentences, and a slow build of dread.</p><p>Which is, oddly, the point. Fitzgerald isn't selling the romance; he is exposing it. Underneath the parties, everyone here is chasing status, and the American Dream they were sold turns out to be a green light that keeps receding.</p><h2>The takeaway</h2><p>A hundred years on, "The Great Gatsby" survives because it named a very modern ache: we fall for the highlight reel, not the person. Gatsby threw the greatest parties in literature and died almost alone. If a friend told you this story about her ex, you would quietly take away her phone. Read it anyway &mdash; for the sentences, for the glamour, and for the warning stitched into every gorgeous line: be careful what you turn a person into.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
   </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the glossy register of celebrity magazines (People / Cosmopolitan). “The Great Gatsby” by F. Scott Fitzgerald (1925) entered the <strong>public domain</strong> in 2021; a few short quoted phrases are used as a study aid. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
 </div>
-<footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the glossy register of celebrity magazines (People / Cosmopolitan). “The Great Gatsby” by F. Scott Fitzgerald (1925) entered the <strong>public domain</strong> in 2021; a few short quoted phrases are used as a study aid. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
-<div id="tip" role="tooltip" aria-hidden="true"></div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
 
 <script>
-var VOCAB = {"exclusive": ["high-status and open only to a select few", "頂級、限定入場的", "v", "B2"], "mansion": ["a very large, grand house", "豪宅", "v", "B2"], "orchestra": ["a large group of musicians playing together", "管弦樂團", "v", "B2"], "guest list": ["the list of people invited to an event", "賓客名單", "p", "B1"], "uninvited": ["without being asked or invited", "未受邀請的", "v", "B2"], "devastatingly handsome": ["extremely, almost overwhelmingly good-looking", "帥到令人招架不住", "p", "B2"], "host": ["the person giving the party", "主人、東道主", "v", "B1"], "stare across": ["to gaze fixedly over (a distance)", "凝望對岸", "p", "B1"], "the bay": ["a wide curved inlet of the sea", "海灣", "v", "B2"], "green light": ["culture: the novel's central symbol at Daisy's dock — hope, longing, the thing just out of reach", "文化:全書核心象徵(黛西碼頭的綠燈)——希望、渴望、觸不可及之物", "f", "B2"], "Reader, he is not okay": ["culture: a wink at the old novelist's habit of addressing 'Reader' directly (as in Jane Eyre)", "文化:戲仿古典小說直接對「讀者」說話的口吻(如《簡愛》)", "f", "C1"], "Here is the tea": ["slang: here's the gossip / the real story ('tea' = juicy truth)", "俚語:來爆料了(tea=八卦、內幕)", "f", "B2"], "the Jazz Age": ["culture: the 1920s in America — jazz, wild parties, and post-war prosperity", "文化:爵士時代(1920年代美國——爵士樂、狂歡派對、戰後繁榮)", "f", "B2"], "Prohibition": ["culture: the 1920–33 US ban on making and selling alcohol", "文化:禁酒令(1920–33年美國禁止製售酒類)", "f", "C1"], "new money": ["culture: recently earned wealth, looked down on by the old rich", "文化:新富、暴發戶(被世家舊錢瞧不起)", "f", "B2"], "Long Island": ["culture: the wealthy stretch of New York coast where the novel is set", "文化:長島(小說背景，紐約的富人海岸)", "f", "B2"], "reinvented himself": ["completely remade his own identity", "徹底重新塑造自己", "p", "B2"], "from scratch": ["from nothing; from the very beginning", "從零開始、白手", "p", "B1"], "made a fortune": ["became very rich", "賺得大筆財富", "p", "B1"], "bootlegging": ["culture: illegally making or selling alcohol during Prohibition", "文化:私釀私售酒類(禁酒令時期的非法生意)", "f", "C1"], "win back": ["to regain (a person's love)", "挽回、贏回", "p", "B1"], "the golden girl": ["the admired, privileged young woman everyone adores", "天之驕女、萬人迷", "p", "B2"], "old money": ["culture: inherited, long-established wealth", "文化:世家舊錢(代代相傳的財富)", "f", "B2"], "broad-shouldered": ["having wide shoulders; physically imposing", "寬肩的、魁梧的", "p", "B2"], "an ounce of guilt": ["idiom: even the smallest amount of guilt", "一絲一毫的愧疚", "p", "B2"], "rom-com": ["culture: a romantic comedy (and its predictable feel-good tropes)", "文化:浪漫喜劇(及其老套的甜蜜橋段)", "f", "B2"], "delusion": ["a false belief held despite the evidence", "妄想、痴心妄想", "v", "C1"], "glittering": ["sparkling, glamorous and dazzling", "光鮮亮麗、閃耀的", "v", "B2"], "wander in": ["to come in casually, without planning to", "隨意晃進來", "p", "B1"], "endures": ["lasts and stays powerful over time", "歷久不衰、經久", "v", "B2"], "got over": ["recovered emotionally from (someone / something)", "走出、放下(情傷)", "p", "B2"], "built an empire": ["created a huge business or fortune", "打下一片江山、建立王國", "p", "B2"], "devotion": ["deep, loyal love or commitment", "深情、忠貞", "v", "C1"], "intoxicating": ["thrilling and heady, like being drunk", "令人陶醉、上頭的", "v", "C1"], "longing": ["a strong, aching desire", "渴望、思慕", "v", "C1"], "shorthand for": ["a quick symbol that stands for a bigger idea", "…的代名詞、象徵", "p", "C1"], "reunites with": ["comes back together with (after being apart)", "與…重逢", "p", "B2"], "mantel": ["the shelf above a fireplace", "壁爐架", "v", "C1"], "relatable": ["easy to identify with; you see yourself in it", "有共鳴、能感同身受的", "v", "B2"], "stage an intervention": ["culture: to gather and confront someone about self-destructive behavior", "文化:辦一場「規勸大會」、集體出手勸阻", "p", "C1"], "red-flag parade": ["a whole procession of warning signs", "一連串的危險信號", "p", "B2"], "up close": ["seen from very near", "近看、貼近觀察", "p", "B1"], "letdown": ["a disappointment; something less than hoped", "令人失望的人事物", "v", "B2"], "full of money": ["culture: Fitzgerald's famous line about Daisy's voice — wealth you can hear", "文化:費茲傑羅形容黛西嗓音的名句——聽得見的財富", "f", "C1"], "careless": ["not caring about the harm you cause", "漫不經心、不顧後果的", "v", "B1"], "dating a memory": ["in love with a past version, not the real person", "愛的是回憶、不是眼前的人", "p", "B2"], "would rather die for the fantasy than": ["grammar: would rather X than Y = prefers X over Y", "文法:would rather X than Y(寧可 X 也不 Y)", "c", "B2"], "thinly drawn": ["(of a character) sketched without depth", "(角色)刻畫單薄、不立體", "p", "C1"], "more symbol than person": ["grammar: more X than Y = X rather than Y", "文法:more X than Y(與其說是 Y，不如說是 X)", "c", "B2"], "symbol": ["a thing that stands for something larger", "象徵", "v", "B2"], "narrator": ["the voice telling the story", "敘事者", "v", "B2"], "passive bystander": ["someone who watches trouble but never acts", "被動的旁觀者", "p", "B2"], "wreck": ["a disaster or crash about to happen", "災難、殘局", "v", "B2"], "plot-light": ["with very little actual plot", "情節稀薄的", "p", "C1"], "dread": ["a heavy sense that something bad is coming", "不祥的預感、惶惶", "v", "C1"], "exposing": ["revealing the ugly truth about something", "揭露、拆穿", "v", "B2"], "chasing status": ["endlessly pursuing rank and prestige", "追逐地位、身分", "p", "B2"], "the American Dream": ["culture: the belief that anyone can rise through hard work — which the novel questions", "文化:美國夢(努力就能翻身的信念——小說對此提出質疑)", "f", "B2"], "keeps receding": ["keeps moving further away as you reach for it", "不斷後退、越追越遠", "p", "C1"], "the highlight reel": ["culture: the curated 'best bits' people show off (esp. on social media)", "文化:精華片段(尤指社群上展示的光鮮那一面)", "p", "B2"], "stitched into": ["woven or sewn tightly into", "縫進、嵌入", "p", "C1"], "Picture": ["imagine; form a mental image of", "想像一下、在腦中描繪", "v", "B2"], "shows up": ["arrives; turns up", "現身、出現", "p", "B1"], "at the center of it all": ["at the very heart of everything", "在這一切的正中心", "p", "B2"], "the catch": ["the hidden snag or drawback", "(藏著的)問題、陷阱、但書", "p", "B2"], "cheating on": ["being romantically unfaithful to (a partner)", "對(伴侶)劈腿、出軌", "p", "B2"], "dock": ["a small platform at the water's edge for boats", "碼頭、水邊小平台", "v", "B2"], "in his nerves": ["out of nervousness; because he is so nervous", "因為太緊張(而…)", "p", "B2"], "Cosmo": ["culture: Cosmopolitan, a glossy magazine famous for relationship advice", "文化:Cosmopolitan(以兩性/感情建議聞名的時尚雜誌)", "f", "B2"], "afford to": ["to be able to allow oneself (to do something)", "有本錢、負擔得起(任性去做)", "p", "B2"], "have a point": ["idiom: to be making a valid argument", "(某人)說得有道理、言之成理", "p", "B2"], "in particular": ["especially; more than the others", "尤其、特別是", "p", "B1"], "sees coming": ["idiom: anticipates (a disaster) in advance", "(早就)預見、料到會發生", "p", "B2"], "barely": ["only just; hardly", "僅僅、勉強才", "v", "B2"], "turns out to be": ["is finally revealed to be", "結果竟是、到頭來是", "p", "B2"], "were sold": ["were persuaded to believe in (an idea)", "被說服相信、被灌輸(某個理想)", "p", "C1"], "fall for": ["idiom: to be fooled by — or to fall in love with", "被…騙倒;或愛上", "p", "B2"], "glamour": ["exciting, alluring attractiveness", "魅力、光鮮誘人的吸引力", "v", "B2"], "ache": ["a deep, lasting pain or longing", "隱隱的痛、深切的渴望", "v", "C1"], "years on": ["years later", "(若干)年之後", "p", "B2"], "oddly": ["strangely; in an unexpected way", "奇怪的是、出乎意料地", "v", "B2"], "neither are we": ["grammar: neither + auxiliary + subject (inversion) = 'we aren't either'", "文法:neither + 助動詞 + 主詞(倒裝)=「我們也不…」", "c", "B2"]};
-var ROOT=document.getElementById('bodywrap'), TIP=document.getElementById('tip');
-var CATLABEL={v:'Word',p:'Phrase / idiom',c:'Grammar / usage',f:'Culture / context'};
-var TERMS=Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+var VOCAB = {"exclusive": ["high-status and open only to a select few", "頂級、限定入場的", "v", "B2"], "mansion": ["a very large, grand house", "豪宅", "v", "B2"], "orchestra": ["a large group of musicians playing together", "管弦樂團", "v", "B2"], "guest list": ["the list of people invited to an event", "賓客名單", "p", "B1"], "uninvited": ["without being asked or invited", "未受邀請的", "v", "B2"], "devastatingly handsome": ["extremely, almost overwhelmingly good-looking", "帥到令人招架不住", "p", "B2"], "host": ["the person giving the party", "主人、東道主", "v", "B1"], "stare across": ["to gaze fixedly over (a distance)", "凝望對岸", "p", "B1"], "the bay": ["a wide curved inlet of the sea", "海灣", "v", "B2"], "green light": ["culture: the novel's central symbol at Daisy's dock — hope, longing, the thing just out of reach", "文化:全書核心象徵(黛西碼頭的綠燈)——希望、渴望、觸不可及之物", "f", "B2"], "Reader, he is not okay": ["culture: a wink at the old novelist's habit of addressing 'Reader' directly (as in Jane Eyre)", "文化:戲仿古典小說直接對「讀者」說話的口吻(如《簡愛》)", "f", "C1"], "Here is the tea": ["slang: here's the gossip / the real story ('tea' = juicy truth)", "俚語:來爆料了(tea=八卦、內幕)", "f", "B2"], "the Jazz Age": ["culture: the 1920s in America — jazz, wild parties, and post-war prosperity", "文化:爵士時代(1920年代美國——爵士樂、狂歡派對、戰後繁榮)", "f", "B2"], "Prohibition": ["culture: the 1920–33 US ban on making and selling alcohol", "文化:禁酒令(1920–33年美國禁止製售酒類)", "f", "C1"], "new money": ["culture: recently earned wealth, looked down on by the old rich", "文化:新富、暴發戶(被世家舊錢瞧不起)", "f", "B2"], "Long Island": ["culture: the wealthy stretch of New York coast where the novel is set", "文化:長島(小說背景，紐約的富人海岸)", "f", "B2"], "reinvented himself": ["completely remade his own identity", "徹底重新塑造自己", "p", "B2"], "from scratch": ["from nothing; from the very beginning", "從零開始、白手", "p", "B1"], "made a fortune": ["became very rich", "賺得大筆財富", "p", "B1"], "bootlegging": ["culture: illegally making or selling alcohol during Prohibition", "文化:私釀私售酒類(禁酒令時期的非法生意)", "f", "C1"], "win back": ["to regain (a person's love)", "挽回、贏回", "p", "B1"], "the golden girl": ["the admired, privileged young woman everyone adores", "天之驕女、萬人迷", "p", "B2"], "old money": ["culture: inherited, long-established wealth", "文化:世家舊錢(代代相傳的財富)", "f", "B2"], "broad-shouldered": ["having wide shoulders; physically imposing", "寬肩的、魁梧的", "p", "B2"], "an ounce of guilt": ["idiom: even the smallest amount of guilt", "一絲一毫的愧疚", "p", "B2"], "rom-com": ["culture: a romantic comedy (and its predictable feel-good tropes)", "文化:浪漫喜劇(及其老套的甜蜜橋段)", "f", "B2"], "delusion": ["a false belief held despite the evidence", "妄想、痴心妄想", "v", "C1"], "glittering": ["sparkling, glamorous and dazzling", "光鮮亮麗、閃耀的", "v", "B2"], "wander in": ["to come in casually, without planning to", "隨意晃進來", "p", "B1"], "endures": ["lasts and stays powerful over time", "歷久不衰、經久", "v", "B2"], "got over": ["recovered emotionally from (someone / something)", "走出、放下(情傷)", "p", "B2"], "built an empire": ["created a huge business or fortune", "打下一片江山、建立王國", "p", "B2"], "devotion": ["deep, loyal love or commitment", "深情、忠貞", "v", "C1"], "intoxicating": ["thrilling and heady, like being drunk", "令人陶醉、上頭的", "v", "C1"], "longing": ["a strong, aching desire", "渴望、思慕", "v", "C1"], "shorthand for": ["a quick symbol that stands for a bigger idea", "…的代名詞、象徵", "p", "C1"], "reunites with": ["comes back together with (after being apart)", "與…重逢", "p", "B2"], "mantel": ["the shelf above a fireplace", "壁爐架", "v", "C1"], "relatable": ["easy to identify with; you see yourself in it", "有共鳴、能感同身受的", "v", "B2"], "stage an intervention": ["culture: to gather and confront someone about self-destructive behavior", "文化:辦一場「規勸大會」、集體出手勸阻", "p", "C1"], "red-flag parade": ["a whole procession of warning signs", "一連串的危險信號", "p", "B2"], "up close": ["seen from very near", "近看、貼近觀察", "p", "B1"], "letdown": ["a disappointment; something less than hoped", "令人失望的人事物", "v", "B2"], "full of money": ["culture: Fitzgerald's famous line about Daisy's voice — wealth you can hear", "文化:費茲傑羅形容黛西嗓音的名句——聽得見的財富", "f", "C1"], "careless": ["not caring about the harm you cause", "漫不經心、不顧後果的", "v", "B1"], "dating a memory": ["in love with a past version, not the real person", "愛的是回憶、不是眼前的人", "p", "B2"], "would rather die for the fantasy than": ["grammar: would rather X than Y = prefers X over Y", "文法:would rather X than Y(寧可 X 也不 Y)", "c", "B2"], "thinly drawn": ["(of a character) sketched without depth", "(角色)刻畫單薄、不立體", "p", "C1"], "more symbol than person": ["grammar: more X than Y = X rather than Y", "文法:more X than Y(與其說是 Y，不如說是 X)", "c", "B2"], "symbol": ["a thing that stands for something larger", "象徵", "v", "B2"], "narrator": ["the voice telling the story", "敘事者", "v", "B2"], "passive bystander": ["someone who watches trouble but never acts", "被動的旁觀者", "p", "B2"], "wreck": ["a disaster or crash about to happen", "災難、殘局", "v", "B2"], "plot-light": ["with very little actual plot", "情節稀薄的", "p", "C1"], "dread": ["a heavy sense that something bad is coming", "不祥的預感、惶惶", "v", "C1"], "exposing": ["revealing the ugly truth about something", "揭露、拆穿", "v", "B2"], "chasing status": ["endlessly pursuing rank and prestige", "追逐地位、身分", "p", "B2"], "the American Dream": ["culture: the belief that anyone can rise through hard work — which the novel questions", "文化:美國夢(努力就能翻身的信念——小說對此提出質疑)", "f", "B2"], "keeps receding": ["keeps moving further away as you reach for it", "不斷後退、越追越遠", "p", "C1"], "the highlight reel": ["culture: the curated 'best bits' people show off (esp. on social media)", "文化:精華片段(尤指社群上展示的光鮮那一面)", "p", "B2"], "stitched into": ["woven or sewn tightly into", "縫進、嵌入", "p", "C1"], "shows up": ["arrives; turns up", "現身、出現", "p", "B1"], "at the center of it all": ["at the very heart of everything", "在這一切的正中心", "p", "B2"], "the catch": ["the hidden snag or drawback", "(藏著的)問題、陷阱、但書", "p", "B2"], "cheating on": ["being romantically unfaithful to (a partner)", "對(伴侶)劈腿、出軌", "p", "B2"], "dock": ["a small platform at the water's edge for boats", "碼頭、水邊小平台", "v", "B2"], "in his nerves": ["out of nervousness; because he is so nervous", "因為太緊張(而…)", "p", "B2"], "Cosmo": ["culture: Cosmopolitan, a glossy magazine famous for relationship advice", "文化:Cosmopolitan(以兩性/感情建議聞名的時尚雜誌)", "f", "B2"], "afford to": ["to be able to allow oneself (to do something)", "有本錢、負擔得起(任性去做)", "p", "B2"], "have a point": ["idiom: to be making a valid argument", "(某人)說得有道理、言之成理", "p", "B2"], "in particular": ["especially; more than the others", "尤其、特別是", "p", "B1"], "sees coming": ["idiom: anticipates (a disaster) in advance", "(早就)預見、料到會發生", "p", "B2"], "barely": ["only just; hardly", "僅僅、勉強才", "v", "B2"], "turns out to be": ["is finally revealed to be", "結果竟是、到頭來是", "p", "B2"], "were sold": ["were persuaded to believe in (an idea)", "被說服相信、被灌輸(某個理想)", "p", "C1"], "fall for": ["idiom: to be fooled by — or to fall in love with", "被…騙倒;或愛上", "p", "B2"], "glamour": ["exciting, alluring attractiveness", "魅力、光鮮誘人的吸引力", "v", "B2"], "ache": ["a deep, lasting pain or longing", "隱隱的痛、深切的渴望", "v", "C1"], "years on": ["years later", "(若干)年之後", "p", "B2"], "oddly": ["strangely; in an unexpected way", "奇怪的是、出乎意料地", "v", "B2"], "neither are we": ["grammar: neither + auxiliary + subject (inversion) = 'we aren't either'", "文法:neither + 助動詞 + 主詞(倒裝)=「我們也不…」", "c", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
 function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
-function ciFind(text,term,from){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm,from);
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
   while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
     if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
 function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
   var bestIdx=-1,bestTerm=null;
-  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t,0);if(idx===-1)continue;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
     if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
   if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
   var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
-  var s=document.createElement('span');var lvl=(e[3]||'').toLowerCase().split('/')[0];
-  s.className='vb '+e[2]+' l-'+lvl;s.setAttribute('tabindex','0');
-  s.setAttribute('data-d',e[0]);s.setAttribute('data-z',e[1]);s.setAttribute('data-t',e[2]);s.setAttribute('data-l',e[3]||'');s.setAttribute('data-w',m);
-  s.textContent=m;var p=node.parentNode;
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
   if(pre)p.insertBefore(document.createTextNode(pre),node);
-  p.insertBefore(s,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
   processTextNode(pn);}
-function linkify(){var w=document.createTreeWalker(ROOT,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
-  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}}
-var pinned=null,hideTimer=null;
-function fillTip(el){var lvl=el.getAttribute('data-l');
-  TIP.innerHTML='<div class="meta"><span class="cat '+el.getAttribute('data-t')+'">'+CATLABEL[el.getAttribute('data-t')]+'</span>'+(lvl?'<span class="lvl">'+lvl+'</span>':'')+'</div><span class="term">'+el.getAttribute('data-w')+'</span> &mdash; '+el.getAttribute('data-d')+'<span class="zh">'+el.getAttribute('data-z')+'</span>';}
-function placeTip(el){TIP.style.display='block';TIP.style.left='0';TIP.style.top='0';var r=el.getBoundingClientRect(),tw=TIP.offsetWidth,th=TIP.offsetHeight,pad=10;
-  var x=r.left+r.width/2-tw/2;x=Math.max(pad,Math.min(x,window.innerWidth-tw-pad));
-  var y=r.top-th-8;if(y<pad)y=r.bottom+8;TIP.style.left=(x+window.scrollX)+'px';TIP.style.top=(y+window.scrollY)+'px';}
-function showTip(el){if(document.body.classList.contains('nohl'))return;if(hideTimer){clearTimeout(hideTimer);hideTimer=null;}fillTip(el);placeTip(el);}
-function hideTip(){TIP.style.display='none';if(pinned){pinned.classList.remove('open');pinned=null;}}
-ROOT.addEventListener('mouseover',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)showTip(el);});
-ROOT.addEventListener('mouseout',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el&&!pinned)hideTimer=setTimeout(function(){TIP.style.display='none';},80);});
-ROOT.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('.vb');if(el)showTip(el);});
-ROOT.addEventListener('focusout',function(){if(!pinned)TIP.style.display='none';});
-document.addEventListener('click',function(e){var el=e.target.closest&&e.target.closest('.vb');
-  if(el){if(pinned===el){hideTip();return;}if(pinned)pinned.classList.remove('open');pinned=el;el.classList.add('open');showTip(el);e.stopPropagation();return;}
-  if(!TIP.contains(e.target))hideTip();});
-window.addEventListener('resize',hideTip);window.addEventListener('scroll',function(){if(pinned)placeTip(pinned);},{passive:true});
-var toggle=document.getElementById('toggle');
-toggle.addEventListener('click',function(){var off=document.body.classList.toggle('nohl');toggle.textContent='Highlights: '+(off?'Off':'On');toggle.setAttribute('aria-pressed',off?'true':'false');if(off)hideTip();});
-Array.prototype.forEach.call(document.querySelectorAll('.lvchk'),function(c){c.addEventListener('change',function(){document.body.classList.toggle('hide-'+c.getAttribute('data-l'),!c.checked);});});
-var scale=1;function setScale(s){scale=Math.max(.85,Math.min(1.4,s));ROOT.style.fontSize=scale.toFixed(2)+'em';}
-document.getElementById('fontPlus').addEventListener('click',function(){setScale(scale+.08);});
-document.getElementById('fontMinus').addEventListener('click',function(){setScale(scale-.08);});
-function buildGlossary(){var seen={},items=[];for(var k in VOCAB){var e=VOCAB[k];if(e[2]==='c')continue;var sig=e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;items.push([k,e]);}
-  items.sort(function(a,b){return a[0].localeCompare(b[0]);});var bc={v:'bt-v',p:'bt-p',f:'bt-f'};var cl={v:'word',p:'phrase',f:'culture'};var html='';
-  for(var i=0;i<items.length;i++){var k=items[i][0],e=items[i][1];
-    html+='<div class="g"><span class="t">'+k+'</span><span class="b '+bc[e[2]]+'">'+cl[e[2]]+'</span><div class="d">'+e[0]+'</div><div class="z">'+e[1]+'</div></div>';}
-  document.getElementById('glossList').innerHTML=html;}
-buildGlossary(); linkify();
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
 </script>
 </body>
 </html>
