@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Mysterious Island, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#B5651D; --accent-deep:#7F4413;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"▲";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Engineering-magazine voice</div>
+    <h1>Civilization, Built From Scratch</h1>
+    <p class="deck">Five men, one match, and a bare rock in the Pacific. Four years later they have pottery, iron, glass, explosives and a telegraph. We review the build.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Jules Verne</b>, The Mysterious Island</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Five men escape a besieged city by stealing a hot-air balloon, are blown four thousand miles off course by a storm, and come down on a rock in the South Pacific with no food, no tools, no weapons, and one match. What they do over the next four years is the most detailed engineering project in fiction.</p>
+
+    <p>Jules Verne published this in 1874. The castaways are led by Cyrus Smith, an engineer from the American Civil War; with him are a journalist, a sailor, a freed slave named Neb, and a boy. Their island has no inhabitants, and no ship is coming. So they start work.</p>
+
+    <h2>The build log</h2>
+
+    <p>Verne's method is to solve one problem so that it unlocks the next. They begin with fire, then clay, and once they have clay they can fire pottery, and once they have pots they can boil, store and cook. Smith identifies iron ore in the rock, builds a crude furnace, and gets metal. From metal come tools; from tools come a forge, a mill, a brick kiln, glass windows, a boat.</p>
+
+    <p>Then it gets ambitious. They make nitroglycerin to blast a channel and lower a lake, exposing a cave they can fortify and live in. They rig an electric telegraph across the island using homemade batteries. They grow a wheat crop from a single grain found in a jacket pocket, and Verne tracks the multiplication year by year, because of course he does.</p>
+
+    <div class="pull">One grain of wheat, tracked year by year, until it feeds five men.</div>
+
+    <h2>What it gets right</h2>
+
+    <p>The pleasure here is competence. Nobody panics, nobody turns on anyone, and every problem yields to knowledge applied patiently. Verne is writing an argument as much as an adventure: that science is not a set of facts but a way of getting from where you are to where you need to be, and that a person who understands materials is never entirely helpless.</p>
+
+    <p>He also gets the sequence right, which is rarer than it sounds. Most survival stories skip the boring middle. Verne insists on it. You cannot have a glass window until you have a furnace hot enough for sand, and he will not let you forget it.</p>
+
+    <h2>Where the wiring is loose</h2>
+
+    <p>Two serious problems. The first is Cyrus Smith, who knows everything. He can identify any mineral at a glance, recall the formula for any process, and is never wrong about anything for nine hundred pages. He is less a character than a walking reference library, and the others mostly agree with him.</p>
+
+    <p>The second is structural. Strange things keep happening on this empty island: a rescue at exactly the right moment, supplies that appear from nowhere, a box of equipment washed up precisely when needed. There is an explanation, and it arrives late in the book, but it means the great self-reliance story is quietly being helped from offstage the whole time. Readers notice, and some feel cheated.</p>
+
+    <p>Add the pacing. Verne describes a kiln with the same care he gives a shipwreck, and readers who came for adventure will find whole chapters that read like a manual.</p>
+
+    <h2>The verdict</h2>
+
+    <p>Read it if you have ever wanted to know how things are actually made. It is the ancestor of every survival and crafting story since, and it remains the most convincing account in fiction of civilization rebuilt from a beach upward. Just know what you are getting: this is a book in which the discovery of clay is a moment of genuine drama, and if that sentence appeals to you, you will not put it down.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a practical engineering magazine. “The Mysterious Island” by Jules Verne (1874) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Jules Verne": ["pronounced jool VAIRN — the French novelist (1828–1905) who pioneered the science-adventure story", "發音 jool VAIRN。法國小說家儡爾納,科學冒險小說的先驅", "f", "B1"], "Cyrus Smith": ["pronounced SIGH-rus SMITH — the engineer who leads the castaways", "發音 SIGH-rus SMITH。帶領隣難者的工程師", "f", "B1"], "the American Civil War": ["the war between the northern and southern United States, 1861–65; the castaways escape from it", "美國南北戰爭(1861–65);主角們就是從這場戰爭逃出來的", "f", "B2"], "the South Pacific": ["the southern part of the Pacific Ocean, where the island lies", "南太平洋(島的所在)", "f", "B1"], "nitroglycerin": ["pronounced nye-troh-GLIH-suh-rin — a powerful liquid explosive; the castaways make it themselves", "發音 nye-troh-GLIH-suh-rin。硭化甘油,強力液態爆裂物;他們自己製造", "f", "C1"], "besieged": ["surrounded by an enemy army and cut off", "遭包圍、被圍城的", "v", "C1"], "hot-air balloon": ["a balloon that rises because the air inside it is heated", "熱氣球", "p", "B1"], "blown off course": ["pushed by wind away from the intended route", "被風吹離航道", "p", "B2"], "come down": ["here: to land, especially unintentionally", "此指:降落、迲降", "p", "B1"], "castaways": ["people left on a deserted shore after a shipwreck or crash", "漂流者、隣難上岸的人", "v", "C1"], "a freed slave": ["a person who was enslaved and has been given freedom", "獲釋的奴隸", "p", "B2"], "inhabitants": ["the people who live in a place", "居民、住民", "v", "B2"], "build log": ["a running record of what was made and when, kept by makers and engineers", "製作日誌、施工紀錄", "p", "B2"], "unlocks": ["makes the next thing possible", "解鎖、打開下一步的可能", "v", "B2"], "clay": ["heavy sticky earth that hardens when baked", "黏土、陶土", "v", "B2"], "fire pottery": ["to bake clay pots in great heat so they harden", "燒製陶器(fire 在此是動詞)", "p", "C1"], "iron ore": ["rock containing iron that can be extracted", "鐵鑛", "p", "B2"], "a crude furnace": ["a rough, basic oven for melting metal", "簡陋的熔爐", "p", "C1"], "a forge": ["a workshop with a fire where metal is heated and hammered", "鍰造場、打鐵店", "v", "C1"], "a mill": ["a building with machinery for grinding grain", "磨坊", "v", "B2"], "a brick kiln": ["an oven for baking bricks", "磚窯", "p", "C1"], "ambitious": ["aiming at something big and difficult", "野心勃勃的、規模大的", "v", "B2"], "blast": ["to break rock apart with explosives", "爆破", "v", "B2"], "a channel": ["a cut or passage that water flows through", "水道、渠道", "v", "B2"], "fortify": ["to strengthen a place against attack", "設防、加強防禦", "v", "C1"], "rig": ["to set up or assemble, often improvising", "搭設、臨時裝設起來", "v", "C1"], "homemade": ["made at home rather than bought", "自製的", "v", "B1"], "a single grain": ["one seed of wheat", "一粒穀子", "p", "B1"], "tracks": ["follows and records the progress of", "追蹤記錄", "v", "B2"], "the multiplication": ["the increase in number by repeated growth", "倍增、繁衍的數量", "v", "C1"], "because of course he does": ["ironic aside: exactly what you would expect from this author", "調侯的插話:他當然會這麼做啦", "p", "C1"], "competence": ["the quality of being genuinely good at something", "能力過硬、真本事", "v", "C1"], "turns on anyone": ["idiom: suddenly attacks or betrays someone in the group", "慣用語:突然反咬、內鬥背叛", "p", "C1"], "yields to": ["gives way to; is solved by", "屈服於、被…解決", "p", "C1"], "applied patiently": ["used steadily and without rushing", "耐心地加以運用", "p", "B2"], "as much as": ["equally; no less than", "不亞於、同樣是", "p", "B2"], "a set of facts": ["a fixed collection of information to memorize", "一堆要背的事實", "p", "B1"], "materials": ["the physical substances things are made from", "材料、材質", "v", "B2"], "helpless": ["unable to do anything to help yourself", "束手無策的", "v", "B2"], "the sequence": ["the order in which things must happen", "順序、先後步驟", "v", "B2"], "rarer than it sounds": ["less common than you would assume", "比你以為的稀有", "p", "B2"], "skip the boring middle": ["leave out the slow but necessary part", "跳過中間那段無趣卻必要的過程", "p", "B2"], "insists on it": ["refuses to leave it out", "堅持不省略它", "p", "B2"], "the wiring is loose": ["idiom (from electrics): something is not properly connected — here, flaws in the book", "慣用語(取自電路):接線沒接穩——此指書中的瑕疵", "p", "C1"], "at a glance": ["idiom: in a single quick look", "慣用語:一眼就…", "p", "B2"], "recall": ["to bring back to mind; remember", "回想起、記得", "v", "B2"], "a walking reference library": ["a person who functions as a library of facts rather than a rounded character", "一部會走路的工具書(而非有血肉的人)", "p", "C1"], "structural": ["to do with the way the whole thing is built", "結構上的", "v", "B2"], "from nowhere": ["with no visible source or explanation", "不知從哪冒出來", "p", "B1"], "washed up": ["carried onto the shore by the sea", "被浪打上岸的", "p", "B2"], "precisely when needed": ["at exactly the moment it is required", "恰好在需要的那一刻", "p", "B2"], "self-reliance": ["depending on yourself alone, without outside help", "自力更生、自立", "v", "C1"], "from offstage": ["from outside the visible action, like someone helping unseen from the wings of a theater", "從幕後、在舎線之外您悠地插手", "p", "C1"], "feel cheated": ["feel they have been unfairly tricked", "覺得被騙了", "p", "B2"], "the pacing": ["the speed at which a story moves", "節奏、步調", "v", "B2"], "a shipwreck": ["the destruction of a ship at sea", "海難、船隻失事", "v", "B2"], "read like a manual": ["feel like reading an instruction booklet", "讀起來像說明書", "p", "B2"], "the ancestor of": ["the earliest form that later versions descend from", "…的鼻祖、源頭", "p", "B2"], "crafting": ["making things by hand from gathered materials — now also a staple of video games", "製作、合成(今日也是電玩的核心玩法)", "f", "B2"], "convincing": ["believable; persuasive", "令人信服的", "v", "B2"], "from a beach upward": ["starting with nothing but a shore and building up", "從一片沙灘一路往上建起來", "p", "B2"], "know what you are getting": ["idiom: be clear about what to expect", "慣用語:先搞清楚你要的是什麼", "p", "B2"], "appeals to you": ["attracts you; sounds good to you", "對你而言很吸引人", "p", "B2"], "put it down": ["idiom: stop reading it", "慣用語:放下這本書、停下不讀", "p", "B1"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

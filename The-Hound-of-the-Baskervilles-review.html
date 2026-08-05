@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Hound of the Baskervilles, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#4A6B5A; --accent-deep:#2F4A3C;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"●";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Clinical-journal voice</div>
+    <h1>A Case of Fatal Fright</h1>
+    <p class="deck">No wound, a face frozen in terror, and the footprints of a giant dog. We review the case notes of the most famous diagnosis in English fiction.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Arthur Conan Doyle</b>, The Hound of the Baskervilles</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">A country doctor arrives at a consulting room in London and presents an unusual case. His patient is dead. The body showed no wound, the face was fixed in terror, and beside the corpse in the mud were the footprints of a gigantic hound.</p>
+
+    <p>Arthur Conan Doyle published this in 1902, and it remains the best-constructed of the Sherlock Holmes stories. Sir Charles Baskerville has died on the moor of Devon, and his family has for two centuries been said to be hunted by a supernatural dog. The heir, arriving from Canada, may be next. Holmes sends Doctor Watson to Devon to observe, and stays behind in London &mdash; or appears to.</p>
+
+    <h2>History and presentation</h2>
+
+    <p>The case notes are excellent because Watson is a doctor, and Doyle wrote him that way deliberately. Watson records what he sees in order, distinguishes what he witnessed from what he was told, and does not speculate beyond the evidence. He is, in effect, taking a patient history: onset, circumstances, prior episodes in the family, and the reports of neighbors, all set down before any conclusion is offered.</p>
+
+    <p>The setting does the rest. The moor is a wide, wet, treeless upland with a bog that swallows animals whole, and Doyle uses it as a symptom rather than scenery: sound carries strangely, lights appear where nobody should be, and a man with a lantern is visible for miles. Half the mystery is a landscape problem.</p>
+
+    <h2>Differential diagnosis</h2>
+
+    <p>Holmes's method is the one taught in medical schools, arrived at from the other direction. Doyle studied medicine in Edinburgh under Joseph Bell, a surgeon famous for telling patients their occupation and recent travels before they had finished sitting down. Bell was demonstrating that careful observation of small signs yields large conclusions, and his student turned him into a detective.</p>
+
+    <p>So the book proceeds as a differential: list every condition that fits the presentation, then eliminate. A family curse fits the fear but not the footprints. A wild animal fits the prints but not the timing. Each hypothesis is tested against a fact that will not bend, and the one that survives is the answer.</p>
+
+    <div class="pull">List everything that fits the evidence. Eliminate what cannot. What remains is your answer.</div>
+
+    <h2>Complications</h2>
+
+    <p>Some findings are less impressive on review. Holmes is absent for a large stretch of the middle, and while his reappearance is one of the great moments in detective fiction, the reader spends many chapters with a narrator who is honest, thorough and consistently one step behind.</p>
+
+    <p>The solution also relies on information the reader could not have had: a portrait, a document, a resemblance nobody mentions until Holmes points at it. By the standards of the fair-play mystery that came later, this is a violation. Doyle was not writing a puzzle to be beaten; he was writing a performance to be admired, and the difference matters if you like to guess.</p>
+
+    <p>Finally, the ending is quick. After two hundred pages of atmosphere, the explanation is delivered briskly in a drawing room, and the terror that made the book famous evaporates in a paragraph of plain motive.</p>
+
+    <h2>Conclusion</h2>
+
+    <p>Still the finest entry point to Holmes, and the only one where the landscape is as frightening as the crime. Read it for the method: a way of looking at a mess of details and asking, patiently, which of these things cannot be explained by the obvious answer. Doyle learned that from a doctor. It works on more than crimes.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a clinical journal. “The Hound of the Baskervilles” by Arthur Conan Doyle (1902) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Arthur Conan Doyle": ["pronounced AR-thur KOH-nun DOYL — the Scottish author (1859–1930), a trained physician before he was a novelist", "發音 AR-thur KOH-nun DOYL。蘇格蘭作家柯南道爾,成為小說家前是執業醫師", "f", "B2"], "Sherlock Holmes": ["pronounced SHER-lok HOHMZ — the consulting detective; note the 'l' in Holmes is silent", "發音 SHER-lok HOHMZ。名偵探福爾摩斯;Holmes 的 l 不發音", "f", "B1"], "Baskerville": ["pronounced BASS-ker-vil — the family name at the center of the case", "發音 BASS-ker-vil。案件核心的巴斯克維爾家族", "f", "B2"], "Devon": ["pronounced DEV-un — a county in south-west England, where the moor lies", "發音 DEV-un。英格蘭西南的德文郡,荒原所在地", "f", "B2"], "the moor": ["pronounced MOOR — open, treeless upland with poor wet soil; bleak and easy to get lost on", "發音 MOOR。沒有樹木、土壤潮濕貧瘠的高地荒原,荒涼且易迷路", "f", "C1"], "Joseph Bell": ["pronounced JOH-zuf BELL — the Edinburgh surgeon who taught Doyle, and the real model for Holmes", "發音 JOH-zuf BELL。教過柯南道爾的愛丁堡外科醫師,福爾摩斯的真實原型", "f", "C1"], "Edinburgh": ["pronounced ED-in-buh-ruh — the Scottish capital; note it does not rhyme with 'burg'", "發音 ED-in-buh-ruh。蘇格蘭首都愛丁堡;結尾不念 burg", "f", "B2"], "a consulting room": ["the room where a doctor — or here, a detective — receives clients", "診療室;此處指福爾摩斯接見委託人的房間", "p", "B2"], "presents": ["medical usage: to come in showing a particular set of symptoms", "醫學用法:(病人)以…症狀來診", "v", "C1"], "a case": ["a single instance being investigated — used in both medicine and detection", "病例、案件(醫學與偵探共用的詞)", "v", "B1"], "no wound": ["no injury to the body", "身上沒有傷口", "p", "B2"], "fixed in terror": ["frozen in an expression of extreme fear", "臉上凝固著恐懼的神情", "p", "C1"], "the corpse": ["a dead body", "屍體", "v", "C1"], "gigantic": ["enormous", "巨大的", "v", "B2"], "hound": ["a hunting dog", "獵犬", "v", "B2"], "best-constructed": ["most skillfully built and organized", "結構最精巧的", "p", "B2"], "supernatural": ["beyond the laws of nature; ghostly", "超自然的、靈異的", "v", "B2"], "The heir": ["the person who inherits property or a title", "繼承人", "v", "C1"], "or appears to": ["or seems to — hinting that he does not really", "或者看起來是如此(暗示並非如此)", "p", "B2"], "case notes": ["the written record a doctor keeps on a patient", "病歷紀錄", "p", "B2"], "distinguishes": ["tells one thing apart from another", "區別、區分", "v", "B2"], "speculate": ["to guess without solid evidence", "臆測、獃想", "v", "C1"], "in effect": ["in practical terms; essentially", "實質上、等於是", "p", "B2"], "a patient history": ["the record of a patient's symptoms and background taken before diagnosis", "病史詢問(診斷前收集的症狀與背景)", "p", "C1"], "onset": ["the moment when something began", "發作的起點、發病時間", "v", "C1"], "prior episodes": ["earlier occurrences of the same thing", "之前發生過的同類事件", "p", "C1"], "set down": ["written down; recorded", "記錄下來", "p", "B2"], "upland": ["higher ground, above the lowlands", "高地", "v", "C1"], "a bog": ["soft wet ground that can swallow anything stepping on it", "泥沼、沼澤", "v", "C1"], "swallows ... whole": ["takes something down entirely, leaving nothing", "整個吞没、吞得一乾二淨", "p", "B2"], "a symptom rather than scenery": ["a clue that carries meaning, not just a pretty background", "把景物當成症狀(有意義的線索),而非單純背景", "p", "C1"], "sound carries": ["sound travels a long way", "聲音傳得很遠", "p", "B2"], "a lantern": ["a portable lamp with a protective case", "提燈", "v", "B2"], "Differential diagnosis": ["the medical process of listing every possible cause, then ruling them out one by one", "鑑別診斷:列出所有可能病因,再逐一排除", "f", "C1"], "arrived at from the other direction": ["reached by approaching from the opposite side", "從另一頭逆向推導而來", "p", "C1"], "a surgeon": ["a doctor who performs operations", "外科醫師", "v", "B2"], "occupation": ["a person's job", "職業", "v", "B2"], "demonstrating": ["showing clearly by example", "示範、以實例證明", "v", "B2"], "yields": ["produces; leads to", "產生、導出", "v", "C1"], "proceeds as": ["moves forward in the manner of", "以…的方式進行", "p", "B2"], "eliminate": ["to remove a possibility from consideration", "排除", "v", "B2"], "a family curse": ["a supposed magical punishment passed down through generations", "家族詛咒", "p", "B2"], "hypothesis": ["pronounced high-POTH-uh-sis — a proposed explanation to be tested", "發音 high-POTH-uh-sis。待驗證的假說", "f", "C1"], "will not bend": ["cannot be twisted or explained away", "拗不彎、無法被抹去的(事實)", "p", "C1"], "Complications": ["medical term for problems arising during a case — here, the book's flaws", "醫學用語:併發症;此處指書中的問題", "f", "C1"], "on review": ["when examined again afterwards", "回頭再看時", "p", "C1"], "a large stretch": ["a long continuous section", "很長一段", "p", "B2"], "thorough": ["complete and careful in every detail", "彻底的、面面俱到的", "v", "B2"], "one step behind": ["idiom: always slightly slower to understand than someone else", "慣用語:總是慢一拍、落後一步", "p", "B2"], "relies on": ["depends on", "依賴、建立在…之上", "p", "B2"], "a resemblance": ["a likeness between two people or things", "相像之處", "v", "C1"], "the fair-play mystery": ["the later detective-story rule that the reader must be given every clue needed to solve it", "公平推理小說:後來確立的規矩——線索必須全部展示給讀者", "f", "C1"], "a violation": ["a breaking of a rule", "違規、犯規", "v", "C1"], "a puzzle to be beaten": ["a problem the reader is meant to solve first", "讓讀者去破解的謎題", "p", "B2"], "a performance to be admired": ["a display meant to be watched with admiration", "讓人欣賞的表演", "p", "B2"], "briskly": ["quickly and efficiently", "乾脆快速地", "v", "C1"], "a drawing room": ["a formal sitting room in a large house", "客廳、會客室", "p", "C1"], "evaporates": ["disappears, like water turning to vapor", "蒸發掉、消散無蹤", "v", "C1"], "plain motive": ["an ordinary, unmysterious reason for a crime", "平淡無奇的犯案動機", "p", "B2"], "entry point": ["the best place to start with something", "入門的起點", "p", "B2"], "a mess of details": ["a confusing pile of small facts", "一堆雜亂的細節", "p", "B2"], "the obvious answer": ["the explanation everyone assumes first", "人人先想到的那個答案", "p", "B1"], "It works on more than crimes": ["the method is useful far beyond solving crimes", "這套方法能用的地方遠不止於破案", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>
