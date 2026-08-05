@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Travels of Marco Polo, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#B08033; --accent-deep:#7E5A1E;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◇";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Profile &amp; fact-check voice</div>
+    <h1>The First Travel Influencer</h1>
+    <p class="deck">He came home after twenty-four years with a story nobody believed, dictated it to a novelist in a prison cell, and changed how Europe saw the world. But did he ever actually go?</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Marco Polo</b>, The Travels</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">The book that invented travel writing was dictated in a prison cell, by a merchant who had been away for twenty-four years, to a cellmate who wrote romance novels for a living. Seven hundred years later, we are still arguing about how much of it is true.</p>
+
+    <p>The subject: Marco Polo, a Venetian trader who left home at seventeen with his father and uncle, crossed Persia and the mountains of Central Asia, and arrived at the court of Kublai Khan, the Mongol emperor who then ruled China. He stayed roughly seventeen years, apparently in the Khan's service, and came home with a description of Asia so far beyond European experience that his neighbors laughed at him.</p>
+
+    <h2>The pitch</h2>
+
+    <p>What he was selling, essentially, was scale. Europe in 1300 was a place of small towns and wooden bridges. Polo described cities of a million people, canals carrying grain across an empire, and a postal system of relay stations where riders changed horses and covered distances no European courier could match.</p>
+
+    <p>Three things astonished his readers most. Paper money &mdash; the idea that a state could print marks on mulberry bark and have everyone accept it as wealth. Black stones that burned, hotter and longer than wood, dug out of the ground: coal, which Europe had barely begun to use. And a mail network so fast it seemed like magic. He was not describing a foreign country. He was describing the future.</p>
+
+    <div class="pull">He was not describing a foreign country. He was describing the future.</div>
+
+    <h2>Fact-check</h2>
+
+    <p>Now the difficulty. Polo spent seventeen years in China and never mentions tea. He never mentions chopsticks. He does not describe foot-binding, or Chinese writing, and he says nothing whatever about the Great Wall. His name has not been found in any Mongol record, despite his claim to have governed a city and served as an envoy.</p>
+
+    <p>Skeptics conclude that he never went, and assembled the book from Persian merchants' accounts picked up along the trade routes. Defenders answer that he moved in a Mongol court that used Persian, not Chinese, and among people who did not drink tea; that the Wall as we picture it was largely built later; and that his details on salt taxes, currency, and provincial administration are far too specific for a man inventing things. The honest position is somewhere in the middle, and unresolved.</p>
+
+    <h2>The ghostwriter problem</h2>
+
+    <p>One fact deserves more attention than it usually gets. Polo did not write the book. He told it, in a Genoese prison, to a fellow prisoner named Rustichello of Pisa &mdash; a professional author of chivalric romances, the popular knights-and-quests fiction of the day. Read the text with that in mind and the tone makes sense: the battles are staged, the kings are magnificent, and the marvels arrive on cue. A reporter and a novelist collaborated, and only one of them had been there.</p>
+
+    <h2>Where it wears badly</h2>
+
+    <p>As a reading experience it can be a slog. Long stretches read like an inventory &mdash; this province produces ginger, that one produces silk, the people are idolaters and subject to the Great Khan &mdash; repeated for chapter after chapter. Polo himself barely appears; he almost never tells us what he felt. And hearsay sits beside eyewitness reporting with no signal to separate them, which is precisely what makes the fact-checking so hard.</p>
+
+    <h2>The verdict</h2>
+
+    <p>His contemporaries nicknamed the book Il Milione &mdash; the million, meaning a million lies. Asked on his deathbed to take back the exaggerations, Polo is said to have replied that he had not told the half of what he saw. Read it as the first great act of travel reporting, dictated by a man with an extraordinary memory and edited by one with an extraordinary imagination. Somewhere in there is Asia in 1290, and nothing else in Europe came close for two hundred years.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a travel-magazine profile with a fact-check sidebar. “The Travels of Marco Polo” (dictated c. 1298) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Marco Polo": ["pronounced MAR-koh POH-loh — the Venetian merchant whose account of Asia became Europe's first great travel book", "發音 MAR-koh POH-loh。威尼斯商人馬可波羅", "f", "B1"], "Venetian": ["pronounced vuh-NEE-shun — from Venice, the Italian trading city", "發音 vuh-NEE-shun。威尼斯的(義大利貿易城市)", "f", "B2"], "Kublai Khan": ["pronounced KOO-bligh KAHN — grandson of Genghis Khan and ruler of the Mongol empire in China", "發音 KOO-bligh KAHN。徽思汗之孫忽必烈,統治中國的蒙古大汗", "f", "B2"], "Mongol": ["pronounced MONG-gol — of the Central Asian empire that ruled China in Polo's time", "發音 MONG-gol。蒙古(當時統治中國的帝國)", "f", "B2"], "Persia": ["pronounced PUR-zhuh — the old name for the region centered on modern Iran", "發音 PUR-zhuh。波斯,大致相當於今日伊朗一帶", "f", "B2"], "Rustichello of Pisa": ["pronounced roo-stee-KELL-oh, PEE-zuh — the romance writer who shared Polo's cell and actually wrote the book down", "發音 roo-stee-KELL-oh, PEE-zuh。與馬可波羅同牟、實際執筆的傳奇小說家", "f", "C1"], "Genoese": ["pronounced jen-oh-EEZ — of Genoa, the rival Italian city that imprisoned Polo", "發音 jen-oh-EEZ。熱那亞的(囚禁馬可波羅的對手城邦)", "f", "C1"], "Il Milione": ["pronounced eel mee-lee-OH-nay — Italian for 'the million', the mocking nickname given to the book, meaning a million lies", "發音 eel mee-lee-OH-nay。義大利文「百萬」,時人嘲諷本書的綽號:百萬個謊言", "f", "C1"], "dictated": ["spoken aloud for someone else to write down", "口述讓人筆錄", "v", "C1"], "a prison cell": ["a small locked room where a prisoner is kept", "牟房", "p", "B1"], "merchant": ["someone whose business is buying and selling goods", "商人", "v", "B2"], "cellmate": ["a person who shares your prison cell", "同牟房的獅友", "v", "B2"], "for a living": ["as a job, to earn money", "當飯吃、謀生", "p", "B1"], "The subject": ["profile-writing jargon: the person the article is about", "人物專訪行話:受訪的主角", "p", "B2"], "trader": ["a person who buys and sells for profit", "貿易商", "v", "B1"], "court": ["the household and government of a ruler", "宮廷、朝廷", "v", "B2"], "in the Khan's service": ["employed by and working for the Khan", "在大汗底下任職、為其效命", "p", "B2"], "so far beyond": ["so much greater than; well outside", "遠遠超出", "p", "B2"], "The pitch": ["the core selling point; what you present to win someone over", "推銷的重點、主打賭點", "v", "B2"], "essentially": ["basically; at heart", "實質上、說穿了", "v", "B2"], "scale": ["the sheer size of something", "規模、尺度", "v", "B2"], "canals": ["man-made waterways for boats", "運河", "v", "B2"], "grain": ["cereal crops such as rice and wheat", "穀物、粼食", "v", "B2"], "relay stations": ["posts along a road where a rider swaps a tired horse for a fresh one, so messages travel non-stop", "驛站:沿途換馬的站點,讓消息不間斷接力傳遞", "p", "C1"], "courier": ["a messenger who carries letters or packages", "信差、送件人", "v", "C1"], "astonished": ["greatly surprised and amazed", "令…驚嘆", "v", "B2"], "Paper money": ["banknotes — unknown in Europe at the time, and one of Polo's most startling reports", "紙幣:當時歐洲絕無僅有,是書中最驚人的見聞之一", "f", "B2"], "mulberry bark": ["the inner bark of the mulberry tree, used to make the Khan's paper money", "桑樹樹皮,大汗用來造紙幣的材料", "p", "C1"], "Black stones that burned": ["Polo's way of describing coal, which Europeans had scarcely used", "馬可波羅形容煤的說法——會燃燒的黑石頭", "f", "B2"], "dug out of the ground": ["removed from the earth by digging", "從地底挖出來的", "p", "B1"], "barely": ["only just; hardly at all", "幾乎還沒、僅僅", "v", "B2"], "Fact-check": ["the process of verifying whether stated claims are true", "事實查核", "v", "B2"], "foot-binding": ["the Chinese practice of tightly binding girls' feet to keep them small", "纏足", "f", "C1"], "says nothing whatever about": ["says absolutely nothing about", "對…隻字未提", "p", "B2"], "envoy": ["an official messenger sent by a ruler to another state", "使節、特使", "v", "C1"], "Skeptics": ["people who doubt a claim and want proof", "持懷疑態度的人", "v", "C1"], "assembled": ["put together from separate pieces", "拼湊、組合而成", "v", "B2"], "accounts": ["written or spoken reports of events", "記述、說法", "v", "B2"], "trade routes": ["the established roads and sea lanes merchants travel", "商道、貿易路線", "p", "B2"], "Defenders": ["people who argue in support of something", "辩護者、支持方", "v", "B2"], "as we picture it": ["in the form we imagine today", "按我們今天想像的那個樣子", "p", "B2"], "provincial administration": ["the running of local government in a province", "地方行政、行省管理", "p", "C1"], "The honest position": ["the fair-minded conclusion, admitting what is unknown", "老實的說法、公允的立場", "p", "B2"], "unresolved": ["still not settled or decided", "尚未定論的", "v", "C1"], "ghostwriter": ["a writer who writes a book that appears under someone else's name", "代筆作家、影子寫手", "v", "C1"], "deserves more attention": ["ought to be noticed more than it is", "值得更多關注", "p", "B1"], "a fellow prisoner": ["another prisoner held in the same place", "同為囚犯的人、獅友", "p", "B2"], "chivalric romances": ["medieval adventure stories about knights, quests and honor", "騎士傳奇:中世紀講騎士、冒險與榮譽的浪漫故事", "f", "C1"], "knights-and-quests": ["featuring knights going on dangerous missions", "騎士出任務、冒險尋寶那一類", "p", "B2"], "with that in mind": ["keeping that fact in your thoughts", "把這點記在心裡(再讀)", "p", "B2"], "the tone makes sense": ["the style becomes understandable", "那種調性就說得通了", "p", "B2"], "staged": ["arranged for effect, like a scene in a play", "安排過的、做戲似的", "v", "C1"], "marvels": ["wonderful, astonishing things", "奇觀、令人稱奇之物", "v", "C1"], "arrive on cue": ["idiom: appear exactly when wanted, as if signalled", "慣用語:說來就來、恰到好踩點出現", "p", "C1"], "collaborated": ["worked together on something", "合作", "v", "B2"], "wears badly": ["idiom: does not survive the passage of time well", "慣用語:隨時間變得難以入目、不耐讀", "p", "C1"], "a slog": ["a long, tiring, boring effort", "苦差事、讀起來很磨人", "v", "C1"], "Long stretches": ["long continuous sections", "長長的段落、大篇幅", "p", "B2"], "an inventory": ["a detailed list of goods or stock", "庫存清單、清點清單", "v", "C1"], "ginger": ["a hot-tasting root used as a spice", "薑", "v", "B1"], "idolaters": ["people who worship images or statues — Polo's label for non-Muslim, non-Christian faiths", "拜偶像者;馬可波羅用來泛稱非基督、非伊斯蘭信仰", "f", "C1"], "subject to": ["under the power or rule of", "臣服於、受…管轄", "p", "B2"], "hearsay": ["information heard from others, not verified by the speaker", "道趽塗說、傳聞", "v", "C1"], "eyewitness": ["based on what a person saw personally", "目擊的、親眼所見的", "v", "B2"], "with no signal to separate them": ["with nothing to show the reader which is which", "沒有任何標記可以區分兩者", "p", "B2"], "contemporaries": ["people living at the same time as someone", "同時代的人", "v", "C1"], "nicknamed": ["gave an informal, often mocking name to", "給了個綽號", "v", "B2"], "on his deathbed": ["idiom: when dying, in his final hours", "慣用語:臨終之際", "p", "C1"], "take back": ["to withdraw something you said", "收回、收回前言", "p", "B1"], "exaggerations": ["claims made bigger or more extreme than the truth", "誇大之詞", "v", "B2"], "is said to have replied": ["grammar: 'is said to have + past participle' reports a claim without vouching for it", "文法:is said to have + 過去分詞——轉述傳說,不保證真偽", "c", "C1"], "not told the half of": ["idiom: told far less than the whole truth", "慣用語:連一半都還沒說到", "p", "C1"], "an extraordinary memory": ["a remarkably powerful ability to remember", "非凡的記憶力", "p", "B2"], "came close": ["idiom: approached the same level", "慣用語:能相提並論、追得上", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

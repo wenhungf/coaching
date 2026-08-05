@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Divine Comedy, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#9E3B2F; --accent-deep:#6F2820;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◆";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Destination-inspector voice</div>
+    <h1>Nine Circles, No Stars</h1>
+    <p class="deck">Our inspector books a descent through Hell, a climb up Purgatory, and a stay in Paradise. One destination is unforgettable. The other two need work.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Dante Alighieri</b>, The Divine Comedy</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Our inspector arrived without a reservation, in the middle of his life, having taken a wrong turn into a dark wood. He was met at the gate by a sign advising visitors to abandon all hope, which is not a welcome we have encountered elsewhere.</p>
+
+    <p>A word on the property. Dante Alighieri, a Florentine poet writing in the early 1300s, imagined himself taken on a guided tour of the afterlife: down through Hell, up the mountain of Purgatory, and out into the light of Paradise. His guide for the descent is the Roman poet Virgil, dead thirteen centuries and evidently still working. We assess all three destinations below.</p>
+
+    <h2>Hell &mdash; nine circles, no stars</h2>
+
+    <p>The layout is the most impressive thing about the place. Hell is a funnel of nine descending circles, and the assignment of guests to floors is done with a precision most hotels can only envy. The rule is that the punishment mirrors the sin: those who let lust blow them through life are blown forever on a black wind; those who told the world what would happen next now walk with their heads twisted backward, seeing only where they have been. The Italians call this contrapasso, and it is the single best piece of design in medieval literature.</p>
+
+    <p>Service is attentive if unfriendly. Amenities: none. Climate ranges from boiling pitch to, at the very bottom, a lake of ice &mdash; a genuine surprise for guests expecting flames throughout.</p>
+
+    <div class="pull">Every reader remembers the design of Hell. Almost nobody finishes the tour.</div>
+
+    <h2>The guide</h2>
+
+    <p>Virgil is the finest tour guide in literature and works, as far as we can establish, for nothing. He explains the geology, handles the difficult residents, carries his visitor when the path gives out, and never once loses patience with a man who keeps stopping to talk to celebrities. He is also, by the rules of the place, not permitted to leave it, having lived before Christianity; the tour ends for him at the top of the mountain. It is the saddest contract in the book.</p>
+
+    <h2>A note on the guest list</h2>
+
+    <p>Prospective visitors should know that Dante wrote this while exiled from Florence by his political enemies, and that a striking number of those enemies turn up in the lower circles, named, suffering, and identified by hometown. Popes are here. Neighbors are here. It is the most elegant act of revenge in the history of European letters, and it is entirely deliberate.</p>
+
+    <h2>Where the stay disappoints</h2>
+
+    <p>Honesty compels us. The first third is magnificent; the rest is a long climb. Purgatory is thoughtful but slower, and Paradise &mdash; where Dante ascends through the spheres of heaven discussing theology &mdash; loses most visitors entirely. The higher he goes, the more abstract it gets, and light is much harder to describe than fire.</p>
+
+    <p>There is also the footnote problem. Dante wrote for readers who knew exactly which Florentine banker he meant, and modern editions carry more explanation than poem. Beatrice, the woman who guides him through Paradise and who he loved from a distance in life, is treated as a symbol of divine grace rather than as a person, which readers hoping for a love story will find cold.</p>
+
+    <h2>The rating</h2>
+
+    <p>Worth the journey &mdash; for the first cantica above all. Read Hell for the architecture and the nerve; continue upward if the mood takes you. Seven hundred years on, no writer has built a more convincing world out of pure moral logic, and none has been so willing to put his own neighbors in it. Book the descent. Pack nothing.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a hotel and restaurant inspector. “The Divine Comedy” by Dante Alighieri (completed 1321) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Dante Alighieri": ["pronounced DAHN-tay ah-lig-YAIR-ee — the Florentine poet who wrote the work and put himself in it as the traveler", "發音 DAHN-tay ah-lig-YAIR-ee。佛羅倫斯詩人但丁,他把自己寫進作品當旅人", "f", "B2"], "Florentine": ["pronounced FLOR-un-teen — from Florence, the Italian city Dante was exiled from", "發音 FLOR-un-teen。佛羅倫斯的;但丁就是從這座城被放逐", "f", "B2"], "Virgil": ["pronounced VUR-jil — the ancient Roman poet (70–19 BC) who acts as Dante's guide through Hell", "發音 VUR-jil。古羅馬詩人維吉爾,擔任但丁的地獅向導", "f", "B2"], "Purgatory": ["pronounced PUR-guh-tor-ee — in Catholic belief, the place where souls are cleaned of sin before Heaven", "發音 PUR-guh-tor-ee。天主教信仰中淨化罪愻、前往天堂之前的煉獅", "f", "B2"], "contrapasso": ["pronounced kon-truh-PAH-so — Dante's rule that each punishment mirrors the sin that earned it", "發音 kon-truh-PAH-so。但丁的設計原則:刑罰正好映照所犯的罪", "f", "C1"], "Beatrice": ["pronounced bay-uh-TREE-chay — the woman Dante loved from afar; in the poem she guides him through Paradise", "發音 bay-uh-TREE-chay。但丁遠遠戴慕的女子,詩中引領他遊歷天堂", "f", "B2"], "cantica": ["pronounced KAN-tee-kuh — one of the three main parts of the poem (Hell, Purgatory, Paradise)", "發音 KAN-tee-kuh。全詩三大部份之一(地獅、煉獅、天堂)", "f", "C1"], "inspector": ["someone who visits and rates a place officially", "評鑑員、審查員", "v", "B2"], "without a reservation": ["without booking in advance", "沒訂位、未預約", "p", "B1"], "in the middle of his life": ["the poem's famous opening — Dante is about thirty-five, halfway through a life", "全詩著名的開場:人生行至中途(約三十五歲)", "f", "B2"], "a wrong turn": ["a mistaken choice of direction", "走錯路、轉錯彎", "p", "B1"], "abandon all hope": ["the warning written over Hell's gate in the poem: give up hope, you who enter", "詩中地獅門上的警語:入此門者舍棄一切希望", "f", "B2"], "the property": ["hotel-review jargon for the building or site being reviewed", "飯店評鑑行話:受評的館所、物件", "v", "B2"], "the afterlife": ["existence after death", "死後的世界、來世", "v", "B2"], "evidently": ["clearly, judging from the evidence", "顯然、看來是", "v", "B2"], "assess": ["to judge the quality or value of something", "評估", "v", "B2"], "the layout": ["the way a space is arranged", "格局、配置", "p", "B2"], "a funnel": ["a cone shape, wide at the top and narrow at the bottom", "漏斗狀、上寬下窄", "v", "B2"], "descending": ["going downward, one level after another", "往下遞降的", "v", "B2"], "the assignment of guests to floors": ["deciding which guest is put on which floor", "把客人分配到哪一層", "p", "B2"], "envy": ["to wish you had what someone else has", "羨慕、嫚妒", "v", "B2"], "mirrors": ["reflects; matches exactly", "映照、如鏡子般對應", "v", "C1"], "lust": ["strong sexual desire", "色欲、情欲", "v", "C1"], "twisted backward": ["turned around to face the wrong way", "被扭向後方", "p", "B2"], "medieval": ["of the Middle Ages, roughly AD 500–1500", "中世紀的", "v", "B2"], "attentive": ["paying close, careful attention to guests", "細心周到的", "v", "C1"], "Amenities": ["hotel jargon: the comforts and facilities provided", "飯店行話:附屬設施與備品", "v", "C1"], "boiling pitch": ["black tar heated until it bubbles — one of Hell's punishments", "沸騰的瀝青(黑油),地獅刑罰之一", "p", "C1"], "throughout": ["in every part; from start to finish", "從頭到尾、到處都是", "v", "B2"], "as far as we can establish": ["as far as we can determine or confirm", "就我們所能查證的範圍", "p", "C1"], "handles": ["deals with (a problem or difficult person)", "應付、搓定", "v", "B1"], "residents": ["people who live in a place — here, the souls in Hell", "住戶;此指地獅裡的亡靈", "v", "B2"], "the path gives out": ["the path runs out or becomes impassable", "路斷了、路沒了", "p", "C1"], "loses patience": ["becomes annoyed after waiting or tolerating too long", "失去耐性", "p", "B1"], "is not permitted to": ["is not allowed to", "不被允許、不得", "p", "B2"], "having lived before Christianity": ["grammar: 'having + past participle' gives the reason — because he lived before Christian times", "文法:having + 過去分詞,表「因為早先…」的原因", "c", "C1"], "Prospective": ["possible or likely in the future", "潛在的、未來可能的", "v", "C1"], "exiled": ["forced to live away from your own country or city", "被放逐、流亡", "v", "C1"], "a striking number of": ["a surprisingly large number of", "多到令人側目的", "p", "C1"], "turn up": ["to appear, often unexpectedly", "現身、出現", "p", "B1"], "Popes": ["the heads of the Roman Catholic Church", "教宗", "v", "B2"], "European letters": ["formal: European literature as a whole", "正式用語:歐洲文學(整體)", "p", "C1"], "entirely deliberate": ["completely intentional; done on purpose", "完全是故意的", "p", "B2"], "Honesty compels us": ["formal: we are obliged to be honest about this", "正式用語:誁實說、不得不實話實說", "p", "C1"], "a long climb": ["hard, slow going (also literal: he climbs a mountain)", "一段漫長的爬坡(也是字面上的登山)", "p", "B2"], "ascends": ["goes up", "上升、登臨", "v", "C1"], "the spheres of heaven": ["the ring-shaped levels of the sky in medieval astronomy, which Dante rises through", "中世紀天文觀中層層包覆的天球,但丁逐層上升", "f", "C1"], "theology": ["the formal study of God and religious belief", "神學", "v", "C1"], "abstract": ["dealing with ideas rather than concrete things", "抽象的", "v", "B2"], "the footnote problem": ["the difficulty that a text needs constant explanatory notes to be understood", "註釋問題:沒有大量註解就讀不懂", "p", "B2"], "carry more explanation than poem": ["contain more notes than actual poetry", "註解比詩還多", "p", "B2"], "divine grace": ["God's freely given love and favor", "神的恩典", "p", "C1"], "cold": ["here: emotionally distant, not warm", "此處指:疏離、不夠有溫度", "v", "B1"], "Worth the journey": ["Michelin's own phrase for its highest rating — worth traveling specially to reach", "米其林最高評級的用語:值得專程前往", "f", "B2"], "above all": ["most importantly", "尤其是、最重要的是", "p", "B1"], "the nerve": ["the boldness or daring to do something risky", "䦽力、膡量", "v", "B2"], "if the mood takes you": ["idiom: if you happen to feel like it", "慣用語:如果你興致來了的話", "p", "C1"], "moral logic": ["reasoning about right and wrong applied consistently", "道德邏輯", "p", "C1"], "so willing to": ["so ready and unafraid to", "如此敢於、不惮於", "p", "B2"], "Book the descent": ["a joke on booking a trip — reserve the journey downward", "玩笑口吻:請預訂這趟向下之旅", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

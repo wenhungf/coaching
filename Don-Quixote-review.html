@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Don Quixote, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#A8603A; --accent-deep:#7A4326;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"✦";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Culture-essay voice</div>
+    <h1>The Man Who Read Too Much</h1>
+    <p class="deck">He read adventure stories until he believed them, then went looking for giants. Four hundred years on, the first modern novel is still the funniest and saddest book about belief.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Miguel de Cervantes</b>, Don Quixote</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">A man in his fifties sits up all night reading adventure stories. He sells land to buy more of them. He stops sleeping. And one morning he takes down a suit of rusted armor from the wall, gives his exhausted farm horse a heroic name, and rides out of his village to fix the world.</p>
+
+    <p>That is the whole engine of the book. Miguel de Cervantes published the first part in 1605: a country gentleman from La Mancha, in central Spain, has read so many tales of knights that he decides to become one. He renames himself Don Quixote, recruits a neighbor named Sancho Panza as his squire by promising him an island to govern, and sets off down the road looking for wrongs to right. Almost everyone he meets is baffled.</p>
+
+    <h2>The scene everyone knows</h2>
+
+    <p>Thirty pages in comes the image that outlived the book. Don Quixote sees windmills on the plain, decides they are giants with long waving arms, and charges. The lance goes into a sail, horse and rider are lifted and thrown, and Sancho arrives to point out, again, that they were windmills. His master explains that an evil magician turned the giants into windmills at the last moment to rob him of the glory.</p>
+
+    <p>That is why the scene endures. It is not simply about a fool. It is about the machinery a person builds to keep a belief alive after the evidence has landed on top of him. We now say tilting at windmills for attacking imaginary enemies, and four hundred years later we still need the phrase.</p>
+
+    <h2>The other half</h2>
+
+    <p>Sancho makes the book work. He is practical, hungry, greedy for his island, and completely aware that inns are inns and sheep are sheep. Yet he follows anyway. What begins as a straight double act &mdash; the dreamer and the realist &mdash; slowly turns into something stranger: the more the world mocks his master, the more fiercely Sancho defends him, and by the end it is no longer clear which of the two has changed the other more.</p>
+
+    <div class="pull">The joke is set up so that we laugh, and then arranged so that we are ashamed of laughing.</div>
+
+    <h2>The trick in Part Two</h2>
+
+    <p>Ten years later Cervantes published a second part, and did something no novelist had done. The characters in Part Two have read Part One. Don Quixote meets people who know his adventures because they are in print, and some of them stage elaborate practical jokes to watch him perform. A duke and duchess take him in purely for entertainment.</p>
+
+    <p>The effect is not clever for its own sake. It changes the moral weather. In Part One we laugh at a man who mistakes the world; in Part Two we watch bored aristocrats manufacture humiliations for him, and the laughter curdles. Cervantes builds the joke, then turns and looks at the people enjoying it.</p>
+
+    <h2>Where it asks too much</h2>
+
+    <p>Honesty requires the warning: it is very long, and it does not move in a straight line. The first part in particular keeps stopping so that a minor character can tell an unrelated novella, and readers have been skipping those since the seventeenth century. Some of the physical comedy is repetitive &mdash; a great deal of falling off horses and being beaten with sticks. And the cruelty is real; modern readers often find Part Two harder to enjoy than the slapstick of Part One, which may be the point but is still uncomfortable.</p>
+
+    <h2>Why it lasts</h2>
+
+    <p>Because the ending is not a punchline. Don Quixote comes home, recovers his sanity, renounces the books that ruined him, and dies quietly &mdash; and it is Sancho, the realist, who stands at the bedside begging him to get up and ride out again, insisting there are still giants. Cervantes spends nine hundred pages making us laugh at a man for believing in something, and then makes us grieve when he stops. Take the long road. Skip the novellas if you must.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a literary culture magazine. “Don Quixote” by Miguel de Cervantes (Part One 1605, Part Two 1615) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Miguel de Cervantes": ["pronounced mee-GEL day ser-VAN-tayz — the Spanish author (1547–1616), a former soldier who lost the use of a hand in battle and spent five years as a captive", "發音 mee-GEL day ser-VAN-tayz。西班牙作家塞萬提斯,曾為士兵、一手殘廃,又被俸五年", "f", "B2"], "Don Quixote": ["pronounced don kee-HOH-tay — the hero's chosen knightly name; the spelling looks nothing like the sound", "發音 don kee-HOH-tay。主角自取的騎士名號;拼法與發音差距極大", "f", "B1"], "La Mancha": ["pronounced lah MAHN-chah — the dry farming region of central Spain he comes from", "發音 lah MAHN-chah。西班牙中部乾旱的拉曼查地區", "f", "B2"], "Sancho Panza": ["pronounced SAN-choh PAN-thah — the farmer who becomes his squire", "發音 SAN-choh PAN-thah。跟隨他的農夫桑丘", "f", "B1"], "squire": ["pronounced SKWIRE — a knight's personal attendant, who carried his gear", "發音 SKWIRE。騎士的隨從、掌具的従者", "f", "C1"], "tilting at windmills": ["idiom born from this scene: attacking enemies that exist only in your own head", "源自本書的慣用語:向風車衝鍽——與想像出來的敵人作戰", "f", "C1"], "sits up all night": ["stays awake through the night", "熬夜不睡", "p", "B1"], "rusted armor": ["metal body protection that has gone brown with age", "生銹的盔甲", "p", "B2"], "heroic": ["brave and grand, like a hero", "英雄氣概的", "v", "B2"], "rides out": ["sets off on horseback", "騎馬上路、出發", "p", "B2"], "the whole engine of the book": ["the single idea that drives the entire story", "全書的動力來源", "p", "B2"], "a country gentleman": ["a landowner of modest rank living outside the city", "鄉間的小地主紳士", "p", "B2"], "renames himself": ["gives himself a new name", "給自己改了名", "p", "B1"], "recruits": ["persuades someone to join", "招募、拉人入夥", "v", "B2"], "to govern": ["to rule or be in charge of", "治理、管轄", "v", "B2"], "sets off": ["begins a journey", "動身、啟程", "p", "B1"], "wrongs to right": ["injustices to correct — note 'right' used as a verb", "待絇正的不公之事(right 在此是動詞)", "p", "C1"], "baffled": ["completely confused", "一頭霧水、莫名其妙", "v", "C1"], "Thirty pages in": ["after about thirty pages of reading", "讀了大約三十頁後", "p", "B2"], "outlived": ["lasted longer than", "活得比…久、比…更長存", "v", "C1"], "windmills": ["towers with turning sails that use wind power to grind grain", "風車", "v", "B1"], "the plain": ["a large area of flat land", "平原", "v", "B2"], "charges": ["rushes forward to attack", "衝鋒、策馬撲上去", "v", "B2"], "lance": ["a long spear carried by a knight on horseback", "長矛、騎槍", "v", "C1"], "sail": ["here: one of the turning arms of a windmill", "此指風車的風帆、轉葉", "v", "B2"], "at the last moment": ["just before something happens", "在最後一刻", "p", "B1"], "rob him of": ["to take something away from him unfairly", "剥奪他的…", "p", "B2"], "glory": ["great honor and public praise", "榮耀", "v", "B2"], "endures": ["lasts and stays powerful over time", "歷久不衰", "v", "B2"], "the machinery": ["here: the mental system a person builds to keep a belief working", "此指:人為了維持信念而搭建的一套心理機制", "v", "C1"], "has landed on top of him": ["has fallen right on him — both literally and as proof he cannot ignore", "字面上壓到他身上,也指證據已經碾到眼前", "p", "B2"], "practical": ["sensible; focused on what actually works", "務實的", "v", "B1"], "greedy for": ["wanting far too much of", "貪圖、一心想要", "p", "B2"], "inns": ["small old-fashioned hotels for travelers", "客棧", "v", "B2"], "double act": ["a comedy pairing of two contrasting characters", "雙人搭檔(一陰一陽的喜劇組合)", "p", "C1"], "mocks": ["laughs at someone in a cruel way", "嘲弄", "v", "B2"], "fiercely": ["with great intensity and force", "激烈地、拼了命地", "v", "B2"], "defends him": ["speaks or fights in his support", "為他辩護、跟人拚命", "p", "B1"], "in print": ["published and available to read", "已出版、白紙黑字", "p", "B2"], "stage": ["to arrange and put on (a performance or trick)", "策劃上演、安排", "v", "B2"], "elaborate": ["complicated and carefully worked out", "精心設計、複雜講究的", "v", "C1"], "practical jokes": ["tricks played on someone to make others laugh", "惡作劇", "p", "B2"], "duke and duchess": ["a high-ranking nobleman and his wife", "公爵與公爵夫人", "p", "B2"], "take him in": ["here: receive him into their house (with a second sense of 'deceive him')", "收留他住下(双關:也有「騙他」之意)", "p", "B2"], "for its own sake": ["done only for itself, with no further purpose", "為了好玩而好玩、本身就是目的", "p", "C1"], "the moral weather": ["the ethical mood or atmosphere of a story", "故事的道德氛圍", "p", "C1"], "aristocrats": ["members of the noble upper class", "貴族", "v", "C1"], "manufacture": ["here: deliberately create (something that should not be made)", "此指:刻意製造出來", "v", "B2"], "humiliations": ["events that make someone feel deeply ashamed", "翩辱、難堪的罰式", "v", "C1"], "curdles": ["turns sour and thick, like milk going bad — here the laughter spoils", "變質發酸(如牛奶凝結);此指笑聲變了調", "v", "C1"], "asks too much": ["demands more patience than it should", "要求讀者付出太多耐心", "p", "B2"], "in a straight line": ["directly, without wandering", "筆直地、不绕路", "p", "B1"], "novella": ["a story longer than a short story but shorter than a novel", "中篇小說", "v", "C1"], "unrelated": ["having no connection to the main story", "不相干的", "v", "B2"], "skipping": ["deliberately not reading a part", "跳過不讀", "v", "B1"], "physical comedy": ["humor built on falls, blows and bodily mishaps", "肢體喜劇、跤倒挨打那一類的笑料", "p", "B2"], "repetitive": ["repeating too often; becoming dull", "重複而乏味的", "v", "B2"], "slapstick": ["broad physical comedy with exaggerated violence", "鬧劇、遭遭打打的搬演", "v", "C1"], "which may be the point": ["which may be exactly what the author intended", "而這或許正是作者的用意", "p", "B2"], "a punchline": ["the final line of a joke, where the laugh comes", "笑話的段子、包裱的那句", "v", "B2"], "recovers his sanity": ["becomes mentally clear and rational again", "恢復神智、清醒過來", "p", "C1"], "renounces": ["formally gives up or rejects", "宣告斷絕、正式舍棄", "v", "C1"], "ruined him": ["destroyed him", "毀了他", "p", "B1"], "at the bedside": ["beside the bed of someone ill or dying", "在病榻旁", "p", "B1"], "begging": ["asking desperately", "苦苦哀求", "v", "B1"], "insisting": ["saying firmly and repeatedly", "堅持說", "v", "B2"], "grieve": ["to feel deep sorrow, especially at a death", "哀傷、失去時的痛", "v", "C1"], "Take the long road": ["a nudge to read the whole book — and a nod to the journey in it", "鼓勵你把這本長書讀完,也呼應書中的旅程", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

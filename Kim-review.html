@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Kim, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#8C6D2F; --accent-deep:#5E4718;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Travel-literature voice</div>
+    <h1>Literature’s Greatest Road</h1>
+    <p class="deck">An orphan who belongs everywhere and nowhere walks 1,500 miles up the Grand Trunk Road with a Tibetan monk. The road is the finest thing in English travel writing — and the politics are complicated.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Rudyard Kipling</b>, Kim</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Somewhere past Umballa the road fills up: bullock carts, a marriage procession with drums, a squad of soldiers, holy men walking barefoot, moneylenders, a woman scolding from a curtained litter, and dust over all of it. A boy sits on the edge of it watching, and decides this is the finest thing in the world.</p>
+
+    <p>He is right, and so is the book. Rudyard Kipling published <em>Kim</em> in 1901: the story of Kimball O'Hara, the orphaned son of an Irish soldier, growing up wild in the streets of Lahore, so brown from the sun and so fluent in the local languages that nobody takes him for a white child. He attaches himself to an old Tibetan lama who is searching for a sacred river, and together they walk out onto the Grand Trunk Road. Along the way, British intelligence discovers that a boy who can pass unnoticed anywhere is extremely useful.</p>
+
+    <h2>The road is the main character</h2>
+
+    <p>The Grand Trunk Road runs some fifteen hundred miles across the north of the subcontinent, and Kipling gives it the best pages in the book. It is a river of people: every caste, every trade, every religion moving in both directions at once, arguing and cooking and sleeping at the side. Nothing in Victorian fiction is so crowded with life, and almost nothing is so generous about it. He notices the smells. He notices what people eat, how they haggle, which insult they choose.</p>
+
+    <div class="pull">Every caste, every trade, every religion, moving in both directions at once.</div>
+
+    <h2>Two journeys, one road</h2>
+
+    <p>The structure is the clever part. Two quests share the same route and never quite touch. The lama walks toward a river that will wash away sin; Kim walks into the Great Game, the long intelligence contest between Britain and Russia over the mountain routes into India, carrying messages and learning to memorize a tray of objects at a glance. One journey is spiritual and slow, the other is worldly and quick.</p>
+
+    <p>What makes the book ache is that the boy loves them both. He is a spy who genuinely reveres his teacher, and the closing pages force a choice he never wanted. It is also a real portrait of a child raised between cultures, at home in a bazaar and never quite at home anywhere, asking again and again a question the plot will not answer neatly: what am I?</p>
+
+    <h2>The problem the book cannot escape</h2>
+
+    <p>Kipling was the great writer of the British Empire, and this is an imperial novel. India is described with immense affection and immense confidence &mdash; it is observed, catalogued, admired, and administered. The Indian characters are vivid and often magnificent, but the machinery of British rule sits there unquestioned, as natural as the weather. Kim's gift, in the end, is put to work for that machinery.</p>
+
+    <p>Readers have argued about this for a century, and the argument is worth having rather than settling. It is possible to find the road scenes among the finest travel writing in English and still notice who is holding the pen, and for whom the intelligence is gathered.</p>
+
+    <h2>Where it slows</h2>
+
+    <p>Practical warnings: the spycraft plot is thin, and it more or less evaporates whenever the road gets interesting. Kipling drops in Hindustani and Anglo-Indian words with no explanation at all, and a modern edition with notes helps enormously. The final chapters go inward and quiet after a very busy book, which some readers find beautiful and others find a stall.</p>
+
+    <h2>The verdict</h2>
+
+    <p>Read it for the road. There is no better account in English of what it felt like to walk across northern India in the 1890s &mdash; the noise, the food, the sheer human traffic &mdash; and no more affecting portrait of an old man and a sharp-witted boy looking after each other. Go with your eyes open about what the book assumes. Then let it take you out onto the Grand Trunk Road, where, as Kim says, there is all the world.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a literary travel magazine. “Kim” by Rudyard Kipling (1901) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Rudyard Kipling": ["pronounced RUD-yard KIP-ling — British author (1865–1936) born in Bombay; the great writer of the British Empire, and still argued over because of it", "發音 RUD-yard KIP-ling。生於孟買的英國作家吉卜林;大英帝國的代表作家,也因此至今備受爭議", "f", "B2"], "Umballa": ["pronounced um-BAH-lah — a town in northern India on the route (today spelled Ambala)", "發音 um-BAH-lah。印度北部沿途城鎮(今作 Ambala)", "f", "C1"], "Lahore": ["pronounced luh-HORE — the great northern city where Kim grows up; today in Pakistan", "發音 luh-HORE。基姆長大的北方大城拉合爾,今屬巴基斯坦", "f", "B2"], "lama": ["pronounced LAH-mah — a Tibetan Buddhist teacher or monk", "發音 LAH-mah。西藏佛教的上師、喇嘆", "f", "B2"], "the Grand Trunk Road": ["pronounced grand TRUNK road — the ancient highway running about 1,500 miles across northern South Asia; the spine of the whole novel", "發音 grand TRUNK road。橫貫南亞北部、約一千五百英里的古道「大幹道」,全書的脊梁", "f", "B2"], "the Great Game": ["the 19th-century contest between Britain and Russia for influence over the mountain approaches to India — the spy plot of the novel", "十九世紀英俄兩國爭奪印度北面山區影響力的「大博弈」,即本書的諑報線", "f", "B2"], "Hindustani": ["pronounced hin-doo-STAH-nee — the everyday north Indian speech behind modern Hindi and Urdu", "發音 hin-doo-STAH-nee。印度北部的通用口語,現代印地語與烏爾都語的共同基礎", "f", "C1"], "Anglo-Indian": ["pronounced ANG-gloh IN-dee-un — describing the British community in India, and the hybrid English they spoke", "發音 ANG-gloh IN-dee-un。指在印度的英國社群及其混合式英語", "f", "C1"], "caste": ["pronounced KAST — the hereditary social ranks of traditional Indian society", "發音 KAST。印度傳統社會的世襲階級(種姓)", "f", "C1"], "bazaar": ["pronounced buh-ZAR — a covered market of small stalls", "發音 buh-ZAR。市集、露天商場", "f", "B2"], "bullock carts": ["carts pulled by oxen", "牛車", "p", "B2"], "procession": ["a line of people moving forward together in ceremony", "行列、陣仗", "v", "B2"], "squad": ["a small group of soldiers", "一小隊士兵", "v", "B2"], "barefoot": ["with nothing on the feet", "赤足的", "v", "B1"], "moneylenders": ["people whose business is lending money at interest", "放高利貸的人、錢莊", "v", "B2"], "scolding": ["telling someone off angrily", "嘲喬、叱責", "v", "B2"], "litter": ["here: a covered seat carried on poles by servants", "此指:由人扛抬的轎子、轿", "v", "C1"], "orphaned": ["having lost both parents", "父母雙亡的、成了孤兒的", "v", "B2"], "growing up wild": ["being raised without supervision or schooling", "野地裡長大、沒人管教", "p", "B2"], "fluent in": ["able to speak a language easily and well", "說…很流利", "p", "B1"], "takes him for": ["mistakenly believes him to be", "把他認成、誤以為他是", "p", "B2"], "attaches himself to": ["joins someone and stays close to them", "跟上了、賤在…身邊", "p", "C1"], "sacred": ["holy; treated with religious respect", "神聖的", "v", "B2"], "intelligence": ["here: secret information gathered by a government", "此指:情報、諑報", "v", "B2"], "pass unnoticed": ["to go about without anyone noticing you", "不被察覺地混入、來去自如", "p", "C1"], "the subcontinent": ["the large landmass of India, Pakistan and neighboring countries", "次大陸(印度、巴基斯坦等地)", "v", "C1"], "a river of people": ["a crowd flowing like water", "人流如河", "p", "B2"], "trade": ["here: a job or occupation", "此指:行業、手藝", "v", "B2"], "in both directions at once": ["going each way at the same time", "兩個方向同時在走", "p", "B1"], "Victorian": ["of Britain under Queen Victoria (1837–1901)", "維多利亞時代的", "v", "B2"], "generous about it": ["warm and open-hearted toward it, not sneering", "對它懷著寬厚的善意(而非輕蔑)", "p", "C1"], "haggle": ["to argue over a price until both sides agree", "講價還價", "v", "C1"], "quests": ["long searches for something of great value", "尋求之旅、追尋", "v", "B2"], "never quite touch": ["stay separate; never fully meet", "始終沒真正交集", "p", "B2"], "wash away sin": ["to cleanse wrongdoing, in a religious sense", "洗去罪業", "p", "B2"], "at a glance": ["idiom: in a single quick look", "慣用語:一眼就…", "p", "B2"], "worldly": ["concerned with money, power and practical life rather than the spirit", "入世的、俗世的", "v", "C1"], "makes the book ache": ["gives the book its quiet pain", "讓這本書隱隱作痛", "p", "C1"], "reveres": ["respects and admires deeply, almost religiously", "敬重、崇敬", "v", "C1"], "the closing pages": ["the final pages of the book", "最後幾頁", "p", "B1"], "raised between cultures": ["brought up belonging to two cultures at once", "在兩種文化之間長大", "p", "B2"], "at home in": ["comfortable and familiar in a place", "在…裡得心應手、如魚得水", "p", "B2"], "neatly": ["cleanly and tidily; here, without loose ends", "干淨俐落地、一句話說完", "v", "B2"], "the Empire": ["the British Empire, which ruled India at the time", "大英帝國(當時統治印度)", "v", "B2"], "imperial": ["belonging to or supporting an empire", "帝國的、帝國立場的", "v", "B2"], "immense": ["extremely great", "極大的", "v", "B2"], "affection": ["warm fondness", "喜愛、深情", "v", "B2"], "catalogued": ["listed and classified item by item", "被逐一編目、分類清點", "v", "C1"], "administered": ["governed and managed by an authority", "被管治、行政統理", "v", "C1"], "vivid": ["clear, bright and full of life", "鮮明生動的", "v", "B2"], "the machinery of British rule": ["the whole system of officials and institutions running the colony", "英國殖民統治的整套機器", "p", "C1"], "unquestioned": ["accepted without anyone challenging it", "無人質疑、理所當然地被接受", "v", "C1"], "is put to work for": ["is used to serve (a purpose or system)", "被拿來為…服務", "p", "B2"], "worth having rather than settling": ["better kept open as a debate than closed with one answer", "值得持續辩論,而不是急著下定論", "p", "C1"], "who is holding the pen": ["idiom: who is doing the writing, and so whose view we get", "慣用語:執筆的是誰——也就是我們看到的是誰的觀點", "p", "C1"], "spycraft": ["the practical skills and methods of spying", "間諜手藝、諑報技術", "v", "C1"], "thin": ["here: lacking substance or development", "此指:單薄、不夠扎實", "v", "B2"], "evaporates": ["disappears, like water turning to vapor", "蒸發掉、消失無蹤", "v", "C1"], "drops in": ["inserts casually, without preparation", "隨手丟進去、不加交代地用上", "p", "B2"], "helps enormously": ["is a very great help", "幫助極大", "p", "B2"], "go inward": ["turn toward inner, private feeling rather than outward action", "轉向內在、從外部行動轉入心境", "p", "C1"], "a stall": ["a point where forward movement stops", "停滞、卡住不動", "v", "C1"], "no better account": ["nothing else describes it as well", "沒有更好的描寫了", "p", "B2"], "the sheer human traffic": ["the sheer volume of people moving about", "那浩大的人潮流動", "p", "C1"], "affecting": ["moving; producing deep feeling", "動人的、令人動容的", "v", "C1"], "sharp-witted": ["quick and clever in thinking", "機靈、腦筋快的", "p", "C1"], "looking after each other": ["taking care of one another", "彼此照應", "p", "B1"], "with your eyes open": ["idiom: fully aware of what you are getting into", "慣用語:心裡有數地、睡知利弊地", "p", "B2"], "assumes": ["takes for granted without proving", "預設、當成理所當然", "v", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

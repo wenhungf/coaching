@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Gulliver’s Travels, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#2F5D8C; --accent-deep:#1F4062;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"●";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Foreign-policy journal voice</div>
+    <h1>Four Failed States: A Diplomatic Assessment</h1>
+    <p class="deck">Jonathan Swift’s traveler washes up in four countries and files four reports. Three hundred years later, they still read like a briefing on this morning’s news.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Jonathan Swift</b>, Gulliver’s Travels</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">The subject of this assessment came ashore in November 1699 and woke to find himself pinned flat to a beach by several hundred citizens six inches tall, every one of them convinced he was a national security problem.</p>
+
+    <p>Jonathan Swift's traveler, a ship's surgeon named Lemuel Gulliver, makes four voyages and returns with four reports: a kingdom of tiny people, a kingdom of giants, a flying island of distracted scientists, and a country where reasonable horses rule over filthy human-shaped animals. Three centuries on, the reports still read like the sharpest political briefing you will see this year.</p>
+
+    <h2>Lilliput: politics in miniature</h2>
+
+    <p>The people of Lilliput stand six inches high and take themselves extremely seriously. Government posts are awarded by rope-dancing: candidates perform on a tightrope, and whoever jumps highest gets the job. The court splits into rival parties over the height of their shoe heels. And the empire has been at war for years with its neighbor over which end of a boiled egg should be cracked first &mdash; Big-Endians against Little-Endians, thousands dead over breakfast. Swift is describing the political parties and religious wars of his own century, and he is not being subtle. He is being exact.</p>
+
+    <h2>Brobdingnag: the view from above</h2>
+
+    <p>Reverse the scale and the joke turns on Gulliver. Among the giants of Brobdingnag he becomes a pet, carried in a box, shown at fairs, and fought off by a wasp the size of a bird. He describes European government to the king with enormous pride; the king listens carefully, asks precise questions, and concludes that Gulliver's countrymen are <q>the most pernicious race of little odious vermin</q> ever to crawl on the earth. Gulliver, undeterred, offers to teach him how to make gunpowder. The king recoils in horror &mdash; and the offer, not the horror, is Swift's point.</p>
+
+    <div class="pull">A war over which end of an egg to crack is still the truest thing ever written about politics.</div>
+
+    <h2>Laputa: research without a purpose</h2>
+
+    <p>Laputa is an island that flies, held up by a giant magnet, and its king can park it above a rebellious city to block out the sun &mdash; or, if that fails to persuade, lower it onto the rooftops. On the ground below, the funded researchers of the Grand Academy work to extract sunbeams from cucumbers, build houses starting with the roof, and soften marble to make pillows. Swift was aiming at the scientific societies of his day. Anyone who has read a modern grant application will find the aim has not drifted much.</p>
+
+    <h2>The fourth voyage, where the report turns</h2>
+
+    <p>Then the tone changes, and the book stops being funny. Among the Houyhnhnms &mdash; horses of perfect reason &mdash; Gulliver also meets the Yahoos: greedy, filthy, violent creatures who are unmistakably human. He decides the horses are right about us. He sails home and cannot bear the smell of his own wife and children; he buys two horses and spends his afternoons talking to them instead. This is not a children's book, whatever the picture-book versions suggest, and readers who arrive expecting one are in for a shock.</p>
+
+    <h2>Assessment</h2>
+
+    <p>The flaws are real. Gulliver himself is a lens rather than a person &mdash; he exists to measure, not to feel. The third voyage sprawls. Some episodes are deliberately coarse, including a palace fire that Gulliver extinguishes by the least dignified means available. And the fourth voyage leaves a bruise: readers have argued for three hundred years over whether Swift shared Gulliver's disgust with humanity or was diagnosing it. Read it anyway, and read the whole thing. No one since has cut this close to the bone, and nobody has ever needed fewer words to do it than a war fought over an egg.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a foreign-policy journal. “Gulliver’s Travels” by Jonathan Swift (1726) is in the <strong>public domain</strong>; the one quoted phrase is used as a study aid. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Lilliput": ["pronounced LIL-ih-put — the land of six-inch people", "發音 LIL-ih-put。小人國", "f", "B1"], "Lilliputians": ["pronounced lil-ih-PYOO-shuns — the tiny people of Lilliput", "發音 lil-ih-PYOO-shuns。小人國的居民", "f", "B2"], "Brobdingnag": ["pronounced BROB-ding-nag — the land of giants", "發音 BROB-ding-nag。大人國", "f", "B2"], "Laputa": ["pronounced luh-PYOO-tuh — the flying island of impractical scholars", "發音 luh-PYOO-tuh。飛島拉普達,住著一群不切實際的學者", "f", "B2"], "Houyhnhnms": ["pronounced roughly HWIN-ums — Swift's word imitates a horse's whinny; they are horses who live by pure reason", "發音約為 HWIN-ums(取馬嘶聲之音)。以純粹理性生活的馬", "f", "C1"], "Yahoos": ["pronounced YAY-hooz — Swift's filthy human-like brutes; the modern insult 'yahoo' for a crude person comes from this book", "發音 YAY-hooz。書中髒髊的人形野獸;英文用 yahoo 罵人粗魯就是出自本書", "f", "B2"], "Lemuel Gulliver": ["pronounced LEM-yoo-ul GULL-ih-ver — the ship's surgeon who narrates all four voyages", "發音 LEM-yoo-ul GULL-ih-ver。負責敘述四次航行的隨船醫生", "f", "B1"], "Jonathan Swift": ["1667–1745, Anglo-Irish satirist and clergyman, famous for attacking politics through comedy", "1667–1745,英裔愛爾蘭諺刺作家兼神職人員,擅以喜劇攻擊政治", "f", "B2"], "assessment": ["a careful judgement of something's quality or condition", "評估、評鑑", "v", "B2"], "came ashore": ["arrived on land from the sea", "上岸、漂上岸", "p", "B2"], "pinned flat": ["held down so you cannot move", "被死死固定在地上", "p", "B2"], "six inches tall": ["about 15 centimeters tall", "約十五公分高", "p", "B1"], "a national security problem": ["something a country treats as a threat to its safety", "國安威脅", "p", "B2"], "ship's surgeon": ["the doctor employed on a sailing ship", "隨船醫生", "p", "B2"], "voyages": ["long journeys by sea", "航行、遠洋之旅", "v", "B2"], "distracted": ["unable to keep attention on what matters", "心不在焉的", "v", "B2"], "filthy": ["extremely dirty", "滋滋、髒髊不堪的", "v", "B2"], "Three centuries on": ["three hundred years later", "三百年後", "p", "B2"], "briefing": ["a short report prepared to bring someone up to date", "簡報、情勢報告", "v", "B2"], "in miniature": ["on a very small scale", "縮小版的、迷你尺度的", "p", "C1"], "take themselves extremely seriously": ["idiom: think far too highly of their own importance", "慣用語:把自己看得太重要", "p", "B2"], "posts": ["official positions or jobs", "職位", "v", "B2"], "are awarded by": ["are given as a prize for", "以…來決定授予", "p", "B2"], "rope-dancing": ["performing acrobatics on a rope — in Lilliput, the way officials compete for jobs", "繩上路雜技;小人國拿它來決定官職歸屬", "p", "C1"], "tightrope": ["a tightly stretched rope for walking on", "鋼索、繩索", "v", "B2"], "rival parties": ["opposing political groups", "對立的政黨", "p", "B2"], "heels": ["the raised back parts of shoes", "鞋跟", "v", "B1"], "Big-Endians against Little-Endians": ["Swift's invented factions who go to war over which end of a boiled egg to crack — his image of pointless religious and party conflict", "史威夫特虛構的兩派:為了「該從蛋的大頭還是小頭敲開」而開戰,譬喻無意義的宗教與黨派之爭", "f", "B2"], "thousands dead over breakfast": ["thousands killed over a trivial matter (the egg)", "為了早餐細事死了數千人", "p", "B2"], "subtle": ["indirect and delicately hidden", "含蠕、不明說的", "v", "B2"], "Reverse the scale": ["turn the size relationship the other way around", "把大小關係倒過來", "p", "B2"], "the joke turns on Gulliver": ["idiom: now Gulliver is the one being laughed at", "慣用語:這下換成 Gulliver 被取笑了", "p", "C1"], "pet": ["an animal kept for amusement — here, Gulliver is treated as one", "寵物(此處 Gulliver 被當成寵物養)", "v", "B1"], "shown at fairs": ["displayed to paying crowds at markets", "在市集上被展示給人看", "p", "B2"], "fought off": ["driven away by fighting", "擊退、抵擋", "p", "B2"], "wasp": ["a stinging insect like a bee", "黃蜂", "v", "B2"], "with enormous pride": ["feeling very proud", "得意洋洋地", "p", "B1"], "pernicious": ["causing serious harm in a gradual, hidden way", "陰險而有害的、毒害深遠的", "v", "C1"], "odious": ["deserving hatred; disgusting", "可憎的、令人反感的", "v", "C1"], "vermin": ["small harmful animals such as rats — used as an insult for people", "害蟲、鼠輩(罵人的語)", "v", "C1"], "undeterred": ["not discouraged; carrying on regardless", "不為所動、沒被嚇退", "v", "C1"], "gunpowder": ["the explosive powder used in guns and bombs", "火藥", "v", "B2"], "recoils in horror": ["draws back suddenly in shock and disgust", "驚恐地往後退縮", "p", "C1"], "held up by": ["supported from below or above so it does not fall", "被…托住、支撐著", "p", "B1"], "magnet": ["a piece of iron that attracts or repels other metal", "磁鐵", "v", "B2"], "park it above": ["position it and leave it hovering over", "把它停在…上方", "p", "B2"], "rebellious": ["refusing to obey those in power", "叛亂的、不服管的", "v", "B2"], "block out the sun": ["stop sunlight from reaching a place", "遮蔽陽光", "p", "B1"], "persuade": ["to make someone agree or obey", "說服", "v", "B2"], "funded researchers": ["scientists whose work is paid for by grants", "拿經費的研究人員", "p", "B2"], "extract sunbeams from cucumbers": ["one of the Grand Academy's absurd projects — Swift's image of research that wastes money on nothing", "學院荒謬計畫之一:從小黃瓜裡提煉陽光;史威夫特嘲諻燒錢卻無用的研究", "f", "C1"], "soften marble": ["to make hard stone soft — another impossible academy project", "把大理石變軟——又一項不可能的計畫", "p", "B2"], "aiming at": ["directing criticism toward", "矛頭對準、矢射", "p", "B2"], "grant application": ["a formal request for research funding", "研究經費申請書", "p", "C1"], "has not drifted much": ["has not moved far off target; is still accurate", "基本沒偏掉、到今仍中的", "p", "C1"], "the tone changes": ["the mood and attitude of the writing shift", "調性變了、氣氛一轉", "p", "B2"], "perfect reason": ["completely rational thinking, free of emotion", "純粹的理性", "p", "B2"], "unmistakably": ["so clearly that there can be no doubt", "不容認錯地、明明白白地", "v", "C1"], "cannot bear": ["cannot tolerate or endure", "受不了、忍受不住", "p", "B1"], "are in for a shock": ["idiom: are going to be unpleasantly surprised", "慣用語:將會大吃一驚", "p", "B2"], "flaws": ["faults or weak points", "缺點、瑕疵", "v", "B2"], "a lens rather than a person": ["a device for seeing things through, not a rounded character", "一副「用來看世界的鏡頭」,而非有血肉的角色", "p", "C1"], "sprawls": ["spreads out loosely and goes on too long", "拖沓鬆散、写得漫無邊際", "v", "C1"], "coarse": ["rude or crude; not refined", "粗俗的", "v", "C1"], "extinguishes": ["puts out (a fire)", "掃滅、撲滅", "v", "C1"], "the least dignified means": ["the most undignified method imaginable (Swift means urinating on it)", "最不雅的手段(指尿滌滅火)", "p", "C1"], "leaves a bruise": ["idiom: hurts and stays with you afterwards", "慣用語:讓人心裡留下痕跡、看完隱隱作痛", "p", "C1"], "disgust": ["a strong feeling of dislike and revulsion", "収惡、反感", "v", "B2"], "diagnosing": ["identifying a problem in order to name it, as a doctor does", "診斷、指出病灶", "v", "C1"], "cut this close to the bone": ["idiom: to be so truthful that it hurts", "慣用語:刺得這麼深、一針見血", "p", "C1"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

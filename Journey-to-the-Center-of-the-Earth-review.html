@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Journey to the Center of the Earth, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#C2542A; --accent-deep:#8A3818;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"▲";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Adventure-magazine voice</div>
+    <h1>Expedition Report: Down the Volcano</h1>
+    <p class="deck">In 1864 Jules Verne sent three men down an Icelandic crater to look for the middle of the Earth. We assess the route, the kit, and the one team member who truly earned his pay.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Jules Verne</b>, Journey to the Center of the Earth</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Every expedition begins with a document. This one begins with a scrap of parchment covered in runes, tumbling out of a secondhand book in a Hamburg study, and a professor who will not eat or sleep until he has cracked the code.</p>
+
+    <p>Decoded, the note is an invitation. Arne Saknussemm, a sixteenth-century Icelandic scholar, claims he found a road to the center of the Earth and left directions for anyone reckless enough to follow. Professor Otto Lidenbrock packs that same afternoon. His nephew Axel, who would much rather stay home and marry his sweetheart, is not consulted. In Reykjavik the two hire a local guide named Hans, and in late June they climb into the crater of an extinct volcano, Sn&aelig;fellsj&ouml;kull, and start walking downward.</p>
+
+    <h2>The route</h2>
+
+    <p>The descent is the finest thing in the book. The party follows old lava tubes &mdash; the long hollow pipes left behind when molten rock drains away &mdash; deeper and deeper into cold basalt. They take a wrong turn at a fork and nearly die of thirst; Hans saves them by listening to a wall, swinging a pickaxe at it, and releasing an underground stream, which the men name the Hansbach and then follow downward like a handrail for weeks.</p>
+
+    <p>Far below, the tunnel opens onto something nobody has prepared for: a sea. It has its own beach, its own storms, and a pale electric sky. Mushrooms grow to the height of trees. Out on the water, from the safety of a raft, the men watch two creatures that should have been extinct for a hundred million years tear each other apart.</p>
+
+    <h2>The kit list</h2>
+
+    <p>Verne, ever the engineer, itemizes everything: rope ladders, pickaxes, six months of dried food, water flasks, and two Ruhmkorff lamps &mdash; real 1860s battery-powered lights, which let the party keep the tunnels lit without carrying an open flame into rock that might hold gas. The provisioning is meticulous. The one thing they almost die of is water, which is precisely the mistake real expeditions still make.</p>
+
+    <div class="pull">Hans is the finest character Verne ever wrote, and he barely says a word.</div>
+
+    <h2>Personnel</h2>
+
+    <p>Axel narrates, and he is a coward &mdash; anxious, homesick, prone to fainting at the worst moment. That is exactly why he works: he asks the questions we would ask and panics on our behalf. Lidenbrock is a force of nature with no patience and no doubt. But the expedition survives because of Hans, who never raises his voice, never hurries, repairs whatever breaks, and once a week, several kilometers beneath Iceland, calmly asks to be paid his wages.</p>
+
+    <h2>Where the science collapses</h2>
+
+    <p>Now, the geology. It does not hold up. Dig down and the temperature climbs fast; long before you reach any of Verne's caverns you would meet rock hot enough to flow. Verne knew this, has Axel raise the objection, and then lets Lidenbrock brush it aside &mdash; a magnificent piece of authorial nerve. The way out is worse: a volcanic eruption does the job, and the physics of that does not bear thinking about. The characters, too, are functions rather than people: the doubter, the driver, the fixer.</p>
+
+    <h2>The verdict</h2>
+
+    <p>None of which matters much. Read it for the going down &mdash; the narrowing walls, the failing light, the moment a tunnel opens onto an impossible shore. Verne built the template that every descent story has followed since, and he built it out of rope, lamplight, and nerve. Just take his one real lesson with you: carry more water than you think you need.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of an outdoor adventure magazine. “Journey to the Center of the Earth” by Jules Verne (1864) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Snæfellsjökull": ["pronounced roughly SNY-fels-YUH-kutl — a real glacier-capped volcano on Iceland's west coast, and the entrance in the story", "發音約為 SNY-fels-YUH-kutl。冰島西岸真實的冰帽火山,故事中的入口", "f", "C1"], "Reykjavik": ["pronounced RAYK-yuh-vik — the capital of Iceland", "發音 RAYK-yuh-vik。冰島首都雷克雅未克", "f", "B2"], "Lidenbrock": ["pronounced LEE-den-brok — the obsessive professor who leads the expedition", "發音 LEE-den-brok。帶隊的執念教授", "f", "B2"], "Arne Saknussemm": ["pronounced AR-nuh sak-NOO-sem — the (invented) 16th-century scholar whose coded note starts everything", "發音 AR-nuh sak-NOO-sem。小說虛構的16世紀學者,他的密碼紙條推動了整個故事", "f", "C1"], "Axel": ["pronounced AK-sel — the nervous nephew who tells the story", "發音 AK-sel。負責敘事、膽小的侄子", "f", "B1"], "Hans": ["pronounced HAHNS — the Icelandic guide hired for the journey", "發音 HAHNS。雇來的冰島向導", "f", "B1"], "Hamburg": ["pronounced HAM-burg — the German port city where the story opens", "發音 HAM-burg。德國港市漢堡,故事開場地", "f", "B1"], "expedition": ["an organized journey made for exploration or research", "遠征、探險行動", "v", "B2"], "parchment": ["a thin writing material made from animal skin, used before paper", "羊皮紙、古代書寫用的獸皮", "v", "C1"], "runes": ["letters of an old Northern European alphabet, carved rather than written", "符文、北歐古文字", "v", "C1"], "tumbling out of": ["falling out suddenly and loosely", "(從…)掉落出來", "p", "B2"], "secondhand": ["previously owned by someone else", "二手的", "v", "B1"], "cracked the code": ["idiom: solved the secret writing", "破解密碼", "p", "B2"], "Decoded": ["turned from secret writing back into ordinary language", "解碼後", "v", "B2"], "invitation": ["here: something that seems to invite you to act", "邀請(此指「一道招手」)", "v", "B1"], "reckless": ["acting without caring about the danger", "魯莽的、不顧後果的", "v", "C1"], "is not consulted": ["is not asked for his opinion", "沒人問過他的意見", "p", "B2"], "crater": ["the bowl-shaped mouth at the top of a volcano", "火山口", "v", "B2"], "extinct volcano": ["a volcano that will never erupt again", "死火山", "p", "B2"], "descent": ["the act of going down", "下降、向下的旅程", "v", "B2"], "lava tubes": ["long hollow tunnels left underground when molten rock drains away — explained in the sentence itself", "熔岩隧道:岩漿流走後留下的中空地下通道", "p", "B2"], "molten": ["melted by heat into liquid", "熔化的、熱熔的", "v", "C1"], "drains away": ["flows out and leaves the space empty", "流走、排空", "p", "B2"], "basalt": ["the hard dark rock formed from cooled lava", "玄武岩", "v", "C1"], "a wrong turn": ["a mistaken choice of direction", "走錯路、轉錯彎", "p", "B1"], "fork": ["a point where a path splits into two", "岔路口", "v", "B2"], "die of thirst": ["to die from lack of water", "渴死", "p", "B1"], "pickaxe": ["a heavy tool with a pointed head for breaking rock", "鴝嘴鎌", "v", "B2"], "handrail": ["a rail you hold to guide or steady yourself — here, the stream guides them", "扶手(此處比喻:沿著溪水就不會迷路)", "v", "B2"], "opens onto": ["leads out into (a wider space)", "通向、豁然接上", "p", "B2"], "has prepared for": ["has expected or got ready for", "預料到、有心理準備", "p", "B1"], "pale": ["light in color; not bright or strong", "淡的、微弱的", "v", "B1"], "raft": ["a flat floating platform used as a simple boat", "箏筏", "v", "B2"], "tear each other apart": ["to rip each other to pieces in a fight", "厭鬥到把彼此撕碎", "p", "B2"], "ever the engineer": ["true to his nature as an engineer; as always, thinking like one", "不愧是工程師性格、一如既往地", "p", "C1"], "itemizes": ["lists each item separately", "逐項列出", "v", "C1"], "rope ladders": ["ladders made of rope, used for climbing down", "繩梯", "p", "B2"], "flasks": ["containers for carrying liquid", "水壷、隨身瓶", "v", "B2"], "Ruhmkorff lamps": ["early battery-powered lamps (a real 1860s invention) that gave light without an open flame", "魯姆科夫燈:1860年代真實存在的電池燈,不需明火就能照明", "f", "C1"], "open flame": ["an exposed, burning flame", "明火、裸露的火焰", "p", "B2"], "provisioning": ["the work of supplying food and equipment", "補給、物資準備", "v", "C1"], "meticulous": ["extremely careful about small details", "一丝不苟的", "v", "C1"], "precisely": ["exactly", "恰恰、正是", "v", "B2"], "narrates": ["tells the story", "擔任敘事、講述故事", "v", "B2"], "coward": ["a person who lacks courage", "懦夫、膽小鬼", "v", "B2"], "homesick": ["sad because you miss home", "思鄉的", "v", "B1"], "prone to": ["likely to do or suffer something (usually bad)", "容易…、有…的傾向", "p", "C1"], "fainting": ["losing consciousness for a short time", "暈倒", "v", "B2"], "on our behalf": ["in our place; instead of us", "替我們、代替我們", "p", "B2"], "a force of nature": ["idiom: a person so powerful and unstoppable they feel like a natural force", "慣用語:像大自然一樣擋不住的人", "p", "C1"], "raises his voice": ["speaks louder in anger", "提高音量、發火", "p", "B1"], "wages": ["money paid for work, usually weekly", "工資", "v", "B1"], "does not hold up": ["idiom: does not survive examination; falls apart when checked", "慣用語:站不住腳、經不起檢驗", "p", "B2"], "caverns": ["large caves", "大山洞", "v", "C1"], "hot enough to flow": ["so hot that solid rock turns liquid and moves", "熱到岩石會流動", "p", "B2"], "raise the objection": ["to state a reason against something", "提出異議、反駁", "p", "C1"], "brush it aside": ["idiom: to dismiss it without serious thought", "慣用語:一揮手就把它打發掉、不屑一顧", "p", "C1"], "authorial nerve": ["the writer's boldness in doing something he knows is indefensible", "作者的膣量(明知說不通還敎寫下去)", "p", "C1"], "does not bear thinking about": ["idiom: is too absurd or awful to examine closely", "慣用語:不堪細想、一想就破功", "p", "C1"], "functions rather than people": ["characters that exist to do a job in the plot, not to feel real", "只是劇情功能,不是有血肉的人", "p", "B2"], "None of which matters much": ["grammar: 'which' referring back to the whole previous idea — 'and none of that matters'", "文法:which 指前面整段的內容——「而這些都不重要」", "c", "C1"], "the going down": ["the process of descending (a noun made from the verb)", "「往下走」這件事本身(動詞當名詞用)", "p", "B2"], "narrowing": ["becoming gradually more narrow", "越來越窄的", "v", "B2"], "failing light": ["light that is growing weaker and dying", "漸弱的光線", "p", "B2"], "template": ["a pattern that later examples copy", "範本、原型模式", "v", "B2"], "lamplight": ["the light given by a lamp", "燈光", "v", "B2"], "nerve": ["courage in a frightening situation", "䦽力、膧量", "v", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

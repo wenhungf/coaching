@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Odyssey, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1E6E8C; --accent-deep:#134A60;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  button.gl{font:inherit;color:inherit;background:none;border:0;padding:0 .5px;margin:0;cursor:pointer;line-height:inherit;
+    border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  button.gl:hover,button.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Travel-complaint column voice</div>
+    <h1>Ten Years, One Commute</h1>
+    <p class="deck">A five-hundred-mile trip home. Ten years in transit, one surviving passenger, and a delay the claimant blames entirely on the weather. We review the file.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Homer</b>, The Odyssey</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">The complaint before us concerns a journey of roughly five hundred miles that took the claimant ten years, cost him his entire crew, and involved a delay caused, he insists, by the weather service itself.</p>
+
+    <p>The facts are these. Odysseus, king of a small Greek island called Ithaca, sails for home after ten years at war in Troy. Almost nothing goes to plan. He is blown off course, imprisoned by a witch, held for seven years by a sea nymph who wants to marry him, and finally washed up alone with nothing. Meanwhile his wife Penelope is holding their house against a hundred and eight men who have moved in, are eating his food, and expect her to marry one of them. This is Homer's poem, composed around the eighth century BC, and it remains the greatest travel-disruption story ever told.</p>
+
+    <h2>Itinerary and incidents</h2>
+
+    <p>The outbound leg was uneventful. The return was not. At the first stop the crew are drugged with lotus fruit and stop wanting to leave. At the second, a one-eyed giant named Polyphemus eats several of them, and Odysseus escapes by blinding him and clinging to the underside of a sheep. He is then handed a bag containing every wind except the one blowing him home; his men, convinced it holds treasure, open it in sight of Ithaca and blow the ship all the way back.</p>
+
+    <p>After that: a witch who turns the crew into pigs, a strait guarded on one side by a monster and on the other by a whirlpool, and finally a beach where the last survivors eat cattle they had been explicitly warned not to touch. Their ship is destroyed. Odysseus alone reaches land, and spends seven more years on an island with the nymph Calypso before anyone lets him go.</p>
+
+    <h2>Grounds for complaint</h2>
+
+    <p>He blames the gods, and the record supports him: Poseidon, god of the sea, spends the entire poem obstructing him. But an honest assessment of liability must note that Odysseus is a poor captain. He raids a town on the way home for no reason and loses men. He shouts his own name at the blinded giant while sailing away, which is how Poseidon learns whom to punish. He fails to tell his crew what is in the bag. Every single man under his command dies; he is the only one who makes it back. Any airline with that record would not be operating.</p>
+
+    <div class="pull">Every man under his command dies. He is the only one who makes it home.</div>
+
+    <h2>The hospitality clause</h2>
+
+    <p>Underneath the monsters, the poem runs on a rule the Greeks called xenia: a host must feed and shelter a stranger before asking who he is, and the guest must not abuse the house. It works like an ancient review system, and the plot is a series of ratings. The good hosts prosper. The giant who eats his visitors and the suitors who devour another man's household both meet the same ending, and it is not a refund.</p>
+
+    <h2>Where the service falls short</h2>
+
+    <p>Modern readers should be warned about the repetition. Homer was composing for performance, so the same ready-made phrases return again and again &mdash; dawn is rosy-fingered every single morning &mdash; and whole speeches are repeated word for word by messengers. It was a memory aid for a poet working without a script; on the page it can drag. The middle books slow to a crawl, and the revenge at the end is far bloodier than most people expect from a story often sold to children.</p>
+
+    <h2>Finding</h2>
+
+    <p>Complaint upheld, with contributory fault on the claimant's part. Three thousand years on, nothing has bettered it: the homesickness, the lying, the disguises, the dog who recognizes his master and then dies. And Penelope, quietly running a twenty-year defense of her own, is the better strategist of the two. Read it for her as much as for him.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a consumer travel-complaint column. “The Odyssey”, attributed to Homer (c. 8th century BC), is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Odysseus": ["pronounced oh-DISS-ee-us — the Greek king trying to get home; the poem is named after him", "發音 oh-DISS-ee-us。試圖返鄉的希臘國王奧德修斯", "f", "B2"], "Ithaca": ["pronounced ITH-uh-kuh — Odysseus's small home island in western Greece", "發音 ITH-uh-kuh。奧德修斯的家鄉小島伊賀島", "f", "B2"], "Troy": ["pronounced TROY — the city where the ten-year war was fought", "發音 TROY。特洛伊,打了十年仗的城市", "f", "B1"], "Penelope": ["pronounced puh-NELL-uh-pee — Odysseus's wife, who holds the household alone for twenty years", "發音 puh-NELL-uh-pee。奧德修斯的妻子佩妮洛希,獨自守了二十年", "f", "B2"], "Homer": ["pronounced HOH-mer — the poet credited with this epic and the Iliad", "發音 HOH-mer。相傳寫下本詩與《伊利亞德》的詩人荷馬", "f", "B1"], "Polyphemus": ["pronounced pol-ee-FEE-mus — the one-eyed giant (a Cyclops) who traps the crew in his cave", "發音 pol-ee-FEE-mus。把船員困在洞裡的獨眼巨人波呂非摩斯", "f", "C1"], "Poseidon": ["pronounced puh-SIGH-dun — god of the sea, and the giant's father; he spends the poem punishing Odysseus", "發音 puh-SIGH-dun。海神波塞冬,巨人之父,全詩都在懲罰奧德修斯", "f", "B2"], "Calypso": ["pronounced kuh-LIP-so — the sea nymph who keeps him on her island for seven years", "發音 kuh-LIP-so。將他留在島上七年的海仙卡里普索", "f", "C1"], "nymph": ["pronounced NIMF — a minor female nature spirit in Greek myth", "發音 NIMF。希臘神話中的自然女神、仙子", "f", "C1"], "xenia": ["pronounced ZEN-ee-uh — the ancient Greek duty of hospitality: feed and shelter a stranger first, ask questions later", "發音 ZEN-ee-uh。古希臘的待客之道:先管飯管住,再問來歷", "f", "C1"], "the claimant": ["the person making a formal complaint", "申訴人、提出索賠的一方", "p", "C1"], "roughly": ["approximately; about", "大約", "v", "B1"], "crew": ["the people who work on a ship", "船員、全體組員", "v", "B1"], "insists": ["states firmly, refusing to be contradicted", "堅持聲稱", "v", "B2"], "the facts are these": ["formal opening: here is what happened", "公文句型:事實如下", "p", "B2"], "goes to plan": ["idiom: happens the way it was intended", "慣用語:按計畫進行", "p", "B2"], "blown off course": ["pushed by wind away from the intended route", "被風吹離航道", "p", "B2"], "washed up": ["carried onto land by the sea, usually helpless", "被海浪掉上岸", "p", "B2"], "holding their house against": ["defending their home from", "守住家、抵擋…的侵敀", "p", "B2"], "travel-disruption": ["the cancellation or delay of a journey", "旅程中斷、延誤取消", "p", "B2"], "itinerary": ["a planned route or schedule for a journey", "行程表", "v", "B2"], "incidents": ["events, usually unwelcome ones", "事件、突發狀況", "v", "B2"], "the outbound leg": ["the outward part of a trip (the way there)", "去程那一段", "p", "C1"], "uneventful": ["with nothing unusual happening; quiet", "平順無事的", "v", "C1"], "drugged": ["given a substance that dulls the mind", "被下藥、被迷暈", "v", "B2"], "lotus fruit": ["the fruit in the poem that makes anyone who eats it lose the will to go home", "詩中的忘憂果:吃了就不想回家", "f", "C1"], "blinding": ["destroying someone's sight", "弄瞎、刺瞎", "v", "B2"], "clinging to": ["holding on tightly", "緊抱著、死抄著", "p", "B2"], "the underside": ["the bottom surface of something", "底部、下方", "v", "B2"], "in sight of": ["close enough to see", "看得見…的地方", "p", "B2"], "a strait": ["a narrow channel of sea between two areas of land", "海峽", "v", "B2"], "whirlpool": ["water spinning violently in a circle, pulling things down", "漩渦", "v", "B2"], "explicitly": ["clearly and directly, leaving no doubt", "明確地、一再交代地", "v", "C1"], "survivors": ["people still alive after a disaster", "生還者", "v", "B2"], "cattle": ["cows and bulls kept as livestock", "牛隻", "v", "B2"], "Grounds for complaint": ["the reasons that justify a formal complaint", "申訴的理由、依據", "p", "C1"], "blames": ["says someone is responsible for something bad", "歸咎於", "v", "B1"], "the record supports him": ["the evidence agrees with what he says", "紀錄確實站在他那邊", "p", "B2"], "obstructing": ["blocking; deliberately getting in the way", "阻擓、搔局", "v", "C1"], "liability": ["legal responsibility for damage or loss", "責任歸屬、賠償責任", "v", "C1"], "raids": ["attacks a place suddenly to steal from it", "突襭掃掠", "v", "B2"], "under his command": ["being led by him", "歸他統領的", "p", "B2"], "makes it back": ["idiom: succeeds in returning", "慣用語:活著回來、順利返回", "p", "B1"], "would not be operating": ["grammar: unreal conditional — if any airline had that record, it would be shut down", "文法:與事實相反的假設——哪家航空公司有這種紀錄,早就停飛了", "c", "B2"], "the hospitality clause": ["the term in a contract about how guests must be treated — here, a joke about xenia", "契約中的「接待條款」;此處拿來調侯古希臘的待客之道", "p", "C1"], "runs on": ["depends on (as an engine runs on fuel)", "靠…運作、以…為燃料", "p", "B2"], "shelter": ["to give someone a safe place to stay", "收留、提供容身之所", "v", "B2"], "abuse the house": ["to treat a host's home badly or take advantage of it", "滅躋主人的家、得寸進尺", "p", "B2"], "prosper": ["to do well and thrive", "興旺、得到好下場", "v", "C1"], "suitors": ["men competing to marry a woman — here, the men occupying Odysseus's house", "求婚者;此指佔據奧德修斯家中的那群人", "v", "C1"], "devour": ["to eat greedily; to consume completely", "吞噬、狼吞虎嚕", "v", "C1"], "a refund": ["money given back when a service fails", "退款", "v", "B1"], "falls short": ["idiom: fails to reach the required standard", "慣用語:不夠好、未達標準", "p", "B2"], "repetition": ["saying or doing the same thing again and again", "重複", "v", "B2"], "composing for performance": ["writing to be spoken aloud to an audience, not read silently", "為了現場誦唱而作,而非供人默讀", "p", "C1"], "ready-made phrases": ["fixed phrases kept on hand and reused — building blocks for an oral poet", "現成的套語:口傳詩人隨時取用的現成組件", "p", "B2"], "rosy-fingered": ["Homer's fixed description of dawn — pink-fingered light spreading over the sky", "荷馬形容黎明的固定用語:玫瑰色手指般的暈光", "f", "C1"], "word for word": ["idiom: exactly, using the same words", "慣用語:一字不漏地", "p", "B2"], "a memory aid": ["something that helps a person remember", "助記工具", "p", "B2"], "without a script": ["with nothing written down to read from", "手邊沒有講稿", "p", "B2"], "drag": ["to move so slowly that it becomes boring", "拖沓、讀起來很慢", "v", "B2"], "slow to a crawl": ["idiom: become extremely slow", "慣用語:慢到像在爬", "p", "C1"], "bloodier": ["more violent and full of killing", "更血腥的", "v", "B2"], "Complaint upheld": ["formal: the complaint is accepted as valid", "公文用語:申訴成立", "p", "C1"], "contributory fault": ["legal: the complainant is partly to blame as well", "法律用語:申訴人自己也有過失", "p", "C1"], "nothing has bettered it": ["nothing since has done it better", "至今無人能超越它", "p", "C1"], "homesickness": ["the sadness of missing home", "鄉愁", "v", "B2"], "disguises": ["changes of appearance to hide who you are", "塔裝、易容", "v", "B2"], "recognizes": ["knows who someone is on seeing them", "認出", "v", "B1"], "strategist": ["a person skilled at long-term planning", "戰略家", "v", "C1"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('button');btn.className='gl '+e[2];btn.type='button';
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('button.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePop();});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>
