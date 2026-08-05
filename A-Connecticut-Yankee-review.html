@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A Connecticut Yankee in King Arthur’s Court, reviewed — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#2E7D6B; --accent-deep:#1C5A4C;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"■";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">Book, reviewed</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Book, reviewed · Tech-industry voice</div>
+    <h1>Disrupting the Sixth Century</h1>
+    <p class="deck">An engineer wakes up in the year 528 and decides to modernize it. Mark Twain wrote the first startup story, and then wrote the crash.</p>
+    <div class="byline"><span>Reviewed for InkQuest Reading Room</span><span class="dot">◆</span><span><b>Mark Twain</b>, A Connecticut Yankee in King Arthur’s Court</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~4 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">The founder's origin story is a good one. Hank Morgan, head of engineering at a Connecticut arms factory, takes a crowbar to the head during a workplace dispute and wakes up in a field in the year 528, where a knight on horseback informs him that he is now a prisoner.</p>
+
+    <p>Mark Twain published this in 1889, and the setup is pure disruption fantasy. Our Yankee has landed squarely in the court of King Arthur. Hank is scheduled to be burned at the stake, remembers that a total eclipse of the sun falls on that exact date, announces that he will blot out the sun unless released, and is promptly made the second most powerful man in Britain. He gives himself the title of The Boss. Within a few years he has laid telegraph wires, opened schools, started a newspaper, and begun quietly building a modern industrial state inside a sixth-century kingdom.</p>
+
+    <h2>The product roadmap</h2>
+
+    <p>What follows is the most detailed technology-rollout plan in nineteenth-century fiction. Hank plants factories where nobody will look. He trains engineers in secret. He introduces soap and advertising in the same move, sending knights across the country as walking billboards for a hygiene brand. He puts a stovepipe hat on a knight and calls it marketing. Twain, a man who lost a fortune investing in a typesetting machine, knew exactly how this species thinks.</p>
+
+    <p>The satire cuts both ways, which is the reason the book still works. Twain is genuinely angry about the medieval world: about a church with total control over what people may think, about hereditary rank, about a legal system in which the poor are property. Hank's contempt for all of it is Twain's own, and much of the comedy comes from a practical American looking at knighthood and seeing only expensive men in uncomfortable metal.</p>
+
+    <div class="pull">He arrives to free a country. He leaves it a battlefield.</div>
+
+    <h2>Where the pitch goes wrong</h2>
+
+    <p>But Twain does not let his founder win, and this is what lifts the book above a joke. Hank believes progress can be installed from above, quickly, by one clever man who knows better. The people he liberates keep choosing the old ways. Superstition beats his demonstrations. And when the church finally moves against him, his response is not to persuade but to escalate.</p>
+
+    <p>The ending is genuinely shocking and nothing in the cheerful first half prepares you for it. The Boss and a handful of loyal technicians take a fortified position and use electric fences, mines and machine guns against a charging feudal army. Twain describes the result as an engineering outcome. A man who arrived to abolish cruelty ends by industrializing it, and the technology he was so proud of does not care who it kills.</p>
+
+    <h2>Where the book creaks</h2>
+
+    <p>Honesty compels some warnings. The middle sags badly &mdash; long stretches of Hank and a companion wandering from adventure to adventure, and chapter after chapter of political lecturing where Twain stops the story to argue about tax policy and the divine right of kings. The imitation medieval dialogue is heavy going, and Twain quotes large slabs of older Arthurian text that most readers will skim.</p>
+
+    <p>Hank himself is hard to like for a modern reader: loud, certain, and casually dismissive of everyone around him. That is partly the point, but six hundred pages is a long time in his company.</p>
+
+    <h2>The verdict</h2>
+
+    <p>Read it as the first great story about technological arrogance, written by a man who had watched it up close. It invented the time-travel adventure, and it invented the warning that comes with it: the tools arrive faster than the wisdom to use them, and a founder convinced he is saving people rarely asks whether they want saving. The last chapter of this comedy is a body count. Twain wanted you to notice.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; a review written in the register of a technology-industry magazine. “A Connecticut Yankee in King Arthur’s Court” by Mark Twain (1889) is in the <strong>public domain</strong>. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"Mark Twain": ["pronounced mark TWAYN — pen name of Samuel Clemens (1835–1910), the American humorist and novelist", "發音 mark TWAYN。美國幽默作家馬克吐溫的筆名", "f", "B1"], "Connecticut": ["pronounced kuh-NET-ih-kut — a US state; note the middle 'c' is silent", "發音 kuh-NET-ih-kut。美國康乃狄克州;注意中間的 c 不發音", "f", "B2"], "Yankee": ["pronounced YANG-kee — a person from the northern United States, especially New England", "發音 YANG-kee。美國北方人(尤指新英格蘭地區)", "f", "B2"], "King Arthur": ["pronounced AR-thur — the legendary British king of the Round Table stories", "發音 AR-thur。圓桌武士傳說中的亞瑟王", "f", "B1"], "Arthurian": ["pronounced ar-THOOR-ee-un — relating to the King Arthur legends", "發音 ar-THOOR-ee-un。亞瑟王傳說的", "f", "C1"], "feudal": ["pronounced FEW-dul — of the medieval system in which lords held land and peasants owed them service", "發音 FEW-dul。封建的(領主持有土地、農奴效勞的制度)", "f", "C1"], "head of engineering": ["the person in charge of a company's technical work", "工程部主管", "p", "B2"], "arms factory": ["a factory that makes weapons", "兵工廠、武器製造廠", "p", "B2"], "crowbar": ["a heavy iron bar used for forcing things open", "撒鴻、鐵撒", "v", "C1"], "workplace dispute": ["a quarrel or fight at work", "職場糾紛", "p", "B2"], "knight": ["a medieval warrior on horseback, of noble rank", "騎士", "v", "B1"], "disruption": ["tech jargon: overturning an established industry with new technology", "科技行話:風聲式創新、顯覆既有產業", "f", "B2"], "burned at the stake": ["executed by being tied to a post and set on fire", "綁在樁上燒死(火刑)", "p", "C1"], "a total eclipse": ["when the moon completely blocks the sun and day goes dark", "日全衋", "p", "B2"], "blot out": ["to hide something completely from view", "遮蔽、抹去", "p", "C1"], "promptly": ["immediately; without delay", "立刻、馬上", "v", "B2"], "The Boss": ["the title Hank gives himself — deliberately plain, not a noble rank", "他自封的名號「老闆」——刻意平民,不是貴族頭銜", "f", "B1"], "telegraph wires": ["the cables of the 19th-century system for sending messages by electrical signal", "電報線", "p", "B2"], "industrial state": ["a country organized around factories and mass production", "工業國家", "p", "B2"], "product roadmap": ["business jargon: the plan for what gets built and when", "商業行話:產品發展藍圖、上線排程", "p", "B2"], "rollout": ["the staged launch of a new product or system", "分階段推行、上線", "v", "B2"], "plants": ["here: sets up or establishes (factories)", "此指:設置、建起(工廠)", "v", "B2"], "in secret": ["without letting anyone know", "秘密地", "p", "B1"], "billboards": ["large outdoor advertising boards", "廣告看板", "v", "B2"], "hygiene": ["the practice of keeping clean to stay healthy", "衛生", "v", "B2"], "stovepipe hat": ["a tall cylindrical hat — comically wrong on a knight", "高頂禮帽(戴在騎士頭上滞稽可笑)", "f", "C1"], "typesetting machine": ["a machine for arranging metal type to print pages — Twain lost his money backing one", "排字機;馬克吐溫投資這種機器而賠光家產", "f", "C1"], "this species": ["joking: this type of person, as if a separate biological kind", "玩笑話:這一類人、這個物種", "p", "B2"], "cuts both ways": ["idiom: works against both sides equally", "慣用語:兩面刃、兩邊都砝", "p", "C1"], "hereditary rank": ["social position passed down by birth rather than earned", "世襲的身分地位", "p", "C1"], "are property": ["are legally owned, like objects", "在法律上被當成財產擁有", "p", "B2"], "contempt": ["a feeling that something is worthless and beneath respect", "輕蔑、不屑", "v", "C1"], "knighthood": ["the rank and institution of being a knight", "騎士身分與制度", "v", "C1"], "the pitch": ["the sales presentation; the case a founder makes", "提案簡報、推銷說詞", "v", "B2"], "lifts the book above": ["raises it beyond; makes it more than", "讓這本書超越了…", "p", "B2"], "installed from above": ["imposed by those in power rather than grown from below", "由上而下強裝給人民", "p", "C1"], "knows better": ["believes he is wiser than everyone else", "自認比別人高明", "p", "B2"], "liberates": ["sets free from oppression", "解放", "v", "C1"], "Superstition": ["belief in magic or luck rather than evidence", "迷信", "v", "B2"], "demonstrations": ["public displays showing how something works", "示範、實演", "v", "B2"], "moves against him": ["takes action to attack or stop him", "對他出手、發難", "p", "B2"], "escalate": ["to make a conflict bigger and more violent", "升高衝突、加碼", "v", "C1"], "nothing ... prepares you for it": ["nothing earlier warns you it is coming", "前面完全沒預告你會遇上這個", "p", "B2"], "a fortified position": ["a place strengthened with defenses for battle", "設防的陣地、堡壘", "p", "C1"], "mines": ["here: hidden explosives buried to kill attackers", "此指:地雷", "v", "B2"], "charging": ["rushing forward to attack", "衝鑾而來的", "v", "B2"], "an engineering outcome": ["a result reported like a technical measurement, not a human loss", "把結果當成工程數據來報告,而非人命損失", "p", "C1"], "abolish": ["to end or get rid of officially", "廢除、終結", "v", "C1"], "industrializing": ["turning something into a large-scale mechanical process", "將…工業化、規模化量產", "v", "C1"], "creaks": ["idiom: shows its age; strains like old wood", "慣用語:顯得老舊吐吐、吐吐作響", "v", "C1"], "sags": ["droops or loses energy in the middle", "中段塔下去、失去張力", "v", "C1"], "Long stretches": ["long continuous sections", "大篇連續的段落", "p", "B2"], "lecturing": ["talking at length to instruct, often tediously", "說教、大論特論", "v", "B2"], "the divine right of kings": ["the old doctrine that a monarch's authority comes directly from God", "君權神授說", "f", "C1"], "imitation": ["made to copy something else; not genuine", "仿造的、模仿的", "v", "B2"], "heavy going": ["idiom: difficult and tiring to read", "慣用語:讀起來很吃力", "p", "C1"], "slabs": ["large thick blocks — here, big chunks of quoted text", "大塊;此指大段引文", "v", "C1"], "skim": ["to read quickly without attention to detail", "跳著快讀、瀑覽", "v", "B2"], "casually dismissive of": ["treating others as unimportant, without even thinking about it", "隨口就把別人打發掉、不將人放在眼裡", "p", "C1"], "in his company": ["spending time with him", "跟他相處", "p", "B2"], "arrogance": ["the belief that you are better and wiser than others", "傲慢、自負", "v", "C1"], "up close": ["from a very short distance; personally", "近距離地、親眼", "p", "B2"], "the warning that comes with it": ["the danger the invention brings along with it", "隨之而來的警告", "p", "B2"], "rarely asks whether": ["almost never stops to ask if", "幾乎不曾問一句是否…", "p", "B2"], "a body count": ["the number of people killed", "死亡人數統計", "p", "C1"], "founder": ["the person who starts a company — in startup culture, a title carrying almost heroic weight", "創辦人;在新創文化裡這個身分帶有近乎英雄的光環", "f", "B2"], "origin story": ["the tale of how someone or something began — borrowed from comic books, where every hero has one, and now standard in business profiles", "起源故事、起家傳奇;語出漫畫(每個英雄都有一段),現在是商業報導的標配", "f", "B2"], "Honesty compels": ["formal set phrase: honesty forces me to say this — used to introduce a criticism you would rather not make", "正式的固定說法:老實說、不得不實話實說(用來引出不太想講的批評)", "p", "C1"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>
