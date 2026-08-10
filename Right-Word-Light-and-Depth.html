@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Right Word: Light, Shadow and Depth — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">The right word</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">The right word · Visual communication, part two</div>
+    <h1>Why Some Images Pop and Others Fall Flat</h1>
+    <p class="deck">Highlights, shadows, rim light and the four depth cues — the vocabulary for saying why a picture has weight, or why it sits dead on the page.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>The Right Word</b> · Visual communication</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~5 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Two photographs of the same object, taken an hour apart, can look like different worlds. Nothing moved. What changed was the light &mdash; and light is what decides whether a flat rectangle of pixels seems to have weight, edges and air around it.</p>
+
+    <p>This is the vocabulary for that. It is also the answer to a question most learners can feel but not phrase: why does one image seem to pop out at you, while another sits flat on the page?</p>
+
+    <h2>The basic three</h2>
+
+    <p>Highlights are the brightest areas, where light hits directly. Shadows are the dark areas the light does not reach. Contrast is the difference between them. High contrast means bright brights and deep darks, with little in between &mdash; dramatic, hard, graphic. Low contrast means everything sits in a narrow band of grays: soft, quiet, sometimes flat.</p>
+
+    <p>Watch for two failures. Blown-out highlights are so bright that all detail is lost; the white is empty. Crushed shadows are so dark that detail disappears into black. Both throw information away, though a photographer may want exactly that.</p>
+
+    <h2>The quality of the light</h2>
+
+    <p>Hard light comes from a small or distant source &mdash; midday sun, a bare bulb &mdash; and it produces sharp-edged shadows and strong texture. Diffused light passes through cloud or fabric and wraps around the subject, giving soft, gradual shadows and flattering skin.</p>
+
+    <p>Direction matters as much as quality. Backlit means the light is behind the subject, so the front goes dark; push it far enough and you get a silhouette, a black shape against brightness. A rim light or edge light traces a bright outline around the subject and lifts it away from the background. Side light rakes across a surface and reveals every bump in it.</p>
+
+    <p>Then the atmospheric words, which do a great deal of work: a glow is light radiating softly outward; haze is a light-scattering veil in the air; mist and steam are visible water; and a beam or shaft of light is a visible column, usually because there is dust or vapor for it to catch.</p>
+
+    <div class="pull">Flatness is not a lack of color. It is a lack of separation.</div>
+
+    <h2>Why some images pop and others go flat</h2>
+
+    <p>An image reads as three-dimensional when the eye is given depth cues. There are four you can name and use.</p>
+
+    <p>Tonal separation: the subject is lighter or darker than what sits directly behind it, so the edge is legible. Overlap: one object clearly passes in front of another, which instantly tells the brain what is nearer. Atmospheric perspective: distant things go paler, cooler and lower in contrast, exactly as they do across a valley. And gradient: light falling around a curved surface produces a smooth run from highlight to shadow, which is what makes a sphere look round rather than like a circle.</p>
+
+    <p>Flat images usually fail one of these. A subject the same tone as its background will merge into it however sharp the lens. This is why designers speak of separation, and why a rim light is such a common fix: it manufactures an edge.</p>
+
+    <p>Sharp lines matter too, but not the way people assume. Crisp edges make an object feel solid and present; softness in the background makes it feel far away. Do both at once and you have depth. Do neither and the picture is a poster of itself.</p>
+
+    <h2>A worked example</h2>
+
+    <p>Now the full move, on a poster of a race car:</p>
+
+    <p><em>The subject is sharp and centered, with the spectator stands falling into blur behind it. That juxtaposition &mdash; hard edges against soft crowd &mdash; is what makes the car pop out of the frame. The lighting is dark and oppressive, and almost all of it is doing one job: the glowing tail lights, the white mist of water thrown up by the tires, and the hazy steam where drizzle meets hot metal. There is no daylight to flatten anything, so every edge is drawn by rim light alone.</em></p>
+
+    <p>Notice how little of that is opinion. Each sentence names a part, then says what it does.</p>
+
+    <h2>Upgrade list</h2>
+
+    <p>Replace the general word with the exact one. <b>Bright bits</b> &rarr; highlights. <b>Dark bits</b> &rarr; shadows. <b>Very bright and very dark</b> &rarr; high contrast. <b>Too bright to see anything</b> &rarr; blown out. <b>Harsh light</b> &rarr; hard light. <b>Soft nice light</b> &rarr; diffused. <b>Light from behind</b> &rarr; backlit. <b>Black shape</b> &rarr; silhouette. <b>Looks fake and flat</b> &rarr; there is no tonal separation. <b>It jumps out</b> &rarr; it pops, because of rim light and shallow depth of field.</p>
+
+    <h2>Two things people get wrong</h2>
+
+    <p>Contrast is not brightness. An image can be very dark overall and still be high contrast, if the few lit areas are brilliant. And flat is not an insult in every context: fashion and product photography often use flat, even light on purpose, so the shape of the garment is not confused by shadow. Say what the flatness is doing before you complain about it.</p>
+
+    <p>Try this. Find a photograph you like, and write two sentences: one naming the direction and quality of the light, one explaining which depth cue is making the subject stand out. If you cannot find a depth cue, you have just discovered why the picture feels flat.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>The Right Word</em>, a series on describing things precisely. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"pixels": ["the tiny colored dots a digital image is made of", "像素", "v", "B2"], "Highlights": ["the brightest areas of an image, where the light lands directly", "亮部、高光", "v", "B2"], "Shadows": ["the dark areas the light does not reach", "陰影、暗部", "v", "B1"], "Contrast": ["the difference between the brightest and darkest areas", "對比、反差", "v", "B2"], "High contrast": ["bright brights and deep darks, with little in between", "高對比:亮的很亮、暗的很暗", "p", "B2"], "Low contrast": ["everything sits in a narrow band of tones; soft and quiet", "低對比:明暗差距小、平和", "p", "B2"], "Blown-out highlights": ["areas so bright that all detail is lost to pure white", "過曝:亮到細節全失、一片死白", "p", "C1"], "Crushed shadows": ["areas so dark that detail disappears into solid black", "死黑:暗到細節全埋進黑裡", "p", "C1"], "throw information away": ["lose detail that cannot be recovered", "丟掉細節資訊(救不回來)", "p", "B2"], "Hard light": ["light from a small or distant source, giving sharp-edged shadows", "硬光:影子邊緣銳利", "p", "B2"], "a bare bulb": ["a light bulb with no shade over it", "沒罩的裸燈泡", "p", "B2"], "texture": ["the visible surface quality of a thing — rough, grainy, smooth", "質感、表面紋理", "v", "B2"], "Diffused light": ["light softened by passing through cloud or fabric; gentle gradual shadows", "漫射光、柔光:影子柔和漸層", "p", "B2"], "wraps around": ["curves gently around a shape rather than hitting one side", "包覆、繞著物體包上去", "p", "B2"], "flattering": ["making someone look better than harsh light would", "披人的、拍起來好看的", "v", "C1"], "Backlit": ["lit from behind, so the front of the subject goes dark", "逆光的", "v", "B2"], "a silhouette": ["a solid dark shape seen against a bright background", "剪影、黑影輪廓", "v", "C1"], "A rim light": ["a thin bright outline along the edge of a subject, separating it from the background", "輪廓光、邊緣光:把主體從背景裡披出來", "p", "C1"], "Side light": ["light coming from one side, revealing surface texture", "側光", "p", "B2"], "rakes across": ["sweeps across a surface at a low angle", "低角度掃過表面", "p", "C1"], "a glow": ["light radiating softly outward from something", "發光、暈光", "v", "B2"], "haze": ["a light-scattering veil in the air", "靄、空氣中的薄霧", "v", "B2"], "vapor": ["gas or tiny droplets suspended in air", "蒸氣、水氣", "v", "B2"], "depth cues": ["the visual signals that tell your brain what is near and what is far", "深度線索:告訴大腦遠近的視覺訊號", "p", "C1"], "Tonal separation": ["a difference in lightness between the subject and what is behind it, so the edge reads clearly", "明暗分離:主體與背景亮度不同,邊緣才看得出來", "p", "C1"], "legible": ["clear enough to be read or made out", "看得出來的、辨識得出的", "v", "C1"], "Overlap": ["one object clearly passing in front of another", "重疊:一物明顯擋在另一物前面", "v", "B2"], "Atmospheric perspective": ["the way distant things go paler, cooler and lower in contrast", "空氣透視:越遠的東西越淡、越冷、對比越低", "p", "C1"], "gradient": ["a smooth run from light to dark across a surface", "漸層", "v", "B2"], "a sphere": ["a perfectly round three-dimensional ball", "球體", "v", "B2"], "merge into": ["blend so completely that the boundary disappears", "融進…裡、黏成一片", "p", "B2"], "separation": ["the visual gap that keeps a subject distinct from its background", "分離感:讓主體不跟背景黏在一起", "v", "B2"], "manufactures an edge": ["deliberately creates a boundary that was not naturally there", "硬是造出一道邊緣", "p", "C1"], "solid and present": ["having real weight and physical presence", "有實體感、站得住", "p", "B2"], "a poster of itself": ["flat and lifeless, like a printed sheet rather than a real scene", "平得像張海報,沒有真實感", "p", "C1"], "oppressive": ["heavy and weighing down on you", "壓迫的、令人嗘不過氣的", "v", "C1"], "thrown up by": ["flung upward by", "被…捲起來、噔起來的", "p", "B2"], "drizzle": ["very fine light rain", "毛毛雨、細雨", "v", "B2"], "flatten": ["to remove the sense of depth from something", "把…壓平、拍成平的", "v", "B2"], "Notice how little of that is opinion": ["most of the description states facts, not preferences", "重點:這段幾乎不是主觀意見,而是陳述事實", "p", "B2"], "brilliant": ["extremely bright", "極亮的、熠熠發光的", "v", "B2"], "the garment": ["the piece of clothing", "衣物、服裝", "v", "C1"], "on purpose": ["deliberately; intentionally", "故意地", "p", "B1"], "stand out": ["to be clearly noticeable against everything else", "突顯出來、抛頭露面", "p", "B1"], "juxtaposition": ["placing two things side by side so the contrast between them creates meaning", "並置、對置:把兩樣東西擺在一起,讓反差本身說話", "v", "C1"], "pop out": ["idiom (of a subject): to appear to lift off the flat surface toward the viewer", "慣用語:主體像要從畫面裡跳出來、立體感十足", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

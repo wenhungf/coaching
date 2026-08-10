@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Right Word: Design and Car Posters — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">The right word</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">The right word · Visual communication, part three</div>
+    <h1>Reading a Poster in One Second</h1>
+    <p class="deck">Typography, palette, whitespace and grid — plus the exact nouns for a car’s silhouette, stance and shoulder line, and five poster styles worth naming.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>The Right Word</b> · Visual communication</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~5 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">A car poster has about one second to work. Before anyone reads a word, the layout has already told them whether this machine is luxurious, brutal, nimble or nostalgic &mdash; and it did that with type, color, angle and empty space.</p>
+
+    <p>This is the vocabulary of graphic design, and then the specific words for describing cars, because a poster of a car is where both sets meet.</p>
+
+    <h2>The elements of a layout</h2>
+
+    <p>Typography is the choice and arrangement of type. A serif typeface has small finishing strokes on the letters and reads as traditional or expensive; a sans-serif has none and reads as modern and clean. Weight means how thick the strokes are, from light to bold. Hierarchy is the order in which the design makes you read things &mdash; the headline first, the price last &mdash; and it is created by size, weight and position.</p>
+
+    <p>The palette is the set of colors used. A monochrome palette uses one color in different tones; muted colors are dulled down, saturated ones are intense. Whitespace is the empty area, and in design it signals confidence: cheap layouts fill every corner, expensive ones leave the product alone. Underneath sits the grid, the invisible set of columns that keeps everything aligned.</p>
+
+    <p>Two more you will use constantly: alignment, whether edges line up, and balance, whether visual weight is distributed evenly (symmetrical) or deliberately off to one side (asymmetrical).</p>
+
+    <h2>Describing the car itself</h2>
+
+    <p>Cars have their own precise nouns. The silhouette is the outline seen from the side. The proportions are the relationships between parts &mdash; a long hood and short rear deck read as classic muscle. The stance is how the car sits on its wheels: wide, low and planted, or tall and narrow. The shoulder line is the crease running along the side below the windows, and lowering it makes a car look longer.</p>
+
+    <p>For surfaces: sculpted or muscular for curved swelling panels, and slab-sided or boxy for flat ones. A raked windscreen leans back sharply. Flared arches bulge outward over the wheels. A car described as aggressive usually has a low nose, narrow lights and a wide track; one described as elegant has long unbroken lines and little decoration.</p>
+
+    <div class="pull">Cheap layouts fill every corner. Expensive ones leave the product alone.</div>
+
+    <h2>Poster styles worth naming</h2>
+
+    <p>Art Deco travel poster: flat blocks of color, simplified geometric shapes, strong diagonals, a heroic low angle. Nineteen-sixties racing poster: bold sans-serif type, high-saturation color, halftone dots from cheap printing, motion suggested by streaks. Minimalist: one object, vast whitespace, a single line of small type. Photoreal render: a computer-generated car, wet asphalt, perfect reflections, usually shot from a low three-quarter angle. Gritty documentary: grain, available light, an imperfect real car in a real place.</p>
+
+    <h2>A worked example</h2>
+
+    <p><em>The poster is built on a strict grid, with the car occupying the lower two-thirds and a single line of condensed sans-serif type across the top. The palette is almost monochrome &mdash; wet black asphalt, gunmetal bodywork &mdash; broken only by the saturated red of the brake calipers, which becomes the focal point precisely because everything else is drained of color. The low three-quarter angle exaggerates the width of the stance, and the generous whitespace above the roofline gives the composition room to breathe. It is asymmetrical and deliberately so: all the visual weight sits bottom-left, and the type balances it from the opposite corner.</em></p>
+
+    <h2>Upgrade list</h2>
+
+    <p><b>The writing</b> &rarr; the typography. <b>The colors used</b> &rarr; the palette. <b>Empty space</b> &rarr; whitespace. <b>Lined up neatly</b> &rarr; aligned to a grid. <b>What you look at first</b> &rarr; the visual hierarchy. <b>Bright colors</b> &rarr; saturated. <b>Faded colors</b> &rarr; muted. <b>The shape of the car</b> &rarr; the silhouette. <b>How it sits</b> &rarr; the stance. <b>Looks fast</b> &rarr; a raked windscreen and a long hood give it a sense of motion even standing still.</p>
+
+    <h2>A mistake to avoid</h2>
+
+    <p>Typeface and font are not the same. A typeface is the design (Helvetica); a font is one specific version of it (Helvetica Bold, 12 point). Designers will notice. And whitespace does not have to be white &mdash; it is empty space of any color, so a black poster can be full of it.</p>
+
+    <p>Now try it on something in front of you: any advertisement, in three sentences. Name the palette, name the hierarchy, and say what the whitespace is doing. If the answer is nothing, that is a finding too.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>The Right Word</em>, a series on describing things precisely. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"the layout": ["the arrangement of all the elements on the page", "版面配置、佈局", "p", "B2"], "nimble": ["light and quick-moving", "灵巧敏捷的", "v", "C1"], "nostalgic": ["evoking fond memory of the past", "懷舊的", "v", "B2"], "Typography": ["the choice and arrangement of type", "字體排版、字型設計", "v", "B2"], "A serif typeface": ["a typeface with small finishing strokes on the letters; reads as traditional", "衢線體:筆畫末端有小脚,感覺傳統、高級", "p", "B2"], "a sans-serif": ["a typeface without those strokes; reads as modern and clean", "無衢線體:沒有小脚,感覺現代、乾淨", "p", "B2"], "Weight": ["how thick the strokes of a typeface are, from light to bold", "字重:筆畫的粗細", "v", "B2"], "Hierarchy": ["the order in which a design makes you read things", "視覺層次:設計安排你先看什麼、後看什麼", "v", "B2"], "The palette": ["the set of colors used in a design", "色彩配置、調色盤", "p", "B2"], "monochrome": ["using a single color in different tones", "單色的、同一色系深淺變化", "v", "C1"], "muted": ["dulled down; low in intensity", "點低彩度的、淡雅的", "v", "B2"], "saturated": ["intense and vivid in color", "高彩度的、濃重的", "v", "B2"], "Whitespace": ["the empty area in a layout — it does not have to be white", "留白(不一定是白色)", "v", "B2"], "signals confidence": ["shows self-assurance without saying so", "透露出自信", "p", "B2"], "the grid": ["the invisible columns and rows that keep a layout aligned", "網格系統:看不見的對齊骨架", "p", "B2"], "alignment": ["whether edges line up with each other", "對齊", "v", "B2"], "balance": ["how visual weight is distributed across a layout", "平衡感、重量分配", "v", "B2"], "symmetrical": ["the same on both sides", "對稱的", "v", "B2"], "asymmetrical": ["deliberately uneven between the two sides", "不對稱的(刻意為之)", "v", "C1"], "The silhouette": ["the outline of a car seen from the side", "車輛側面的輪廓", "p", "B2"], "The proportions": ["the size relationships between the parts", "比例關係", "p", "B2"], "hood": ["the panel covering the engine (British English: bonnet)", "引擎蓋(英式英文用 bonnet)", "v", "B2"], "rear deck": ["the flat panel at the back, over the trunk", "車尾行李箱上方的平面", "p", "C1"], "muscle": ["short for muscle car — a powerful American car with a big engine", "肌肉車(大排量的美式性能車)", "f", "C1"], "The stance": ["how a car sits on its wheels — wide and low, or tall and narrow", "車的姿態、輪距與車高的觀感", "p", "C1"], "planted": ["sitting solidly on the road, as if rooted", "跨穩路面、如同扎根般", "v", "C1"], "The shoulder line": ["the crease running along the side of a car below the windows", "腿線、車側腿部的折線", "p", "C1"], "sculpted": ["shaped with curved, swelling surfaces", "雕塑感的、面別豐滿的", "v", "C1"], "slab-sided": ["having flat, featureless side panels", "側面平直如板的", "p", "C1"], "boxy": ["square and angular in shape", "方正的、盒子狀的", "v", "B2"], "raked": ["leaning back at a sharp angle", "後斜的", "v", "C1"], "windscreen": ["the front window of a car (American English: windshield)", "擋風玻璃(美式英文 windshield)", "v", "B2"], "Flared arches": ["wheel arches that bulge outward over the tires", "外擴的輪拱", "p", "C1"], "a wide track": ["a wide distance between the left and right wheels", "寬輪距", "p", "C1"], "unbroken lines": ["long continuous lines with no interruption", "連貫不斷的線條", "p", "B2"], "Art Deco": ["a 1920s–30s design style of flat color, geometric shape and strong diagonals", "裝飾藝術:1920–30年代的設計風格,平塗色塊、幾何造型、強烈斜線", "f", "C1"], "a heroic low angle": ["a viewpoint from below that makes the subject look grand", "仰角英雄視角:從低處往上拍,顯得偉岽", "p", "B2"], "halftone dots": ["the pattern of tiny dots that reproduces shades in cheap printing", "網點:印刷用小點重現淡淡深淺的網目", "f", "C1"], "Minimalist": ["stripped to the fewest possible elements", "極簡的", "v", "B2"], "render": ["a computer-generated image of an object", "電腦渲染圖", "v", "C1"], "asphalt": ["the black surface material of a road", "柏油路面", "v", "B2"], "three-quarter angle": ["a view showing the front and one side at once", "三分之一側前方視角:同時看得到車頭與一側", "p", "C1"], "Gritty": ["rough, raw and unpolished in feel", "粗糙寫實的", "v", "C1"], "grain": ["the visible speckled texture of film or high-ISO images", "顆粒感", "v", "B2"], "available light": ["whatever light already exists, with nothing added", "現場自然光,不另打燈", "p", "C1"], "condensed": ["a typeface narrowed so the letters sit closer together", "窩體:字形變窤、排得更緊", "v", "C1"], "gunmetal": ["a dark blue-gray, the color of old gun barrels", "槍鐵色:深藍灰", "v", "C1"], "brake calipers": ["the clamps that squeeze the brake discs, often painted a bright color", "煎車卡鉗(常漆成鲜艷顏色)", "p", "C1"], "drained of color": ["having had its color removed or reduced", "被抽掉色彩的", "p", "C1"], "exaggerates": ["makes something seem greater than it is", "夸大、強化", "v", "B2"], "the roofline": ["the line formed by the top of the car", "車頂線條", "v", "C1"], "room to breathe": ["idiom: enough space around something for it to feel uncrowded", "慣用語:留下喘息的空間、不擁擠", "p", "B2"], "A typeface": ["the design of a set of letters (for example, Helvetica)", "字體(指設計本身,如 Helvetica)", "p", "B2"], "a font": ["one specific version of a typeface, at a specific weight and size", "字型檔:某字體的特定字重與尺寸", "p", "B2"], "that is a finding too": ["noticing that nothing is happening is itself a useful observation", "發現「什麼都沒發生」也是一種發現", "p", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Right Word: Describing an Image — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">The right word</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">The right word · Visual communication, part one</div>
+    <h1>The Grammar of an Image</h1>
+    <p class="deck">Most people can only say a photograph is nice. Here are the words for what it is actually doing — and why one you dislike is not working.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>The Right Word</b> · Visual communication</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~5 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Somebody shows you a photograph and asks what you think of it. You look at it for a moment and say: it's nice. The lighting is good. And that is the whole review, because the words for everything else were never taught.</p>
+
+    <p>Images have a grammar. Once you can name the parts, you can say exactly what a picture is doing &mdash; and, just as usefully, exactly why one you dislike is not working.</p>
+
+    <h2>Where things sit</h2>
+
+    <p>Start with depth. Anything closest to the viewer is in the foreground; the far distance is the background; anything between them sits in the middle ground. The thing the image is actually about is the subject.</p>
+
+    <p>How those parts are arranged is the composition. If the subject sits dead in the middle, it is centered. If it sits a third of the way in, following the old photographers' guide of dividing the frame into nine, it follows the rule of thirds. Empty space around the subject is negative space, and it is not wasted &mdash; it gives the eye somewhere to rest. Lines that pull your attention toward the subject, like a road or a fence, are leading lines. The place your eye lands first is the focal point.</p>
+
+    <p>Two more you will need constantly. Framing is what the photographer chose to include and where the edges fall; cropping is cutting the picture down afterward. If someone's arm is cut off at the edge, that arm is cropped out.</p>
+
+    <h2>Juxtaposition: the most useful word here</h2>
+
+    <p>Juxtaposition means placing two things side by side so that the contrast between them creates meaning. A shining new tower next to a collapsing house is a juxtaposition; so is a sharp subject against a blurred crowd. Nothing is stated, but the reader gets the point.</p>
+
+    <p>This is the word most learners are missing, and it does an enormous amount of work in one move: <em>the juxtaposition of the child's toy and the empty street makes the photograph unsettling.</em> Note the pattern: <b>the juxtaposition of X and Y</b> + what it does.</p>
+
+    <div class="pull">Name the parts, and you can finally say why a picture works.</div>
+
+    <h2>Sharpness and blur</h2>
+
+    <p>Depth of field is how much of the image is in focus front-to-back. In a shallow depth of field only a thin slice is sharp and everything else falls away softly &mdash; a portrait with a creamy background. A deep depth of field keeps everything crisp, from the flowers at your feet to the mountain behind.</p>
+
+    <p>The vocabulary of softness matters. Blurred is the general word. Out of focus means the camera focused elsewhere. Soft is gentler and often deliberate. Hazy suggests something in the air &mdash; mist, dust, heat. Motion blur is the streak left by something moving during the exposure, and it is how a photograph shows speed.</p>
+
+    <h2>A worked example</h2>
+
+    <p>Here is the same photograph described twice.</p>
+
+    <p><em>Weak:</em> A nice photo of a man on a bike. The background is blurry. Good colors.</p>
+
+    <p><em>Precise:</em> The subject is a cyclist, framed slightly off-center against a wall of market stalls that dissolve into color behind him. The shallow depth of field isolates him completely; only his face and hands are sharp. Leading lines in the wet road pull the eye from the bottom-left corner straight to the front wheel, and the juxtaposition of his stillness and the streaking motion blur of a passing bus makes the picture feel like a held breath.</p>
+
+    <h2>Upgrade list</h2>
+
+    <p>Trade the vague word for the exact one. <b>Blurry</b> &rarr; out of focus, soft, hazy, or motion-blurred, depending on the cause. <b>The thing in the picture</b> &rarr; the subject. <b>The stuff behind</b> &rarr; the background. <b>Where things are</b> &rarr; the composition. <b>Empty bit</b> &rarr; negative space. <b>It draws your eye</b> &rarr; it is the focal point. <b>Cut off</b> &rarr; cropped. <b>Two things next to each other</b> &rarr; a juxtaposition.</p>
+
+    <h2>Two mistakes to avoid</h2>
+
+    <p>First: foreground is one word, and it means nearest to you, not most important &mdash; a subject can sit in the background. Second: focus is not the same as focal point. Focus is about sharpness; the focal point is where the eye goes. A subject can be the focal point while being slightly out of focus, and that is often a deliberate and beautiful choice.</p>
+
+    <p>Now try it. Take any photograph on your phone and describe it in three sentences, using foreground, subject, composition, and one word for blur. The third sentence should say what the arrangement makes you feel.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>The Right Word</em>, a series on describing things precisely. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"foreground": ["the part of an image nearest the viewer", "前景", "v", "B2"], "background": ["the part of an image furthest from the viewer", "背景", "v", "B1"], "middle ground": ["the area between the foreground and the background", "中景", "p", "B2"], "the subject": ["the person or thing the image is actually about", "主體、拍攝對象", "p", "B1"], "composition": ["how the parts of an image are arranged within the frame", "構圖", "v", "B2"], "centered": ["placed in the exact middle", "置中的", "v", "B1"], "the rule of thirds": ["a composition guide: divide the frame into nine and place the subject on a third-line rather than the middle", "三分法:把畫面切成九格,主體放在三分線上而非正中央", "f", "B2"], "negative space": ["the empty area around a subject, used deliberately", "留白、負空間", "p", "B2"], "leading lines": ["lines in the image that guide the eye toward the subject", "引導線", "p", "B2"], "the focal point": ["the place the eye lands first", "視覺焦點、目光最先落到的地方", "p", "B2"], "Framing": ["what the photographer chose to include, and where the edges fall", "取景、畫面邊界的取捨", "v", "B2"], "cropping": ["cutting down an image after it was taken", "裁切、裁圖", "v", "B2"], "cropped out": ["removed by cutting the edge of the image", "被裁掉、裁在畫面外", "p", "B2"], "the frame": ["the rectangle of the image; its boundaries", "畫框、畫面範圍", "v", "B2"], "Juxtaposition": ["placing two things side by side so the contrast between them creates meaning", "並置、對置:把兩樣東西放在一起,讓反差本身說話", "v", "C1"], "side by side": ["next to each other", "並列、肩並肩地", "p", "B1"], "collapsing": ["falling down; in the act of ruin", "倒塌中的、卡掉的", "v", "B2"], "unsettling": ["making you feel uneasy in a way you cannot quite name", "令人不安、心裡發毛的", "v", "C1"], "an enormous amount of work": ["idiom (of a word): it carries a lot of meaning by itself", "慣用語(形容用字):一個字就能背很多意思", "p", "C1"], "Depth of field": ["how much of the image is sharp from front to back", "景深", "p", "B2"], "shallow depth of field": ["only a thin slice is sharp; the rest falls away softly", "淺景深:只有很薄的一層清晰", "p", "B2"], "deep depth of field": ["nearly everything stays sharp, near and far", "深景深:遠近都清晰", "p", "B2"], "in focus": ["sharp and clearly defined", "對焦清晰的", "p", "B1"], "out of focus": ["not sharp, because the camera focused elsewhere", "失焦的", "p", "B1"], "falls away": ["gradually loses sharpness or presence toward the edges", "往後逐漸消融、變虛", "p", "C1"], "creamy": ["describing a background blur that is smooth and buttery", "形容背景虛化柔滑如奶油", "v", "C1"], "crisp": ["sharp and clean-edged", "銳利清晰的", "v", "B2"], "Blurred": ["not sharp; smeared", "模糊的", "v", "B1"], "Soft": ["gently unsharp, often on purpose", "柔焦的(常是刻意的)", "v", "B1"], "Hazy": ["unclear because of something in the air — mist, dust or heat", "月朦的、因空氣中的霧塵而不清", "v", "B2"], "Motion blur": ["the streak left when something moves during the exposure", "動態模糊:拍攝期間物體移動留下的拖痕", "p", "B2"], "the exposure": ["the moment the camera is collecting light", "曝光(相機收光的那一瞬)", "v", "B2"], "streak": ["a long mark left by fast movement", "拖出的長痕", "v", "B2"], "framed": ["positioned within the edges of the picture", "被安排在畫面中", "v", "B2"], "off-center": ["not in the middle", "偏離中心的", "p", "B2"], "stalls": ["small open shops or stands in a market", "攝位、攝販", "v", "B2"], "dissolve into": ["gradually blur and merge into", "漸漸化開、融成一片", "p", "C1"], "isolates": ["separates from everything around it", "將…從背景中獨立出來", "v", "B2"], "stillness": ["the quality of being completely motionless", "靜止、一動不動的狀態", "v", "B2"], "streaking": ["moving so fast it leaves a smear of light", "拉出光痕地飛快移動", "v", "C1"], "a held breath": ["a moment of tense pause, as when you stop breathing", "屏住呼吸的那一刻", "p", "B2"], "vague": ["not clear or exact", "含糊的、不夠明確的", "v", "B2"], "depending on the cause": ["according to what is making it happen", "視原因而定", "p", "B2"], "deliberate": ["done on purpose", "刻意的、有意為之的", "v", "B2"], "the arrangement": ["the way the parts have been placed", "排列方式、佈局", "v", "B2"]};
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

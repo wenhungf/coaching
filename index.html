@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
 <title>InkQuest English Coaching — Reading room</title>
-<meta name="description" content="Current-events and feature readings for English learners, with glossary notes in English and Traditional Chinese, graded to CEFR levels.">
+<meta name="description" content="News, classic-book reviews and precise-vocabulary guides for English learners, with glossary notes in English and Traditional Chinese, graded to CEFR levels.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
     --climate: #4f9a86;      /* Climate / environment accent (teal-green) */
     --wind: #7f9dc4;         /* Wind / engineering accent (steel sea-blue) */
     --review: #8b7ec8;       /* Book, reviewed series accent (violet) */
+    --word: #4a86a8;         /* The Right Word series accent (deep sea blue) */
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -155,6 +156,53 @@
   }
   footer a { color: var(--mist); }
 
+
+  /* ---------- Section navigation ---------- */
+  .jump {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.4rem;
+    margin: 2.5rem auto 0; padding-top: 1.5rem;
+    border-top: 1px solid rgba(240, 234, 216, 0.12);
+  }
+  .jump a {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--faded); text-decoration: none;
+    padding-bottom: 2px; border-bottom: 1px solid transparent;
+    transition: color 0.18s ease, border-color 0.18s ease;
+  }
+  .jump a:hover, .jump a:focus-visible { color: var(--parchment); border-bottom-color: var(--gold); }
+
+  /* ---------- Shelf sections ---------- */
+  .shelf { scroll-margin-top: 1.5rem; }
+  .shelf + .shelf { margin-top: 3.5rem; }
+  .shelf-head { margin: 0 0 1.5rem; text-align: center; }
+  .shelf-head h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 700; font-size: 1.5rem; letter-spacing: 0.02em;
+    color: var(--parchment);
+  }
+  .shelf-head .count {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faded); margin-left: 0.6rem;
+    vertical-align: 0.35em;
+  }
+  .shelf-head p {
+    max-width: 44ch; margin: 0.5rem auto 0;
+    font-size: 0.98rem; font-style: italic; color: var(--faded); line-height: 1.55;
+  }
+  .to-top {
+    display: block; text-align: center; margin-top: 1.75rem;
+    font-family: 'Fraunces', Georgia, serif; font-size: 0.78rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--faded); text-decoration: none;
+  }
+  .to-top:hover { color: var(--gold); }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
   @media (prefers-reduced-motion: reduce) {
     .stroke path { animation: none; stroke-dashoffset: 0; }
     .card, .start::after { transition: none; }
@@ -162,7 +210,7 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="top">
 
   <header>
     <p class="kicker">InkQuest</p>
@@ -173,15 +221,74 @@
     </svg>
     <p class="tagline">Real news, real English — one reading at a time.</p>
     <p class="intro">
-      Current-events and feature readings built for learners. Hover or tap any
-      underlined word for a plain meaning in English and Traditional Chinese — or switch the
-      highlights off and just read.
+      News, classics and the vocabulary to describe them — all built for learners. Hover
+      or tap any underlined word for a plain meaning in English and Traditional Chinese,
+      or switch the highlights off and just read.
     </p>
   </header>
 
-  <p class="shelf-label">Choose your reading</p>
+  <nav class="jump" aria-label="Sections">
+    <a href="#right-word">The Right Word</a>
+    <a href="#book-reviewed">Book, reviewed</a>
+    <a href="#news-features">News &amp; features</a>
+  </nav>
 
-  <ul class="readings">
+  <section class="shelf" id="right-word">
+    <div class="shelf-head">
+      <h2>The Right Word<span class="count">3</span></h2>
+      <p>Saying it precisely — the vocabulary for describing what you see, hear and mean.</p>
+    </div>
+    <ul class="readings">
+
+    <li>
+      <a class="card" href="Right-Word-Design-and-Car-Posters.html" style="--accent: var(--word);">
+        <p class="eyebrow">The right word · Visual communication</p>
+        <h2>Reading a Poster in One Second</h2>
+        <p>Typography, palette, whitespace and grid — plus the exact nouns for a car's
+        silhouette, stance and shoulder line, and five poster styles worth naming.</p>
+        <div class="card-foot">
+          <span class="level">B1–C1 · ~730 words</span>
+          <span class="start">Read the guide</span>
+        </div>
+      </a>
+    </li>
+
+    <li>
+      <a class="card" href="Right-Word-Light-and-Depth.html" style="--accent: var(--word);">
+        <p class="eyebrow">The right word · Visual communication</p>
+        <h2>Why Some Images Pop and Others Fall Flat</h2>
+        <p>Highlights, shadows, rim light and the four depth cues — the words for saying
+        why a picture has weight, or why it sits dead on the page.</p>
+        <div class="card-foot">
+          <span class="level">B1–C1 · ~870 words</span>
+          <span class="start">Read the guide</span>
+        </div>
+      </a>
+    </li>
+
+    <li>
+      <a class="card" href="Right-Word-Describing-Images.html" style="--accent: var(--word);">
+        <p class="eyebrow">The right word · Visual communication</p>
+        <h2>The Grammar of an Image</h2>
+        <p>Foreground, subject, composition, juxtaposition, depth of field — the parts of
+        a picture, so you can say more than "it's nice."</p>
+        <div class="card-foot">
+          <span class="level">B1–C1 · ~750 words</span>
+          <span class="start">Read the guide</span>
+        </div>
+      </a>
+    </li>
+
+    </ul>
+    <a class="to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section class="shelf" id="book-reviewed">
+    <div class="shelf-head">
+      <h2>Book, reviewed<span class="count">15</span></h2>
+      <p>Classics retold in the voice of a magazine — a business weekly, a travel guide, a science journal.</p>
+    </div>
+    <ul class="readings">
 
     <li>
       <a class="card" href="The-Hound-of-the-Baskervilles-review.html" style="--accent: var(--review);">
@@ -378,6 +485,17 @@
       </a>
     </li>
 
+    </ul>
+    <a class="to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section class="shelf" id="news-features">
+    <div class="shelf-head">
+      <h2>News &amp; features<span class="count">5</span></h2>
+      <p>Real reporting on the world right now, graded and glossed.</p>
+    </div>
+    <ul class="readings">
+
     <li>
       <a class="card" href="InkQuest_Reading_Room_Blade_Repair.html" style="--accent: var(--wind);">
         <p class="eyebrow">Science &amp; technology · Field report</p>
@@ -445,7 +563,9 @@
       </a>
     </li>
 
-  </ul>
+    </ul>
+    <a class="to-top" href="#top">↑ Back to top</a>
+  </section>
 
   <footer>
     <p>© 2026 Wen-Hung Fang · InkQuest English Coaching. All rights reserved.</p>
