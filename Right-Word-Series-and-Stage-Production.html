@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Right Word: Series and Stage, Production — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">The right word</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">The right word · Screen and stage, part two</div>
+    <h1>Props, Blocking, Delivery</h1>
+    <p class="deck">Set, backdrop, score, blocking, chemistry — the vocabulary for everything you notice in a production without quite being able to name it.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>The Right Word</b> · Screen and stage</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~5 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Something is wrong with the scene and you cannot say what. The acting seems fine, the story makes sense, and yet it feels cheap, or airless, or oddly flat. Almost always the problem is in the parts nobody is looking at directly.</p>
+
+    <p>This is the vocabulary for those parts &mdash; what is built, what is lit, what is worn, and how it is performed.</p>
+
+    <h2>What is built and what is carried</h2>
+
+    <p>The set is everything constructed for the scene to happen in. The backdrop is the painted or projected surface at the very back. Props, short for properties, are the objects the actors handle: a cup, a letter, a gun. Set dressing is everything placed to make the space look lived in but never touched.</p>
+
+    <p>This distinction is worth having, because it lets you praise precisely. <em>The set was fine but the props were wrong</em> is a real observation: it means the space looked right and the objects in it did not belong to those people.</p>
+
+    <h2>Light and sound</h2>
+
+    <p>Lighting design is how a production uses light to shape mood. A spotlight isolates one figure. A wash covers the stage in even color. Practical lights are the ones visible in the scene itself &mdash; a lamp, a candle &mdash; and they are what make an interior feel real. When a stage goes to blackout, everything cuts to dark at once.</p>
+
+    <p>On the sound side: the score is the music written for the production, and a soundtrack is the collection of songs used. Sound design covers everything else &mdash; footsteps, rain, the hum of a room. A scene described as airless usually has no ambient sound at all, and the silence reads as artificial.</p>
+
+    <h2>Bodies in space</h2>
+
+    <p>Blocking is the planned movement of actors around the stage or set &mdash; who stands where, and when they cross. Bad blocking is why a scene can feel stiff even when the lines are good. Costume design covers what people wear, and continuity is the job of keeping details consistent between shots, so a glass is not full, then empty, then full again.</p>
+
+    <p>Two effects words. Practical effects are made physically in front of the camera: real fire, real rain, real prosthetics. CGI is added by computer afterward. Audiences often prefer practical effects because light behaves correctly on real objects, which is the same depth problem that makes some images look flat.</p>
+
+    <div class="pull">Bad blocking is why a scene feels stiff even when the writing is good.</div>
+
+    <h2>Performance</h2>
+
+    <p>Casting is the choice of actors. Someone miscast is simply wrong for the part, however good they are. Chemistry is whether two performers convince you of a relationship, and it either exists or does not. An ensemble is a cast working as a balanced group rather than around one star, and a scene-stealer is the minor character everyone remembers.</p>
+
+    <p>For the acting itself: delivery is how a line is spoken. Range is how far an actor can travel from their usual register. Understated performance holds back, and it is usually a compliment. Wooden means stiff and lifeless. Hammy or over the top means exaggerated, chewing the scenery. Melodramatic is the close relative you will hear most often, though it points slightly differently: hammy is about the acting, melodramatic is about pitching the emotion far above what the moment deserves. A performance described as restrained is doing a great deal with very little.</p>
+
+    <h2>Upgrade list</h2>
+
+    <p><b>The stuff on stage</b> &rarr; the set and the props. <b>The background</b> &rarr; the backdrop. <b>The lights were good</b> &rarr; the lighting design was precise. <b>The music</b> &rarr; the score. <b>The way they moved around</b> &rarr; the blocking. <b>Wrong actor for the role</b> &rarr; miscast. <b>They didn't seem like a couple</b> &rarr; no chemistry. <b>The way they said the line</b> &rarr; the delivery. <b>Stiff acting</b> &rarr; wooden. <b>Too much acting</b> &rarr; hammy. <b>Quiet but powerful acting</b> &rarr; understated.</p>
+
+    <h2>Two things to get right</h2>
+
+    <p>First, props are objects that get handled; scenery is what they stand in front of. Calling a chair a prop is fine if someone sits on it during the scene, and wrong if it is simply there. Second, understated and wooden can look similar on paper but mean opposite things &mdash; understated is deliberate control, wooden is an absence of life. If you are unsure which you saw, ask whether the stillness was doing something.</p>
+
+    <p>Try this. Describe one scene you loved in three sentences: one on the set or props, one on the lighting or sound, and one on a single actor's delivery.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>The Right Word</em>, a series on describing things precisely. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"airless": ["with no sense of air or life in the space; stifling", "悶死人的、毫無空氣感的", "v", "C1"], "set": ["everything constructed for a scene to take place in", "佈景:為了讓場景成立而搭建的一切", "v", "B2"], "backdrop": ["the painted or projected surface at the very back of a stage", "背景幕:舞台最後方的繪景或投影", "v", "B2"], "Props": ["short for 'properties' — the objects actors actually handle", "道具:props 是 properties 的簡稱,指演員實際拿取使用的物件", "v", "B2"], "Set dressing": ["objects placed to make a space look lived in, but never touched", "場景陳設:為了讓空間顯得有人住而擺放、但不會被碰的東西", "p", "C1"], "lived in": ["showing signs of being used by real people", "有生活痕跡的、住得出來的", "p", "B2"], "Lighting design": ["how a production uses light to shape mood and focus", "燈光設計:用光線塑造氣氛與焦點", "p", "B2"], "spotlight": ["a narrow beam that isolates one figure", "聚光燈:把單一人物從暗處挑出來", "v", "B2"], "wash": ["an even spread of light across the whole stage", "染色光:均勻鋪滿整個舞台的光", "v", "C1"], "Practical lights": ["lights visible within the scene itself, such as a lamp or candle", "實景光源:畫面裡看得見的燈具,如檯燈、蠟燭", "p", "C1"], "blackout": ["the moment everything cuts to darkness at once", "全場暗場:燈光同時全滅", "v", "B2"], "score": ["the music composed specifically for a production", "配樂:為作品譜寫的音樂", "v", "B2"], "soundtrack": ["the collection of songs used in a production", "原聲帶:作品中使用的歌曲集合", "v", "B1"], "Sound design": ["everything heard that is not music or dialogue", "音效設計:音樂與對白以外的所有聲音", "p", "B2"], "ambient sound": ["the background noise of a place — traffic, a room's hum", "環境音:一個地方的背景聲響", "p", "C1"], "Blocking": ["the planned movement of actors around the stage or set", "走位:演員在場上移動的事先安排", "v", "C1"], "cross": ["to move from one side of the stage to the other", "橫越舞台走位", "v", "B2"], "stiff": ["rigid and unnatural in movement or manner", "僵硬、放不開的", "v", "B2"], "Costume design": ["the planning of what characters wear", "服裝設計", "p", "B2"], "continuity": ["keeping details consistent between shots or performances", "連戲:確保鏡頭之間細節一致", "v", "C1"], "Practical effects": ["effects created physically in front of the camera", "實體特效:在鏡頭前真的做出來的效果", "p", "B2"], "prosthetics": ["artificial body parts applied to an actor", "特殊化妝義肢:貼在演員身上的假體", "v", "C1"], "CGI": ["computer-generated imagery, added after filming", "電腦動畫特效(後製加上去的)", "f", "B2"], "Casting": ["the choice of which actors play which parts", "選角", "v", "B2"], "miscast": ["wrong for the part, however good the actor is", "選角不對:再好的演員放錯位置也不行", "v", "C1"], "Chemistry": ["whether two performers convince you of a relationship", "化學反應:兩位演員演不演得出那段關係", "v", "B2"], "ensemble": ["a cast working as a balanced group rather than around one star", "群戲班底:整體平衡而非圍繞單一主角", "v", "C1"], "scene-stealer": ["the minor character everyone remembers", "搶戲的配角", "v", "C1"], "delivery": ["how a line is spoken", "台詞的說法、口條", "v", "B2"], "Range": ["how far an actor can travel from their usual register", "戲路:演員能離開慣常表演區間多遠", "v", "C1"], "Understated": ["holding back deliberately — usually a compliment", "收斂內斂的:刻意不外放,通常是稱讚", "v", "C1"], "Wooden": ["stiff and lifeless in performance", "木頭般的、演得死板無生氣", "v", "C1"], "Hammy": ["exaggerated and showy in performance", "演得太over、浮誇賣力過頭", "v", "C1"], "over the top": ["idiom: excessive; far beyond what is needed", "慣用語:太過火、超過必要的程度", "p", "B2"], "chewing the scenery": ["idiom: acting so extravagantly it swallows the whole scene", "慣用語:演到把整場戲吞掉、用力過猛", "p", "C1"], "restrained": ["controlled and held back, achieving much with little", "克制的:用極少的動作做出極多的效果", "v", "C1"], "scenery": ["the painted or built surroundings actors perform in front of", "布景:演員身前身後的環境陳設", "v", "B2"], "an absence of life": ["a complete lack of energy or vitality", "毫無生氣、了無生機", "p", "B2"], "Melodramatic": ["pitching emotion far higher than the situation warrants. Close to hammy, but hammy describes an actor's performance while melodramatic describes the emotional level of the writing or the scene itself", "煽情、灑狗血:情緒強度遠超過情境所需。與 hammy 相近,但 hammy 說的是演員的表演,melodramatic 說的是劇本或場面本身的情緒層級", "v", "C1"], "close relative": ["a word with a very similar meaning", "近親詞:意思非常接近的字", "p", "B2"]};
+(function(){var ART=/^(a|an|the)\s+/i;var add={};
+  for(var k in VOCAB){if(ART.test(k)){var bare=k.replace(ART,'');if(bare&&!(bare in VOCAB)&&!(bare in add))add[bare]=VOCAB[k];}}
+  for(var b in add)VOCAB[b]=add[b];})();
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>

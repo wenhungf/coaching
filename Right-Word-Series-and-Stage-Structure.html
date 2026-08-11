@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>The Right Word: Series and Stage, Structure — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◈";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">The right word</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">The right word · Screen and stage, part one</div>
+    <h1>Was That Twist Earned?</h1>
+    <p class="deck">Pilot, arc, cliffhanger, filler — the parts of a series and a play, and the one pair of words that carries most English criticism.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>The Right Word</b> · Screen and stage</span><span class="dot">◆</span><span>Level B1–C1</span><span class="dot">◆</span><span>~5 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">Everyone has had this conversation. A friend asks what you thought of the show, and the honest answer is that the first half was great, the middle dragged, and the ending annoyed you &mdash; but what comes out is "it was okay, the last part was a bit weird."</p>
+
+    <p>Screen and stage have a precise vocabulary for their own parts. Once you have it, you can say exactly where a story lost you.</p>
+
+    <h2>The units, from smallest to largest</h2>
+
+    <p>On stage, a play is divided into acts, and each act into scenes. A scene usually changes when the place or the time changes; an act is a larger movement, and the gap between them is the interval in British usage, the intermission in American.</p>
+
+    <p>On television, the unit is the episode, and a run of episodes is a season &mdash; or a series in British usage, which causes constant confusion, since Americans use series for the whole show. The first episode is the pilot, made to test whether the idea works. The last of a season is the finale, and the very last of everything is the series finale.</p>
+
+    <p>Two more worth knowing. A cold open is a scene that runs before the opening titles, dropping you straight into the action. A bottle episode is one shot cheaply in a single location, usually to save money elsewhere in the season.</p>
+
+    <h2>How a story is built</h2>
+
+    <p>An arc is the shape of a change across time: a character arc is how a person is different by the end, and a season arc is the story running underneath the individual episodes. A subplot is a smaller story running alongside the main one. Exposition is the information the audience needs, and clumsy exposition is the great sin of early episodes &mdash; two characters explaining to each other things they both already know.</p>
+
+    <p>Then the machinery of surprise. Foreshadowing is an early hint that only makes sense later. A payoff is the moment that hint delivers. A twist reverses what you believed. A cliffhanger ends an episode mid-danger so you keep watching. A red herring is a false clue planted to mislead you. And filler is material that exists only to fill time, advancing nothing.</p>
+
+    <div class="pull">A twist that was earned feels inevitable. One that was not feels like cheating.</div>
+
+    <h2>The most useful pair of words</h2>
+
+    <p>English criticism turns on one distinction: whether a moment was earned. An earned twist is one the story prepared you for &mdash; looking back, the clues were there, and the surprise feels inevitable. An unearned twist arrives from nowhere to shock you, and it feels like the writer cheating. The extreme case has its own name: a deus ex machina, where an outside force appears at the last moment and solves everything the characters could not.</p>
+
+    <p>Two neighbors. If a story telegraphed its ending, it made the outcome obvious far too early. If it was contrived, the events were forced into place to suit the plot rather than arising from the characters. These three words will carry most of the criticism you ever need.</p>
+
+    <h2>Pacing and where shows fail</h2>
+
+    <p>Pacing is the speed at which a story moves. When a middle section slows without purpose, it drags or sags. When too much happens too quickly, it feels rushed. A show that loses its way in a later season has jumped the shark, an idiom from a 1970s television episode in which a character literally waterskied over a shark, now used for the moment a series becomes absurd.</p>
+
+    <h2>Upgrade list</h2>
+
+    <p><b>The first one</b> &rarr; the pilot. <b>The last one</b> &rarr; the finale. <b>The story across the whole thing</b> &rarr; the season arc. <b>How the character changes</b> &rarr; the character arc. <b>A surprise at the end</b> &rarr; a twist. <b>The surprise made no sense</b> &rarr; it was unearned. <b>I guessed it too early</b> &rarr; it was telegraphed. <b>Too convenient</b> &rarr; contrived. <b>Boring middle</b> &rarr; the pacing sags. <b>Nothing happened in that one</b> &rarr; it was filler. <b>It got ridiculous</b> &rarr; it jumped the shark.</p>
+
+    <h2>Two things to get right</h2>
+
+    <p>First, the British and American senses of series are genuinely different: British <em>series two</em> equals American <em>season two</em>. If you are talking to people from both, say season and be understood everywhere. Second, a plot hole is a gap in logic; a twist you disliked is not a plot hole. Keeping that distinction makes your criticism much harder to dismiss.</p>
+
+    <p>Try this. Take the last thing you watched and write three sentences: one on the pacing, one on whether the ending was earned, and one on the single episode you would cut.</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>The Right Word</em>, a series on describing things precisely. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"dragged": ["moved so slowly that it became boring", "拖戲、節奏拖沓", "v", "B2"], "acts": ["the largest divisions of a play", "(戲劇的)幕", "v", "B2"], "scenes": ["the smaller divisions within an act, usually one place and time", "場:一幕之中的段落,通常同一地點時間", "v", "B1"], "interval": ["the break between acts (British usage)", "中場休息(英式用法)", "v", "B2"], "intermission": ["the break between acts (American usage)", "中場休息(美式用法)", "v", "B2"], "episode": ["one instalment of a television series", "一集", "v", "B1"], "season": ["a run of episodes released together — American usage", "一季(美式用法)", "v", "B1"], "series": ["in British usage, one season; in American usage, the whole show", "英式指「一季」,美式指「整部劇」——最常搞混的一個字", "f", "B1"], "pilot": ["the first episode, made to test whether the idea works", "試播集:用來測試這個點子行不行的第一集", "v", "B2"], "finale": ["the final episode of a season or of the whole show", "最終集、季終集", "v", "B2"], "cold open": ["a scene that runs before the opening titles", "冷開場:片頭曲之前先演的一段", "p", "C1"], "bottle episode": ["an episode shot cheaply in one location to save money elsewhere", "獨景集:只在單一場景低成本拍攝,省下預算給別集", "p", "C1"], "arc": ["the shape of a change across time", "弧線:一段變化的整體走向", "v", "B2"], "character arc": ["how a person is different by the end of the story", "角色成長線:一個人到故事結尾有何不同", "p", "B2"], "season arc": ["the story running underneath the individual episodes", "季線:貫穿整季、藏在單集底下的主線", "p", "B2"], "subplot": ["a smaller story running alongside the main one", "支線劇情", "v", "B2"], "Exposition": ["the background information the audience needs to follow the story", "說明性資訊:觀眾必須知道的背景交代", "v", "C1"], "clumsy": ["awkward and badly handled", "笨拙的、處理得很生硬", "v", "B2"], "Foreshadowing": ["an early hint that only makes sense later", "伏筆:先埋下、後來才看懂的暗示", "v", "C1"], "payoff": ["the moment an earlier hint finally delivers", "回收:先前伏筆兌現的那一刻", "v", "C1"], "twist": ["a turn in the story that reverses what you believed", "轉折:推翻你原本的認知", "v", "B2"], "cliffhanger": ["an ending left mid-danger so you keep watching", "懸念結尾:停在最緊張處讓你追下去", "v", "B2"], "red herring": ["a false clue planted to mislead you", "誤導用的假線索", "p", "C1"], "filler": ["material that exists only to fill time and advances nothing", "灌水的內容:純粹填時間、劇情毫無推進", "v", "B2"], "earned": ["prepared for by the story, so it feels inevitable rather than random", "有鋪陳的:故事早有準備,因此顯得理所當然", "v", "C1"], "inevitable": ["certain to happen; unavoidable in hindsight", "必然的、回頭看無可避免的", "v", "B2"], "unearned": ["arriving with no preparation, so it feels like cheating", "沒鋪陳的:憑空冒出來,像作者在耍賴", "v", "C1"], "telegraphed": ["made the outcome obvious far too early", "太早破梗:結局老遠就被看穿", "v", "C1"], "contrived": ["forced into place to suit the plot rather than arising naturally", "刻意安排的、為了劇情硬湊的", "v", "C1"], "arising from": ["growing naturally out of", "自然生發自…", "p", "B2"], "Pacing": ["the speed at which a story moves", "節奏、步調", "v", "B2"], "sags": ["loses energy and droops in the middle", "中段鬆垮下來、失去張力", "v", "C1"], "rushed": ["done too quickly, without room to breathe", "趕得太快、來不及喘息的", "v", "B2"], "jumped the shark": ["idiom: the moment a series becomes absurd and starts declining — from a 1970s episode in which a character waterskied over a shark", "慣用語:一部劇開始荒腔走板的轉捩點;典出1970年代某集主角滑水躍過鯊魚", "f", "C1"], "loses its way": ["stops knowing what it is trying to do", "迷失方向、不知道自己在幹嘛了", "p", "B2"], "plot hole": ["a gap in the story's logic that cannot be explained", "劇情漏洞:邏輯上說不通的缺口", "p", "B2"], "harder to dismiss": ["more difficult for others to wave away", "更難被別人一句話打發掉", "p", "B2"], "instalment": ["one part of something published or broadcast in parts", "(分期播出的)一集、一輯", "v", "C1"], "deus ex machina": ["pronounced DAY-us eks MAH-kih-nuh — Latin for 'god from the machine'. In Greek theatre an actor playing a god was lowered by a crane to resolve the plot; today it means any sudden outside rescue that solves a problem the characters had not earned their way out of", "發音 DAY-us eks MAH-kih-nuh,拉丁文「機器裡出來的神」。古希臘劇場用起重機把扮神的演員吊下來收拾殘局;今指憑空冒出的外力,替角色解決他們自己解不了的困境", "f", "C1"], "outside force": ["something from beyond the story's established world or characters", "外力:來自故事既有世界與角色之外的東西", "p", "B2"]};
+(function(){var ART=/^(a|an|the)\s+/i;var add={};
+  for(var k in VOCAB){if(ART.test(k)){var bare=k.replace(ART,'');if(bare&&!(bare in VOCAB)&&!(bare in add))add[bare]=VOCAB[k];}}
+  for(var b in add)VOCAB[b]=add[b];})();
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>
