@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Who Decides When Suffering Ends? — InkQuest Reader</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#55637D; --accent-deep:#3B475E;
+    --word:#0E7C86; --word-soft:#D9EDEF;
+    --phrase:#8A5AA8; --phrase-soft:#EDE2F3;
+    --gram:#3F7D54;  --gram-soft:#DDEEE2;
+    --cult:#B8863B;  --cult-soft:#F0E4C9;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"◆";color:var(--accent);font-size:12px}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.06);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:absolute;z-index:50;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:18px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:40;display:none} #scrim.show{display:block}
+
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 18px}
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer a{color:var(--accent-deep)} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    body{font-size:18px} h1{font-size:31px} .deck{font-size:18px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px 26px}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <span class="brand">Ink<span>Quest</span> · Reading Room</span>
+    <span class="sec">News &amp; features</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">Feature · Medicine, law and the mind</div>
+    <h1>Who Decides When Suffering Ends?</h1>
+    <p class="deck">A Dutch report recorded the first euthanasia of a child under twelve. Behind one line of statistics sits a century-old argument — and a set of psychological reflexes that make it almost impossible to have calmly.</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>Feature</b> · Euthanasia and the psychology of dying</span><span class="dot">◆</span><span>Level B2–C1</span><span class="dot">◆</span><span>~9 min read</span></div>
+  </header>
+
+  <article>
+    <p class="lead">In June 2026 a single sentence appeared in a Dutch government report that almost nobody reads. The committee that reviews end-of-life decisions had received, in late 2025, its first notification concerning a child between the ages of one and twelve. No name. No illness. No age. One line, and then the rest of the statistics.</p>
+
+    <p>It was the first case under regulations the Netherlands introduced in 2024, and it reopened an argument that has run for a century and shows no sign of ending. Almost everyone who joins that argument is certain. Almost nobody agrees on what the words even mean.</p>
+
+    <h2>Four different things, one word</h2>
+
+    <p>Clear thinking here depends entirely on definitions, because the public conversation constantly mixes up practices that doctors treat as completely separate.</p>
+
+    <p>Euthanasia means a doctor actively ending a patient's life, usually by administering a lethal drug. Assisted suicide means the doctor supplies the means and the patient performs the final act themselves &mdash; the distinction that separates the Dutch model from the Swiss one, and from most American states. Withdrawing treatment means stopping a ventilator or a feeding tube and allowing an underlying illness to kill the patient; this is legal almost everywhere and is not classified as euthanasia at all. Palliative sedation means using drugs to keep a dying patient unconscious and comfortable, accepting that this may shorten life slightly, without that being the aim.</p>
+
+    <p>The distance between the second and third of those is where a great deal of the argument actually lives. Critics say it is a distinction without a difference. Defenders say intention is the whole of medicine.</p>
+
+    <h2>What the Dutch law actually says</h2>
+
+    <p>The Netherlands legalized euthanasia for adults in 2002, the first country in the world to do so. The criteria are demanding: the request must be voluntary and well-considered, the suffering must be unbearable with no prospect of improvement, a second independent doctor must agree, and every case is reported afterwards to a review committee.</p>
+
+    <p>For young people, the law built a strange staircase. Minors aged twelve and over could request euthanasia, with parental involvement required below sixteen. Newborns under one year could have their lives ended in extreme cases under the Groningen Protocol, on their parents' decision. Between those two floors sat a gap: children aged one to twelve, old enough to have outgrown the infant rules and too young to qualify under the adult ones.</p>
+
+    <p>A study commissioned by the government found doctors and parents who believed some children were dying badly inside that gap. The 2024 regulation closed it. Technically the act remains a criminal offence; what changed is that prosecutors will not charge a doctor who follows the criteria &mdash; terminal illness, hopeless and unbearable suffering, no reasonable alternative, parental consent. Officials estimated it might apply to five to ten children a year. In the first full period of operation, it applied to one.</p>
+
+    <div class="pull">Almost everyone in this argument is certain. Almost nobody agrees on what the words mean.</div>
+
+    <h2>The case for</h2>
+
+    <p>Supporters begin with autonomy: an adult who owns their life owns its ending, and a state that forces a competent person to endure agony is not protecting them but overruling them. They point out that we already accept death as an outcome of medical choices &mdash; we withdraw ventilators, we sedate people into unconsciousness &mdash; and argue that refusing the faster route is squeamishness rather than principle.</p>
+
+    <p>They make an argument from honesty, too. Where assisted dying is illegal, some doctors help anyway, quietly and without oversight; legalization replaces a hidden practice with a documented one. And they argue that the reality of some deaths is not adequately captured by the phrase "palliative care can manage it": there are cancers of the head and neck, degenerative diseases, and forms of suffering that resist every drug available.</p>
+
+    <p>For children specifically, the case is narrower and harder. Its defenders do not claim a small child can weigh such a decision. They argue that a child dying in pain that cannot be relieved is already beyond rescue, that parents and doctors make life-and-death decisions for children constantly &mdash; to operate, to stop treatment, to resuscitate or not &mdash; and that a rule which allows a doctor to withdraw a feeding tube but not to act directly is drawing its line by squeamishness rather than by mercy.</p>
+
+    <h2>The case against</h2>
+
+    <p>Opponents start with the character of the act itself. Medicine's oldest instruction is to do no harm, and a profession that kills patients, however kindly, becomes something other than what it was. Once that door opens, they argue, it does not stay where it was put: the Dutch law began with terminal adults and now covers psychiatric suffering, dementia, and children, each expansion justified by the last. This is the slippery slope objection, and its force is that it does not require anyone to act in bad faith.</p>
+
+    <p>Then the argument about pressure. The sick and disabled frequently feel they are a burden; a legal option to die can quietly become an expectation to die, particularly where care is expensive and families are exhausted. Disability rights organizations have been among the most consistent opponents, and their objection is not religious &mdash; it is that a society which offers assisted death more readily than it offers home care, wheelchairs and personal assistants is not expanding choice but narrowing it.</p>
+
+    <p>Some argue that unbearable suffering is a claim about the failure of palliative care rather than an argument for killing, and that resources should go to fixing the first problem. Others hold a straightforwardly religious position: life is not ours to end. And for children, opponents make the sharpest point available &mdash; a child of six cannot consent, so this is not assisted dying at all. It is a decision made for someone by other people, and calling it a mercy does not change who is holding the syringe.</p>
+
+    <h2>Why children are the hardest case</h2>
+
+    <p>Every framework for assisted dying rests on competence: the capacity to understand a situation, weigh alternatives, and choose. Children are precisely where that foundation gives way.</p>
+
+    <p>Developmental researchers describe children's understanding of death as four separate ideas that arrive at different times: that death is irreversible, that it is universal, that the body stops functioning, and that it has physical causes. Most children hold all four by around seven. Below that, a child may understand that they are very sick and frightened, and may not grasp that being dead has no morning after.</p>
+
+    <p>This produces a genuine dilemma rather than a rhetorical one. If a small child cannot consent, then either their suffering is treated as beyond help, or someone else decides. Belgium took one route in 2014, removing the age limit but requiring that the child have what the law calls capacity for discernment, assessed by a psychiatrist &mdash; which in practice restricts it to older, gravely ill minors, and has produced only a handful of cases. The Netherlands took the other, treating the youngest children as a matter of parental and medical judgment. Canada studied the question of mature minors and declined. Most countries have not gone near it.</p>
+
+    <h2>What we do with the thought of dying</h2>
+
+    <p>Underneath the legal argument sits a psychological one, and it explains why these debates get so hot so quickly.</p>
+
+    <p>The anthropologist Ernest Becker argued in 1973 that awareness of our own death is so intolerable that civilization is largely a machine for not thinking about it: our projects, our nations, our religions and our children are ways of belonging to something that outlasts us. Psychologists later built this into terror management theory, which produced an unsettling body of experiments. Remind people of their mortality, even briefly, and they defend their own worldview more fiercely and judge outsiders more harshly. In one well-known study, judges asked to reflect on their own death set markedly higher bail in a hypothetical case than colleagues who had not been reminded.</p>
+
+    <p>If that is right, an argument about euthanasia is never only an argument about policy. It is conducted by people whose defences have just been activated, which is one reason both sides so often accuse the other of monstrousness.</p>
+
+    <p>The other framework everyone half-knows is Elisabeth K&uuml;bler-Ross's five stages &mdash; denial, anger, bargaining, depression, acceptance &mdash; published in 1969. It is worth knowing what she actually claimed. She was describing patients told they were dying, not the bereaved, and she never proposed a fixed sequence that everyone completes. The popular version, in which a griever advances neatly through five levels and finishes, has weak evidence behind it and does real harm, because people conclude they are grieving incorrectly. Researchers now favor models of oscillation: mourners swing between confronting the loss and getting on with life, and both movements are necessary.</p>
+
+    <div class="pull">Remind people of death and they defend their worldview more fiercely. This debate is conducted by people whose defences have just gone up.</div>
+
+    <h2>The stories we tell about it</h2>
+
+    <p>Fiction has been arguing about this for as long as parliaments have, and where it lands is revealing.</p>
+
+    <p>Clint Eastwood's <em>Million Dollar Baby</em> ends with a trainer ending the life of a paralysed fighter who asks him to, and disability organizations protested it fiercely for treating paralysis as a fate worse than death. The same objection met <em>Me Before You</em> a decade later, whose wealthy quadriplegic hero travels to Switzerland to die; campaigners noted that a story about choice had somehow produced only one possible choice. Alejandro Amen&aacute;bar's <em>The Sea Inside</em> dramatized the real thirty-year campaign of Ram&oacute;n Sampedro, and Jodi Picoult's <em>My Sister's Keeper</em> put a minor in court asking to control her own medical fate &mdash; the child-autonomy question in its most direct form.</p>
+
+    <p>The dystopias run the other way, and they are all versions of the slippery slope: <em>Logan's Run</em>, where the state kills everyone at thirty; <em>Soylent Green</em>, where an exhausted old man checks into a government suite to die to soothing music and film of a vanished world. What such stories fear is never a doctor's compassion. It is a bureaucracy that finds compassion convenient.</p>
+
+    <p>Then there is Terry Pratchett, who made the argument in his own voice. Diagnosed with early-onset Alzheimer's, he campaigned openly for assisted dying and presented a documentary in which he accompanied a man to a Swiss clinic and stayed with him. Pratchett wanted the option and, as it happened, never used it; he died of his illness in 2015. It is an unusually clean illustration of the supporters' central claim &mdash; that the value of the option lies in having it.</p>
+
+    <p>And some of the best stories about mortality are not about hastening it at all. <em>Coco</em> builds an entire afterlife on the idea that the dead persist while someone remembers them. <em>Grave of the Fireflies</em> refuses to make dying meaningful. Margaret Edson's play <em>Wit</em> puts a professor of seventeenth-century poetry through terminal cancer and lets her discover that erudition is no protection whatsoever.</p>
+
+    <h2>Where that leaves us</h2>
+
+    <p>The Dutch case will be reviewed, as every case is, and the file will probably stay closed. Five to ten children a year was the estimate; one was the reality. Both sides have already read that number as proof they were right &mdash; that the safeguards are working, or that a threshold has been crossed and the numbers will climb.</p>
+
+    <p>What seems clear is that the argument cannot be settled by insisting the other side is wicked. The strongest case for assisted dying is not a contempt for life, and the strongest case against it is not an indifference to suffering. Anyone who cannot state their opponent's position in a form that opponent would accept has not yet joined the argument.</p>
+
+    <h2>Questions to argue about</h2>
+
+    <p>Is there a real moral difference between switching off a ventilator and administering a drug? If not, which practice should change?</p>
+
+    <p>Does the slippery slope objection describe something that has actually happened in the Netherlands since 2002, or something people feared would happen?</p>
+
+    <p>If a child cannot consent, can this be called euthanasia at all &mdash; and if it is a decision made by others, does that make it worse, or simply honest about what all paediatric medicine involves?</p>
+
+    <p>Disability campaigners say the problem is the surrounding society, not the law itself. What would have to be true about a country's healthcare before assisted dying could be considered a free choice?</p>
+
+    <p>Terror management theory suggests you will argue this more rigidly right after being reminded of your own death. Does knowing that change how you want to argue it?</p>
+  </article>
+
+  <div class="bank">
+    <div class="bankhead">Word bank · 詞彙表</div>
+    <div id="wordbank"></div>
+  </div>
+
+  <footer><span class="strong">An original InkQuest reading</span> — a feature written for classroom discussion. It sets out the strongest arguments on each side rather than arguing for one; the legal details reflect reporting available in mid-2026 and change often. <br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+<div id="scrim"></div>
+
+<script>
+var VOCAB = {"committee": ["a small group appointed to examine or decide something", "委員會", "v", "B1"], "end-of-life decisions": ["choices made about medical care when a patient is dying", "臨終醫療決策", "p", "B2"], "notification": ["a formal report telling an authority that something has happened", "通報、正式報告", "v", "B2"], "regulations": ["official rules issued under a law, rather than a law itself", "法規、行政命令(依法律訂定的規則)", "v", "B2"], "reopened": ["started again something that had been settled or paused", "重啟(爭議)", "v", "B2"], "shows no sign of": ["gives no indication of", "絲毫看不出要…的跡象", "p", "B2"], "Euthanasia": ["pronounced yoo-thuh-NAY-zhuh — a doctor actively ending a patient's life, usually with a lethal drug. From Greek 'eu' (good) + 'thanatos' (death)", "發音 yoo-thuh-NAY-zhuh:安樂死,由醫師主動結束病人生命。源自希臘文 eu(好)+ thanatos(死)", "f", "B2"], "administering": ["giving a drug or treatment to a patient", "(對病人)施予、投藥", "v", "C1"], "lethal": ["capable of causing death", "致命的", "v", "B2"], "Assisted suicide": ["the doctor supplies the means, but the patient performs the final act themselves", "協助自殺:醫師提供藥物,由病人自己執行最後一步", "p", "B2"], "Withdrawing treatment": ["stopping a ventilator or feeding tube and letting the illness take its course — legal almost everywhere, and not classed as euthanasia", "撤除治療:停止呼吸器或鼻胃管,讓疾病自然發展;幾乎各國都合法,且不算安樂死", "p", "B2"], "ventilator": ["a machine that breathes for a patient who cannot", "呼吸器", "v", "B2"], "feeding tube": ["a tube used to deliver food to a patient who cannot eat", "餵食管、鼻胃管", "p", "B2"], "underlying illness": ["the disease that is the real cause beneath the symptoms", "底層的病因、原本的疾病", "p", "B2"], "Palliative sedation": ["using drugs to keep a dying patient unconscious and comfortable, accepting that life may be slightly shortened without that being the aim", "緩和鎮靜:用藥讓臨終病人保持無意識而舒適;可能略微縮短生命,但那並非目的", "p", "C1"], "palliative care": ["care aimed at relieving suffering rather than curing the disease", "安寧緩和醫療:以減輕痛苦為目標,而非治癒", "p", "B2"], "distinction without a difference": ["idiom: a difference that is claimed but does not really exist", "慣用語:名義上有別、實質上無異的區分", "p", "C1"], "intention": ["what a person is actually trying to bring about", "意圖:一個人真正想達成的目的", "v", "B2"], "criteria": ["the standards that must be met (singular: criterion)", "標準、要件(單數為 criterion)", "v", "B2"], "demanding": ["requiring a lot; hard to satisfy", "嚴苛的、門檻高的", "v", "B2"], "well-considered": ["thought through carefully rather than impulsive", "深思熟慮的,而非一時衝動", "p", "C1"], "unbearable": ["too painful or difficult to endure", "無法忍受的", "v", "B2"], "no prospect of improvement": ["no realistic chance of getting better", "毫無好轉的可能", "p", "B2"], "review committee": ["a body that checks afterwards whether the rules were followed", "審查委員會:事後查核是否符合規定", "p", "B2"], "Minors": ["people below the legal age of adulthood", "未成年人", "v", "B2"], "Groningen Protocol": ["pronounced GROH-ning-un — the Dutch framework, in place since 2005, allowing life-ending decisions for severely suffering newborns on their parents' decision", "發音 GROH-ning-un:格羅寧根準則,2005年起施行,允許在父母決定下對極度痛苦的新生兒終止生命", "f", "C1"], "outgrown": ["become too old or too big for something", "已經超過(某階段)、長大到不再適用", "v", "B2"], "commissioned": ["formally ordered and paid for", "委託進行的", "v", "C1"], "criminal offence": ["an act punishable by law", "刑事犯罪行為", "p", "B2"], "prosecutors": ["the officials who decide whether to bring criminal charges", "檢察官", "v", "B2"], "consent": ["formal permission given with understanding of what it involves", "知情同意", "v", "B2"], "autonomy": ["the right to govern yourself and make your own decisions", "自主權:自我決定的權利", "v", "C1"], "competent": ["legally and mentally able to make a decision", "有行為能力的、心智上足以決定的", "v", "C1"], "endure": ["to suffer through something difficult", "忍受、熬過", "v", "B2"], "overruling": ["overriding someone's decision with your own authority", "否決、以權威推翻對方的決定", "v", "C1"], "squeamishness": ["a reluctance to face something unpleasant", "過度潔癖式的迴避:不願直視令人不適之事", "v", "C1"], "oversight": ["supervision and monitoring by an authority", "監督、把關", "v", "C1"], "resist": ["here: to be unaffected by; to withstand", "此處指:對…無效、抵抗得住", "v", "B2"], "degenerative": ["(of a disease) steadily getting worse over time", "退化性的(病情持續惡化)", "v", "C1"], "beyond rescue": ["past the point where saving is possible", "已經救不回來了", "p", "B2"], "resuscitate": ["to revive someone whose heart or breathing has stopped", "急救、施行心肺復甦", "v", "C1"], "mercy": ["compassion shown by relieving suffering", "慈悲、不忍", "v", "B2"], "do no harm": ["the oldest principle of medical ethics: a doctor must not injure the patient", "醫學倫理最古老的原則:不傷害病人", "p", "B2"], "slippery slope": ["the argument that permitting one thing leads step by step to consequences nobody intended", "滑坡論證:主張開了一個口子,便會一步步走向無人樂見的後果", "p", "C1"], "in bad faith": ["dishonestly, with hidden motives", "居心不良地、不誠實地", "p", "C1"], "burden": ["a heavy load or responsibility carried by others", "負擔、拖累", "v", "B2"], "expectation": ["something others assume you will do", "被預期要做的事", "v", "B2"], "exhausted": ["completely drained of energy", "筋疲力盡的", "v", "B1"], "Disability rights organizations": ["groups that campaign for the rights of disabled people", "身心障礙者權益團體", "p", "B2"], "personal assistants": ["paid helpers who support a disabled person in daily life", "個人助理:協助身障者日常生活的支薪人員", "p", "B2"], "narrowing": ["making smaller or more limited", "限縮、變窄", "v", "B2"], "straightforwardly": ["plainly and without complication", "直截了當地", "v", "B2"], "syringe": ["the instrument used to inject a drug", "針筒", "v", "B2"], "competence": ["the mental capacity to understand and decide", "判斷能力、決定能力", "v", "C1"], "gives way": ["collapses or fails under pressure", "塌陷、撐不住", "p", "C1"], "irreversible": ["impossible to undo or return from", "不可逆的", "v", "B2"], "universal": ["applying to everyone without exception", "普世的:無人例外", "v", "B2"], "no morning after": ["nothing follows it; there is no next day — the part of death a young child may not grasp", "沒有「隔天早上」:死亡之後不再有下一天,這正是幼童難以理解之處", "p", "B2"], "dilemma": ["a choice between options that are all unwelcome", "兩難:每個選項都不討喜", "v", "B2"], "rhetorical": ["concerned with persuasive language rather than real substance", "修辭上的:只是說話的方式,並非真實存在的問題", "v", "C1"], "capacity for discernment": ["the legal term in Belgian law for a child's ability to understand their situation and judge it", "比利時法律用語:辨識能力,指兒童理解自身處境並加以判斷的能力", "f", "C1"], "gravely": ["extremely seriously", "極其嚴重地", "v", "C1"], "handful": ["a very small number", "寥寥數例", "v", "B2"], "mature minors": ["young people under 18 judged capable of making their own medical decisions", "成熟未成年人:未滿18歲但被認定有能力自行決定醫療事項者", "p", "C1"], "declined": ["politely refused; chose not to", "婉拒、決定不採行", "v", "B2"], "gone near": ["idiom: come anywhere close to dealing with", "慣用語:根本不敢碰、連靠近都不願", "p", "B2"], "anthropologist": ["a scientist who studies human societies and cultures", "人類學家", "v", "C1"], "intolerable": ["impossible to put up with", "令人無法忍受的", "v", "C1"], "outlasts": ["continues to exist after something else has ended", "比…活得久、留存得比…更長", "v", "C1"], "terror management theory": ["the psychological theory that much of human behaviour is a defence against awareness of our own death", "恐懼管理理論:認為人類許多行為都是對「意識到自己會死」的防衛", "f", "C1"], "unsettling": ["disturbing in a way that is hard to shake off", "令人不安、揮之不去的", "v", "C1"], "mortality": ["the fact that all living things must die", "終有一死的事實、死亡率", "v", "B2"], "worldview": ["the whole set of beliefs through which a person understands the world", "世界觀", "v", "C1"], "outsiders": ["people seen as not belonging to your own group", "外人、非我族類", "v", "B2"], "markedly": ["noticeably; to a clear degree", "顯著地", "v", "C1"], "bail": ["money a court requires as a guarantee that an accused person will return", "保釋金", "v", "C1"], "defences": ["psychological protections against anxiety", "(心理)防衛機制", "v", "B2"], "monstrousness": ["the quality of being morally horrifying", "泯滅人性、喪心病狂", "v", "C1"], "half-knows": ["knows only partly and imprecisely", "一知半解地知道", "v", "B2"], "bereaved": ["people who have lost someone to death", "喪親者", "v", "C1"], "fixed sequence": ["a set order that does not vary", "固定的先後順序", "p", "B2"], "oscillation": ["swinging back and forth between two states", "擺盪:在兩種狀態之間來回", "v", "C1"], "mourners": ["people grieving a death", "哀悼者、服喪的人", "v", "C1"], "confronting": ["facing something difficult directly", "直面、正視", "v", "B2"], "revealing": ["showing something significant that was not obvious", "耐人尋味的、透露真相的", "v", "B2"], "paralysed": ["unable to move part or all of the body", "癱瘓的", "v", "B2"], "fate worse than death": ["idiom: a condition presented as more terrible than dying — the framing disability groups object to", "慣用語:比死更慘的處境;正是身障團體反對的敘事方式", "p", "C1"], "quadriplegic": ["pronounced kwod-rih-PLEE-jik — paralysed in all four limbs", "發音 kwod-rih-PLEE-jik:四肢癱瘓者", "f", "C1"], "campaigners": ["people who work publicly for a cause", "倡議者、運動人士", "v", "B2"], "dramatized": ["turned a real event into a play or film", "改編成戲劇或電影", "v", "C1"], "dystopias": ["imagined societies where everything has gone wrong", "反烏托邦:一切都走向敗壞的想像社會", "v", "C1"], "bureaucracy": ["a system of officials and rules that runs by procedure", "官僚體系", "v", "C1"], "soothing": ["gently calming", "撫慰人心的、令人平靜的", "v", "B2"], "vanished": ["gone completely and not coming back", "消失無蹤的、不復存在的", "v", "B2"], "early-onset": ["beginning at an unusually young age", "早發性的:比一般更早發病", "p", "C1"], "accompanied": ["went with someone", "陪同前往", "v", "B2"], "as it happened": ["idiom: as things turned out", "慣用語:結果後來是這樣", "p", "B2"], "hastening": ["making something happen sooner", "加速、提前促成", "v", "C1"], "persist": ["continue to exist", "持續存在", "v", "B2"], "refuses to": ["deliberately will not", "刻意不、拒絕去", "p", "B1"], "erudition": ["deep scholarly learning", "博學:深厚的學問", "v", "C1"], "no protection whatsoever": ["absolutely no protection at all", "毫無保護作用可言", "p", "B2"], "threshold": ["a line that, once crossed, changes what is possible", "門檻、界線:一旦跨過,情況就不同了", "v", "C1"], "climb": ["here: to rise in number", "此處指:數字往上攀升", "v", "B1"], "wicked": ["morally evil", "邪惡的", "v", "B2"], "contempt": ["a feeling that something is worthless", "輕蔑、不把…當一回事", "v", "C1"], "indifference": ["a complete lack of concern", "漠不關心", "v", "C1"], "opponent": ["the person arguing the other side", "對手、持相反意見者", "v", "B2"], "rigidly": ["inflexibly; without allowing movement", "僵硬地、寸步不讓地", "v", "C1"], "statistics": ["numbers collected and presented as data", "統計數字", "v", "B1"], "reflexes": ["automatic reactions that happen before you think — here, mental ones", "反射反應:來不及思考就先發生的反應;此指心理上的", "v", "B2"], "mixes up": ["confuses two things that should be kept separate", "把兩件事混為一談", "p", "B1"], "practices": ["ways of doing things that are established and repeated", "作法、慣行的做法", "v", "B2"], "treat as": ["to regard or classify as", "把…視為、當作…看待", "p", "B1"], "the means": ["noun: the method or instrument needed to do something — here, the drug itself. Same spelling as the verb 'means', different word: this one is a thing, not an action", "名詞:做某事所需的手段或工具,此處指藥物本身。與動詞 means 拼法相同但完全不同字:這個是「東西」,不是動作", "p", "B2"], "distinction": ["a difference between two things that matters", "區分、分野", "v", "B2"], "the whole of medicine": ["the entire point of medicine; what medicine fundamentally is", "醫學的全部:整個醫學的核心所在", "p", "B2"], "strange staircase": ["metaphor: the law has separate steps for different ages, with an odd gap between them", "比喻:法律依年齡分成幾個階梯,中間卻空了一階", "p", "B2"], "involvement": ["taking part in something; being included in a decision", "參與、涉入", "v", "B2"], "gap": ["an empty space where something is missing", "空隙、漏洞:該有東西卻空著的地方", "v", "B1"], "terminal illness": ["a disease that cannot be cured and will cause death", "末期疾病:無法治癒、終將致死", "p", "B2"], "agony": ["extreme physical or mental pain", "極度的痛苦", "v", "B2"], "ventilators": ["machines that breathe for patients who cannot", "呼吸器(複數)", "v", "B2"], "sedate": ["to give drugs that calm someone or make them unconscious", "給予鎮靜劑、使人鎮靜或失去意識", "v", "C1"], "captured": ["here: expressed accurately in words", "此處指:用文字準確表達出來", "v", "B2"], "relieved": ["here: (of pain) reduced or eased — not the emotion", "此處指:(疼痛)被減輕、緩解;不是「鬆一口氣」那個意思", "v", "B2"], "stay where it was put": ["idiom: remain within the limits originally set", "慣用語:停在原本畫定的界線內、不會再往外挪", "p", "B2"], "terminal": ["(of illness) leading to death; in the final stage", "末期的:終將致死、已到最後階段", "v", "B2"], "psychiatric suffering": ["mental illness severe enough to cause profound distress", "精神疾病造成的痛苦", "p", "C1"], "dementia": ["pronounced dih-MEN-shuh — progressive loss of memory and thinking ability", "發音 dih-MEN-shuh:失智症,記憶與思考能力逐步喪失", "f", "B2"], "justified": ["shown to be reasonable or defensible", "被合理化、被說成正當的", "v", "B2"], "weigh alternatives": ["to compare options against each other before choosing", "權衡各種選項:比較後再做決定", "p", "B2"], "developmental researchers": ["scientists who study how children's minds grow and change", "發展心理學研究者:研究兒童心智如何成長變化", "p", "B2"], "grasp": ["to understand fully", "理解、領會", "v", "B2"], "genuine": ["real and sincere, not merely apparent", "真實的、名副其實的", "v", "B2"], "fiercely": ["with great intensity and force", "激烈地、拚了命地", "v", "B2"], "harshly": ["severely; without kindness", "嚴厲地、苛刻地", "v", "B2"], "reflect on": ["to think carefully about something", "反思、細想", "p", "B2"], "hypothetical case": ["an imagined example used for testing or discussion", "假設性的案例:為了討論或測試而虛構的例子", "p", "B2"], "conducted": ["carried out; here, the way an argument is held", "進行、開展:此指這場爭論是「怎麼被進行」的", "v", "B2"], "activated": ["switched on; made to start working", "被啟動、被觸發", "v", "B2"], "accuse": ["to say someone has done something wrong", "指控、指責", "v", "B2"], "framework": ["a structure of rules within which something operates", "框架、制度架構", "v", "B2"], "bargaining": ["trying to negotiate a better outcome — one of Kübler-Ross's five stages", "討價還價:庫伯勒-羅斯五階段之一,試圖以交換條件換取轉圜", "f", "B2"], "griever": ["a person who is mourning a loss", "哀悼者、正在傷慟的人", "v", "B2"], "advances": ["moves forward, step by step", "逐步推進", "v", "B2"], "neatly": ["tidily and without complication — here, suspiciously so", "整整齊齊地:此處帶有「太過工整、不合實情」的意味", "v", "B2"], "grieving": ["the process of mourning someone's death", "傷慟、哀悼的過程", "v", "B2"], "getting on with": ["continuing with ordinary life", "繼續過日子、把生活過下去", "p", "B2"], "fiction": ["invented stories — novels, films, plays", "虛構作品:小說、電影、戲劇", "v", "B1"], "parliaments": ["national law-making assemblies", "國會、議會", "v", "B2"], "lands": ["idiom: where an argument or story finally comes down", "慣用語:(論點或故事)最終落在哪個位置", "v", "C1"], "paralysis": ["pronounced puh-RAL-uh-sis — loss of the ability to move", "發音 puh-RAL-uh-sis:癱瘓", "f", "B2"], "objection": ["a reason given against something", "反對意見、異議", "v", "B2"], "put a minor in court": ["placed a young person in a legal case as the one making the claim", "讓一名未成年人站上法庭、成為提告的一方", "p", "B2"], "fate": ["what happens to someone, especially something unavoidable", "命運、下場", "v", "B2"], "suite": ["pronounced SWEET — a set of private rooms", "發音 SWEET:套房;一組相連的私人房間", "f", "B2"], "compassion": ["deep sympathy for another's suffering, with the wish to relieve it", "悲憫、不忍人之心", "v", "B2"], "convenient": ["useful because it makes something easier — here, uncomfortably so", "便利的:此處帶有「太過好用而令人不安」之意", "v", "B1"], "Alzheimer's": ["pronounced ALTS-hy-merz — the most common cause of dementia", "發音 ALTS-hy-merz:阿茲海默症,失智症最常見的成因", "f", "B2"], "campaigned": ["worked publicly and persistently for a cause", "公開奔走倡議", "v", "B2"], "openly": ["without hiding it", "公開地、不加隱瞞地", "v", "B1"], "assisted dying": ["the general term covering both euthanasia and assisted suicide", "協助死亡:涵蓋安樂死與協助自殺的統稱", "p", "B2"], "presented": ["here: hosted or fronted a television programme", "此處指:主持(電視節目)", "v", "B2"], "documentary": ["a film about real events and people", "紀錄片", "v", "B1"], "option": ["a choice that is available to you", "選項:可供選擇的可能", "v", "B1"], "afterlife": ["existence after death", "來世、死後的世界", "v", "B2"], "play": ["a story written to be performed on stage", "舞台劇劇本", "v", "B1"], "file will probably stay closed": ["the case will most likely not be reopened or prosecuted", "這個案子多半就此結案、不會再被翻出來追究", "p", "B2"], "safeguards": ["protections built in to prevent misuse", "防護機制:為防止濫用而設的保障", "v", "B2"], "crossed": ["gone past a line or limit", "跨過(界線)", "v", "B1"], "paediatric": ["pronounced pee-dee-AT-rik — relating to the medical care of children (US spelling: pediatric)", "發音 pee-dee-AT-rik:兒科的(美式拼法為 pediatric)", "f", "C1"], "disability": ["a condition that limits movement, senses or activities", "身心障礙", "v", "B2"], "means": ["verb: signifies; is defined as. Not to be confused with the noun 'the means' later in this paragraph, which is a method or instrument", "動詞:意思是、指的是。注意勿與本段稍後的名詞 the means(手段、工具)混淆", "c", "B1"]};
+(function(){var ART=/^(a|an|the)\s+/i;var add={};
+  for(var k in VOCAB){if(ART.test(k)){var bare=k.replace(ART,'');if(bare&&!(bare in VOCAB)&&!(bare in add))add[bare]=VOCAB[k];}}
+  for(var b in add)VOCAB[b]=add[b];})();
+var TERMS = Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+function isWordChar(ch){return (ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z')||(ch>='0'&&ch<='9');}
+function ciFind(text,term){var lt=text.toLowerCase(),lterm=term.toLowerCase();var idx=lt.indexOf(lterm);
+  while(idx!==-1){var b=idx>0?text.charAt(idx-1):'';var a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a))return idx;idx=lt.indexOf(lterm,idx+1);}return -1;}
+function processTextNode(node){var text=node.nodeValue;if(!text||!/[A-Za-z]/.test(text))return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){var t=TERMS[i];var idx=ciFind(text,t);if(idx===-1)continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}}
+  if(bestTerm===null)return;var e=VOCAB[bestTerm];var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx),post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');btn.className='gl '+e[2];btn.setAttribute('role','button');btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-t',e[2]);btn.setAttribute('data-w',m);btn.setAttribute('data-z',e[1]);btn.setAttribute('data-d',e[0]);btn.setAttribute('data-l',e[3]||'');
+  btn.setAttribute('aria-expanded','false');btn.textContent=m;
+  var p=node.parentNode;
+  if(pre)p.insertBefore(document.createTextNode(pre),node);
+  p.insertBefore(btn,node);var pn=document.createTextNode(post);p.insertBefore(pn,node);p.removeChild(node);
+  processTextNode(pn);}
+function linkify(){Array.prototype.forEach.call(document.querySelectorAll('article p, p.deck'),function(p){
+  var w=document.createTreeWalker(p,NodeFilter.SHOW_TEXT,null,false);var ns=[],n;
+  while((n=w.nextNode()))ns.push(n);for(var i=0;i<ns.length;i++){if(ns[i].parentNode)processTextNode(ns[i]);}});}
+
+var pop=document.getElementById('pop'),scrim=document.getElementById('scrim');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase / idiom 片語 · 慣用語",c:"Grammar 文法",f:"Culture / context 文化補充"};
+var openBtn=null;
+function closePop(){pop.classList.remove('show');scrim.classList.remove('show');if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;}}
+function openPop(btn){var t=btn.getAttribute('data-t');
+  pT.className='tag '+t;pT.textContent=LABEL[t];
+  pH.textContent=btn.getAttribute('data-w');pZ.textContent=btn.getAttribute('data-z');pD.textContent=btn.getAttribute('data-d');
+  var lv=btn.getAttribute('data-l');pLv.textContent=lv?('CEFR '+lv):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){scrim.classList.add('show');pArr.style.display='none';}
+  else{pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2;left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12,below=true;
+    if(r.bottom+12+ph>window.innerHeight && r.top-12-ph>0){top=sy+r.top-ph-12;below=false;}
+    pop.style.left=left+'px';pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7;ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px';pArr.style.top=below?'-7px':(ph-7)+'px';}
+  btn.setAttribute('aria-expanded','true');openBtn=btn;}
+document.addEventListener('click',function(e){var btn=e.target.closest?e.target.closest('.gl'):null;
+  if(btn){e.stopPropagation();if(openBtn===btn){closePop();}else{closePop();openPop(btn);}return;}
+  if(pop.classList.contains('show')&&!pop.contains(e.target))closePop();});
+document.getElementById('popclose').addEventListener('click',closePop);
+scrim.addEventListener('click',closePop);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePop();return;}if((e.key==='Enter'||e.key===' ')&&e.target.classList&&e.target.classList.contains('gl')){e.preventDefault();if(openBtn===e.target){closePop();}else{closePop();openPop(e.target);}}});
+window.addEventListener('resize',closePop);
+
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases & idioms","片語 · 慣用語"],["c","Grammar","文法"],["f","Culture & context","文化補充"]];
+  var seen={},byType={v:[],p:[],c:[],f:[]};
+  for(var k in VOCAB){var e=VOCAB[k];var sig=e[2]+'|'+e[1]+'|'+e[0];if(seen[sig])continue;seen[sig]=1;byType[e[2]].push([k,e]);}
+  var html='';
+  GROUPS.forEach(function(G){var items=byType[G[0]];if(!items.length)return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank">';
+    items.forEach(function(it){var e=it[1];html+='<div class="wb"><span class="t">'+it[0]+'</span> · <span class="z">'+e[1]+'</span><span class="x">'+e[0]+'</span></div>';});
+    html+='</div>';});
+  document.getElementById('wordbank').innerHTML=html;}
+
+buildWordbank(); linkify();
+</script>
+</body>
+</html>
