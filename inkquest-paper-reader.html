@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>InkQuest Reading Room · Oral Health Papers</title>
+<style>
+  :root{
+    --paper:#F6F2E9; --panel:#FFFFFF; --ink:#1E1B16; --soft-ink:#4A453B; --rule:#DED6C4;
+    --accent:#1F4E6B; --accent-deep:#123549; --accent-tint:rgba(31,78,107,.08);
+    --word:#0E7C86; --phrase:#8A5AA8; --gram:#3F7D54; --res:#B8863B;
+    --gl-line:#9C907A; --gl-line-hover:#5F5849; --hit:#FBE7A2;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+    --fs:19px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;
+    font-family:var(--serif);line-height:1.72;font-size:var(--fs);
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  #bar{position:sticky;top:0;z-index:30;background:var(--paper);
+    border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:10px;
+    padding:10px 18px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .iconbtn{background:none;border:0;padding:6px;cursor:pointer;color:var(--ink);line-height:0;border-radius:5px}
+  .iconbtn:hover{background:var(--accent-tint)}
+  .iconbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+  #barTitle{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--soft-ink);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+  #barTitle b{color:var(--accent)}
+
+  header.article{margin:32px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent);margin-bottom:12px}
+  h1.title{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.14;font-size:31px;margin:0 0 14px}
+  h1.title .sent{border-radius:5px}
+  .cite{font-family:var(--sans);font-size:13px;line-height:1.55;color:var(--soft-ink);
+    border-top:1px solid var(--rule);padding:12px 0 0}
+  .cite b{color:var(--ink)}
+  .cite .lic{display:inline-block;margin-top:5px;font-size:11.5px;color:var(--res);font-weight:700}
+  .toolbar{display:flex;gap:9px;margin:20px 0 4px;flex-wrap:wrap}
+  .tbtn{font-family:var(--sans);font-size:12.5px;font-weight:600;padding:8px 13px;border:1px solid var(--rule);
+    background:none;color:var(--ink);border-radius:20px;cursor:pointer}
+  .tbtn:hover{background:var(--accent-tint);border-color:var(--accent)}
+  .tbtn.on{background:var(--accent);border-color:var(--accent);color:#F6F2E9}
+
+  article{margin-top:22px}
+  #body > h2.sec:first-child{border-top:0;padding-top:0;margin-top:26px}
+  h2.sec{font-family:var(--sans);font-weight:800;font-size:15px;color:var(--ink);
+    margin:34px 0 12px;padding-top:16px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+  h2.sec::before{content:"\25C8";color:var(--accent);font-size:11px}
+  h2.sec .zh{font-family:var(--han);font-weight:600;font-size:13px;color:var(--soft-ink)}
+  .para{margin:0 0 20px}
+  .bigrule{border-top:2px solid var(--ink);margin:44px 0 0;padding-top:10px}
+  .bigrule .lbl{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--accent)}
+
+  .sent{cursor:pointer;border-radius:3px;padding:1px 0;-webkit-tap-highlight-color:transparent;
+    transition:background .12s;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .sent:hover{background:rgba(31,78,107,.07)}
+  .sent.open{background:rgba(31,78,107,.10)}
+  .sent.flash{background:var(--hit)}
+  .sent:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  mark.hit{background:var(--hit);padding:0 1px;border-radius:2px}
+
+  .tr{display:none;margin:12px 0 16px;padding:14px 16px;background:var(--panel);
+    border:1px solid var(--rule);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;
+    font-family:var(--han);font-size:16px;line-height:1.78;color:var(--ink)}
+  .tr.show{display:block}
+  .tr .lab{font-family:var(--sans);font-size:10.5px;font-weight:800;letter-spacing:.1em;
+    color:var(--accent);display:block;margin-bottom:5px}
+  .tr .gnote{margin-top:13px;padding-top:12px;border-top:1px dashed var(--rule);
+    font-size:14.5px;line-height:1.75;color:var(--soft-ink)}
+  .tr .gnote .lab{color:var(--gram)}
+  .tr .gnote em{font-family:var(--sans);font-style:normal;font-weight:700;color:var(--ink)}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(30,27,22,.08);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  .tblblock{margin:22px 0 8px;border-top:1px solid var(--rule);padding-top:14px}
+  .tblhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tblname{font-family:var(--sans);font-size:13px;font-weight:800;color:var(--accent)}
+  .tblbtn{font-family:var(--sans);font-size:12px;font-weight:600;padding:6px 12px;
+    border:1px solid var(--rule);background:var(--panel);color:var(--ink);border-radius:16px;cursor:pointer;margin-left:auto}
+  .tblbtn:hover{border-color:var(--accent);background:var(--accent-tint)}
+  .tblbtn.on{background:var(--accent);border-color:var(--accent);color:#F6F2E9}
+  .tblcap{font-family:var(--sans);font-size:12.5px;line-height:1.55;color:var(--soft-ink);margin:12px 0 8px}
+  .tblwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule);border-radius:6px;background:var(--panel)}
+  .tblwrap table{border-collapse:collapse;font-family:var(--sans);font-size:12.5px;min-width:100%}
+  .tblwrap th,.tblwrap td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--rule);white-space:nowrap;vertical-align:top}
+  .tblwrap thead th{background:#EFE9DA;font-weight:800;color:var(--accent-deep);position:sticky;top:0}
+  .tblwrap td:first-child,.tblwrap th:first-child{white-space:normal;min-width:190px}
+  .tblwrap.text td,.tblwrap.text th{white-space:normal}
+  .tblwrap.text td:nth-child(1),.tblwrap.text th:nth-child(1){min-width:0;width:34px}
+  .tblwrap.text td:nth-child(2),.tblwrap.text td:nth-child(3){min-width:0;line-height:1.55}
+  .tblwrap.text td,.tblwrap.text th{padding:7px 8px}
+  .tblwrap.text td:nth-child(3){font-family:var(--han)}
+  .tblwrap tr.grp td{background:#F3EEE1;font-weight:800;color:var(--accent-deep);white-space:normal}
+  .tblnote{font-family:var(--han);font-size:13px;line-height:1.7;color:var(--soft-ink);margin:10px 0 0}
+  .mesh{margin:10px 0 0;font-family:var(--sans);font-size:15px;line-height:2.1}
+  .mesh .mterm{display:inline-block;margin:0 8px 8px 0;padding:5px 11px;border:1px solid var(--rule);
+    border-radius:16px;background:var(--panel);cursor:pointer;font-size:14px;
+    border-bottom:1px solid var(--rule);-webkit-tap-highlight-color:transparent}
+  .mesh .mterm:hover{border-color:var(--res);background:#FBF6EA}
+  .meshnote{font-family:var(--sans);font-size:13px;line-height:1.65;color:var(--soft-ink);margin:4px 0 14px}
+
+  #pop{position:absolute;z-index:60;max-width:350px;background:var(--ink);color:#F3EEE3;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.1em;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:#E0BC72;color:#2b1f08}
+  #pop .tag.m{background:#E0BC72;color:#2b1f08}
+  #pop .h{font-weight:800;font-size:15.5px;color:#fff;margin-bottom:2px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#E7C58A;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:var(--ink);transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:20px;cursor:pointer;line-height:1;display:none}
+
+  #scrim{position:fixed;inset:0;background:rgba(30,27,22,.34);z-index:40;display:none}
+  #scrim.show{display:block}
+  #drawer{position:fixed;top:0;left:0;bottom:0;width:min(88vw,350px);background:var(--panel);z-index:50;
+    transform:translateX(-101%);transition:transform .22s ease;display:flex;flex-direction:column;
+    box-shadow:0 0 44px -8px rgba(30,27,22,.4)}
+  #drawer.open{transform:none}
+  .d-head{padding:calc(20px + env(safe-area-inset-top,0px)) 20px 14px;border-bottom:1px solid var(--rule)}
+  .d-sub{font-family:var(--sans);font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--accent);margin:0 0 3px}
+  .d-title{font-family:var(--sans);font-size:16px;font-weight:800;margin:0;line-height:1.3}
+  .tabs{display:flex;border-bottom:1px solid var(--rule)}
+  .tab{flex:1;font-family:var(--sans);font-size:12.5px;font-weight:600;padding:12px 3px;background:none;
+    border:0;border-bottom:2px solid transparent;color:var(--soft-ink);cursor:pointer}
+  .tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+  .d-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:30px}
+  .pane{display:none;padding:10px 0} .pane.on{display:block}
+
+  .tocitem{display:block;width:100%;text-align:left;font-family:var(--sans);font-size:13.5px;line-height:1.45;
+    padding:13px 20px;background:none;border:0;border-left:3px solid transparent;color:var(--ink);cursor:pointer}
+  .tocitem:hover{background:var(--accent-tint)}
+  .tocitem.cur{border-left-color:var(--accent);background:var(--accent-tint);font-weight:700}
+  .tocitem.todo{color:#A9A396;cursor:default} .tocitem.todo:hover{background:none}
+  .tocitem em{font-style:normal;color:var(--accent);font-size:11px;font-weight:700;display:block;margin-bottom:3px;letter-spacing:.05em}
+  .tocitem.todo em{color:#BDB6A7}
+  .tocitem .meta{display:block;font-size:11.5px;color:var(--soft-ink);margin-top:4px;font-weight:400}
+  .tocitem.todo .meta{color:#BDB6A7}
+
+  #q{width:calc(100% - 40px);margin:12px 20px 6px;font-family:var(--sans);font-size:14px;padding:10px 12px;
+    border:1px solid var(--rule);border-radius:6px;background:var(--paper);color:var(--ink)}
+  #q:focus{outline:none;border-color:var(--accent)}
+  .qnote{font-family:var(--sans);font-size:11.5px;color:var(--soft-ink);padding:4px 20px 8px;margin:0}
+  .hitrow{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;
+    padding:11px 20px;cursor:pointer;font-family:var(--sans)}
+  .hitrow:hover{background:var(--accent-tint)}
+  .hitrow .hr-ch{font-size:11px;color:var(--accent);font-weight:700;display:block;margin-bottom:3px}
+  .hitrow .hr-sn{font-size:12.5px;line-height:1.5;color:var(--soft-ink)}
+  .hitrow .hr-sn b{color:var(--ink);background:var(--hit);font-weight:400}
+
+  .wbhead{font-family:var(--sans);font-size:11.5px;font-weight:800;letter-spacing:.08em;
+    margin:18px 20px 10px;display:flex;align-items:center;gap:8px}
+  .wbhead .pip{width:9px;height:9px;border-radius:3px;flex:none}
+  .wbhead.v{color:#0d6870} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.c{color:#2f6042} .wbhead.c .pip{background:var(--gram)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--res)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0}
+  .wb{padding:0 20px;margin-bottom:12px;font-size:13.5px;line-height:1.45}
+  .wb .t{font-family:var(--sans);font-weight:700}
+  .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:13px}
+  .wb .x{display:block;font-family:var(--sans);color:var(--soft-ink);font-size:12px;margin-top:2px;line-height:1.5}
+
+  .setrow{padding:16px 20px;border-bottom:1px solid var(--rule)}
+  .setrow h4{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.06em;margin:0 0 10px;color:var(--soft-ink)}
+  .sizes{display:flex;gap:8px}
+  .sizes button{flex:1;font-family:var(--sans);font-size:12.5px;padding:9px 6px;border:1px solid var(--rule);
+    background:none;border-radius:5px;cursor:pointer;color:var(--ink)}
+  .sizes button.on{background:var(--accent);border-color:var(--accent);color:#F6F2E9}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;
+    font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.65}
+  footer .strong{color:var(--ink);font-weight:700} footer .han{font-family:var(--han)}
+
+  @media(max-width:600px){
+    :root{--fs:18px}
+    h1.title{font-size:26px}
+    #pop{position:fixed;left:0!important;right:0;bottom:0;top:auto!important;max-width:none;
+      border-radius:16px 16px 0 0;padding:20px 20px calc(26px + env(safe-area-inset-bottom,0px))}
+    #pop .arrow{display:none} #pop .close{display:block}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <button class="iconbtn" id="menuBtn" aria-label="Contents">
+    <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <div id="barTitle"></div>
+  <button class="iconbtn" id="searchBtn" aria-label="Search">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+</div>
+
+<div class="wrap">
+  <header class="article">
+    <div class="kicker" id="kicker"></div>
+    <h1 class="title" id="pTitle"></h1>
+    <div class="cite" id="pCite"></div>
+  </header>
+
+  <article id="body"></article>
+  <div class="toolbar" id="ftBar">
+    <button class="tbtn" id="ftBtn">Continue to the full text</button>
+  </div>
+  <article id="ftBody" hidden></article>
+
+  <footer id="foot"></footer>
+</div>
+
+<div id="scrim"></div>
+
+<aside id="drawer" aria-label="Contents and search">
+  <div class="d-head">
+    <p class="d-sub">InkQuest</p>
+    <p class="d-title">Reading Room · Oral&nbsp;Health Papers</p>
+  </div>
+  <div class="tabs">
+    <button class="tab on" data-pane="toc">Papers</button>
+    <button class="tab" data-pane="search">Search</button>
+    <button class="tab" data-pane="words">Words</button>
+    <button class="tab" data-pane="set">Settings</button>
+  </div>
+  <div class="d-body">
+    <div class="pane on" id="pane-toc"></div>
+    <div class="pane" id="pane-search">
+      <input id="q" type="search" placeholder="Search this paper&hellip;" autocomplete="off">
+      <p class="qnote" id="qnote">Type at least two letters. 中英文都可以搜尋。</p>
+      <div id="hits"></div>
+    </div>
+    <div class="pane" id="pane-words"></div>
+    <div class="pane" id="pane-set">
+      <div class="setrow">
+        <h4>Text size 字級</h4>
+        <div class="sizes" id="sizes">
+          <button data-size="17">Small</button>
+          <button data-size="19" class="on">Medium</button>
+          <button data-size="22">Large</button>
+        </div>
+      </div>
+      <div class="setrow">
+        <h4>Translations 中譯</h4>
+        <div class="sizes">
+          <button id="openAllBtn">Open all 全部展開</button>
+          <button id="closeAllBtn">Close all 全部收起</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">&times;</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="h" id="pop-h"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+
+<script>
+var PAPERS = [{"id": "yen2015", "no": "Paper 1", "part": "Abstract + full text", "short": "Denture wearing and quality of life in Taiwan", "title": "Impact of removable dentures on oral health-related quality of life among elderly adults in Taiwan", "titleZh": "活動假牙對台灣長者口腔健康相關生活品質的影響", "titleG": "論文標題通常沒有動詞，整個就是一個大名詞片語。拆法是找介系詞：<em>Impact of A on B among C</em> — A（活動假牙）對 B（口腔健康相關生活品質）在 C（台灣長者）身上的影響。看到 of / on / among / in 就切一刀，標題立刻變短。", "authors": "Yen Y-Y, Lee H-E, Wu Y-M, Lan S-J, Wang W-C, Du J-K, Huang S-T, Hsu K-J", "journal": "BMC Oral Health, 2015; 15:1", "doi": "10.1186/1472-6831-15-1", "lic": "Open access under CC BY 4.0 — reproduced with attribution.", "why": "277 高雄長者、面對面問卷、橫斷式設計。跟您的題目最接近，第一篇就讀這篇。", "done": true, "abstract": [{"h": "Background", "zh": "研究背景", "s": [{"en": "Although the use of removable dentures can improve oral function and esthetics for elderly people, compared to those who do not wear removable dentures, those wearing removable dentures could have worse oral health related-quality of life (OHRQoL).", "zh": "雖然配戴活動假牙可以改善長者的口腔功能與外觀，但與沒有配戴活動假牙的人相比，配戴活動假牙者的口腔健康相關生活品質（OHRQoL）反而可能較差。", "g": "這篇的第一句就是長句，但骨架只有一個：<em>Although A, B</em>。先找 B（主要子句）的主詞和動詞：<em>those wearing removable dentures</em>（主詞）+ <em>could have</em>（動詞）。中間那句 compared to... 是插入語，第一次讀先蓋住。長句不是難，是裝了很多註解；先拆出主詞動詞，句子就散了。"}, {"en": "Additional information is required to assess which factors related to denture wearing influence the OHRQoL of elderly individuals.", "zh": "我們還需要更多資料，才能評估與配戴假牙有關的哪些因素會影響長者的口腔健康相關生活品質。", "g": "<em>is required</em> 是被動語態。論文很少寫 “We need more information”，而是寫 “Additional information is required”——把人拿掉，只講事情。這是學術英文的基本語氣，您自己寫論文也會一直用到。"}, {"en": "The purpose of this study is to evaluate the association between denture wearing and OHRQoL in a sample of elderly individuals in Taiwan.", "zh": "本研究的目的是評估在台灣一組長者樣本中，配戴假牙與口腔健康相關生活品質之間的關聯。", "g": "<em>The purpose of this study is to + 原形動詞</em> 是論文最常見的句型之一，背下來直接可以用在自己的報告第一張投影片。另外記住 <em>association between A and B</em>（A 與 B 的關聯），介系詞固定用 between...and，不能換。"}]}, {"h": "Methods", "zh": "研究方法", "s": [{"en": "The study population included 277 elderly people wearing removable dentures (mean age = 76.0 years).", "zh": "研究對象包含 277 位配戴活動假牙的長者（平均年齡 76.0 歲）。", "g": "<em>wearing removable dentures</em> 是分詞片語，等於 <em>who wore removable dentures</em>，用來修飾前面的 277 elderly people。論文很愛這種省略關係代名詞的寫法，讀到「名詞 + Ving」就把它還原成 who...，意思馬上出來。"}, {"en": "Using face-to-face interviews, we collected data on the participants’ socio-demographic characteristics, dental care service usage (regular dental checkups, treatment during toothache, dental visits in the last year), and factors related to denture wearing (perceived oral pain, perceived loose denture, perceived oral ulcer, perceived halitosis, perceived dry mouth, and perceived total denture satisfaction scores).", "zh": "我們透過面對面訪談，收集了受訪者的社會人口特徵、牙科醫療服務使用情形（定期口腔檢查、牙痛時就醫、過去一年就診次數），以及與配戴假牙相關的因素（自覺口腔疼痛、自覺假牙鬆脫、自覺口腔潰瘍、自覺口臭、自覺口乾，以及自覺假牙整體滿意度分數）。", "g": "這句看起來嚇人，其實只有三塊：<em>we collected data on A, B, and C</em>。括號裡全部是舉例，第一次讀先跳過、拉出 A/B/C 三塊，句子立刻變短。還有一個關鍵字：<em>perceived</em>，是「受訪者自己覺得的」，不是牙醫檢查出來的，這篇全文反覆出現。"}, {"en": "OHRQoL was measured using the Taiwanese version of the Geriatric Oral Health Assessment Index (GOHAI-T).", "zh": "口腔健康相關生活品質以台灣版老年口腔健康評估指標（GOHAI-T）測量。", "g": "<em>was measured using...</em> 就是「用……來測量」。Methods 段落幾乎整段都是被動式：X was measured / was recorded / was performed。原因是重點在「做了什麼」，不是「誰做的」。寫自己論文的 Methods 時，直接套這個句型。"}, {"en": "The location and number of remaining natural teeth and the type of denture were also recorded.", "zh": "也記錄了剩餘天然牙的位置與數量，以及假牙的類型。", "g": "主詞很長：<em>The location and number of remaining natural teeth and the type of denture</em>，動詞是 <em>were also recorded</em>。主詞一長就容易看丟動詞，所以讀到 and 要先判斷：它是在串主詞，還是在串句子？"}, {"en": "Hierarchical multiple regression analysis was performed using GOHAI-T scores as the dependent variable.", "zh": "以 GOHAI-T 分數為依變項，進行階層式多元迴歸分析。", "g": "又是「被動 + using」。這裡要記一組詞：<em>dependent variable</em>（依變項）是被影響的那一個，其他預測因子叫 <em>independent variables</em>（自變項）。您的生統課會反覆用到這兩個字。"}]}, {"h": "Results", "zh": "研究結果", "s": [{"en": "All the predictors together accounted for 50% of the variance in GOHAI-T scores.", "zh": "所有預測因子合起來可以解釋 GOHAI-T 分數 50% 的變異。", "g": "<em>account for</em> 在這裡不是「解釋原因」，而是統計上的「解釋變異」。看到 <em>accounted for X% of the variance</em> 就直接理解成「解釋了 X%」，不用每次重新推。"}, {"en": "Further, education level, number of natural teeth, denture status, perceived loose denture, perceived oral ulcer, and perceived total denture satisfaction scores had statistically significant influences on OHRQoL.", "zh": "此外，教育程度、天然牙數目、假牙狀況、自覺假牙鬆脫、自覺口腔潰瘍，以及自覺假牙整體滿意度分數，對口腔健康相關生活品質有統計上顯著的影響。", "g": "六個並列主詞配一個動詞 <em>had</em>。讀這種長串列舉時，先找最後一個 <em>and</em>，就知道清單到哪裡結束，動詞緊接在後。搭配記住：<em>have an influence on</em>（對……有影響），介系詞用 on。"}, {"en": "When compared with other variables, factors related to denture wearing, especially perceived total denture satisfaction scores, had the greatest impact on GOHAI-T scores.", "zh": "與其他變項相比，與配戴假牙有關的因素——尤其是自覺假牙整體滿意度分數——對 GOHAI-T 分數的影響最大。", "g": "主詞是 <em>factors</em>，動詞是 <em>had</em>。中間 especially... 是插入補充，兩邊用逗號夾起來，可以先蓋住。最高級 <em>the greatest impact on</em> 前面一定要有 the。"}]}, {"h": "Conclusions", "zh": "結論", "s": [{"en": "Of the factors analyzed in this study, denture satisfaction was the strongest predictor of OHRQoL.", "zh": "在本研究分析的各項因素中，假牙滿意度是口腔健康相關生活品質最強的預測因子。", "g": "句首的 <em>Of the factors...</em> 等於 <em>Among the factors...</em>，意思是「在……之中」。這種倒裝開頭在結論句很常見，目的是先把範圍圈好再講重點。<em>analyzed</em> 是過去分詞，修飾 factors（被分析的因素）。"}, {"en": "This suggests that denture satisfaction is useful for assessing the effect of denture treatment on the OHRQoL of elderly individuals wearing removable dentures.", "zh": "這顯示假牙滿意度可用於評估假牙治療對配戴活動假牙長者口腔健康相關生活品質的影響。", "g": "<em>This suggests that...</em> 是結論段的標準收尾：不說「證明」，只說「顯示、暗示」。因為橫斷式研究不能講因果，所以用 suggests 而不是 proves——這是審查者最愛抓的點。另外：<em>useful for + Ving</em>，<em>the effect of A on B</em>（A 對 B 的影響）。"}]}], "fulltext": [{"h": "Background", "zh": "前言", "s": [{"en": "Because of the low fertility rate in Taiwan, the elderly population is rapidly increasing.", "zh": "由於台灣生育率偏低，老年人口正快速增加。", "g": "<em>Because of + 名詞</em>（因為某個東西），<em>Because + 句子</em>（因為某件事）。兩個不能混用，這是台灣學生最常寫錯的地方之一。"}, {"en": "By the end of 2026, people aged 65 years or over are expected to account for 20.1% of the total population of Taiwan, and, as such, there is a growing interest in helping the elderly to live a complete and healthy life, physically, mentally, and socially.", "zh": "預計到 2026 年底，65 歲以上人口將占台灣總人口的 20.1%，因此，如何協助長者在生理、心理與社會層面過完整而健康的生活，越來越受到重視。", "g": "<em>are expected to</em>（預計將會）是論文談趨勢與推估的標準說法，比 will 客氣，也比較安全。<em>account for</em> 在這裡是「占（多少比例）」，跟摘要裡統計上的「解釋變異」是同一個片語的不同用法——看上下文決定。"}, {"en": "Oral health is an important part of well-being, and oral health-related quality of life (OHRQoL) should be emphasized when providing dental care to elderly people.", "zh": "口腔健康是整體福祉的重要一環，在提供長者牙科照護時，應重視口腔健康相關生活品質。"}, {"en": "One of the most commonly used measures of OHRQoL is the Geriatric Oral Health Assessment Index (GOHAI), which was developed specifically for use with older adults.", "zh": "最常用的口腔健康相關生活品質測量工具之一是老年口腔健康評估指標（GOHAI），這是專為長者設計的量表。", "g": "<em>One of the most + 形容詞 + 複數名詞</em> 是介紹工具或方法的萬用開場。後面的 <em>which</em> 帶出補充說明，前面有逗號，代表這是額外資訊、不是限定，可以先跳過再回頭讀。"}, {"en": "Many previous studies have shown that implant-supported dentures can substantially improve the wearer’s quality of life; however, the higher cost of treatment with dental implants means that removable dentures continue to be widely used to replace missing teeth, especially in the elderly.", "zh": "許多先前研究顯示，植體支持式假牙能大幅改善配戴者的生活品質；然而，植牙治療費用較高，因此活動假牙仍被廣泛用來替代缺失的牙齒，長者尤其如此。", "g": "分號 <em>;</em> 加 <em>however</em> 是論文轉折的標準寫法：前半講好處，後半講現實限制。<em>Many previous studies have shown that...</em> 是文獻回顧的第一號句型，整篇會出現很多次。"}, {"en": "Unfortunately, individuals wearing a removable prosthesis can experience significant problems with regard to the social and emotional aspects of life, as compared to individuals with natural teeth.", "zh": "遺憾的是，與擁有天然牙的人相比，配戴活動補綴物者在生活的社交與情緒層面可能遭遇明顯的困擾。", "g": "<em>prosthesis</em>（補綴物）在這篇是 denture 的同義替換詞，論文常換字避免重複。讀的時候要意識到：換了字，講的還是同一件事。"}, {"en": "It may be difficult for some individuals to adapt to dentures, as wearing a removable prosthesis demands emotional and functional adjustments.", "zh": "有些人可能難以適應假牙，因為配戴活動補綴物需要在情緒與功能上做出調整。", "g": "<em>It is difficult for someone to do something</em>——這裡的 It 是虛主詞，真正的主詞是後面的 to adapt to dentures。中文沒有這個結構，所以很容易寫成 “Some people are difficult to adapt”（錯）。"}, {"en": "As such, elderly individuals wearing removable dentures may experience more OHRQoL impairments than do those who do not wear removable dentures.", "zh": "因此，配戴活動假牙的長者，其口腔健康相關生活品質受損的程度，可能高於未配戴活動假牙者。"}, {"en": "In elderly people, OHRQoL is known to be associated with socioeconomic status, regular dental visits, subjective masticatory ability, and the number of remaining natural teeth.", "zh": "在長者身上，口腔健康相關生活品質已知與社經地位、定期就診、主觀咀嚼能力，以及剩餘天然牙數目有關。", "g": "<em>be associated with</em>（與……有關聯）是本篇出現頻率最高的片語之一，整篇至少十幾次。注意它只講關聯，不講因果——這正是橫斷式研究能講的極限。"}, {"en": "Factors related to denture wearing that specifically affect the OHRQoL of elderly people wearing removable dentures include denture status, denture satisfaction, perceived loose denture, presence of oral pain, presence of oral ulcer, perceived halitosis and perceived dry mouth.", "zh": "特別會影響配戴活動假牙長者口腔健康相關生活品質的、與配戴假牙相關的因素，包括假牙狀況、假牙滿意度、自覺假牙鬆脫、口腔疼痛、口腔潰瘍、自覺口臭與自覺口乾。", "g": "這句的主詞從句首一路長到 <em>include</em> 才結束。訣竅：找到動詞 include，往前推的全部都是主詞。看到句子讀了兩行還沒出現動詞，就是遇到長主詞了，別慌，繼續往下找。"}, {"en": "Kuo et al. found that increased denture satisfaction was significantly related to an improvement in elderly patients’ OHRQoL.", "zh": "Kuo 等人發現，假牙滿意度提高與長者口腔健康相關生活品質的改善有顯著關聯。", "g": "<em>et al.</em> 是拉丁文 “and others” 的縮寫，唸作 /ˌet ˈæl/，中文就是「等人」。引用他人研究時的標準寫法：作者姓 + et al. + 過去式動詞（found / reported / showed）。"}, {"en": "In addition, Komagamine et al. showed a positive relationship between retention of the lower denture and OHRQoL, using the Oral Health Impact Profile (OHIP), in edentulous patients.", "zh": "此外，Komagamine 等人以口腔健康影響量表（OHIP）在無牙患者中，發現下顎假牙固位力與口腔健康相關生活品質之間呈正向關係。"}, {"en": "Moreover, Ekanayake et al. reported a significant association between halitosis and higher OHIP scores, indicating that people with halitosis had a worse OHRQoL than those who did not have halitosis.", "zh": "再者，Ekanayake 等人指出口臭與較高的 OHIP 分數之間有顯著關聯，顯示有口臭者的口腔健康相關生活品質比沒有口臭者差。", "g": "注意 OHIP 與 GOHAI 的分數方向相反：OHIP 分數越高代表生活品質越差，GOHAI 分數越高代表越好。讀到分數就要先確認方向，否則整段會理解顛倒。<em>indicating that...</em> 是分詞構句，等於 “which indicates that...”。"}, {"en": "In addition, a previous study indicated that elderly patients’ denture satisfaction is associated with health-related quality of life (HRQoL).", "zh": "此外，先前一項研究指出，長者的假牙滿意度與健康相關生活品質（HRQoL）有關。", "g": "注意兩個很像的縮寫：<em>OHRQoL</em> 是口腔健康相關生活品質，<em>HRQoL</em> 是整體健康相關生活品質，少一個 O，範圍大很多。這段刻意在比較兩者。"}, {"en": "However, Inoue et al. showed that HRQoL in patients with removable dentures was mediated by OHRQoL.", "zh": "然而，Inoue 等人顯示，配戴活動假牙者的健康相關生活品質是透過口腔健康相關生活品質而產生中介影響的。", "g": "<em>mediated by</em>（被……中介）是研究方法的專門用語：A 不是直接影響 C，而是先影響 B，再由 B 影響 C。B 就叫中介變項（mediator）。"}, {"en": "Moreover, Lee et al. observed that perceived oral health status, measured by the OHIP, had a greater impact on HRQoL than did the clinical factors, as measured by the 36-Item Short Form (SF-36) Health Survey.", "zh": "再者，Lee 等人觀察到，以 OHIP 測得的自覺口腔健康狀況，對健康相關生活品質的影響大於以 SF-36 健康量表測得的臨床因素。"}, {"en": "Therefore, it is important to assess the predictors of OHRQoL to improve HRQoL.", "zh": "因此，評估口腔健康相關生活品質的預測因子，對於改善整體健康相關生活品質相當重要。"}, {"en": "A previous study showed that although denture wearing could improve oral function and esthetics related to quality of life, people wearing removable dentures had a significantly higher median OHIP score than did those who do not wear removable dentures, indicating a poorer OHRQoL in the former group.", "zh": "先前一項研究顯示，雖然配戴假牙能改善與生活品質相關的口腔功能與外觀，但配戴活動假牙者的 OHIP 中位數分數顯著高於未配戴者，代表前者的口腔健康相關生活品質較差。", "g": "<em>the former</em> 指前面提到的兩者中的「前者」，相對的是 <em>the latter</em>（後者）。論文為了避免重複整串名詞常這樣用，讀到就要回頭確認它指誰。"}, {"en": "Hence, additional information is required to determine which factors related to denture wearing influence the OHRQoL of elderly subjects.", "zh": "因此，還需要更多資料來確定與配戴假牙相關的哪些因素會影響長者的口腔健康相關生活品質。", "g": "這句和摘要裡的第二句幾乎一模一樣，只換了 assess → determine。摘要本來就是全文的濃縮版，這種重疊很正常，也代表您讀懂摘要就等於掌握了骨架。"}, {"en": "Improved understanding of the factors correlated with a better OHRQoL would help in clinical decision making to provide dental treatment appropriate for patients’ specific needs and concerns.", "zh": "更了解哪些因素與較佳的口腔健康相關生活品質有關，有助於臨床決策，提供符合病人特定需求與顧慮的牙科治療。"}, {"en": "Although the relationship between variables related to denture wearing and OHRQoL has been investigated in previous studies, it is unclear which variable is the strongest predictor of OHRQoL.", "zh": "雖然先前研究已探討過與配戴假牙相關的變項和口腔健康相關生活品質之間的關係，但仍不清楚哪一個變項是最強的預測因子。", "g": "<em>Although 前人做過 A，但 B 仍不清楚</em>——這就是論文的「研究缺口」句型，幾乎每篇前言的倒數第二段都會出現。找到這句，就找到了整篇論文存在的理由。"}, {"en": "Therefore, in the current study, we aimed to address this gap in the literature.", "zh": "因此，本研究旨在填補文獻中的這個缺口。", "g": "<em>gap in the literature</em>（文獻缺口）是學術寫作的核心概念：別人沒做過的那一塊，就是您研究的立足點。<em>address a gap</em> 是固定搭配，不是 solve 也不是 fix。"}, {"en": "The research hypothesis was that denture satisfaction would be the strongest predictor of OHRQoL among the variables mentioned above that relate to wearing of removable dentures.", "zh": "研究假設是：在上述與配戴活動假牙相關的變項中，假牙滿意度會是口腔健康相關生活品質最強的預測因子。", "g": "<em>The research hypothesis was that...</em> 直接點名研究假設，後面用 <em>would be</em>（而不是 is），因為假設是還沒驗證的推測。這個時態選擇很重要，寫的時候別用錯。"}]}, {"h": "Methods · Participants", "zh": "研究方法 · 研究對象", "s": [{"en": "This was a cross-sectional study carried out from September 2009 to January 2010.", "zh": "本研究為橫斷式研究，執行期間自 2009 年 9 月至 2010 年 1 月。", "g": "<em>carried out</em> 是過去分詞，修飾前面的 study（被執行的研究），等於 “which was carried out”。這種省略在 Methods 幾乎每句都有。"}, {"en": "A convenience sample of elderly subjects aged 65 years or over who wore removable dentures was recruited from the Kaohsiung City Government Senior Citizens’ Service.", "zh": "研究以方便取樣，自高雄市政府長青服務單位招募 65 歲以上、配戴活動假牙的長者。", "g": "<em>convenience sample</em>（方便樣本）指的是「找得到誰就收誰」，不是隨機抽樣。這會限制結果推論的範圍，作者在討論段也自己承認了。這個詞您寫方法時會用到。"}, {"en": "Subjects were excluded from the study for the following reasons: 1. did not complete the questionnaire; 2. did not eat the foods listed in the questionnaire due to religious beliefs, vegetarianism, or other personal reasons; 3. had three or more incorrect answers on the Short Portable Mental Status Questionnaire (SPMSQ), indicating mild to severe intellectual impairment.", "zh": "以下情況者排除於研究之外：一、未完成問卷；二、因宗教信仰、素食或其他個人理由而不食用問卷所列食物；三、簡易心智狀態問卷（SPMSQ）答錯三題以上，代表有輕度至重度智能障礙。", "g": "<em>exclusion criteria</em>（排除條件）與 <em>inclusion criteria</em>（納入條件）是每篇量性研究都要交代的東西。您做問卷研究時，這一段是必寫的。"}, {"en": "Nine subjects were excluded from the study; five of them were vegetarian, three did not complete their questionnaire, and one additional subject had mild intellectual impairment.", "zh": "共九位受試者被排除：五位為素食者、三位未完成問卷，另一位有輕度智能障礙。"}, {"en": "In the present study, the SPMSQ was used to evaluate the participants’ ability to understand the questionnaire.", "zh": "本研究以 SPMSQ 評估受試者理解問卷的能力。", "g": "<em>In the present study</em>（在本研究中）是論文自我指稱的標準說法，比 “in our study” 正式。同義的還有 “in the current study”。"}, {"en": "The cognitive status of elderly individuals was defined as the number of wrong answers in the 10-question SPMSQ, whereby two or fewer incorrect answers indicate an intact cognitive status, three or four incorrect answers indicate mild intellectual impairment, and five or more incorrect answers indicate moderate to severe intellectual impairment.", "zh": "長者的認知狀態以十題 SPMSQ 的答錯題數定義：答錯兩題以內代表認知功能完整，答錯三至四題代表輕度智能障礙，答錯五題以上代表中度至重度智能障礙。", "g": "<em>was defined as</em>（被定義為）在 Methods 裡非常關鍵：它告訴讀者「這篇論文所說的 X，具體是指什麼」。讀論文時看到 defined as，一定要停下來看清楚。"}, {"en": "Written informed consent was obtained from all subjects prior to data collection.", "zh": "所有受試者於資料收集前均簽署書面知情同意書。", "g": "<em>informed consent</em>（知情同意）是研究倫理的核心，您送 IRB 時一定會用到這個詞。<em>prior to</em> = before，只是比較正式。"}, {"en": "Ethical approval was obtained from the Institutional Review Board at Chung-Ho Memorial Hospital, Kaohsiung Medical University.", "zh": "本研究經高雄醫學大學附設中和紀念醫院人體試驗委員會核准。", "g": "<em>Institutional Review Board（IRB）</em> 就是人體試驗審查委員會。您之後做問卷研究收人體資料，這一關跑不掉，指導教授一定會提。"}]}, {"h": "Methods · Questionnaire", "zh": "研究方法 · 問卷", "s": [{"en": "Information obtained by questionnaires included socio-demographic characteristics (age, gender, education level, living alone or with others, and the ability to afford living expenses), factors related to denture wearing (presence of oral pain, perceived loose denture, presence of oral ulcer, perceived halitosis, perceived dry mouth, and satisfaction with removable dentures), dental health service usage (regular dental checkups, treatment during toothache, dental visits in the last year), and OHRQoL, as measured using the GOHAI.", "zh": "問卷取得的資訊包括：社會人口特徵（年齡、性別、教育程度、獨居或與人同住、負擔生活費的能力）、與配戴假牙相關的因素（口腔疼痛、自覺假牙鬆脫、口腔潰瘍、自覺口臭、自覺口乾、對活動假牙的滿意度）、牙科醫療服務使用情形（定期口腔檢查、牙痛時就醫、過去一年就診次數），以及以 GOHAI 測量的口腔健康相關生活品質。", "g": "這是全篇最長的句子之一，但結構還是那招：<em>Information included A, B, C, and D</em>。括號一律先跳過，先數出有幾大塊，再回頭看細節。這個技巧在您上台報告前整理投影片時特別好用。"}, {"en": "OHRQoL was measured using the GOHAI, which was originally developed for use in older adult populations.", "zh": "口腔健康相關生活品質以 GOHAI 測量，該量表原本就是為長者族群設計的。"}, {"en": "The GOHAI instrument provides a score based on the answers to 12 questions associated with the following three domains of OHRQoL: physical function (PF), including eating, speech, and swallowing; psychosocial function (PSF), including worry or concern about oral health, dissatisfaction with appearance, self-consciousness about oral health, and avoidance of social contact because of oral problems; and pain or discomfort (PD), including the use of medication to relieve pain or discomfort in the mouth.", "zh": "GOHAI 依據十二題的作答給分，涵蓋口腔健康相關生活品質的三個面向：物理功能（PF），包含進食、說話與吞嚥；心理社會功能（PSF），包含對口腔健康的擔憂、對外觀的不滿、對口腔狀況的在意，以及因口腔問題而避免社交；以及疼痛或不適（PD），包含使用藥物緩解口腔疼痛或不適。", "g": "冒號後面用<em>分號</em>分隔三大項，是因為每一項裡面已經有逗號了。看到分號就知道：這是一層更大的切割。讀長列舉時先數分號，就知道有幾大類。"}, {"en": "Score ranges for the dimensions of physical function, psychosocial function, and pain or discomfort are 4–20, 5–25, and 3–15, respectively.", "zh": "物理功能、心理社會功能、疼痛或不適三個面向的分數範圍分別為 4–20、5–25 與 3–15。", "g": "<em>respectively</em>（分別地）是論文寫數據的必備字：前面列了 A、B、C，後面列 1、2、3，用 respectively 表示一一對應。順序絕對不能弄反。"}, {"en": "The original English version of the GOHAI was translated into Chinese for use with Taiwanese people (GOHAI-T).", "zh": "GOHAI 英文原版經翻譯為中文，供台灣民眾使用（GOHAI-T）。"}, {"en": "A panel of professional experts carried out and verified the translation and cross-cultural adaptation of the original English version.", "zh": "由專業專家小組執行並確認英文原版的翻譯與跨文化調適。", "g": "<em>cross-cultural adaptation</em>（跨文化調適）不只是翻譯，還要把題目調整成在地文化說得通的樣子。如果您的研究要用現成的英文量表，這一步是必要的，指導教授一定會問。"}, {"en": "Responses to GOHAI-T items were assessed using a 5-point Likert scale, ranging from 1 = always to 5 = never.", "zh": "GOHAI-T 各題以五點李克特量表計分，從 1 =「總是」到 5 =「從不」。", "g": "<em>Likert scale</em> 唸作 LIK-ert，不是 LIE-kert，這是最常唸錯的研究名詞之一。您的問卷十之八九也會用它。"}, {"en": "Total scores on the GOHAI-T were a summation of all individual scores obtained from the 12 items, with a higher score indicating a lower impact on OHRQoL.", "zh": "GOHAI-T 總分為十二題個別分數的加總，分數越高代表口腔健康相關生活品質受到的影響越小。", "g": "<em>with + 名詞 + Ving</em> 是論文最常用的補充結構：<em>with a higher score indicating...</em>（分數越高就表示……）。學會這個句型，您寫結果時可以少寫很多零碎的短句。"}, {"en": "Denture satisfaction was evaluated by a denture-satisfaction assessment (DSA).", "zh": "假牙滿意度以假牙滿意度評估表（DSA）評量。"}, {"en": "In previous studies in which the DSA was utilized, six questions were used to evaluate the level of subjects’ satisfaction with their removable dentures.", "zh": "在先前使用 DSA 的研究中，以六個題目評估受試者對活動假牙的滿意程度。"}, {"en": "The questions were related to tasting, retention (including upper and lower dentures), esthetics, comfort (including upper and lower dentures), appearance, ability to speak, and mastication ability.", "zh": "題目涵蓋味覺、固位（含上下顎假牙）、美觀、舒適度（含上下顎假牙）、外觀、說話能力與咀嚼能力。", "g": "這六題就是這篇論文測「滿意度」的具體內容。您自己要做假牙滿意度調查的話，這一句是可以直接拿來跟指導教授討論的起點：要不要沿用這六個面向？"}, {"en": "Subjects’ satisfaction was recorded using a 5-point Likert scale, wherein the scores ranged from 1 (very unsatisfied) to 5 (very satisfied).", "zh": "受試者的滿意度以五點李克特量表記錄，分數從 1（非常不滿意）至 5（非常滿意）。"}, {"en": "The scores for questions concerning retention and comfort of the dentures were calculated as average scores of the upper and lower dentures.", "zh": "關於假牙固位與舒適度的題目，其分數以上下顎假牙的平均分數計算。"}, {"en": "Subjects’ responses to the six questions were summed to obtain a total denture satisfaction score.", "zh": "六題的作答加總後即為假牙滿意度總分。"}, {"en": "The sum score can range from 6 to 30, with a higher score indicating more satisfaction with the dentures.", "zh": "總分範圍為 6 至 30 分，分數越高代表對假牙越滿意。"}], "tables": [{"no": "Table 1", "title": "English and Taiwanese versions of the GOHAI", "zh": "GOHAI 的英文版與台灣版題目", "head": [["#", "English question", "台灣版題目 (GOHAI-T)"]], "rows": [["1", "How often did you limit the kinds or amounts of food you eat because of problems with your teeth or dentures?", "您會因為牙齒或假牙問題限制所吃的食物種類或數量嗎？"], ["2", "How often did you have trouble biting or chewing any kinds of food, such as firm meat or apples?", "您有無法咀嚼食物（例如肉類或蘋果）的困擾嗎？"], ["3", "How often were you able to swallow comfortably?", "您能夠舒適的吞嚥食物嗎？"], ["4", "How often have your teeth or dentures prevented you from speaking the way you wanted?", "您有因為牙齒或假牙而妨礙說話嗎？"], ["5", "How often were you able to eat anything without feeling discomfort?", "您吃任何食物時不會感到不舒服嗎？"], ["6", "How often did you limit contacts with people because of the condition of your teeth or dentures?", "您會因為牙齒或假牙狀況不良而限制與人交往嗎？"], ["7", "How often were you pleased or happy with the looks of your teeth and gums, or dentures?", "您對牙齒、牙齦或假牙的外觀感滿意或愉快嗎？"], ["8", "How often did you use medication to relieve pain or discomfort from around your mouth?", "您使用藥物減緩口腔的疼痛或不適嗎？"], ["9", "How often were you worried or concerned about the problems with your teeth, gums, or dentures?", "您擔慮或關心牙齒、牙齦或假牙的問題嗎？"], ["10", "How often did you feel nervous or self-conscious because of problems with your teeth, gums, or dentures?", "您因為牙齒、牙齦或假牙問題，感到緊張或不自在、不舒適嗎？"], ["11", "How often did you feel uncomfortable eating in front of people because of problems with your teeth or dentures?", "您會因為牙齒或假牙問題，在別人面前吃東西感覺到不自在嗎？"], ["12", "How often were your teeth or gums sensitive to hot, cold, or sweets?", "您的牙齒或牙齦，對冷、熱或甜的食物會感覺敏感嗎？"]], "note": "計分：5=always（總是）、4=usually（經常）、3=occasionally（偶爾）、2=seldom（很少）、1=never（從不）。第 3、7、12 題為反向計分。右欄為該研究實際使用的台灣版 GOHAI-T 題目原文。對照左右兩欄很值得做：英文問 How often（多常），中文全部改成「嗎？」的是非問句，這是跨文化調適時常見的調整，不是翻譯錯誤。", "wrap": true}]}, {"h": "Methods · Dental examination", "zh": "研究方法 · 口腔檢查", "s": [{"en": "The dental examinations were carried out by one of the authors, a family dentistry specialist with 15 years of clinical experience, in accordance with the guidelines of the World Health Organization.", "zh": "口腔檢查由作者之一執行，該作者為具十五年臨床經驗的家庭牙醫專科醫師，檢查依世界衛生組織指引進行。", "g": "兩個逗號夾住的 <em>a family dentistry specialist with 15 years of clinical experience</em> 是同位語，用來說明前面的 one of the authors 是誰。看到「名詞，名詞，」的結構，中間那塊通常是在解釋前面那個人或物。"}, {"en": "Intra-examiner reliability (kappa coefficient) was assessed in a sample of 14 subjects during the data collection.", "zh": "檢查者內信度（kappa 係數）在資料收集期間以十四位受試者評估。", "g": "<em>intra-</em> 是「內部的」（同一個人前後兩次），<em>inter-</em> 是「之間的」（不同人之間）。差一個字母，意思完全不同。<em>kappa coefficient</em> 就是用來檢驗這種一致性的指標。"}, {"en": "The kappa coefficient for intra-examiner agreement was 0.90, which indicates a high level of agreement.", "zh": "檢查者內一致性的 kappa 係數為 0.90，代表一致性相當高。"}, {"en": "Information was collected on the location, number, and type of natural teeth, and the kind of dentures.", "zh": "收集了天然牙的位置、數量與類型，以及假牙的種類。"}, {"en": "Teeth that were sound, decayed, filled, or filled but decayed were marked as natural teeth.", "zh": "健康、齲齒、已填補，或已填補但再度齲壞的牙齒，均計為天然牙。", "g": "<em>sound</em> 在這裡不是「聲音」，是「健康完好的」。牙科文獻裡 sound tooth 就是健康牙。一字多義在專業文章裡很常見，靠上下文判斷。"}, {"en": "Teeth with grade III mobility, retained roots, or extensive crown destruction were excluded.", "zh": "第三度動搖的牙齒、殘留牙根，或牙冠嚴重破壞者則不計入。"}]}, {"h": "Methods · Statistical analysis", "zh": "研究方法 · 統計分析", "s": [{"en": "We explored the relationships among the variables using STATA version 13.0, with the significance level set at 5%.", "zh": "我們以 STATA 13.0 版探討各變項之間的關係，顯著水準設定為 5%。", "g": "<em>significance level set at 5%</em> 就是 α = 0.05，也就是 p 值小於 0.05 才算顯著。這是醫學研究的慣例門檻，您的生統課會從這裡開始講。"}, {"en": "Continuous variables and categorical variables are expressed as mean ± standard error (SE), counts (n), and percentages (%), respectively.", "zh": "連續變項以平均值±標準誤（SE）表示，類別變項則以個數（n）與百分比（%）表示。", "g": "<em>continuous variable</em>（連續變項，如年齡、分數）與 <em>categorical variable</em>（類別變項，如性別、假牙種類）是統計最基本的分類，決定後面能用哪種檢定。這兩個詞務必記牢。"}, {"en": "Bivariate analysis was used to compare GOHAI-T scores with socio-demographic characteristics, dentition and denture status, dental care service usage, and factors related to denture wearing.", "zh": "以雙變項分析比較 GOHAI-T 分數與社會人口特徵、齒列與假牙狀況、牙科服務使用情形，以及與配戴假牙相關因素之間的關係。", "g": "<em>bivariate</em>（雙變項）是一次只看兩個變項的關係；<em>multivariate / multiple</em>（多變項）是同時放很多個進去。論文通常先做雙變項篩一遍，再做多變項。"}, {"en": "A t-test and one-way analysis of variance were used to assess the distributions of GOHAI-T scores in relation to the categorical variables.", "zh": "以 t 檢定與單因子變異數分析評估 GOHAI-T 分數在各類別變項下的分布。", "g": "<em>t-test</em> 比較兩組，<em>one-way ANOVA</em>（單因子變異數分析）比較三組以上。挑錯檢定是口試最容易被問倒的地方，記住這個分界。"}, {"en": "Correlations between the GOHAI-T scores and continuous variables were evaluated using Spearman’s rank correlation analysis.", "zh": "GOHAI-T 分數與連續變項之間的相關性，以 Spearman 等級相關分析評估。"}, {"en": "The reliability of the GOHAI-T scale was evaluated using the internal consistency approach (Cronbach’s alpha) in the presence and absence of each item for the subjects.", "zh": "GOHAI-T 量表的信度以內部一致性法（Cronbach's alpha）評估，並分別檢視每一題加入與移除後的情形。", "g": "<em>reliability</em>（信度）是「量得穩不穩」，<em>validity</em>（效度）是「量得準不準」。兩個都要交代。Cronbach's alpha 是最常見的信度指標，一般 0.7 以上算可接受。"}, {"en": "Further, the convergent validity of the GOHAI-T was assessed using Spearman’s rank correlation coefficient by examining the correlation between GOHAI-T scores and self-rated oral health for all subjects.", "zh": "此外，以 Spearman 等級相關係數檢視全體受試者的 GOHAI-T 分數與自評口腔健康之間的相關性，藉此評估聚斂效度。", "g": "<em>convergent validity</em>（聚斂效度）的意思是：如果這個量表真的測到了它想測的東西，它應該和另一個測類似東西的指標高度相關。"}, {"en": "The test-retest correlation coefficient for the GOHAI-T was assessed by re-interviewing 30 elderly subjects 1 week after the first interview.", "zh": "重測信度則以三十位長者在首次訪談一週後再次受訪的結果評估。", "g": "<em>test-retest reliability</em>（重測信度）：同一批人隔一段時間再測一次，分數應該差不多。這是問卷研究的標準檢驗，您的量表如果是自編的，一定要做。"}, {"en": "Cronbach’s alpha for internal consistency was 0.801 for the total scale and ranged between 0.764 and 0.813 for each item.", "zh": "整體量表的內部一致性 Cronbach's alpha 為 0.801，各題介於 0.764 至 0.813 之間。"}, {"en": "The correlation coefficient for the GOHAI-T score and self-rated oral health was 0.356.", "zh": "GOHAI-T 分數與自評口腔健康的相關係數為 0.356。"}, {"en": "This supported the convergent validity and showed that a low GOHAI-T score, indicating a higher level of impairment of OHRQoL, was significantly associated with poor self-rated oral health.", "zh": "此結果支持聚斂效度，並顯示較低的 GOHAI-T 分數（代表口腔健康相關生活品質受損較嚴重）與較差的自評口腔健康顯著相關。"}, {"en": "The Spearman’s rank correlation coefficient for the test-retest was 0.797, indicating an acceptable level of reliability.", "zh": "重測的 Spearman 等級相關係數為 0.797，代表信度可接受。"}, {"en": "The internal consistency of the DSA (Cronbach’s alpha) was assessed in the presence and absence of each item for the subjects.", "zh": "DSA 的內部一致性（Cronbach's alpha）同樣以逐題加入與移除的方式評估。"}, {"en": "Cronbach’s alpha was 0.887 for the total scale and ranged between 0.857 and 0.881 for each item, indicating that the DSA had highly acceptable reliability.", "zh": "整體量表的 Cronbach's alpha 為 0.887，各題介於 0.857 至 0.881 之間，顯示 DSA 的信度相當良好。"}, {"en": "The convergent validity of the DSA was assessed by examining the correlation between total denture satisfaction scores and the general satisfaction of the sample subjects.", "zh": "DSA 的聚斂效度則透過檢視假牙滿意度總分與受試者整體滿意度之間的相關性來評估。"}, {"en": "The Spearman’s rank correlation coefficient was 0.7583, which supported the convergent validity and showed that a high total denture satisfaction score was significantly associated with good general denture satisfaction.", "zh": "Spearman 等級相關係數為 0.7583，支持聚斂效度，並顯示假牙滿意度總分越高，整體假牙滿意度也越好。"}, {"en": "Our data indicated that the skewness and kurtosis of the GOHAI-T distribution were −0.77 and 3.25, respectively, and that these values were more normalized than the square-root-transformed or log-transformed GOHAI-T distributions.", "zh": "資料顯示 GOHAI-T 分布的偏態與峰度分別為 −0.77 與 3.25，較平方根轉換或對數轉換後的分布更接近常態。", "g": "<em>skewness</em>（偏態）看分布左右歪不歪，<em>kurtosis</em>（峰度）看尖不尖。兩者都用來判斷資料是否接近常態分布，決定能不能用參數統計。"}, {"en": "Hence, the raw GOHAI-T scores were chosen for multiple linear regression analysis.", "zh": "因此，多元線性迴歸分析採用未經轉換的 GOHAI-T 原始分數。"}, {"en": "Moreover, we conducted a robust linear regression to confirm the analysis results and found that all the statistically significant variables were the same as those obtained using general multiple linear regression.", "zh": "此外，我們另以穩健線性迴歸驗證分析結果，發現所有達統計顯著的變項與一般多元線性迴歸的結果一致。", "g": "<em>robust</em> 在統計裡是「穩健的」，指這個方法比較不怕資料違反假設。用第二種方法重跑一次得到相同結果，叫 <em>sensitivity analysis</em>（敏感度分析），是加強說服力的常見做法。"}, {"en": "Robust regression methods are designed such that they are not overly affected by violations of assumptions by the underlying data-generating process.", "zh": "穩健迴歸法的設計，就是為了讓結果不會因為資料違反假設而受到過度影響。"}, {"en": "To assess the impacts of different blocks of predictors on OHRQoL, we conducted hierarchical multiple regression analysis using all independent predictors, with variance inflation factors under 5 to avoid multicollinearity in the whole model.", "zh": "為評估不同組預測因子對口腔健康相關生活品質的影響，我們以所有自變項進行階層式多元迴歸分析，並將變異數膨脹因子控制在 5 以下，以避免整體模型出現多重共線性。", "g": "<em>multicollinearity</em>（多重共線性）是指幾個自變項彼此太像，結果會不穩。<em>variance inflation factor（VIF）</em> 就是用來檢查它的指標，一般小於 5 或 10 算安全。"}, {"en": "The analysis was performed to determine the most predictive block of variables based on the GOHAI-T scores.", "zh": "此分析用以判斷哪一組變項對 GOHAI-T 分數最具預測力。"}, {"en": "The GOHAI-T score was used as a dependent variable and the blocks of independent variables were entered in the following steps: Step 1, socio-demographic characteristics; Step 2, dentition and denture status; Step 3, dental care service usage; Step 4, factors related to denture wearing.", "zh": "以 GOHAI-T 分數為依變項，自變項分組依序投入：第一步為社會人口特徵，第二步為齒列與假牙狀況，第三步為牙科服務使用情形，第四步為與配戴假牙相關的因素。", "g": "這就是「階層式」的意思：不是一次全部丟進去，而是一組一組加，看每加一組模型能多解釋多少。這個設計正是這篇論文能說「假牙相關因素最重要」的原因。"}, {"en": "R squared shows the percentage of variability in the dependent variable that can be accounted for by all predictors.", "zh": "R 平方代表所有預測因子能解釋依變項多少百分比的變異。"}, {"en": "The change in R squared can be used to measure the amount of predictive power added to the model by the addition of another block of variables in the next step.", "zh": "R 平方的變化量可用來衡量下一步加入另一組變項後，模型增加了多少預測力。", "g": "這就是摘要裡「加入假牙相關因素後多解釋了 40%」的來源。<em>ΔR²</em>（delta R squared）唸作 “change in R squared”，報告時直接說「R 平方增加了多少」即可。"}, {"en": "We compared the standardized regression coefficients of independent variables to determine their impact on the GOHAI-T scores.", "zh": "我們比較各自變項的標準化迴歸係數，以判斷它們對 GOHAI-T 分數的影響程度。", "g": "<em>standardized regression coefficient</em> 就是 beta（β）。因為各變項的單位不同（年齡是歲、分數是分），標準化之後才能互相比較誰的影響大。摘要說滿意度 β=0.45 最大，就是這樣比出來的。"}]}, {"h": "Results", "zh": "研究結果", "s": [{"en": "Data were collected from 277 subjects who wore removable dentures.", "zh": "共自 277 位配戴活動假牙的受試者收集資料。"}, {"en": "More than half of them were women, the mean age was 76.8 years, two-thirds had a level of education of high school or above, the majority were living with others, and more than three-fourths were able to afford their living expenses.", "zh": "其中超過半數為女性，平均年齡 76.8 歲，三分之二具高中以上學歷，多數與他人同住，逾四分之三能負擔生活費用。", "g": "英文用分數表達比例的方式要熟：<em>two-thirds</em>（三分之二）、<em>three-fourths</em>（四分之三）。分子用基數、分母用序數，分子大於一時分母加 s。報告數據時常用。"}, {"en": "Further, the mean number of natural teeth was 7.8.", "zh": "此外，天然牙的平均數量為 7.8 顆。"}, {"en": "The distribution of the denture status was as follows: full-mouth complete denture, 24.9%; single complete denture, 24.9%; single partial denture, 24.6%; and full-mouth partial denture, 25.6%.", "zh": "假牙狀況分布如下：全口全口假牙 24.9%、單顎全口假牙 24.9%、單顎局部假牙 24.6%、全口局部假牙 25.6%。", "g": "<em>as follows</em>（如下）後面接冒號再列項目，是報告分布的標準寫法。注意四組比例都在 25% 左右，分布相當平均——這對後面的統計比較是好事。"}, {"en": "Those who had regular dental checkups, treatment during toothache, and dental visits in the last year accounted for 22.4%, 10.8%, and 39.4% of the population, respectively.", "zh": "有定期口腔檢查、牙痛時就醫，以及過去一年曾就診者，分別占 22.4%、10.8% 與 39.4%。"}, {"en": "Regarding factors related to denture wearing, 24 subjects always or often presented with oral pain, 51 perceived that they had a loose denture, 28 had an oral ulcer, 21 had perceived halitosis, 31 had perceived dry mouth, and the total denture satisfaction score was 19.0.", "zh": "在與配戴假牙相關的因素方面，24 位受試者經常或總是有口腔疼痛、51 位自覺假牙鬆脫、28 位有口腔潰瘍、21 位自覺有口臭、31 位自覺口乾，假牙滿意度總分為 19.0。", "g": "<em>Regarding...</em>（關於……）是切換話題的好用開場，等於 “With regard to” 或 “As for”。您上台報告換段落時可以直接用。"}, {"en": "Gender, education level, living status, ability to afford living expenses, denture status, regular dental checkups, treatment during toothache, and dental visits in the last year were not significantly associated with the GOHAI-T scores.", "zh": "性別、教育程度、居住狀況、負擔生活費能力、假牙狀況、定期口腔檢查、牙痛時就醫，以及過去一年就診情形，與 GOHAI-T 分數均無顯著關聯。", "g": "<em>were not significantly associated with</em>——注意「沒有顯著關聯」不等於「沒有關聯」，只是這份資料看不出來。這個分寸在寫討論時很重要，別把不顯著講成「證明無關」。"}, {"en": "However, subjects who had oral pain, perceived that they had a loose denture, had an oral ulcer, or perceived that they had halitosis had lower physical function and total GOHAI-T scores.", "zh": "然而，有口腔疼痛、自覺假牙鬆脫、有口腔潰瘍或自覺口臭的受試者，其物理功能分數與 GOHAI-T 總分均較低。"}, {"en": "Further, those who had perceived dry mouth had lower GOHAI-T scores.", "zh": "此外，自覺口乾者的 GOHAI-T 分數也較低。"}, {"en": "Denture satisfaction scores were positively associated with physical function, psychosocial function, pain or discomfort, and total GOHAI-T scores.", "zh": "假牙滿意度分數與物理功能、心理社會功能、疼痛或不適及 GOHAI-T 總分均呈正相關。", "g": "<em>positively associated</em>（正相關：一個高，另一個也高）對應的是 <em>negatively associated</em>（負相關）。報告結果時這兩個詞用錯，意思會完全相反。"}, {"en": "We also found that the physical function and psychosocial function scores were significantly lower for subjects with a lower number of natural teeth.", "zh": "我們也發現，天然牙數目較少的受試者，其物理功能與心理社會功能分數顯著較低。"}, {"en": "However, age was not significantly correlated with the GOHAI-T scores.", "zh": "然而，年齡與 GOHAI-T 分數並無顯著相關。"}, {"en": "Hierarchical multiple regression was performed to investigate the ability of factors related to denture wearing to predict GOHAI-T scores, after controlling for socio-demographic variables, dentition and denture status, and dental care service usage.", "zh": "在控制社會人口變項、齒列與假牙狀況及牙科服務使用情形後，以階層式多元迴歸探討與配戴假牙相關的因素對 GOHAI-T 分數的預測力。", "g": "<em>after controlling for...</em>（在控制……之後）是多變項分析的關鍵說法：意思是「把這些干擾因素的影響先扣掉」，剩下的才是我們想看的效果。"}, {"en": "Socio-demographic characteristics were entered in Model I, and this model was not statistically significant.", "zh": "第一個模型僅放入社會人口特徵，未達統計顯著。"}, {"en": "We added dentition and denture status to the socio-demographic characteristics in Model II, and the model as a whole explained a total of 12.4% of the variance.", "zh": "第二個模型加入齒列與假牙狀況後，整體模型解釋了 12.4% 的變異。"}, {"en": "The education level, number of natural teeth, and denture status were predictors of GOHAI-T scores.", "zh": "教育程度、天然牙數目與假牙狀況為 GOHAI-T 分數的預測因子。"}, {"en": "In Model III, factors related to denture wearing were added, and the total variance explained by the model increased to 52.4%.", "zh": "第三個模型加入與配戴假牙相關的因素後，模型解釋的總變異提高至 52.4%。", "g": "從 12.4% 一口氣跳到 52.4%——這一句就是整篇論文最重要的一個數字變化。您報告時如果只能講一張投影片，就講這裡。"}, {"en": "The introduction of factors related to denture wearing explained an additional 40.0% of the variance in GOHAI-T scores.", "zh": "加入與配戴假牙相關的因素後，額外解釋了 40.0% 的 GOHAI-T 分數變異。"}, {"en": "Dental care service usage was added in Model IV, and the total variance explained by the model was 53.3%.", "zh": "第四個模型再加入牙科服務使用情形，模型解釋的總變異為 53.3%。"}, {"en": "The introduction of dental care service usage explained an additional 0.9% of the variance in GOHAI-T scores.", "zh": "加入牙科服務使用情形僅額外解釋了 0.9% 的變異。", "g": "只多了 0.9%，等於幾乎沒有貢獻。論文用數字說話：不必寫「這個因素不重要」，把 0.9% 擺出來，讀者自己就看懂了。"}, {"en": "In the final model, 6 of 18 predictor variables were statistically significant, with denture satisfaction having a higher beta value than the remaining natural teeth, denture status, perceived loose denture, presence of oral ulcer, and educational level.", "zh": "在最終模型中，十八個預測變項有六個達統計顯著，其中假牙滿意度的 beta 值高於剩餘天然牙數、假牙狀況、自覺假牙鬆脫、口腔潰瘍與教育程度。"}], "tables": [{"no": "Table 2", "title": "Participants’ characteristics (N = 277)", "zh": "受試者基本特徵（N = 277）", "head": [["Variables", "n", "%"]], "rows": [["**Socio-demographic characteristics 社會人口特徵"], ["Gender 性別 — Male", "131", "47.3"], ["Gender — Female", "146", "52.7"], ["Age 65–69", "79", "28.5"], ["Age 70–79", "106", "38.3"], ["Age ≥80", "92", "33.2"], ["Age, mean ± SE (range)", "76.8 ± 0.4 (65–90)", ""], ["Education — Less than high school", "89", "32.1"], ["Education — High school or above", "188", "67.9"], ["Living status — Alone", "52", "18.8"], ["Living status — With others", "225", "81.2"], ["Able to afford living expenses — Yes", "218", "78.7"], ["Able to afford living expenses — No", "59", "21.3"], ["**Dentition and denture status 齒列與假牙狀況"], ["Remaining natural teeth, mean ± SE (range)", "7.78 ± 0.4 (0–26)", ""], ["Full-mouth complete denture", "69", "24.9"], ["Single complete denture", "69", "24.9"], ["Single partial denture", "68", "24.6"], ["Full-mouth partial denture", "71", "25.6"], ["**Dental care service usage 牙科服務使用"], ["Regular dental checkups", "62", "22.4"], ["Treatment during toothache", "30", "10.8"], ["Dental visits in the last year", "109", "39.4"], ["**Factors related to denture wearing 與配戴假牙相關的因素"], ["Presence of oral pain", "24", "8.7"], ["Perceived loose denture", "51", "18.4"], ["Presence of oral ulcer", "28", "10.1"], ["Perceived halitosis", "21", "7.6"], ["Perceived dry mouth", "31", "11.2"], ["Total denture satisfaction scores, mean ± SE (range)", "19.0 ± 0.3 (6–30)", ""], ["**Oral health related quality of life 口腔健康相關生活品質"], ["GOHAI-T scores", "47.8 ± 0.5 (22–60)", ""], ["Physical function", "14.3 ± 0.2 (4–20)", ""], ["Psychosocial function", "20.8 ± 0.3 (5–25)", ""], ["Pain and discomfort", "12.7 ± 0.1 (3–15)", ""]], "note": "這張表就是論文的「受試者長什麼樣子」。您自己寫論文時，Table 1 或 Table 2 幾乎一定是這種表。"}, {"no": "Table 3", "title": "Oral health-related quality of life in denture-wearing elderly subjects (N = 277)", "zh": "配戴假牙長者的口腔健康相關生活品質（N = 277）", "head": [["Variables", "Physical function (max 20)", "Psychosocial function (max 25)", "Pain and discomfort (max 15)", "GOHAI-T (max 60)"], ["", "Mean ± SE", "Mean ± SE", "Mean ± SE", "Mean ± SE"]], "rows": [["**Gender"], ["Male", "14.37 ± 0.31", "20.86 ± 0.36", "12.84 ± 0.16", "48.08 ± 0.67"], ["Female", "14.18 ± 0.32", "20.66 ± 0.37", "12.61 ± 0.19", "47.44 ± 0.72"], ["**Education level"], ["Less than high school", "14.16 ± 0.27", "20.53 ± 0.31", "12.63 ± 0.15", "47.32 ± 0.60"], ["High school or above", "14.53 ± 0.37", "21.26 ± 0.46", "12.94 ± 0.23", "48.73 ± 0.84"], ["**Living status"], ["Alone", "14.01 ± 0.24", "20.60 ± 0.29", "12.68 ± 0.14", "47.30 ± 0.55"], ["With others", "15.42 ± 0.49", "21.46 ± 0.53", "12.96 ± 0.30", "49.85 ± 1.03"], ["**Able to afford living expenses"], ["Yes", "14.39 ± 0.25", "20.92 ± 0.28", "12.89 ± 0.13", "48.20 ± 0.53"], ["No", "13.88 ± 0.48", "20.20 ± 0.63", "12.14 ± 0.33", "46.22 ± 1.18"], ["**Denture status"], ["Full-mouth complete denture", "13.91 ± 0.41", "20.67 ± 0.63", "13.23 ± 0.23", "47.81 ± 1.05"], ["Single complete denture", "13.29 ± 0.44", "19.99 ± 0.54", "12.26 ± 0.27", "45.54 ± 1.00"], ["Single partial denture", "14.41 ± 0.48", "21.06 ± 0.44", "12.47 ± 0.26", "47.94 ± 0.97"], ["Full-mouth partial denture", "15.46 ± 0.41", "21.34 ± 0.42", "12.96 ± 0.24", "49.76 ± 0.85"], ["**Regular dental checkups"], ["No", "14.04 ± 0.25", "20.78 ± 0.30", "12.73 ± 0.14", "47.55 ± 0.56"], ["Yes", "15.10 ± 0.47", "20.73 ± 0.51", "12.73 ± 0.28", "48.55 ± 1.04"], ["**Treatment during toothache"], ["No", "14.35 ± 0.24", "20.81 ± 0.26", "12.69 ± 0.14", "47.85 ± 0.52"], ["Yes", "13.67 ± 0.61", "20.43 ± 0.98", "13.07 ± 0.32", "47.17 ± 1.47"], ["**Dental visits in the last year"], ["No", "13.99 ± 0.30", "20.34 ± 0.34", "12.54 ± 0.16", "46.88 ± 0.66"], ["Yes", "14.72 ± 0.32", "21.42 ± 0.39", "13.03 ± 0.20", "49.17 ± 0.71"], ["**Presence of oral pain"], ["No", "14.56 ± 0.23 *", "21.11 ± 0.24", "12.88 ± 0.13", "48.55 ± 0.48 *"], ["Yes", "11.29 ± 0.57", "17.13 ± 1.42", "11.21 ± 0.53", "39.63 ± 1.90"], ["**Perceived loose denture"], ["No", "15.06 ± 0.22 *", "21.56 ± 0.22", "12.97 ± 0.14", "49.59 ± 0.45 *"], ["Yes", "10.80 ± 0.41", "17.24 ± 0.87", "11.69 ± 0.29", "39.73 ± 1.28"], ["**Presence of oral ulcer"], ["No", "14.61 ± 0.23 *", "21.33 ± 0.22", "12.94 ± 0.12", "48.89 ± 0.46 *"], ["Yes", "11.29 ± 0.61", "15.75 ± 1.26", "10.86 ± 0.46", "37.89 ± 1.71"], ["**Perceived halitosis"], ["No", "14.53 ± 0.22 *", "20.96 ± 0.26", "12.82 ± 0.13", "48.32 ± 0.49 *"], ["Yes", "11.19 ± 0.74", "18.33 ± 1.17", "11.67 ± 0.60", "41.19 ± 1.90"], ["**Perceived dry mouth"], ["No", "14.46 ± 0.23", "21.16 ± 0.24", "12.83 ± 0.13", "48.45 ± 0.47 *"], ["Yes", "13.00 ± 0.69", "17.91 ± 1.10", "12.03 ± 0.42", "42.94 ± 1.95"]], "note": "p 值以單因子變異數分析（假牙狀況）與兩樣本 t 檢定（其他因素）計算。* p < 0.05。看法：比較每一組的 Yes 與 No 兩列，差距大的就是有影響的因素。"}, {"no": "Table 4", "title": "Correlations among oral health-related quality of life, age, and denture-related factors (N = 277)", "zh": "生活品質、年齡與假牙相關因素的相關分析（N = 277）", "head": [["Variables", "Physical function (max 20)", "Psychosocial function (max 25)", "Pain and discomfort (max 15)", "GOHAI-T (max 60)"], ["", "Coefficients", "Coefficients", "Coefficients", "Coefficients"]], "rows": [["Age (years)", "0.01", "−0.05", "0.09", "0.01"], ["Remaining natural teeth", "0.17 *", "0.25 *", "0.06", "0.03"], ["Total denture satisfaction scores", "0.65 *", "0.55 *", "0.56 *", "0.45 *"], ["Satisfaction with chewing ability", "0.54 *", "0.49 *", "0.43 *", "0.35 *"], ["Satisfaction with ability to speak clearly", "0.56 *", "0.47 *", "0.49 *", "0.38 *"], ["Satisfaction with appearance", "0.43 *", "0.31 *", "0.43 *", "0.29 *"], ["Satisfaction with tasting ability", "0.49 *", "0.44 *", "0.40 *", "0.31 *"], ["Satisfaction with retention of dentures (total, estimate)", "0.50 *", "0.43 *", "0.40 *", "0.35 *"], ["Satisfaction with comfort (total, estimate)", "0.52 *", "0.40 *", "0.47 *", "0.40 *"]], "note": "* p < 0.05。相關係數越接近 1，關聯越強；負號代表反向。注意年齡那一列全部接近 0，這就是論文說「年齡沒有顯著相關」的依據。"}, {"no": "Table 5", "title": "Hierarchical multiple regression analysis of GOHAI-T scores", "zh": "GOHAI-T 分數的階層式多元迴歸分析", "head": [["Block and variables", ["Model I", 3], ["Model II", 3], ["Model III", 3], ["Model IV", 3]], ["", "B", "β", "t", "B", "β", "t", "B", "β", "t", "B", "β", "t"]], "rows": [["**Socio-demographic characteristics"], ["Age", "0.03", "0.02", "0.31", "0.10", "0.08", "1.28", "0.07", "0.05", "1.11", "0.06", "0.04", "0.94"], ["Female vs. male", "0.01", "0.00", "0.01", "0.01", "0.00", "0.01", "0.52", "0.03", "0.67", "0.71", "0.04", "0.90"], ["Lower than high school vs. high school or above", "1.51", "0.09", "1.33", "2.56", "0.15", "2.29 *", "1.93", "0.11", "2.32 *", "1.92", "0.11", "2.28 *"], ["Living alone — Yes vs. no", "2.53", "0.12", "1.98 *", "2.26", "0.11", "1.82", "1.73", "0.08", "1.87", "1.55", "0.07", "1.66"], ["Able to afford living expenses — No vs. yes", "−2.60", "−0.13", "−2.13 *", "−2.27", "−0.11", "−1.92", "−1.26", "−0.06", "−1.43", "−1.39", "−0.07", "−1.55"], ["**Dentition and denture status"], ["Remaining natural teeth", "", "", "", "0.41", "0.36", "3.72 **", "0.24", "0.21", "2.87 **", "0.29", "0.26", "3.34 **"], ["Single CD vs. CD", "", "", "", "−5.07", "−0.27", "−3.47 **", "−2.54", "−0.14", "−2.28 *", "−2.24", "−0.12", "−1.94"], ["Single RPD vs. CD", "", "", "", "−3.47", "−0.18", "−2.17 *", "−3.18", "−0.17", "−2.60 *", "−3.07", "−0.16", "−2.47 *"], ["Full-mouth RPD vs. CD", "", "", "", "−4.43", "−0.24", "−2.04", "−2.59", "−0.14", "−1.57", "−2.52", "−0.13", "−1.52"], ["**Factors related to denture wearing"], ["Presence of oral pain — Yes vs. no", "", "", "", "", "", "", "−1.28", "−0.04", "−0.89", "−1.56", "−0.05", "−1.07"], ["Perceived loose denture — Yes vs. no", "", "", "", "", "", "", "−3.12", "−0.15", "−2.84 **", "−3.50", "−0.17", "−3.15 **"], ["Presence of oral ulcer — Yes vs. no", "", "", "", "", "", "", "−4.83", "−0.18", "−3.46 **", "−4.23", "−0.16", "−2.97 **"], ["Perceived halitosis — Yes vs. no", "", "", "", "", "", "", "−1.74", "−0.06", "−1.23", "−1.90", "−0.06", "−1.35"], ["Perceived dry mouth — Yes vs. no", "", "", "", "", "", "", "−1.88", "−0.08", "−1.61", "−2.00", "−0.08", "−1.71"], ["Total denture satisfaction scores", "", "", "", "", "", "", "0.77", "0.44", "8.79 **", "0.79", "0.45", "8.85 ***"], ["**Dental care service usage"], ["Regular dental checkups — No vs. yes", "", "", "", "", "", "", "", "", "", "−1.77", "−0.09", "−1.86"], ["Treatment during toothache — No vs. yes", "", "", "", "", "", "", "", "", "", "1.52", "0.06", "1.16"], ["Dental visits in the last year — No vs. yes", "", "", "", "", "", "", "", "", "", "−0.18", "−0.01", "−0.22"], ["**Model fit 模型適配"], ["R²", "", "", "0.035", "", "", "0.124 ***", "", "", "0.524 ***", "", "", "0.533 ***"], ["Adjusted R²", "", "", "0.018", "", "", "0.094 ***", "", "", "0.496 ***", "", "", "0.500 ***"], ["F (df1, df2)", "", "", "F(5,271) = 1.99", "", "", "F(9,267) = 4.20", "", "", "F(15,261) = 19.13", "", "", "F(18,258) = 16.35"], ["p", "", "", "0.081", "", "", "0.000", "", "", "0.000", "", "", "0.000"], ["ΔR²", "", "", "0.035", "", "", "0.089 ***", "", "", "0.400 ***", "", "", "0.009"], ["F change", "", "", "F(5,271) = 1.99", "", "", "F(4,267) = 6.75", "", "", "F(6,261) = 36.50", "", "", "F(3,258) = 1.68"], ["p for F change", "", "", "0.081", "", "", "0.000", "", "", "0.0000", "", "", "0.172"]], "note": "* p < 0.05、** p < 0.01、*** p < 0.001。VIF 設定小於 5 以避免多重共線性。這是全篇最重要的表：看最下面的 ΔR² 那一列，Model III 一口氣多解釋了 0.400（40%），就是「假牙相關因素最重要」的證據。"}]}, {"h": "Discussion", "zh": "討論", "s": [{"en": "Despite the important findings, our study had several limitations that should be considered with some caution when interpreting the results.", "zh": "儘管有重要發現，本研究仍有若干限制，解讀結果時應審慎考量。", "g": "<em>Despite + 名詞</em>（儘管……）後面不能接句子，這點跟 Although 不同。討論段先講限制再談發現，是這篇作者的安排；多數論文則是放在最後。"}, {"en": "First, we did not use a population-based sample, but a convenience sample from the Senior Citizens’ College of Kaohsiung City, and thus, our study represents only a subgroup of the public.", "zh": "第一，本研究並非採用族群為基礎的樣本，而是取自高雄市長青學苑的方便樣本，因此僅代表部分族群。", "g": "<em>not A but B</em>（不是 A 而是 B）是很好用的對比句型。這裡作者主動承認取樣限制——誠實交代限制反而讓論文更可信，您寫的時候也該這樣。"}, {"en": "Future research should focus on generalizing the findings to elderly Taiwanese people wearing removable dentures.", "zh": "未來研究應著重於將結果推論至全體配戴活動假牙的台灣長者。", "g": "<em>Future research should...</em>（未來研究應……）是討論段的固定收尾句型之一。口試被問「你的研究有什麼不足」時，可以用這個結構回答。"}, {"en": "Second, the present study is characterized by a cross-sectional design, and therefore, we cannot make inferences with respect to the direction of the observed associations.", "zh": "第二，本研究為橫斷式設計，因此無法推論所觀察到的關聯之方向性。", "g": "這句是整篇最重要的方法學提醒：橫斷式研究只能說「兩者有關」，不能說「誰造成誰」。是假牙滿意度讓生活品質變好，還是生活品質好的人比較滿意假牙？這份資料分不出來。"}, {"en": "The third limitation was related to the study instrument.", "zh": "第三項限制與研究工具有關。"}, {"en": "Because no Chinese version of the GOHAI for Taiwanese had been validated when the study was performed, the original English version was translated by the researchers and was examined among a convenience sample of elderly subjects in Kaohsiung City for its construct validity and internal reliability.", "zh": "由於研究進行時尚無經過驗證的台灣中文版 GOHAI，研究者自行翻譯英文原版，並在高雄市長者的方便樣本中檢驗其建構效度與內部信度。", "g": "<em>had been validated</em> 是過去完成被動式：在「研究進行」這個過去時間點之前，就已經（沒有）被驗證過。時間有前後層次時，較早的那件事用 had + 過去分詞。"}, {"en": "Therefore, further studies may be required to determine whether this version can be applied to the elderly Taiwanese population.", "zh": "因此，可能仍需進一步研究來確認此版本能否適用於台灣長者族群。"}, {"en": "To enable the development of patient-oriented approaches in public health care and provide appropriate oral health care to elderly people wearing removable dentures, it is important to know which predictors actually affect the OHRQoL of elderly people.", "zh": "為了發展以病人為中心的公共衛生策略，並為配戴活動假牙的長者提供適當的口腔照護，了解哪些預測因子真正影響長者的口腔健康相關生活品質相當重要。"}, {"en": "Results of the hierarchical multiple regression showed that factors related to denture wearing were most strongly associated with OHRQoL, with denture satisfaction being the strongest predictor, and the number of remaining natural teeth was the second highest predictor.", "zh": "階層式多元迴歸結果顯示，與配戴假牙相關的因素和口腔健康相關生活品質關聯最強，其中假牙滿意度是最強的預測因子，剩餘天然牙數目則居第二。"}, {"en": "In addition, the OHRQoL of elderly people wearing removable dentures could also be predicted by education level, denture status, perceived loose denture, and presence of oral ulcer.", "zh": "此外，教育程度、假牙狀況、自覺假牙鬆脫與口腔潰瘍，也能預測配戴活動假牙長者的口腔健康相關生活品質。"}, {"en": "Thus, among the predictors analyzed in this study, denture satisfaction was the best predictor of OHRQoL of elderly people wearing removable dentures.", "zh": "因此，在本研究分析的預測因子中，假牙滿意度是配戴活動假牙長者口腔健康相關生活品質的最佳預測因子。"}, {"en": "The findings of this study suggested that high satisfaction with removable dentures was significantly related to a high GOHAI-T score, indicating a low level of impairment of OHRQoL.", "zh": "本研究發現，對活動假牙的高滿意度與較高的 GOHAI-T 分數顯著相關，代表口腔健康相關生活品質受損程度較低。"}, {"en": "This is in line with the findings of previous studies that showed a positive correlation between self-reported denture satisfaction and OHRQoL in the elderly.", "zh": "此結果與先前研究一致，該等研究顯示長者自陳的假牙滿意度與口腔健康相關生活品質呈正相關。", "g": "<em>in line with</em>（與……一致）是討論段比對前人研究的常用片語，同義的還有 <em>consistent with</em>、<em>in accordance with</em>。相反的是 <em>in contrast to</em>（與……相反）。"}, {"en": "In their 2-year longitudinal analysis, Stober et al. showed that elderly patients’ satisfaction with complete dentures was associated with OHRQoL, based on scores on the shortened version of the OHIP.", "zh": "Stober 等人在為期兩年的縱貫分析中，以簡短版 OHIP 分數顯示長者對全口假牙的滿意度與口腔健康相關生活品質有關。", "g": "<em>longitudinal</em>（縱貫）是追蹤同一批人一段時間，跟 <em>cross-sectional</em>（橫斷）只看一個時間點正好相對。縱貫研究才比較能談因果。"}, {"en": "Recently, Kuo et al. reported that patients’ satisfaction with complete dentures was significantly related to an improvement in their OHRQoL, as measured using the OHIP-14.", "zh": "近期 Kuo 等人以 OHIP-14 測量後指出，病人對全口假牙的滿意度與其口腔健康相關生活品質的改善顯著相關。"}, {"en": "In their cross-sectional analysis, Lee et al. showed that if the elderly are satisfied with their dentures, OHRQoL may be unaffected by oral health problems.", "zh": "Lee 等人的橫斷式分析顯示，若長者對自己的假牙感到滿意，口腔健康問題可能不會影響其口腔健康相關生活品質。"}, {"en": "A recent study described a positive correlation between professional ratings of removable denture quality and a low OHIP score, indicating a low level of impairment of OHRQoL.", "zh": "近期一項研究指出，專業人員對活動假牙品質的評分與較低的 OHIP 分數呈正相關，代表口腔健康相關生活品質受損較輕。"}, {"en": "However, a poorly fitting denture may be well tolerated in one person, while a well fitting denture may create problems for another.", "zh": "然而，同一副不密合的假牙，某些人可以適應良好，而密合良好的假牙卻可能造成另一個人的困擾。", "g": "<em>while</em> 在這裡不是「當……的時候」，而是「然而、相對地」，用來對比兩件事。這個用法在論文很常見，讀錯會整句誤解。"}, {"en": "Garrett et al. reported that 55% of 21 patients with poorly fitting dentures had moderate-to-complete denture satisfaction, as judged by examining dentists assessing the need for denture replacement.", "zh": "Garrett 等人指出，在二十一位假牙不密合的病人中，有 55% 對假牙的滿意度達中度至完全滿意；這是由評估是否需更換假牙的牙醫師判定的。"}, {"en": "Närhi et al. found a weak or statistically nonsignificant correlation between patients’ denture satisfaction and clinical measurements such as anatomic conditions, as well as denture quality.", "zh": "Närhi 等人發現，病人的假牙滿意度與解剖條件等臨床測量值及假牙品質之間，相關性微弱或未達統計顯著。"}, {"en": "Thus, denture satisfaction is not based on the technical quality of the dentures alone.", "zh": "因此，假牙滿意度並非僅取決於假牙的技術品質。", "g": "這句是整段的重點句（topic sentence 的結論版）。前面連舉三個研究，全都指向這一句。讀討論段時，找出這種「因此……」的句子，就抓到了作者真正想說的話。"}, {"en": "Moreover, Turker et al. suggested that although patients seek technical advice, psychological and emotional factors play an important role in their poor adaptation to the denture.", "zh": "再者，Turker 等人指出，儘管病人尋求的是技術上的建議，心理與情緒因素在其難以適應假牙上其實扮演重要角色。", "g": "<em>play an important role in</em>（在……扮演重要角色）是討論段的高頻片語，寫作時很好用，介系詞固定用 in。"}, {"en": "Another study showed that the dentist–patient relationship and psychological factors had a great impact on patients’ acceptance of and adaptation to removable dentures.", "zh": "另一項研究顯示，醫病關係與心理因素對病人接受並適應活動假牙有很大影響。", "g": "<em>acceptance of and adaptation to</em>——兩個名詞各配自己的介系詞（acceptance of / adaptation to），不能共用。這是英文寫作容易出錯的細節。"}, {"en": "Therefore, in addition to clinical and technical skills, gaining a better understanding of patient behavior and psychology, and improving communication, are crucial to improving patients’ denture satisfaction.", "zh": "因此，除了臨床與技術能力之外，更了解病人的行為與心理並改善溝通，對提升病人的假牙滿意度至關重要。", "g": "這句對口腔衛生師特別有意義：它把「溝通能力」寫進了專業建議裡。您日後寫討論或做衛教設計時，這是可以直接引用的立場。"}, {"en": "In the present study, subjects with a perceived loose denture gained significantly lower mean GOHAI-T scores, indicating a worse OHRQoL than those without a perceived loose denture.", "zh": "本研究中，自覺假牙鬆脫者的 GOHAI-T 平均分數顯著較低，代表其口腔健康相關生活品質比未自覺鬆脫者差。"}, {"en": "This result is in accordance with those of previous studies showing that denture loosening was a significant contributing factor to low OHRQoL.", "zh": "此結果與先前研究一致，該等研究顯示假牙鬆脫是造成口腔健康相關生活品質低落的重要因素。"}, {"en": "Moreover, Hassel et al. showed that improving retention of previously insufficiently retained dentures was positively associated with OHRQoL among removable denture wearers.", "zh": "再者，Hassel 等人顯示，改善原本固位不足的假牙之固位力，與活動假牙配戴者的口腔健康相關生活品質呈正相關。"}, {"en": "Hassel et al. further indicated that denture loosening affects many aspects of quality of life, both psychological and social.", "zh": "Hassel 等人進一步指出，假牙鬆脫會影響生活品質的許多面向，包括心理與社會層面。"}, {"en": "Komagamine et al. also reported that sufficient retention of lower dentures is important to improving OHRQoL in edentulous patients.", "zh": "Komagamine 等人也指出，下顎假牙有足夠的固位力，對改善無牙患者的口腔健康相關生活品質相當重要。"}, {"en": "Hence, it is necessary to identify and improve retention of previously insufficiently retained dentures in order to improve the OHRQoL of elderly persons wearing removable dentures.", "zh": "因此，找出並改善原本固位不足的假牙，是提升配戴活動假牙長者口腔健康相關生活品質的必要做法。"}, {"en": "Removable dentures can injure oral tissues, and their use is associated with a high frequency of oral mucosal lesions.", "zh": "活動假牙可能傷害口腔組織，其使用與口腔黏膜病灶的高發生率有關。"}, {"en": "In the present study, subjects who had had an oral ulcer were more likely to report a poorer OHRQoL than their counterparts without oral ulcer experiences.", "zh": "本研究中，曾有口腔潰瘍者比沒有此經驗者更容易回報較差的口腔健康相關生活品質。", "g": "<em>had had</em> 不是打錯字：前面的 had 是過去完成式的助動詞，後面的 had 是「有」。合起來就是「在那之前曾經有過」。<em>counterparts</em> 指的是「對照的另一群人」。"}, {"en": "This finding is consistent with the results of many previous studies showing that oral ulcers were associated with a poor OHRQoL.", "zh": "此發現與許多先前研究一致，該等研究顯示口腔潰瘍與較差的口腔健康相關生活品質有關。"}, {"en": "In a study evaluating the sensitivity of patient-centered outcome measures to treatment, McGrath et al. suggested that patients with ulcers and symptomatic oral mucosal lesions had poorer OHRQoL than their counterparts with non-symptomatic lesions.", "zh": "McGrath 等人在一項評估以病人為中心的成效指標對治療敏感度的研究中指出，有潰瘍及有症狀口腔黏膜病灶的病人，其口腔健康相關生活品質比無症狀者差。"}, {"en": "Recently, Suliman et al. showed that oral ulcerative lesions were significantly associated with oral impacts on daily performance, indicating poor quality of life.", "zh": "近期 Suliman 等人顯示，口腔潰瘍性病灶與日常生活表現受口腔影響顯著相關，代表生活品質較差。"}, {"en": "Moreover, Mandali et al. suggested that recall visits and shortened denture usage are essential for prevention of oral mucosal lesions.", "zh": "再者，Mandali 等人建議，定期回診與縮短假牙配戴時間，對預防口腔黏膜病灶至關重要。", "g": "<em>recall visit</em> 是牙科的「回診、定期召回」，不是「回想」。這是專業領域的特殊用法，一般字典查不太到，靠上下文和領域知識判斷。"}, {"en": "Therefore, to improve the OHRQoL of the elderly population, it is important to educate and regularly review patients who wear dentures with regard to oral tissue injuries.", "zh": "因此，若要改善長者族群的口腔健康相關生活品質，針對口腔組織傷害對假牙配戴者進行衛教並定期追蹤相當重要。"}, {"en": "Our results demonstrated that the number of remaining natural teeth was positively associated with OHRQoL; thus, the larger the number of remaining natural teeth, the lower the impact on the OHRQoL.", "zh": "本研究結果顯示，剩餘天然牙數目與口腔健康相關生活品質呈正相關；也就是說，剩餘天然牙越多，對生活品質的影響越小。", "g": "<em>the + 比較級, the + 比較級</em>（越……就越……）是很實用的句型：the larger the number, the lower the impact。中文的「越……越……」直接對應這個結構。"}, {"en": "Zaitsu et al. suggested that the number of missing teeth was significantly associated with low GOHAI scores, indicating a poor OHRQoL.", "zh": "Zaitsu 等人指出，缺牙數目與較低的 GOHAI 分數顯著相關，代表口腔健康相關生活品質較差。"}, {"en": "In their meta-analysis, Gerritsen et al. showed that tooth loss is associated with impairment of OHRQoL, and this association seems to be independent of the assessment instrument used and the context of the included samples.", "zh": "Gerritsen 等人的統合分析顯示，缺牙與口腔健康相關生活品質受損有關，且此關聯似乎不受所用評估工具與樣本背景影響。", "g": "<em>meta-analysis</em>（統合分析）是把很多篇研究的數據合併起來重新分析，證據等級比單一研究高。查文獻時看到 meta-analysis 或 systematic review，優先讀。"}, {"en": "Moreover, Jain et al. indicated that a decrease in the number of remaining natural teeth was correlated with poor OHRQoL, independent of the effect of age and gender.", "zh": "再者，Jain 等人指出，剩餘天然牙數目減少與較差的口腔健康相關生活品質相關，且不受年齡與性別影響。"}, {"en": "Our study also showed that denture status was a predictor of OHRQoL, and that removable partial denture (RPD) wearers experienced a more adverse impact on their OHRQoL than did complete denture wearers.", "zh": "本研究也顯示假牙狀況是口腔健康相關生活品質的預測因子，且活動局部假牙（RPD）配戴者所受的負面影響大於全口假牙配戴者。"}, {"en": "Another study found that RPD users experienced impaired OHRQoL more often than did CD users.", "zh": "另一項研究發現，活動局部假牙使用者出現生活品質受損的情形，比全口假牙使用者更常見。"}, {"en": "In addition, Wong et al. reported that in a sample of community-dwelling elderly Chinese people, those who wore RPD experienced a greater OHRQoL impairment than did CD wearers.", "zh": "此外，Wong 等人指出，在社區居住的華人長者樣本中，配戴活動局部假牙者的生活品質受損程度大於全口假牙配戴者。"}, {"en": "These findings probably result from the unrealistic expectations of the wearers from their dentures; that is, RPD wearers tend to compare their dentures with natural teeth.", "zh": "這些發現可能源自配戴者對假牙的不切實際期待，也就是說，活動局部假牙的配戴者傾向拿假牙和天然牙相比。", "g": "<em>result from</em>（源自、起因於）與 <em>result in</em>（導致）方向完全相反，只差一個介系詞。這組是很多人會弄反的地方，寫的時候要特別小心。"}, {"en": "In contrast, researchers have shown that CD wearers have usually previously used RPD and might accept the lack of teeth and oral discomfort as a part of the aging process.", "zh": "相對地，研究顯示全口假牙配戴者通常先前就用過活動局部假牙，可能已把缺牙與口腔不適視為老化過程的一部分。"}, {"en": "Thus, CD wearers might be more accepting of the limitations of denture functions than RPD wearers are.", "zh": "因此，全口假牙配戴者對假牙功能限制的接受度，可能高於活動局部假牙配戴者。"}, {"en": "In our study, educational level had a significant influence on GOHAI-T scores.", "zh": "本研究中，教育程度對 GOHAI-T 分數有顯著影響。"}, {"en": "Subjects with a higher education level were more likely to have poorer OHRQoL, indicating more perceived dental problems in this group than in those with an education level lower than high school.", "zh": "教育程度較高者的口腔健康相關生活品質反而較差，代表這群人自覺的口腔問題比高中以下學歷者更多。", "g": "這是一個反直覺的結果，作者接下來連用兩段解釋它。討論段的價值就在這裡：不是重述結果，而是回答「為什麼會這樣」。"}, {"en": "A possible explanation for this trend may be related to a person’s expectations.", "zh": "此一趨勢的可能解釋，或許與個人的期待有關。", "g": "<em>A possible explanation ... may be ...</em>——一句話裡放了 possible 和 may 兩層保留。學術英文在提出解釋時刻意講得很保守，因為那只是推測，不是證據。"}, {"en": "Subjects with a lower level of education may have lower standards or expectations in their evaluation of health satisfaction or life satisfaction and, accordingly, be more likely to be satisfied than those who are more highly educated.", "zh": "教育程度較低者在評估健康或生活滿意度時，標準或期待可能較低，因而比高學歷者更容易感到滿意。"}, {"en": "Another possible reason is that subjects with a higher education level may be more concerned about problems with oral health and esthetics than those with a lower education level.", "zh": "另一個可能原因是，高學歷者可能比低學歷者更在意口腔健康與美觀方面的問題。"}, {"en": "Therefore, those with a lower education level and lower expectations may report higher GOHAI-T scores, indicating a better OHRQoL.", "zh": "因此，教育程度較低、期待也較低者，可能回報較高的 GOHAI-T 分數，代表較佳的口腔健康相關生活品質。"}, {"en": "Compared to other international literature dealing with OHRQoL in the elderly, we found lower GOHAI-T values in this study.", "zh": "與其他探討長者口腔健康相關生活品質的國際文獻相比，本研究的 GOHAI-T 數值較低。"}, {"en": "One possible reason for this is that the subjects in this study were elderly individuals wearing removable dentures.", "zh": "可能原因之一是本研究的受試者全都是配戴活動假牙的長者。"}, {"en": "Hogenius et al. showed that compared to people with natural teeth, those who wear removable dentures experience more significant negative impacts on social and emotional aspects of life.", "zh": "Hogenius 等人顯示，與擁有天然牙者相比，配戴活動假牙者在生活的社交與情緒層面受到更明顯的負面影響。"}, {"en": "Another possible reason may be that the subjects in this study were sourced from the Government Senior Citizens’ Service Center in Taiwan.", "zh": "另一個可能原因是，本研究的受試者來自台灣的政府長青服務中心。"}, {"en": "Elderly people attending this center tend to have a higher education level and better socioeconomic status.", "zh": "會來這個中心的長者，教育程度與社經地位往往較高。"}, {"en": "Subjects with a higher level of education may have higher expectations relating to their oral health satisfaction and, accordingly, be more likely to have lower GOHAI-T values.", "zh": "教育程度較高者對口腔健康滿意度的期待可能較高，因而更容易出現較低的 GOHAI-T 數值。"}, {"en": "The present study was performed in 2009, at which time the GOHAI had not yet been translated for use in Taiwan.", "zh": "本研究於 2009 年執行，當時 GOHAI 尚未翻譯成可供台灣使用的版本。"}, {"en": "A Chinese version of the GOHAI for older people living in Hong Kong and southern China was developed in 2002.", "zh": "供香港與華南地區長者使用的中文版 GOHAI 已於 2002 年發展完成。"}, {"en": "Though the Taiwanese language is influenced by Chinese culture, there are a number of differences between the spoken and written Chinese of Hong Kong and that of Taiwan, so the wording of the questions in the Chinese version of the GOHAI could confuse elderly Taiwanese individuals.", "zh": "雖然台灣的語言深受中華文化影響，但香港與台灣在口語及書面中文上仍有不少差異，因此中文版 GOHAI 的題目用詞可能會讓台灣長者感到困惑。", "g": "<em>that of Taiwan</em> 裡的 that 是為了避免重複 “the spoken and written Chinese”。英文很討厭重複，會用 that / those 代替前面提過的名詞。讀到 that 要回頭找它指誰。"}, {"en": "Therefore, in the current study, we did not use the Chinese version of the GOHAI for assessing OHRQoL measures.", "zh": "因此，本研究並未採用該中文版 GOHAI 來評估口腔健康相關生活品質。"}, {"en": "Instead, a Chinese version of the GOHAI for use with Taiwanese people specifically (GOHAI-T) was developed.", "zh": "取而代之的是，研究者發展了專供台灣民眾使用的中文版 GOHAI（GOHAI-T）。"}, {"en": "A strength of the current study was that we simultaneously controlled both for factors related to denture wearing and for relevant influencing factors mentioned in previous similar studies.", "zh": "本研究的優點在於同時控制了與配戴假牙相關的因素，以及先前類似研究中提到的相關影響因素。", "g": "<em>A strength of the current study was that...</em>——講完限制之後講優點，是討論段常見的平衡寫法。您寫論文時兩邊都要有，只講優點會顯得不誠實。"}, {"en": "In the final model, the overall explanatory power was 0.533.", "zh": "最終模型的整體解釋力為 0.533。"}, {"en": "The present findings confirmed that factors related to denture wearing were most strongly associated with OHRQoL, with denture satisfaction being the strongest predictor.", "zh": "本研究結果證實，與配戴假牙相關的因素和口腔健康相關生活品質的關聯最強，其中假牙滿意度是最強的預測因子。"}, {"en": "Therefore, in clinical practice, denture satisfaction is a useful tool to evaluate the effect of denture treatment on OHRQoL.", "zh": "因此，在臨床實務上，假牙滿意度是評估假牙治療對口腔健康相關生活品質影響的實用工具。"}, {"en": "However, a weakness of the study was that the nature of the causality in which denture satisfaction is used to predict OHRQoL was still unclear due to the cross-sectional design.", "zh": "然而，本研究的弱點在於，由於採橫斷式設計，以假牙滿意度預測口腔健康相關生活品質的因果性質仍不明確。", "g": "<em>causality</em>（因果關係）與 <em>correlation</em>（相關）是完全不同的兩件事。這篇從頭到尾守住這條線：只說相關，不說因果。這是您做問卷研究時最該學起來的一課。"}]}, {"h": "Conclusions", "zh": "結論", "s": [{"en": "In conclusion, of the factors analyzed in this study, those related to denture wearing were most strongly associated with OHRQoL, and denture satisfaction was the strongest predictor among them.", "zh": "總結而言，在本研究分析的各項因素中，與配戴假牙相關的因素和口腔健康相關生活品質的關聯最強，其中又以假牙滿意度為最強的預測因子。", "g": "<em>In conclusion</em>（總結而言）是收尾的標準信號詞，同義的還有 <em>To sum up</em>、<em>Overall</em>。上台報告最後一張投影片就可以用這句開頭。"}, {"en": "It is suggested that denture satisfaction is useful as a tool for assessing the effect of denture treatment on the OHRQoL of elderly individuals wearing removable dentures.", "zh": "研究建議，假牙滿意度可作為評估假牙治療對配戴活動假牙長者口腔健康相關生活品質影響的工具。", "g": "<em>It is suggested that...</em> 又是被動，而且連「誰建議的」都不講。這是學術英文最保守的表達方式：把主張說出來，但不把自己擺在前面。"}]}], "mesh": [["Aged", "老年人（65 歲以上）", "PubMed 為每篇論文貼上的主題標籤。Aged 指 65 歲以上的受試者。"], ["Aged, 80 and over", "80 歲以上長者", "樣本中若含 80 歲以上者會另外標記。本研究平均年齡 76.8 歲。"], ["Attitude to Health", "健康態度", "受試者對自身健康的看法與態度，本研究的「自覺」項目屬於這一類。"], ["Cross-Sectional Studies", "橫斷式研究", "在單一時間點蒐集資料的研究設計。只能看關聯，不能下因果結論。"], ["Deglutition / physiology", "吞嚥／生理學", "Deglutition 是 swallowing 的醫學用語。斜線後面是子標題，表示從生理角度切入。"], ["Dental Care / statistics & numerical data", "牙科照護／統計數據", "對應本研究的「牙科醫療服務使用情形」。"], ["Denture Retention / psychology", "假牙固位／心理層面", "Retention 是假牙的固位力；子標題 psychology 表示探討的是心理感受，不是力學測量。"], ["Denture, Complete / psychology", "全口假牙／心理層面", "星號代表這是本篇的主要主題（major topic）。"], ["Denture, Partial, Removable / psychology", "活動局部假牙／心理層面", "MeSH 的寫法是「大類, 次類, 修飾語」，倒著讀才順：removable partial denture。"], ["Educational Status", "教育程度", "本研究發現教育程度會顯著影響 GOHAI-T 分數。"], ["Facial Pain / psychology", "顏面疼痛／心理層面", "對應本研究的「自覺口腔疼痛」。"], ["Female", "女性", "性別標籤。論文只要有女性受試者就會標記。"], ["Geriatric Assessment", "老年評估", "針對長者的整體功能評估，GOHAI 屬於這一類工具。"], ["Halitosis / psychology", "口臭／心理層面", "對應本研究的「自覺口臭」。"], ["Humans", "人類", "表示這是人體研究，不是動物或細胞實驗。查 PubMed 時很常用來過濾。"], ["Interpersonal Relations", "人際關係", "對應 GOHAI 中「因口腔問題而避免社交」的題目。"], ["Male", "男性", "性別標籤。"], ["Mastication / physiology", "咀嚼／生理學", "咀嚼功能，本研究以自覺咀嚼能力測量。"], ["Oral Health", "口腔健康", "本篇的主要主題之一。"], ["Oral Ulcer / psychology", "口腔潰瘍／心理層面", "對應本研究的「自覺口腔潰瘍」。"], ["Patient Satisfaction", "病人滿意度", "本研究的核心變項：假牙滿意度。"], ["Quality of Life", "生活品質", "本篇的主要主題之一。搜尋文獻時這是最關鍵的一個詞。"], ["Self Concept", "自我概念", "對應 GOHAI 中「因口腔問題而在意自己形象」的題目。"], ["Social Class", "社會階層", "社經地位，本研究以教育程度與生活費負擔能力測量。"], ["Speech / physiology", "言語／生理學", "說話功能，GOHAI 物理功能面向的一部分。"], ["Taiwan", "台灣", "地理標籤。搜尋台灣本土研究時可以直接加這個詞。"], ["Xerostomia / psychology", "口乾症／心理層面", "Xerostomia 是 dry mouth 的醫學用語。"]], "vocab": {"removable dentures": ["dentures the wearer can take out and put back — not fixed in the mouth", "活動假牙（可自行取下佩戴）", "v", "B2"], "removable prosthesis": ["another word for a removable denture; papers switch terms to avoid repeating", "活動補綴物：即活動假牙，論文換字避免重複", "v", "C1"], "denture wearing": ["the fact of using a denture, treated here as a factor that can be studied", "配戴假牙（本研究把它當成一個可分析的因素）", "p", "B2"], "denture": ["a set of artificial teeth", "假牙、義齒", "v", "B2"], "edentulous": ["having no natural teeth left", "無牙的（重音在第二音節 e-DEN-tu-lous）", "v", "C1"], "oral function": ["how well the mouth does its jobs — chewing, speaking, swallowing", "口腔功能：咀嚼、說話、吞嚥等", "p", "B2"], "esthetics": ["how something looks; appearance (British spelling: aesthetics)", "美觀、外觀（英式拼法 aesthetics）", "v", "C1"], "oral health related-quality of life": ["how much a person's mouth affects their daily life, comfort and confidence", "口腔健康相關生活品質", "f", "C1"], "OHRQoL": ["short for oral health-related quality of life", "口腔健康相關生活品質的縮寫", "f", "C1"], "HRQoL": ["health-related quality of life — the broader, whole-body version of OHRQoL", "健康相關生活品質：範圍比 OHRQoL 大，少一個 O", "f", "C1"], "Additional information is required": ["a formal, impersonal way of saying 'we need to know more'", "「還需要更多資訊」的學術寫法，不說 we", "c", "B2"], "assess": ["to judge or measure something carefully", "評估", "v", "B2"], "factors": ["the things that may cause or affect a result", "因素", "v", "B1"], "The purpose of this study is to": ["the standard opening for stating what a paper set out to do", "論文交代研究目的的標準句型", "c", "B1"], "evaluate": ["to judge the value or quality of something", "評估、評定", "v", "B2"], "the association between": ["the statistical relationship linking two things — always 'between A and B'", "……之間的關聯（固定搭配 between A and B）", "p", "B2"], "be associated with": ["to be linked to — states a relationship, never a cause", "與……有關聯（只講關聯，不講因果）", "p", "B2"], "sample": ["the group of people actually studied, standing for a larger population", "樣本：實際受測的那群人", "f", "B2"], "convenience sample": ["a group recruited because they were easy to reach, not randomly chosen", "方便樣本：找得到誰就收誰，非隨機抽樣", "f", "C1"], "study population": ["the whole group a study draws its participants from", "研究母群、研究對象", "f", "B2"], "mean age": ["the average age of the group", "平均年齡", "f", "B1"], "face-to-face interviews": ["asking questions in person rather than by post or phone", "面對面訪談", "p", "B1"], "socio-demographic characteristics": ["background facts such as age, sex, education and income", "社會人口特徵：年齡、性別、教育程度等", "f", "C1"], "dental care service usage": ["how often and why a person goes to the dentist", "牙科醫療服務使用情形", "p", "B2"], "regular dental checkups": ["routine visits to the dentist when nothing is wrong", "定期口腔檢查", "p", "B1"], "perceived": ["as the person themselves reports it — not measured by a dentist. The key word of this paper.", "自覺的、受訪者自己認為的（非客觀檢查）——本篇關鍵字", "v", "B2"], "self-rated": ["scored by the person about themselves", "自評的", "v", "B2"], "loose denture": ["a denture that moves or slips instead of staying in place", "假牙鬆脫、不穩", "p", "B1"], "oral ulcer": ["a painful open sore inside the mouth", "口腔潰瘍、口瘡", "p", "B2"], "halitosis": ["the medical word for bad breath", "口臭（醫學用語）", "v", "C1"], "dry mouth": ["not enough saliva; the medical term is xerostomia", "口乾（醫學用語 xerostomia）", "p", "B1"], "denture satisfaction": ["how happy the wearer is with their own denture", "假牙滿意度", "p", "B2"], "Geriatric Oral Health Assessment Index": ["a 12-question scale built to measure oral quality of life in older adults", "老年口腔健康評估指標：專為長者設計的 12 題量表", "f", "C1"], "GOHAI": ["the 12-item scale used in this paper. Higher score = better quality of life.", "本研究使用的 12 題量表。分數越高代表生活品質越好", "f", "C1"], "GOHAI-T": ["the Taiwanese Chinese version of the GOHAI scale", "GOHAI 的台灣中文版", "f", "C1"], "Oral Health Impact Profile": ["a rival scale (OHIP). Careful: higher OHIP score = WORSE quality of life.", "口腔健康影響量表（OHIP）。注意：分數越高代表生活品質越差", "f", "C1"], "OHIP": ["Oral Health Impact Profile. Its scores run the opposite way to GOHAI.", "口腔健康影響量表，分數方向與 GOHAI 相反", "f", "C1"], "remaining natural teeth": ["the teeth a person still has of their own", "剩餘的天然牙", "p", "B1"], "denture status": ["what kind of denture a person wears, and where", "假牙狀況（種類與位置）", "p", "B2"], "mastication": ["chewing (medical word). Stress the third syllable: mas-ti-CA-tion.", "咀嚼（醫學用語，重音在第三音節）", "v", "C1"], "oral mucosal lesions": ["damaged patches on the soft tissue lining the mouth", "口腔黏膜病灶", "p", "C1"], "Hierarchical multiple regression analysis": ["a statistic that adds groups of factors in steps, to see how much each group explains", "階層式多元迴歸分析：分步加入變項，看每組能多解釋多少", "f", "C2"], "was performed": ["passive voice — the standard way Methods sections describe what was done", "被動語態，Methods 段的標準寫法", "c", "B2"], "was measured using": ["the standard Methods pattern for naming a tool", "「以……測量」，Methods 的標準句型", "c", "B2"], "dependent variable": ["the thing being explained or predicted in a statistical model", "依變項：被預測、被影響的那一個", "f", "C1"], "independent": ["not affected by; in statistics, a variable used to predict the outcome", "自變項的、不受影響的", "v", "C1"], "predictors": ["the factors used to explain or predict the outcome", "預測因子", "f", "C1"], "accounted for": ["explained (a share of the variation) — a statistics use, not 'gave a reason'", "解釋了（多少變異），統計專用用法", "p", "C1"], "account for": ["to make up (a proportion of), or to explain (variation)", "占（多少比例）；或解釋（變異）", "p", "B2"], "variance": ["how much the scores spread out from the average", "變異量：分數離平均值的散布程度", "f", "C1"], "statistically significant": ["unlikely to be caused by chance alone", "統計上顯著：不太可能只是巧合", "f", "C1"], "significance level": ["the cut-off for calling a result significant, usually 5%", "顯著水準，通常設為 5%（α = 0.05）", "f", "C1"], "cross-sectional": ["measured at a single point in time — can show links, never causes", "橫斷式：單一時間點測量，只能看關聯不能談因果", "f", "C1"], "longitudinal": ["following the same people over time", "縱貫式：追蹤同一批人一段時間", "f", "C1"], "meta-analysis": ["a study that pools the numbers from many earlier studies", "統合分析：合併多篇研究的數據重新分析", "f", "C2"], "excluded": ["left out of the study on purpose, by a stated rule", "（依規則）排除在外", "v", "B2"], "informed consent": ["written agreement to join, given after the risks are explained", "知情同意", "f", "C1"], "Institutional Review Board": ["the ethics committee that must approve research on people", "人體試驗審查委員會（IRB）", "f", "C1"], "reliability": ["whether a measure gives consistent results", "信度：量得穩不穩", "f", "C1"], "validity": ["whether a measure really captures what it claims to", "效度：量得準不準", "f", "C1"], "convergent validity": ["evidence that a scale agrees with another measure of the same thing", "聚斂效度", "f", "C2"], "internal consistency": ["whether the items in a scale hang together", "內部一致性", "f", "C1"], "Cronbach": ["Cronbach's alpha — the usual number reported for internal consistency", "Cronbach's alpha：最常見的信度指標", "f", "C1"], "test-retest": ["measuring the same people twice to see if scores stay stable", "重測（信度）", "f", "C1"], "Likert scale": ["an agreement scale, usually 1 to 5. Say LIK-ert, not LIE-kert.", "李克特量表（唸 LIK-ert，不是 LIE-kert）", "f", "B2"], "questionnaire": ["a set of written questions. Stress the last syllable: kwes-tio-NAIR.", "問卷（重音在最後一音節）", "v", "B1"], "cross-cultural adaptation": ["reworking a translated scale so it makes sense in the new culture", "跨文化調適：翻譯後還要調整成在地說得通", "f", "C2"], "respectively": ["in the same order as just listed — the order must match exactly", "分別地（順序必須一一對應）", "c", "B2"], "positively associated": ["when one goes up, so does the other", "呈正相關", "p", "B2"], "correlation": ["a statistical link between two measures", "相關", "f", "B2"], "causality": ["one thing actually causing another — more than correlation", "因果關係", "f", "C1"], "controlling for": ["removing the influence of other factors so one effect can be seen", "控制（其他因素的影響）", "p", "C1"], "multicollinearity": ["when predictors are too similar to each other, making results unstable", "多重共線性", "f", "C2"], "skewness": ["how lopsided a distribution is", "偏態", "f", "C2"], "kurtosis": ["how peaked a distribution is", "峰度", "f", "C2"], "robust": ["not easily upset by broken assumptions in the data", "穩健的：不易受假設違反影響", "v", "C1"], "had the greatest impact on": ["affected it more than anything else did", "對……的影響最大", "p", "B2"], "the strongest predictor": ["the factor that explains the outcome better than any other", "最強的預測因子", "p", "B2"], "This suggests that": ["a careful way of stating a conclusion — shows, not proves", "這顯示……（謹慎的結論語氣，不是證明）", "c", "B2"], "et al.": ["Latin for 'and others'. Say 'et AL'. Used when a paper has several authors.", "等人（拉丁文縮寫，唸 et AL）", "c", "B2"], "in line with": ["agreeing with; matching what others found", "與……一致", "p", "B2"], "in accordance with": ["following, or agreeing with", "依照、與……一致", "p", "B2"], "consistent with": ["matching; not contradicting", "與……一致", "p", "B2"], "In contrast": ["signals that the opposite is coming next", "相對地、相反地", "c", "B1"], "gap in the literature": ["something earlier research has not answered — the reason a study exists", "文獻缺口：前人沒做過的那一塊", "p", "C1"], "hypothesis": ["the prediction a study sets out to test", "研究假設", "f", "B2"], "the former": ["the first of two things just mentioned (opposite: the latter)", "前者（相對於 the latter 後者）", "p", "C1"], "generalizing": ["applying findings from a sample to a wider population", "推論、類推到更大的族群", "v", "C1"], "limitations": ["the weaknesses a paper admits about itself", "研究限制", "f", "B2"], "mediated by": ["A affects C only through B; B is the middle step", "被……中介：A 透過 B 才影響 C", "p", "C2"], "play an important role in": ["to matter a lot in something", "在……扮演重要角色", "p", "B2"], "result from": ["to be caused by. Careful: 'result in' means the opposite.", "源自、起因於（注意 result in 是「導致」，方向相反）", "p", "B2"], "counterparts": ["the matching people in the other group", "對照的另一群人", "v", "C1"], "recall visits": ["scheduled follow-up dental appointments — not 'remembering'", "（牙科）定期回診，不是「回想」", "p", "C1"], "In conclusion": ["the standard signal that the final summary is starting", "總結而言", "c", "B1"], "In the present study": ["a formal way of saying 'in this study of ours'", "在本研究中", "c", "B2"], "Future research should": ["the standard way to hand unfinished work to the next study", "未來研究應……", "c", "B2"], "fertility rate": ["how many children are born per woman in a population", "生育率", "f", "B2"], "geriatric": ["relating to the medical care of old people. Say jer-ee-AT-rik.", "老年醫學的（唸 jer-ee-AT-rik）", "v", "C1"], "well-being": ["a person's overall health, comfort and happiness", "福祉、整體安適", "v", "B2"], "emphasized": ["given special importance", "被強調、被重視", "v", "B2"], "substantially": ["by a large amount", "大幅地、可觀地", "v", "B2"], "implant-supported": ["held in place by screws fixed into the jawbone", "植體支持式的（以植牙固定）", "p", "C1"], "adapt to": ["to get used to something new", "適應", "p", "B1"], "impairments": ["losses or weakening of a function", "損害、功能減損", "v", "C1"], "socioeconomic status": ["a person's position in society, from income, job and education", "社經地位", "f", "C1"], "subjective": ["based on personal feeling rather than outside measurement", "主觀的（相對於 objective 客觀的）", "v", "B2"], "prior to": ["before — the formal version", "在……之前（正式用語）", "p", "B2"], "intact": ["undamaged; complete", "完好的、未受損的", "v", "C1"], "cognitive": ["relating to thinking, memory and understanding", "認知的", "v", "C1"], "summation": ["the result of adding things together", "加總", "v", "C1"], "utilized": ["used — the formal version", "使用（正式用語）", "v", "B2"], "guidelines": ["official advice on how something should be done", "指引、準則", "v", "B1"], "mobility": ["how much a tooth moves; graded I to III", "（牙齒的）動搖度，分為第一至第三度", "f", "C1"], "extensive": ["covering a large area or amount", "大範圍的、廣泛的", "v", "B2"], "expressed as": ["written or reported in a particular form", "以……方式表示", "p", "B2"], "distributions": ["how values are spread across a range", "分布", "f", "C1"], "transformed": ["changed mathematically, e.g. by taking the log", "（數學上）轉換過的", "v", "C1"], "assumptions": ["conditions a statistical test takes for granted", "（統計）假設前提", "f", "C1"], "variability": ["how much values differ from one another", "變異程度", "f", "C1"], "majority": ["more than half", "多數、過半", "v", "B1"], "adverse": ["harmful or unfavourable", "不利的、負面的", "v", "C1"], "tolerated": ["put up with; accepted without complaint", "被容忍、被接受", "v", "C1"], "contributing factor": ["one of several things that help cause a result", "促成因素", "p", "B2"], "injure": ["to hurt or damage", "傷害、損傷", "v", "B1"], "symptomatic": ["causing noticeable symptoms", "有症狀的（相對於 non-symptomatic 無症狀的）", "v", "C1"], "essential": ["absolutely necessary", "必要的、不可或缺的", "v", "B1"], "demonstrated": ["showed clearly with evidence", "（以證據）顯示、證明", "v", "B2"], "community-dwelling": ["living at home in the community, not in an institution", "社區居住的（非住在機構）", "p", "C2"], "unrealistic": ["not matching what is actually possible", "不切實際的", "v", "B2"], "expectations": ["what a person believes will or should happen", "期待、預期", "v", "B1"], "simultaneously": ["at the same time", "同時地", "v", "C1"], "explanatory power": ["how much of the outcome a model can explain", "解釋力", "f", "C1"], "weakness": ["a weak point; the opposite of a strength", "弱點（相對於 strength 優點）", "v", "B1"], "recruited": ["found and signed up for a study", "招募（受試者）", "v", "B2"], "carried out": ["done, performed", "執行、進行", "p", "B1"], "conducted": ["carried out (a study or analysis)", "進行（研究或分析）", "v", "B2"]}}, {"id": "hirayama2025", "no": "Paper 2", "part": "Abstract", "short": "Diet texture, denture use and denture quality", "title": "Association of Diet Texture With Denture Wearing and Denture Quality in Institutionalized Older Adults Requiring Long-Term Care", "authors": "Hirayama M, Hatanaka Y, Yamane K, et al.", "journal": "Cureus, 2025; 17(11): e97796", "doi": "10.7759/cureus.97796", "lic": "Open access under CC BY 4.0.", "why": "把「食物質地」和「假牙」綁在一起，也帶進 FOIS、吞嚥量表等跟您上課直接重疊的詞彙。", "done": false}, {"id": "tosun2024", "no": "Paper 3", "part": "Abstract", "short": "OHIP-14 and satisfaction in denture wearers", "title": "Examination of oral health quality of life and patient satisfaction in removable denture wearers with OHIP-14 scale and visual analog scale: a cross-sectional study", "authors": "Tosun B, Uysal N", "journal": "BMC Oral Health, 2024; 24:1353", "doi": "10.1186/s12903-024-05124-6", "lic": "Open access under CC BY-NC-ND 4.0 — no-derivatives licence; private teaching use only.", "why": "句型最乾淨、統計最單純的一篇，適合當第一次完整走完 IMRaD 的練習。", "done": false}];
+
+var cur=0, VOCAB={}, TERMS=[], USED={}, TBL=[], allOpen=false, ftOpen=false;
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function P(){return PAPERS[cur];}
+
+/* ---------- render ---------- */
+/* Panels are rendered up front and shown/hidden with a class.
+   Removing a block element from inline flow makes WebKit drop the
+   collapsed space that follows it, so the DOM must never change here. */
+function panelHtml(st){
+  return '<div class="tr"><span class="lab">\u4e2d\u8b6f</span>'+st.zh+
+    (st.g?'<div class="gnote"><span class="lab">\u53e5\u578b\u00b7\u6587\u6cd5</span>'+st.g+'</div>':'')+'</div>';
+}
+function tableHtml(t,ti){
+  var h='<div class="tblblock"><div class="tblhead"><span class="tblname">'+esc(t.no)+
+        ' \u00b7 '+esc(t.zh)+'</span>'+
+        '<button class="tblbtn" data-tbl="'+ti+'">Show table \u986f\u793a\u8868\u683c</button></div>'+
+        '<div class="tblbody" hidden><p class="tblcap">'+esc(t.title)+'</p><div class="tblwrap'+(t.wrap?' text':'')+'"><table>';
+  h+='<thead>';
+  t.head.forEach(function(row){
+    h+='<tr>';
+    row.forEach(function(c){
+      if(Array.isArray(c)) h+='<th colspan="'+c[1]+'">'+esc(c[0])+'</th>';
+      else h+='<th>'+esc(c)+'</th>';
+    });
+    h+='</tr>';
+  });
+  h+='</thead><tbody>';
+  var ncol=t.head[t.head.length-1].length;
+  t.rows.forEach(function(r){
+    if(r.length===1&&r[0].indexOf('**')===0){
+      h+='<tr class="grp"><td colspan="'+ncol+'">'+esc(r[0].slice(2))+'</td></tr>';
+    }else{
+      h+='<tr>';
+      for(var i=0;i<ncol;i++) h+='<td>'+esc(r[i]!==undefined?r[i]:'')+'</td>';
+      h+='</tr>';
+    }
+  });
+  h+='</tbody></table></div>';
+  if(t.note) h+='<p class="tblnote">'+t.note+'</p>';
+  return h+'</div></div>';
+}
+function secHtml(sec,si,which){
+  var h='<h2 class="sec">'+esc(sec.h)+' <span class="zh">'+sec.zh+'</span></h2><div class="para">';
+  sec.s.forEach(function(st,ti){
+    h+='<span class="sent" role="button" tabindex="0" data-w="'+which+'" data-s="'+si+'" data-t="'+ti+'">'+
+       esc(st.en)+'</span>'+panelHtml(st)+' ';
+  });
+  h+='</div>';
+  (sec.tables||[]).forEach(function(t){ h+=tableHtml(t,TBL.push(t)-1); });
+  return h;
+}
+
+function render(i){
+  cur=i;
+  var p=P();
+  TBL=[];
+  VOCAB={};
+  if(p.vocab){
+    for(var k in p.vocab) VOCAB[k]=p.vocab[k];
+    var ART=/^(a|an|the)\s+/i, add={};
+    for(var k2 in VOCAB){ if(ART.test(k2)){ var bare=k2.replace(ART,''); if(bare&&!(bare in VOCAB)&&!(bare in add)) add[bare]=VOCAB[k2]; } }
+    for(var b in add) VOCAB[b]=add[b];
+  }
+  TERMS=Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
+
+  document.getElementById('barTitle').innerHTML='<b>'+p.no+'</b> &nbsp;'+esc(p.short);
+  document.getElementById('kicker').textContent=p.no+' · '+p.part;
+  document.getElementById('pTitle').innerHTML= p.titleZh
+    ? '<span class="sent" role="button" tabindex="0" data-w="title" data-s="0" data-t="0">'+esc(p.title)+'</span>'+
+      panelHtml({zh:p.titleZh,g:p.titleG})
+    : esc(p.title);
+  document.getElementById('pCite').innerHTML=
+    '<b>'+esc(p.authors)+'</b><br>'+esc(p.journal)+' · doi:'+esc(p.doi)+
+    '<span class="lic">'+esc(p.lic)+'</span>';
+
+  var html='';
+  (p.abstract||[]).forEach(function(sec,si){ html+=secHtml(sec,si,'a'); });
+  document.getElementById('body').innerHTML=html;
+
+  var ftEl=document.getElementById('ftBody');
+  if(p.fulltext&&p.fulltext.length){
+    var f='<div class="bigrule"><span class="lbl">FULL TEXT · 全文</span></div>';
+    p.fulltext.forEach(function(sec,si){ f+=secHtml(sec,si,'f'); });
+    if(p.mesh&&p.mesh.length){
+      f+='<h2 class="sec">MeSH terms <span class="zh">PubMed 主題詞</span></h2>'+
+         '<p class="meshnote">PubMed 為每篇論文貼上的標準主題標籤。用這些詞去搜尋，比自己拼關鍵字準得多。點任一標籤看說明。</p><div class="mesh">';
+      p.mesh.forEach(function(m,mi){
+        f+='<span class="mterm" role="button" tabindex="0" data-mi="'+mi+'">'+esc(m[0])+'</span>';
+      });
+      f+='</div>';
+    }
+    ftEl.innerHTML=f;
+    document.getElementById('ftBar').hidden=false;
+  }else{
+    ftEl.innerHTML='';
+    document.getElementById('ftBar').hidden=true;
+  }
+  ftOpen=false; ftEl.hidden=true;
+  var fb=document.getElementById('ftBtn');
+  fb.classList.remove('on'); fb.textContent='Continue to the full text';
+
+  document.getElementById('foot').innerHTML=
+    '<span class="strong">InkQuest Reading Room · annotated research reading.</span> '+
+    'Source text: '+esc(p.authors)+'. <em>'+esc(p.title)+'</em> '+esc(p.journal)+'. '+esc(p.lic)+
+    '<br>Translation, glossary and grammar notes are original InkQuest teaching material. '+
+    '<span class="strong han">僅供教學使用。</span>';
+
+  linkify(); buildWordbank(); markToc(); doSearch();
+  allOpen=false;
+  window.scrollTo(0,0);
+}
+
+/* ---------- glossary ---------- */
+function isWordChar(c){return (c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9');}
+function ciFind(text,term){
+  var lt=text.toLowerCase(), lterm=term.toLowerCase(), idx=lt.indexOf(lterm);
+  while(idx!==-1){
+    var b=idx>0?text.charAt(idx-1):'', a=(idx+term.length<text.length)?text.charAt(idx+term.length):'';
+    if(!isWordChar(b)&&!isWordChar(a)) return idx;
+    idx=lt.indexOf(lterm,idx+1);
+  }
+  return -1;
+}
+function sig(e){return e[2]+'|'+e[1];}
+function processTextNode(node){
+  var text=node.nodeValue; if(!text||!/[A-Za-z]/.test(text)) return;
+  var bestIdx=-1,bestTerm=null;
+  for(var i=0;i<TERMS.length;i++){
+    var t=TERMS[i];
+    if(USED[sig(VOCAB[t])]) continue;
+    var idx=ciFind(text,t); if(idx===-1) continue;
+    if(bestIdx===-1||idx<bestIdx||(idx===bestIdx&&t.length>bestTerm.length)){bestIdx=idx;bestTerm=t;}
+  }
+  if(bestTerm===null) return;
+  var e=VOCAB[bestTerm]; USED[sig(e)]=1;
+  var m=text.substr(bestIdx,bestTerm.length);
+  var pre=text.slice(0,bestIdx), post=text.slice(bestIdx+bestTerm.length);
+  var btn=document.createElement('span');
+  btn.className='gl'; btn.setAttribute('role','button'); btn.setAttribute('tabindex','0');
+  btn.setAttribute('data-gt',e[2]); btn.setAttribute('data-gw',m);
+  btn.setAttribute('data-gz',e[1]); btn.setAttribute('data-gd',e[0]); btn.setAttribute('data-gl',e[3]||'');
+  btn.setAttribute('aria-expanded','false'); btn.textContent=m;
+  var par=node.parentNode;
+  if(pre) par.insertBefore(document.createTextNode(pre),node);
+  par.insertBefore(btn,node);
+  var pn=document.createTextNode(post); par.insertBefore(pn,node); par.removeChild(node);
+  processTextNode(pn);
+}
+function linkify(){
+  USED={};
+  if(!TERMS.length) return;
+  Array.prototype.forEach.call(document.querySelectorAll('#body .sent, #ftBody .sent'),function(s){
+    var w=document.createTreeWalker(s,NodeFilter.SHOW_TEXT,null,false), ns=[], n;
+    while((n=w.nextNode())) ns.push(n);
+    for(var i=0;i<ns.length;i++){ if(ns[i].parentNode) processTextNode(ns[i]); }
+  });
+}
+
+/* ---------- sentence panels ---------- */
+function panelOf(el){
+  var n=el.nextElementSibling;
+  return (n&&n.classList.contains('tr'))?n:null;
+}
+function toggleSent(el,force){
+  var p=panelOf(el); if(!p) return false;
+  var want=(force===undefined)?!p.classList.contains('show'):force;
+  p.classList.toggle('show',want);
+  el.classList.toggle('open',want);
+  return want;
+}
+function visibleSents(){
+  var sel='#pTitle .sent, #body .sent';
+  if(ftOpen) sel+=', #ftBody .sent';
+  return document.querySelectorAll(sel);
+}
+function setAll(open){
+  Array.prototype.forEach.call(visibleSents(),function(s){ toggleSent(s,open); });
+  allOpen=open;
+}
+
+/* ---------- popup ---------- */
+var pop=document.getElementById('pop');
+var pT=document.getElementById('pop-tag'),pH=document.getElementById('pop-h'),
+    pZ=document.getElementById('pop-zh'),pD=document.getElementById('pop-d'),
+    pLv=document.getElementById('pop-lvl'),pArr=document.getElementById('pop-arrow');
+var LABEL={v:"Word 單字",p:"Phrase 片語",c:"Grammar 文法",f:"Research term 研究術語",m:"MeSH term 主題詞"};
+var openBtn=null;
+function closePop(){ pop.classList.remove('show'); if(openBtn){openBtn.setAttribute('aria-expanded','false');openBtn=null;} }
+function showPop(btn,t,head,zh,def,lvl){
+  pT.className='tag '+t; pT.textContent=LABEL[t]||'';
+  pH.textContent=head; pZ.textContent=zh; pD.textContent=def;
+  pLv.textContent=lvl?('CEFR '+lvl):'';
+  pop.classList.add('show');
+  if(window.matchMedia('(max-width:600px)').matches){ pArr.style.display='none'; }
+  else{
+    pArr.style.display='block';
+    var r=btn.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight,
+        sx=window.scrollX,sy=window.scrollY,vw=document.documentElement.clientWidth;
+    var left=sx+r.left+r.width/2-pw/2; left=Math.max(sx+10,Math.min(left,sx+vw-pw-10));
+    var top=sy+r.bottom+12, below=true;
+    if(r.bottom+12+ph>window.innerHeight&&r.top-12-ph>0){ top=sy+r.top-ph-12; below=false; }
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+    var ax=sx+r.left+r.width/2-left-7; ax=Math.max(12,Math.min(ax,pw-26));
+    pArr.style.left=ax+'px'; pArr.style.top=below?'-7px':(ph-7)+'px';
+  }
+  btn.setAttribute('aria-expanded','true'); openBtn=btn;
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var g=e.target.closest?e.target.closest('.gl'):null;
+  if(g){ e.stopPropagation();
+    if(openBtn===g){closePop();}
+    else{closePop();showPop(g,g.getAttribute('data-gt'),g.getAttribute('data-gw'),
+         g.getAttribute('data-gz'),g.getAttribute('data-gd'),g.getAttribute('data-gl'));}
+    return; }
+  var m=e.target.closest?e.target.closest('.mterm'):null;
+  if(m){ e.stopPropagation();
+    var d=P().mesh[+m.getAttribute('data-mi')];
+    if(openBtn===m){closePop();} else {closePop();showPop(m,'m',d[0],d[1],d[2],'');}
+    return; }
+  var tb=e.target.closest?e.target.closest('.tblbtn'):null;
+  if(tb){ e.stopPropagation();
+    var body=tb.parentNode.nextElementSibling, show=body.hidden;
+    body.hidden=!show;
+    tb.classList.toggle('on',show);
+    tb.textContent=show?'Hide table \u6536\u8d77\u8868\u683c':'Show table \u986f\u793a\u8868\u683c';
+    return; }
+  if(pop.classList.contains('show')&&!pop.contains(e.target)){ closePop(); return; }
+  var s=e.target.closest?e.target.closest('.sent'):null;
+  if(s){ toggleSent(s); return; }
+});
+document.getElementById('popclose').addEventListener('click',function(e){e.stopPropagation();closePop();});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){ closePop(); closeDrawer(); return; }
+  if(e.key==='Enter'||e.key===' '){
+    var t=e.target;
+    if(t.classList&&t.classList.contains('gl')){ e.preventDefault();
+      if(openBtn===t){closePop();} else {closePop();showPop(t,t.getAttribute('data-gt'),t.getAttribute('data-gw'),
+        t.getAttribute('data-gz'),t.getAttribute('data-gd'),t.getAttribute('data-gl'));} }
+    else if(t.classList&&t.classList.contains('mterm')){ e.preventDefault();
+      var d=P().mesh[+t.getAttribute('data-mi')];
+      if(openBtn===t){closePop();} else {closePop();showPop(t,'m',d[0],d[1],d[2],'');} }
+    else if(t.classList&&t.classList.contains('sent')){ e.preventDefault(); toggleSent(t); }
+  }
+});
+window.addEventListener('resize',closePop);
+document.getElementById('openAllBtn').onclick=function(){ setAll(true); closeDrawer(); };
+document.getElementById('closeAllBtn').onclick=function(){ setAll(false); closeDrawer(); };
+document.getElementById('ftBtn').onclick=function(){ setFullText(!ftOpen); };
+
+function setFullText(open){
+  ftOpen=open;
+  var el=document.getElementById('ftBody'), b=document.getElementById('ftBtn');
+  el.hidden=!open;
+  b.classList.toggle('on',open);
+  b.textContent=open?'Hide the full text':'Continue to the full text';
+  if(!open){
+    Array.prototype.forEach.call(document.querySelectorAll('#ftBody .sent.open'),
+      function(s){toggleSent(s,false);});
+  }
+  doSearch();
+}
+
+/* ---------- drawer ---------- */
+var drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+function openDrawer(p){
+  drawer.classList.add('open'); scrim.classList.add('show');
+  if(p){ document.querySelector('.tab[data-pane="'+p+'"]').click(); }
+}
+function closeDrawer(){ drawer.classList.remove('open'); scrim.classList.remove('show'); }
+document.getElementById('menuBtn').onclick=function(){ openDrawer('toc'); };
+document.getElementById('searchBtn').onclick=function(){ openDrawer('search'); setTimeout(function(){document.getElementById('q').focus();},260); };
+scrim.onclick=closeDrawer;
+Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(t){
+  t.onclick=function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+    document.querySelectorAll('.pane').forEach(function(x){x.classList.remove('on');});
+    t.classList.add('on');
+    document.getElementById('pane-'+t.getAttribute('data-pane')).classList.add('on');
+  };
+});
+
+function buildToc(){
+  var html='';
+  PAPERS.forEach(function(p,i){
+    html+='<button class="tocitem'+(p.done?'':' todo')+'" data-i="'+i+'"'+(p.done?'':' disabled')+'>'+
+      '<em>'+p.no+' · '+p.part+(p.done?'':' · 尚未製作')+'</em>'+esc(p.short)+
+      '<span class="meta">'+esc(p.journal)+'<br>'+p.why+'</span></button>';
+  });
+  document.getElementById('pane-toc').innerHTML=html;
+  document.querySelectorAll('.tocitem:not(.todo)').forEach(function(b){
+    b.onclick=function(){ render(+b.getAttribute('data-i')); closeDrawer(); };
+  });
+}
+function markToc(){
+  document.querySelectorAll('.tocitem[data-i]').forEach(function(b){
+    b.classList.toggle('cur',+b.getAttribute('data-i')===cur);
+  });
+}
+
+/* ---------- search ---------- */
+function ctx(text,pos,len){
+  var a=Math.max(0,pos-38), b=Math.min(text.length,pos+len+46);
+  return (a>0?'…':'')+esc(text.slice(a,pos))+'<b>'+esc(text.slice(pos,pos+len))+'</b>'+
+         esc(text.slice(pos+len,b))+(b<text.length?'…':'');
+}
+function doSearch(){
+  var q=document.getElementById('q').value.trim();
+  var box=document.getElementById('hits'), note=document.getElementById('qnote');
+  clearFlash();
+  if(q.length<2){ box.innerHTML=''; note.textContent='Type at least two letters. 中英文都可以搜尋。'; return; }
+  var lq=q.toLowerCase(), out='', n=0, p=P();
+  function scan(list,which,label){
+    (list||[]).forEach(function(sec,si){
+      sec.s.forEach(function(st,ti){
+        var hay=[[st.en,'en'],[st.zh,'zh'],[st.g||'','g']];
+        for(var h=0;h<hay.length;h++){
+          var txt=hay[h][0].replace(/<[^>]+>/g,''), pos=txt.toLowerCase().indexOf(lq);
+          if(pos!==-1){
+            n++;
+            out+='<button class="hitrow" data-w="'+which+'" data-s="'+si+'" data-t="'+ti+'">'+
+                 '<span class="hr-ch">'+esc(label)+' · '+esc(sec.h)+'</span>'+
+                 '<span class="hr-sn">'+ctx(txt,pos,q.length)+'</span></button>';
+            break;
+          }
+        }
+      });
+    });
+  }
+  if(p.titleZh){
+    var tt=[p.title,p.titleZh,p.titleG||''];
+    for(var i=0;i<tt.length;i++){
+      var t2=tt[i].replace(/<[^>]+>/g,''), pz=t2.toLowerCase().indexOf(lq);
+      if(pz!==-1){ n++; out+='<button class="hitrow" data-w="title" data-s="0" data-t="0">'+
+        '<span class="hr-ch">Title · 標題</span><span class="hr-sn">'+ctx(t2,pz,q.length)+'</span></button>'; break; }
+    }
+  }
+  scan(p.abstract,'a','Abstract');
+  scan(p.fulltext,'f','Full text');
+  note.textContent = n ? (n+' result'+(n===1?'':'s')+' 筆結果') : 'Nothing found 找不到';
+  box.innerHTML=out;
+  box.querySelectorAll('.hitrow').forEach(function(b){
+    b.onclick=function(){ jumpTo(b.getAttribute('data-w'),b.getAttribute('data-s'),b.getAttribute('data-t')); };
+  });
+}
+function clearFlash(){ document.querySelectorAll('.sent.flash').forEach(function(s){s.classList.remove('flash');}); }
+function jumpTo(w,si,ti){
+  if(w==='f'&&!ftOpen) setFullText(true);
+  closeDrawer(); clearFlash();
+  var root = w==='title' ? '#pTitle' : (w==='f'?'#ftBody':'#body');
+  var el=document.querySelector(root+' .sent[data-s="'+si+'"][data-t="'+ti+'"]');
+  if(!el) return;
+  el.classList.add('flash');
+  el.scrollIntoView({block:'center'});
+  toggleSent(el,true);
+}
+document.getElementById('q').addEventListener('input',doSearch);
+
+/* ---------- word bank ---------- */
+function buildWordbank(){
+  var GROUPS=[["v","Words","單字"],["p","Phrases","片語"],["c","Grammar","文法"],["f","Research terms","研究術語"]];
+  var src=P().vocab||{}, seen={}, byType={v:[],p:[],c:[],f:[]};
+  for(var k in src){
+    var e=src[k], s2=e[2]+'|'+e[1];
+    if(seen[s2]) continue; seen[s2]=1;
+    byType[e[2]].push([k,e]);
+  }
+  var html='';
+  GROUPS.forEach(function(G){
+    var items=byType[G[0]]; if(!items.length) return;
+    items.sort(function(a,b){return a[0].toLowerCase().localeCompare(b[0].toLowerCase());});
+    html+='<div class="wbhead '+G[0]+'"><span class="pip"></span>'+G[1]+
+          ' <span style="font-family:var(--han);font-weight:600">'+G[2]+'</span>'+
+          '<span class="n">'+items.length+'</span></div>';
+    items.forEach(function(it){
+      html+='<div class="wb"><span class="t">'+esc(it[0])+'</span> · <span class="z">'+it[1][1]+
+            '</span><span class="x">'+esc(it[1][0])+'</span></div>';
+    });
+  });
+  document.getElementById('pane-words').innerHTML=html||'<p class="qnote">No word bank for this paper yet.</p>';
+}
+
+document.querySelectorAll('#sizes button').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('#sizes button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    document.documentElement.style.setProperty('--fs',b.getAttribute('data-size')+'px');
+  };
+});
+
+buildToc();
+render(0);
+</script>
+</body>
+</html>
