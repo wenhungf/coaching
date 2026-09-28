@@ -317,7 +317,8 @@
           <button data-rate="1">Natural 正常</button>
         </div>
         <select id="voiceSel" aria-label="Voice"></select>
-        <p class="setnote">語音由裝置內建，不同手機、電腦的聲音不一樣。iPhone／iPad 可到「設定 › 輔助使用 › 朗讀內容 › 聲音」下載較自然的英文語音。</p>
+        <p class="setnote" id="voiceNow"></p>
+        <p class="setnote">iPhone、iPad 上的網頁只能用系統內建的語音；自己下載的「增強音質」語音 Apple 不開放給網頁使用。在電腦上用 Microsoft Edge 開這一頁，可以選到很自然的 AI 語音（名稱有 Natural 的那幾個）。</p>
       </div>
     </div>
   </div>
@@ -597,24 +598,46 @@ var TTS=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window);
 var sayRate=0.85, sayVoice='', VOICES=[], sayBtn=null, saySent=null;
 function lsGet(k){ try{return localStorage.getItem(k);}catch(e){return null;} }
 function lsSet(k,v){ try{localStorage.setItem(k,v);}catch(e){} }
-function voiceRank(v){
-  var n=v.name, r=0;
-  if(/en-US/i.test(v.lang)) r+=3; else if(/en-GB/i.test(v.lang)) r+=2;
-  if(/Natural|Neural|Enhanced|Premium|Samantha|Ava|Allison|Google US/i.test(n)) r+=4;
-  if(/Novelty|Bells|Bubbles|Cellos|Bad News|Good News|Jester|Organ|Trinoids|Whisper|Zarvox|Albert|Boing|Superstar|Wobble|Bahh|Hysterical/i.test(n)) r-=20;
-  return r;
+var NOVELTY=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley/i;
+/* 0 normal, 1 enhanced, 2 premium; iPhone gives enhanced voices the same name, so read the voiceURI too */
+function vq(v){
+  var t=(v.voiceURI||'')+' '+v.name;
+  if(/premium|高品質|優質/i.test(t)) return 2;
+  if(/enhanced|增強|加強|Natural|Neural|Online/i.test(t)) return 1;
+  return 0;
 }
+var QLABEL=['一般音質','增強音質','高品質'];
+function vid(v){ return v.voiceURI||v.name; }
 function loadVoices(){
   if(!TTS) return;
-  VOICES=speechSynthesis.getVoices().filter(function(v){return /^en[-_]/i.test(v.lang)&&voiceRank(v)>-5;});
-  VOICES.sort(function(a,b){return voiceRank(b)-voiceRank(a);});
+  var us=function(v){return /^en[-_]US/i.test(v.lang)?0:1;};
+  VOICES=speechSynthesis.getVoices().filter(function(v){return /^en/i.test(v.lang)&&!NOVELTY.test(v.name);});
+  VOICES.sort(function(a,b){return us(a)-us(b)||vq(b)-vq(a);});
+  var main=VOICES.filter(function(v){return vid(v)===sayVoice;})[0]
+    ||VOICES.filter(function(v){return us(v)===0&&/Samantha|Google US English|Aria|Jenny|Ava|Allison/i.test(v.name);})[0]
+    ||VOICES[0];
+  sayVoice=main?vid(main):'';
   var sel=document.getElementById('voiceSel'); if(!sel) return;
-  if(!VOICES.length){ sel.innerHTML='<option>(Default voice)</option>'; return; }
-  if(!sayVoice||!VOICES.some(function(v){return v.name===sayVoice;})) sayVoice=VOICES[0].name;
+  if(!VOICES.length){ sel.innerHTML='<option>（這個瀏覽器沒有英文語音）</option>'; sel.disabled=true; return; }
+  sel.disabled=false;
   sel.innerHTML=VOICES.map(function(v){
-    return '<option value="'+esc(v.name)+'"'+(v.name===sayVoice?' selected':'')+'>'+esc(v.name+' ('+v.lang+')')+'</option>';
+    return '<option value="'+esc(vid(v))+'"'+(v===main?' selected':'')+'>'+esc(v.name)+' · '+esc(v.lang)+' · '+QLABEL[vq(v)]+'</option>';
   }).join('');
+  showVoiceNow();
 }
+function showVoiceNow(){
+  var n=document.getElementById('voiceNow'), m=VOICES.filter(function(v){return vid(v)===sayVoice;})[0];
+  if(!n||!m) return;
+  var better=VOICES.some(function(v){return vq(v)>vq(m)&&v.lang===m.lang;});
+  n.innerHTML='目前使用：<b>'+esc(m.name)+'（'+QLABEL[vq(m)]+'）</b>'+
+    (vq(m)===0?(better?'。清單裡有更好的版本，可以直接切換。':'。這個瀏覽器只提供一般音質的英文語音。'):'');
+}
+var speechUnlocked=false;
+function unlockSpeech(){
+  if(speechUnlocked||!TTS) return; speechUnlocked=true;
+  try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; u.lang='en-US'; speechSynthesis.speak(u); }catch(e){}
+}
+['touchend','click','keydown'].forEach(function(t){ document.addEventListener(t,unlockSpeech,true); });
 var SAY_UNITS=[['mg/dL','milligram','milligrams per deciliter'],['mg/L','milligram','milligrams per liter'],
   ['mL','milliliter','milliliters'],['mm','millimeter','millimeters'],['cm','centimeter','centimeters'],
   ['kg','kilogram','kilograms'],['g','gram','grams'],['s','second','seconds'],['min','minute','minutes'],
@@ -660,7 +683,7 @@ function say(text,btn,sent){
   text=cleanSay(text); if(!text) return;
   var u=new SpeechSynthesisUtterance(text);
   u.lang='en-US'; u.rate=sayRate;
-  var v=VOICES.filter(function(x){return x.name===sayVoice;})[0];
+  var v=VOICES.filter(function(x){return vid(x)===sayVoice;})[0];
   if(v){ u.voice=v; u.lang=v.lang; }
   sayBtn=btn||null; saySent=sent||null;
   if(sayBtn) sayBtn.classList.add('on');
@@ -684,7 +707,7 @@ function say(text,btn,sent){
     });
   });
   document.getElementById('voiceSel').addEventListener('change',function(){
-    sayVoice=this.value; lsSet('iq-voice',sayVoice); say('Hello. This is my reading voice.',null,null);
+    sayVoice=this.value; lsSet('iq-voice',sayVoice); showVoiceNow(); say('Hello. This is my reading voice.',null,null);
   });
   loadVoices();
   if(speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged',loadVoices);
