@@ -664,6 +664,12 @@ function cleanSay(t){
      .replace(/(\d)\s*[x×]\s*(?=\d)/g,'$1 by ')
      .replace(/−\s*(?=\d)/g,'minus ')
      .replace(/α/g,'alpha');
+  // acronyms that are also English words: spell them letter by letter
+  t=t.replace(/\b(OR|MA|MO|VAS|HUG)(s?)\b/g,function(m,w,pl){ return w.split('').join('.')+'.'+(pl?'s':''); });
+  // Roman numerals in labels: Model III, grade III, GS-II
+  var RN={II:'two',III:'three',IV:'four'};
+  t=t.replace(/\b(Model|model|Grade|grade|Class|class|Phase|phase|Type|type|Stage|stage)\s+(II|III|IV)\b/g,function(m,w,n){return w+' '+RN[n];})
+   .replace(/-(II|III|IV)\b/g,function(m,n){return ' '+RN[n];});
   t=sayUnits(t);
   return t.replace(/\s*≤\s*/g,' less than or equal to ').replace(/\s*≥\s*/g,' greater than or equal to ')
      .replace(/\s*±\s*/g,' plus or minus ').replace(/\s*<\s*/g,' less than ').replace(/\s*>\s*/g,' greater than ')
