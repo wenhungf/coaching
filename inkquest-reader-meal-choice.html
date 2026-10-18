@@ -275,6 +275,7 @@
     #pop .arrow{display:none} #pop .close{display:block}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+  html.shelf,html.shelf body{background:#12141c!important;color-scheme:dark}
   /* ---------- bookshelf (home view) ---------- */
   #shelfView{display:none;background:#12141c;min-height:calc(100vh - 50px);color:#b9b2a0;font-family:Georgia,"Iowan Old Style","Times New Roman",var(--han),serif}
   body.shelf #shelfView{display:block}
@@ -573,7 +574,7 @@ function render(i){
   }
   TERMS=Object.keys(VOCAB).sort(function(a,b){return b.length-a.length;});
 
-  document.body.classList.remove('shelf');
+  document.body.classList.remove('shelf'); if(typeof setShelfChrome==='function') setShelfChrome(false);
   document.getElementById('barTitle').innerHTML='<button type="button" id="homeBtn">InkQuest Reading Room</button><span class="crumb"> &rsaquo; <b>'+p.no+'</b> &nbsp;'+esc(p.short)+'</span>';
   document.getElementById('kicker').textContent=p.no+' · '+p.part;
   document.getElementById('pTitle').innerHTML= p.titleZh
@@ -1500,9 +1501,14 @@ function bShow(btn){
   requestAnimationFrame(function(){ pop.classList.add('open'); });
   setTimeout(function(){ var r=pop.getBoundingClientRect(); if(r.bottom>innerHeight) pop.scrollIntoView({block:'nearest',behavior:'smooth'}); },260);
 }
+function setShelfChrome(on){
+  document.documentElement.classList.toggle('shelf',on);
+  var m=document.querySelector('meta[name="theme-color"]'); if(!m){ m=document.createElement('meta'); m.name='theme-color'; document.head.appendChild(m); }
+  m.content=on?'#12141c':'#F6F2E9';
+}
 function showShelf(){
   if(typeof stopSay==='function') stopSay(); closePop(); bClose();
-  document.body.classList.add('shelf');
+  document.body.classList.add('shelf'); setShelfChrome(true);
   document.getElementById('barTitle').innerHTML='<button type="button" id="homeBtn">InkQuest Reading Room</button>';
   window.scrollTo(0,0);
 }
