@@ -299,9 +299,9 @@
   .case{position:relative;background:repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 3px,rgba(0,0,0,.05) 3px 7px,rgba(255,255,255,.008) 7px 11px),linear-gradient(180deg,#1d1612,#17120f 40%,#120d0a);
     border:12px solid #4a2f1d;border-top-width:16px;border-radius:6px;box-shadow:inset 0 0 40px rgba(0,0,0,.65),0 18px 40px rgba(0,0,0,.45);
     border-image:linear-gradient(90deg,#2b1a10,#6e4a30 18%,#4a2f1d 50%,#6e4a30 82%,#2b1a10) 1}
-  .shelf{position:relative;padding:1.4rem 0 0;min-width:0;display:flex;flex-direction:column}
-  .shelf .row{flex:1}
-  @media (min-width:780px){ .case{display:grid;grid-template-columns:1fr 1fr} .shelf:nth-child(odd){border-right:12px solid #4a2f1d;box-shadow:inset -6px 0 10px -6px rgba(0,0,0,.6)} }
+   .sh{position:relative;padding:1.4rem 0 0;min-width:0;display:flex;flex-direction:column}
+   .sh .row{flex:1}
+  @media (min-width:780px){ .case{display:grid;grid-template-columns:1fr 1fr}  .sh:nth-child(odd){border-right:12px solid #4a2f1d;box-shadow:inset -6px 0 10px -6px rgba(0,0,0,.6)} }
   .shelf-label{display:flex;align-items:baseline;justify-content:space-between;gap:.2rem 1rem;flex-wrap:wrap;padding:0 1.1rem .8rem}
   .shelf-label h2{font-size:.95rem;font-weight:600;letter-spacing:.08em;color:#f0ead8;margin:0;font-family:var(--han)}
   .shelf-label span{font-size:.78rem;letter-spacing:.08em;color:#7d7868;white-space:nowrap}
@@ -349,7 +349,7 @@
   .pg .start::after{content:" →"}
   .pg .start[disabled]{color:#9a8d76;text-decoration:none;cursor:default} .pg .start[disabled]::after{content:""}
   .pg .x{position:absolute;top:.8cqw;right:1.2cqw;width:6cqw;height:6cqw;min-width:28px;min-height:28px;font-size:4cqw;line-height:1;color:#8a7a60;display:grid;place-items:center;background:none;border:0;cursor:pointer}
-  .shelf:last-child .board{height:18px}
+   .sh:last-child .board{height:18px}
   .sv-foot{margin-top:2.4rem;text-align:center;font-size:.9rem;color:#7d7868;line-height:1.8;font-family:var(--han)}
   @media (max-width:520px){
     .case{border-width:6px;border-top-width:10px}
@@ -362,6 +362,13 @@
     .row{gap:3px;padding-left:.5rem;padding-right:.5rem} .shelf-label{padding:0 .6rem .7rem}
   }
   @media (prefers-reduced-motion:reduce){ .book,.bpop{transition:none} }
+
+  body.shelf #bar{display:none}
+  .sv-icons{position:absolute;top:10px;left:8px;right:8px;display:flex;justify-content:space-between;pointer-events:none}
+  .sv-icons .iconbtn{pointer-events:auto;color:#f0ead8}
+  .sv-icons .iconbtn:hover{background:rgba(240,234,216,.08)}
+  .sv-wrap{position:relative;padding-top:1.2rem}
+  #shelfView{min-height:100vh}
 </style>
 </head>
 <body>
@@ -377,6 +384,8 @@
 </div>
 
 <div id="shelfView"><div class="sv-wrap">
+  <div class="sv-icons"><button class="iconbtn" id="svMenu" aria-label="Contents"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+    <button class="iconbtn" id="svSearch" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button></div>
   <div class="sv-head"><h1 class="sv-mark">Ink<span class="q">Quest</span></h1>
     <svg class="sv-stroke" viewBox="0 0 240 16" aria-hidden="true"><path d="M4 11 C 50 3, 90 14, 130 8 S 210 4, 236 9"/></svg>
     <p class="sv-tag">Reading Room</p><p class="sv-tag2">口腔狀況與餐食選擇 · 文獻書架</p></div>
@@ -1462,7 +1471,7 @@ function bkInfo(i){ var p=PAPERS[i], parts=p.short.split(' · ');
 function buildShelf(){
   var ce=document.getElementById('case');
   ce.innerHTML=SHELVES.map(function(sh,si){
-    return '<section class="shelf"><div class="shelf-label"><h2>'+esc(sh.name)+'</h2><span>'+esc(sh.sub)+'</span></div><div class="row">'+
+    return '<section class="sh"><div class="shelf-label"><h2>'+esc(sh.name)+'</h2><span>'+esc(sh.sub)+'</span></div><div class="row">'+
       sh.books.map(function(i,bi){ var k=bkInfo(i), p=k.p, face=bi===0, todo=!p.done,
         st='--a:'+(todo?'#3a352d':BOOKCOL[i%BOOKCOL.length])+';'+(face?'':'--h:'+BOOKH[(i*3+bi)%BOOKH.length||1]+'px;');
         var tag=k.tag&&!todo?'<span class="tag">'+esc(k.tag.split('・')[0].replace('暫不需要','暫緩'))+'</span>':'';
@@ -1479,7 +1488,7 @@ var bOpen=null;
 function bClose(){ if(bOpen==null) return; var b=document.getElementById('bk'+bOpen); if(b) b.setAttribute('aria-expanded','false'); document.getElementById('bpop').classList.remove('open'); bOpen=null; }
 function bPlace(btn){
   var ce=document.getElementById('case'), pop=document.getElementById('bpop'), c=ce.getBoundingClientRect(),
-      bd=btn.closest('.shelf').querySelector('.board').getBoundingClientRect(), r=btn.getBoundingClientRect();
+      bd=btn.closest('.sh').querySelector('.board').getBoundingClientRect(), r=btn.getBoundingClientRect();
   var inner=ce.clientWidth, w=pop.offsetWidth, mid=r.left+r.width/2-c.left-ce.clientLeft;
   var left=Math.max(6,Math.min(inner-w-6,mid-w/2));
   pop.style.left=left+'px'; pop.style.top=(bd.bottom-c.top-ce.clientTop+10)+'px';
@@ -1514,6 +1523,8 @@ function showShelf(){
 }
 (function(){
   buildShelf(); showShelf();
+  document.getElementById('svMenu').onclick=function(){ document.getElementById('menuBtn').click(); };
+  document.getElementById('svSearch').onclick=function(){ document.getElementById('searchBtn').click(); };
   document.getElementById('case').addEventListener('click',function(e){ var b=e.target.closest('.book'); if(b){ e.stopPropagation(); bShow(b); } });
   document.addEventListener('click',function(e){ if(bOpen!==null&&!e.target.closest('.bpop,.book')) bClose(); });
   addEventListener('resize',function(){ if(bOpen!==null) bPlace(document.getElementById('bk'+bOpen)); });
