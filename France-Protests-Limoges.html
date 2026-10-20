@@ -380,17 +380,29 @@ function segs(s){
     add('en',s.slice(last,m.index)); var k=keyOf(m[1],m[2]), e=GL[k];
     /* a French entry is spoken in French when the shown text is part of the French headword
        ("Macron" for Emmanuel Macron); an English gloss like "Paris Commune" stays English */
-    if(e&&e.t==='fr'&&(m[1].toLowerCase()===k||k.indexOf(m[1].toLowerCase())>=0)) add('fr',m[1],e); else add('en',m[1]);
+    if(e&&e.t==='fr'&&(m[1].toLowerCase()===k||k.indexOf(m[1].toLowerCase())>=0||FR_EXTRA[m[1]]===k)) add('fr',m[1],e); else add('en',m[1]);
     last=MARK.lastIndex; }
   add('en',s.slice(last));
   var res=[]; out.forEach(function(p){ if(p.lang==='fr'){ res.push(p); return; }
     p.text.split(/(?<=[.!?]["”]?)\s+/).forEach(function(x){
       /* French names left unmarked in the text still get the French voice */
-      x.split(FR_AUTO).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:'fr',text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
+      x.split(frAuto()).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:'fr',text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
   return res;
 }
 var FR_KEY={Macron:'emmanuel macron',Lecornu:'sébastien lecornu',Barnier:'michel barnier',Bayrou:'françois bayrou',Attal:'gabriel attal','Le Pen':'marine le pen','Mélenchon':'jean-luc mélenchon','Guérin':'guillaume guérin','Nuñez':'laurent nuñez',Limoges:'limoges','Créteil':'créteil',Marseille:'marseille',Mulhouse:'mulhouse',Nanterre:'nanterre','de Gaulle':'charles de gaulle',Bastille:'bastille','Juppé':'alain juppé'};
-var FR_AUTO=new RegExp('(?<![\\wÀ-ÿ])('+Object.keys(FR_KEY).join('|')+')(?![\\wÀ-ÿ])');
+/* built on first use (after the page has collected headwords): every French glossary headword, plus
+   surnames and plurals, so a French word left unmarked in the text still gets the French voice.
+   "Lens" is left out because it is also an English word. */
+var FR_AUTO=null, FR_EXTRA={mairies:'mairie','lycées':'lycée'};
+function frAuto(){
+  if(FR_AUTO) return FR_AUTO;
+  Object.keys(FR_EXTRA).forEach(function(w){ FR_KEY[w]=FR_EXTRA[w]; });
+  Object.keys(GL).forEach(function(k){ var e=GL[k]; if(e.t!=='fr'||k==='lens') return;
+    var h=(e.h||SHOWN[k]||k).replace(/\s*\(.*\)$/,''); if(!FR_KEY[h]) FR_KEY[h]=k; });
+  var words=Object.keys(FR_KEY).sort(function(a,b){ return b.length-a.length; }).map(function(w){ return w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); });
+  FR_AUTO=new RegExp('(?<![\\wÀ-ÿ])('+words.join('|')+')(?![\\wÀ-ÿ])');
+  return FR_AUTO;
+}
 function makeUtt(p,slow){
   var u;
   if(p.lang==='fr'&&FRV){ u=new SpeechSynthesisUtterance(p.text); u.voice=FRV; u.lang=FRV.lang; u.rate=slow?0.45:Math.min(sayRate,0.95); return u; }
@@ -399,6 +411,7 @@ function makeUtt(p,slow){
   if(ENV){ u.voice=ENV; u.lang=ENV.lang; } else u.lang='en-US';
   u.rate=slow?0.55:sayRate; return u;
 }
+var LIVE=[];
 function stopSay(){ sayTok++; if(TTS) speechSynthesis.cancel(); if(sayBtn){ sayBtn.classList.remove('on'); sayBtn=null; } }
 /* speak runs in order; done() fires once when all finish (or are cancelled by a newer call) */
 function speakRuns(runs,done,slow){
@@ -406,9 +419,16 @@ function speakRuns(runs,done,slow){
   var tok=++sayTok, left=runs.length, fired=false;
   function fin(){ if(fired) return; fired=true; if(tok===sayTok) done&&done(true); }
   speechSynthesis.cancel();
-  runs.forEach(function(p){ var u=makeUtt(p,slow); u.onend=u.onerror=function(){ if(--left<=0) fin(); }; speechSynthesis.speak(u); });
-  var est=runs.reduce(function(n,p){ return n+p.text.length; },0)*95/Math.max(.5,sayRate)+6000;
-  setTimeout(fin,est);
+  /* keep the utterances referenced: Chrome may garbage-collect them and never fire onend */
+  LIVE=runs.map(function(p){ var u=makeUtt(p,slow); u.onstart=function(){ started=true; }; u.onend=u.onerror=function(){ if(--left<=0) fin(); }; return u; });
+  var started=false, t0=Date.now();
+  LIVE.forEach(function(u){ speechSynthesis.speak(u); });
+  /* backup for engines that drop onend: when nothing is speaking or queued any more, we are done */
+  var poll=setInterval(function(){
+    if(fired||tok!==sayTok){ clearInterval(poll); return; }
+    var busy=speechSynthesis.speaking||speechSynthesis.pending;
+    if(!busy&&(started||Date.now()-t0>1500)){ clearInterval(poll); fin(); }
+  },250);
 }
 function sayMarked(s,btn){
   if(btn&&sayBtn===btn){ stopSay(); return; }
@@ -426,7 +446,7 @@ function closePop(){ if(!pop) return; pop.classList.remove('show'); $('scrim').c
 function openPop(el){
   var k=el.getAttribute('data-k'), e=GL[k]; if(!e) return;
   if(popFor===el){ closePop(); return; }
-  closePop(); if(!$('wb').hidden) wbPause();
+  closePop();
   var fr=e.t==='fr';
   $('pop-tag').className='tag '+GCLASS[e.t]; $('pop-tag').textContent=LABEL[e.t]||'';
   $('pop-h').textContent=head(k);
@@ -454,13 +474,13 @@ function rnd(){ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }
 function jit(a){ return (rnd()-0.5)*2*a; }
 function mk(tag,attrs,parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); (parent||wbLayer).appendChild(e); return e; }
 var FONT='"Bradley Hand","Segoe Print","Chalkboard SE","Comic Sans MS","Kaiti TC","STKaiti","BiauKai","DFKai-SB","KaiTi","PingFang TC","Microsoft JhengHei",cursive';
-var Q=[], qRaf=0, qInstant=false;
+var Q=[], qRaf=0, qInstant=false, qRush=false;
 function enqueue(dur,f){ if(qInstant){ f(1); return; } Q.push({dur:dur,f:f}); f(0); }
 function runQueue(tok,onDone){
   var i=0, t0=performance.now();
   function frame(now){
     if(tok!==WB.token) return;
-    while(i<Q.length){ var it=Q[i], t=Math.max(0,Math.min(1,(now-t0)*1.5/it.dur)); it.f(t);
+    while(i<Q.length){ var it=Q[i], t=qRush?1:Math.max(0,Math.min(1,(now-t0)*1.5/it.dur)); it.f(t);
       if(t<1){ qRaf=requestAnimationFrame(frame); return; } i++; t0=now; }
     Q=[]; onDone&&onDone();
   }
@@ -516,7 +536,7 @@ function doOp(op){
 
 /* ---------- player ---------- */
 var wbTimers=[];
-function wbStopAll(){ WB.token++; cancelAnimationFrame(qRaf); Q=[]; wbTimers.forEach(clearTimeout); wbTimers=[]; stopSay(); }
+function wbStopAll(){ qRush=false; WB.token++; cancelAnimationFrame(qRaf); Q=[]; wbTimers.forEach(clearTimeout); wbTimers=[]; stopSay(); }
 function drawUpTo(B,k,instantAll){
   wbLayer.innerHTML=''; seed=1000+WB.b*97;
   qInstant=true; for(var i=0;i<k;i++) B.steps[i].ops.forEach(doOp);
@@ -535,17 +555,17 @@ function wbCaption(B,st){
 }
 function wbRender(){
   var B=BOARDS[WB.b], st=B.steps[WB.k];
-  wbStopAll(); closePop(); var tok=WB.token;
+  wbStopAll(); var tok=WB.token;
   drawUpTo(B,WB.k,false); wbCaption(B,st); wbPlayBtn();
   var drawn=false, spoke=!WB.playing;
   function maybe(){ if(drawn&&spoke&&WB.playing&&tok===WB.token){
       wbTimers.push(setTimeout(function(){ if(tok!==WB.token) return;
-        if(WB.k<B.steps.length-1){ WB.k++; wbRender(); } else { WB.playing=false; wbPlayBtn(); } },800)); } }
+        if(WB.k<B.steps.length-1){ WB.k++; wbRender(); } else { WB.playing=false; wbPlayBtn(); } },700)); } }
   st.ops.forEach(doOp);
-  runQueue(tok,function(){ drawn=true; maybe(); });
+  runQueue(tok,function(){ drawn=true; qRush=false; maybe(); });
   if(WB.playing){
-    if(TTS&&WB.voiceOn) speakRuns(segs(st.say),function(ok){ if(tok===WB.token){ spoke=true; maybe(); } });
-    else wbTimers.push(setTimeout(function(){ spoke=true; maybe(); },st.say.length*60+1500));
+    if(TTS&&WB.voiceOn) speakRuns(segs(st.say),function(ok){ if(tok===WB.token){ spoke=true; if(!drawn) qRush=true; maybe(); } });
+    else wbTimers.push(setTimeout(function(){ spoke=true; if(!drawn) qRush=true; maybe(); },st.say.length*60+1500));
   }
 }
 /* pause: stop sound and timers, show the current step fully drawn */
@@ -1066,7 +1086,7 @@ var CUSTOM={
     var t=ev.target, g=t.closest?t.closest('.gl'):null;
     if(g){ ev.preventDefault(); openPop(g); return; }
     if(t.closest&&t.closest('#pop')){
-      if(t.id==='pop-say') sayEntry(pop.getAttribute('data-k'));
+      if(t.id==='pop-say'){ if(!$('wb').hidden) wbPause(); sayEntry(pop.getAttribute('data-k')); }
       if(t.id==='popclose') closePop(); return; }
     closePop();
     var s=t.closest?t.closest('.say'):null; if(s){ sayMarked(textFor(s.getAttribute('data-say')),s); return; }
