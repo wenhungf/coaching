@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <title>InkQuest English Coaching — Reading room</title>
 <meta name="description" content="News, classic-book reviews and precise-vocabulary guides for English learners, with glossary notes in English and Traditional Chinese, graded to CEFR levels.">
@@ -10,205 +10,126 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+  /* Layout: the InkQuest bookcase (same as the stories index). One shelf per topic, at most five books
+     a shelf: the first book stands face-out, the rest spine-out. Tapping a book opens it under its shelf. */
   :root {
-    --ink: #12141c;          /* deep ink blue-black */
-    --ink-raised: #1a1d28;   /* card surface */
-    --parchment: #f0ead8;    /* headings */
-    --mist: #b9b2a0;         /* body text */
-    --faded: #7d7868;        /* captions, footer */
-    --gold: #c9a554;         /* brand accent */
-    --brief: #6f93d6;        /* Daily Brief accent (briefing navy-blue) */
-    --feature: #c87d2a;      /* BBC feature accent (worklife amber) */
-    --lit: #b06a8f;          /* Literature / discussion accent (mulberry) */
-    --climate: #4f9a86;      /* Climate / environment accent (teal-green) */
-    --wind: #7f9dc4;         /* Wind / engineering accent (steel sea-blue) */
-    --review: #8b7ec8;       /* Book, reviewed series accent (violet) */
-    --word: #4a86a8;         /* The Right Word series accent (deep sea blue) */
-    --dusk: #8792ab;         /* Feature accent (dusk blue-grey) */
+    --ink: #12141c; --parchment: #f0ead8; --mist: #b9b2a0; --faded: #7d7868; --gold: #c9a554;
+    --walnut: #4a2f1d; --walnut-hi: #6e4a30; --walnut-lo: #2b1a10; --back: #17120f;
+    /* The Right Word: sea blues */
+    --w1: #7fb3d1; --w2: #8fc6c9; --w3: #9bb8e0; --w4: #79a9c9; --w5: #a7c7dc;
+    /* Book, reviewed: violets and mulberry */
+    --r1: #b3a3e6; --r2: #c79ee0; --r3: #a99be0; --r4: #d4a5c8; --r5: #9f9ed8;
+    /* News & features */
+    --france: #9fb0d6; --dusk: #a7b0c4; --brief: #8fa9de; --wind: #9db6d6; --feature: #d99a55; --climate: #79b9a6; --lit: #cc8fae;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html, body { background: var(--ink) !important; }
-
-  body {
-    font-family: 'Crimson Pro', Georgia, serif;
-    color: var(--mist);
-    font-size: 1.125rem;
-    line-height: 1.6;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap { max-width: 680px; margin: 0 auto; padding: 4rem 1.25rem 3rem; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Crimson Pro', Georgia, serif; color: var(--mist); font-size: 1.125rem; line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 4rem max(16px, env(safe-area-inset-right, 0px)) 3rem max(16px, env(safe-area-inset-left, 0px)); }
 
   /* ---------- Header ---------- */
-  header { text-align: center; margin-bottom: 3rem; }
-
-  .kicker {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.8rem; font-weight: 500;
-    letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--faded);
-    margin-bottom: 0.6rem;
-  }
-
-  .wordmark {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(2.6rem, 9vw, 3.8rem);
-    letter-spacing: 0.01em;
-    color: var(--parchment);
-    line-height: 1;
-  }
+  header { text-align: center; margin-bottom: 2.2rem; }
+  .kicker { font-family: 'Fraunces', Georgia, serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase; color: var(--faded); margin-bottom: 0.6rem; }
+  .kicker a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; }
+  .kicker a:hover { color: var(--parchment); border-bottom-color: var(--gold); }
+  .wordmark { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: clamp(2.4rem, 9vw, 3.8rem); letter-spacing: 0.01em; color: var(--parchment); line-height: 1; }
   .wordmark .q { color: var(--gold); }
-
-  .coaching {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.95rem; font-weight: 500;
-    letter-spacing: 0.34em; text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 0.55rem;
-  }
-
-  /* signature: an ink stroke that draws itself beneath the wordmark */
+  .coaching { font-family: 'Fraunces', Georgia, serif; font-size: 0.95rem; font-weight: 500; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); margin-top: 0.55rem; }
   .stroke { width: min(240px, 60vw); margin: 0.9rem auto 1rem; display: block; }
-  .stroke path {
-    stroke: var(--gold); stroke-width: 3; fill: none; stroke-linecap: round;
-    stroke-dasharray: 260; stroke-dashoffset: 260;
-    animation: draw 1.1s ease-out 0.2s forwards;
-  }
+  .stroke path { stroke: var(--gold); stroke-width: 3; fill: none; stroke-linecap: round; stroke-dasharray: 260; stroke-dashoffset: 260; animation: draw 1.1s ease-out 0.2s forwards; }
   @keyframes draw { to { stroke-dashoffset: 0; } }
 
-  .tagline { font-style: italic; font-size: 1.2rem; color: var(--mist); }
-
-  .intro {
-    margin: 2rem auto 0; max-width: 52ch; text-align: center; color: var(--mist);
+  /* ---------- The bookcase ---------- */
+  .case { position: relative;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0 3px, rgba(0,0,0,0.05) 3px 7px, rgba(255,255,255,0.008) 7px 11px), linear-gradient(180deg, #1d1612, var(--back) 40%, #120d0a);
+    border: 12px solid var(--walnut); border-top-width: 16px; border-radius: 6px;
+    box-shadow: inset 0 0 40px rgba(0,0,0,0.65), 0 18px 40px rgba(0,0,0,0.45);
+    border-image: linear-gradient(90deg, var(--walnut-lo), var(--walnut-hi) 18%, var(--walnut) 50%, var(--walnut-hi) 82%, var(--walnut-lo)) 1; }
+  .shelf { position: relative; padding: 1.4rem 0 0; min-width: 0; display: flex; flex-direction: column; scroll-margin-top: 1rem; }
+  .shelf .row { flex: 1; }
+  @media (min-width: 780px) {
+    .case { display: grid; grid-template-columns: 1fr 1fr; }
+    .shelf:nth-child(odd) { border-right: 12px solid var(--walnut); box-shadow: inset -6px 0 10px -6px rgba(0,0,0,0.6); }
   }
+  .shelf-label { display: flex; align-items: baseline; justify-content: space-between; gap: 0.2rem 1rem; flex-wrap: wrap; padding: 0 1.1rem 0.8rem; font-family: 'Fraunces', Georgia, serif; }
+  .shelf-label h2 { font-size: 0.82rem; text-wrap: balance; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--parchment); }
+  .shelf-label h2 .ser { color: var(--gold); }
+  .shelf-label span { font-size: 0.78rem; letter-spacing: 0.08em; color: var(--faded); }
+  .row { display: flex; align-items: flex-end; gap: 4px; padding: 18px 1.1rem 0; overflow: hidden; }
+  .board { height: 16px; background: linear-gradient(180deg, var(--walnut-hi) 0 2px, var(--walnut) 2px 11px, var(--walnut-lo) 11px); box-shadow: 0 6px 10px rgba(0,0,0,0.5); position: relative; z-index: 1; }
 
-  /* ---------- Reading cards ---------- */
-  .shelf-label {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.85rem; font-weight: 500;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--faded); text-align: center;
-    margin: 3rem 0 1.5rem;
-  }
+  .book { --a: var(--gold); flex: 0 1 auto; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+    color: #15151c; text-align: center; border-radius: 3px 3px 1px 1px;
+    transition: transform 0.22s cubic-bezier(.2,.8,.3,1.2), box-shadow 0.22s ease;
+    box-shadow: 2px 0 0 rgba(0,0,0,0.35), inset 0 -3px 0 rgba(0,0,0,0.18); }
+  .book:focus-visible { outline: 2px solid var(--parchment); outline-offset: 3px; }
+  .book:hover { transform: translateY(-5px); }
+  .book[aria-expanded="true"] { transform: translateY(-16px); box-shadow: 0 10px 18px rgba(0,0,0,0.55); }
+  .spine { --H: var(--h, 184px); width: var(--w, 50px); height: var(--H); min-width: 34px; padding: 10px 0 9px;
+    background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(0,0,0,0) 22%, rgba(255,255,255,0.16) 46%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.32)), var(--a); }
+  .spine::before, .spine::after { content: ""; position: absolute; left: 6px; right: 6px; height: 4px; border-top: 1px solid rgba(21,21,28,0.55); border-bottom: 1px solid rgba(21,21,28,0.55); }
+  .spine::before { top: 22px; } .spine::after { bottom: 30px; }
+  .spine .t { writing-mode: vertical-rl; font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 0.92rem; line-height: 1.05;
+    max-height: calc(var(--H) - 70px); overflow: hidden; margin-top: 22px; letter-spacing: 0.01em; }
+  .spine .lv { white-space: nowrap; font-family: 'Fraunces', Georgia, serif; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.04em; line-height: 1.1; }
+  .cover { width: 136px; height: 196px; margin-right: 6px; padding: 14px 12px 12px;
+    background: radial-gradient(120% 80% at 30% 0%, rgba(255,255,255,0.28), rgba(255,255,255,0) 60%), linear-gradient(90deg, rgba(0,0,0,0.3) 0 6px, rgba(255,255,255,0.18) 6px 7px, rgba(0,0,0,0) 7px), var(--a);
+    justify-content: flex-start; gap: 6px; }
+  .cover::after { content: ""; position: absolute; inset: 7px 7px 7px 13px; border: 1px solid rgba(21,21,28,0.5); border-radius: 2px; pointer-events: none; }
+  .cover .eb { font-family: 'Fraunces', Georgia, serif; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.8; padding-left: 6px; }
+  .cover .t { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 1.12rem; line-height: 1.1; padding: 0 2px 0 8px; text-wrap: balance; margin-top: auto; }
+  .cover .t.long { font-size: 0.98rem; }
+  .cover .orn { width: 46px; height: 1px; background: rgba(21,21,28,0.55); margin: 4px auto 0; }
+  .cover .lv { font-family: 'Fraunces', Georgia, serif; font-size: 0.7rem; font-weight: 500; margin-top: auto; padding-left: 6px; }
+  .new { position: absolute; bottom: 34px; left: -4px; background: var(--parchment); color: var(--ink);
+    font: 700 0.6rem/1 'Fraunces', Georgia, serif; letter-spacing: 0.14em; padding: 4px 7px 4px 8px; border-radius: 0 2px 2px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.45); }
 
-  .readings { display: flex; flex-direction: column; gap: 1.25rem; list-style: none; }
+  /* the open book (10:7 spread, sized in cqw so it scales like a picture) */
+  .pop { position: absolute; z-index: 20; width: min(460px, calc(100% - 12px)); container-type: inline-size;
+    opacity: 0; transform: translateY(-6px) scale(0.98); transform-origin: var(--cx, 50%) 0;
+    transition: opacity 0.2s ease, transform 0.24s cubic-bezier(.2,.8,.3,1.1); pointer-events: none; }
+  .pop.open { opacity: 1; transform: none; pointer-events: auto; }
+  .pop .caret { position: absolute; top: -7px; left: var(--cx, 50%); width: 14px; height: 14px; margin-left: -7px; transform: rotate(45deg); background: var(--a); border-radius: 2px 0 0 0; }
+  .ob { position: relative; display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 10 / 7; background: var(--a); padding: 1.4cqw 1.4cqw 1.8cqw; border-radius: 1.2cqw;
+    box-shadow: 0 18px 38px rgba(0,0,0,0.65), 0 2px 0 rgba(0,0,0,0.35); }
+  .pg { position: relative; color: #2a2118; padding: 4cqw 3.6cqw 3.6cqw; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .pg.l { border-radius: 0.6cqw 0 0 0.6cqw; background: linear-gradient(90deg, #efe5cd, #f3ead5 12%, #f1e7d0 82%, #ddd0b3); padding-right: 4.4cqw; }
+  .pg.r { border-radius: 0 0.6cqw 0.6cqw 0; background: linear-gradient(90deg, #d8caab, #efe5cd 12%, #f3ead5 70%, #ece1c8); padding-left: 4.4cqw; padding-top: 6.4cqw; }
+  .pg .ser { font-family: 'Fraunces', Georgia, serif; font-size: 2.4cqw; font-weight: 500; letter-spacing: 0.16em; line-height: 1.4; text-transform: uppercase; color: #6b5d48; }
+  .pg .eyebrow { font-family: 'Fraunces', Georgia, serif; font-size: 3cqw; font-style: italic; color: var(--ad); margin-top: 1.8cqw; line-height: 1.35; }
+  .pg h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 5.6cqw; line-height: 1.1; color: #1d160f; margin-top: 1.2cqw; text-wrap: balance; }
+  .pg h3.long { font-size: 4.8cqw; } .pg h3 .nw { white-space: nowrap; }
+  .pg .orn { flex: none; width: 8cqw; height: 1px; background: #8f7f62; margin: 2.4cqw 0 2cqw; }
+  .pg .level { font-family: 'Fraunces', Georgia, serif; font-size: 3cqw; font-weight: 500; letter-spacing: 0.06em; color: #3a2f22; margin-top: auto; }
+  .pg p.blurb { font-size: 4.1cqw; line-height: 1.36; color: #2f261b; }
+  .pg .start { margin-top: auto; padding-top: 2cqw; align-self: flex-end; font-family: 'Fraunces', Georgia, serif; font-size: 3.8cqw; font-weight: 700;
+    color: var(--ad); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.6cqw; white-space: nowrap; }
+  .pg .start::after { content: " →"; }
+  .pg .start:hover { color: #1d160f; }
+  .pg .x { position: absolute; top: 0.8cqw; right: 1.2cqw; width: 6cqw; height: 6cqw; min-width: 28px; min-height: 28px; font-size: 4cqw; line-height: 1; color: #8a7a60; display: grid; place-items: center; }
+  .pg .x:hover { color: #1d160f; }
+  .shelf:last-child .board { height: 18px; }
 
-  .card {
-    display: block; position: relative;
-    background: var(--ink-raised);
-    border: 1px solid rgba(240, 234, 216, 0.08);
-    border-left: 6px solid var(--accent, var(--gold));
-    border-radius: 10px;
-    padding: 1.5rem 1.5rem 1.4rem 1.75rem;
-    text-decoration: none;
-    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-  }
-  .card:hover, .card:focus-visible {
-    transform: translateX(4px);
-    background: #1f2330;
-    border-color: rgba(240, 234, 216, 0.18);
-    border-left-color: var(--accent, var(--gold));
-  }
-  .card:focus-visible { outline: 2px solid var(--accent, var(--gold)); outline-offset: 3px; }
-
-  .eyebrow {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.78rem; font-weight: 500;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--accent, var(--gold)); margin-bottom: 0.35rem;
-  }
-
-  .card h2 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700; font-size: 1.6rem; line-height: 1.2;
-    color: var(--parchment); margin-bottom: 0.45rem;
-  }
-
-  .card p { color: var(--mist); font-size: 1.05rem; max-width: 50ch; }
-
-  .card-foot {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 1rem; gap: 1rem;
-  }
-
-  .level {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
-    color: var(--ink); background: var(--accent, var(--gold));
-    border-radius: 999px; padding: 0.2rem 0.75rem; white-space: nowrap;
-  }
-
-  .start {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.95rem; font-weight: 500;
-    color: var(--accent, var(--gold)); white-space: nowrap;
-  }
-  .start::after { content: " →"; transition: margin-left 0.18s ease; }
-  .card:hover .start::after { margin-left: 4px; }
-
-  /* ---------- Footer ---------- */
-  footer {
-    margin-top: 4rem; text-align: center;
-    font-size: 0.92rem; color: var(--faded); line-height: 1.8;
-  }
+  footer { margin-top: 3.5rem; text-align: center; font-size: 0.92rem; color: var(--faded); line-height: 1.8; }
   footer a { color: var(--mist); }
 
-
-  /* ---------- Section navigation ---------- */
-  .jump {
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.4rem;
-    margin: 2.5rem auto 2.75rem; padding: 1.5rem 0;
-    border-top: 1px solid rgba(240, 234, 216, 0.12);
-    border-bottom: 1px solid rgba(240, 234, 216, 0.12);
+  @media (max-width: 520px) {
+    .case { border-width: 6px; border-top-width: 10px; }
+    /* one cover and four spines fit across a narrow phone */
+    .cover { width: 96px; height: 152px; min-width: 84px; padding: 11px 8px 9px; gap: 4px; }
+    .cover::after { inset: 5px 5px 5px 10px; }
+    .cover .t { font-size: 0.86rem; padding-left: 6px; } .cover .t.long { font-size: 0.76rem; }
+    .cover .eb { font-size: 0.5rem; letter-spacing: 0.1em; } .cover .lv { font-size: 0.6rem; }
+    .spine { --H: calc(var(--h, 184px) * 0.8); width: calc(var(--w, 50px) * 0.86); padding: 8px 0 7px; }
+    .spine::before { top: 16px; } .spine::after { bottom: 24px; }
+    .spine .t { font-size: 0.8rem; margin-top: 16px; }
+    .spine .lv { font-size: 0.56rem; }
+    .row { gap: 3px; padding-left: 0.5rem; padding-right: 0.5rem; }
+    .shelf-label { padding: 0 0.6rem 0.7rem; } .shelf-label h2 { letter-spacing: 0.14em; }
   }
-  .jump a {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.82rem; font-weight: 500;
-    letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--faded); text-decoration: none;
-    padding-bottom: 2px; border-bottom: 1px solid transparent;
-    transition: color 0.18s ease, border-color 0.18s ease;
-  }
-  .jump a:hover, .jump a:focus-visible { color: var(--parchment); border-bottom-color: var(--gold); }
-
-  /* ---------- Shelf sections ---------- */
-  .shelf { scroll-margin-top: 1.5rem; }
-  .shelf + .shelf { margin-top: 3.5rem; }
-  .shelf-head { margin: 0 0 1.5rem; text-align: center; }
-  .shelf-head h2 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 700; font-size: 1.5rem; letter-spacing: 0.02em;
-    color: var(--parchment);
-  }
-  .shelf-head .count {
-    font-family: 'Fraunces', Georgia, serif;
-    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--faded); margin-left: 0.6rem;
-    vertical-align: 0.35em;
-  }
-  .shelf-head p {
-    max-width: 44ch; margin: 0.5rem auto 0;
-    font-size: 0.98rem; font-style: italic; color: var(--faded); line-height: 1.55;
-  }
-  .to-top {
-    display: block; text-align: center; margin-top: 1.75rem;
-    font-family: 'Fraunces', Georgia, serif; font-size: 0.78rem;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--faded); text-decoration: none;
-  }
-  .to-top:hover { color: var(--gold); }
-
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-  @media (prefers-reduced-motion: reduce) {
-    .stroke path { animation: none; stroke-dashoffset: 0; }
-    .card, .start::after { transition: none; }
-  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .stroke path { animation: none; stroke-dashoffset: 0; } .book, .pop { transition: none; } }
 </style>
 </head>
 <body>
@@ -218,490 +139,10 @@
     <p class="kicker">InkQuest</p>
     <h1 class="wordmark">English&nbsp;<span class="q">Coaching</span></h1>
     <p class="coaching">Reading room</p>
-    <svg class="stroke" viewBox="0 0 240 16" aria-hidden="true">
-      <path d="M4 11 C 50 3, 90 14, 130 8 S 210 4, 236 9" />
-    </svg>
-    <p class="tagline">Real news, real English — one reading at a time.</p>
-    <p class="intro">
-      News, classics and the vocabulary to describe them — all built for learners.
-      Tap any underlined word for a plain meaning in English and Traditional Chinese.
-    </p>
+    <svg class="stroke" viewBox="0 0 240 16" aria-hidden="true"><path d="M4 11 C 50 3, 90 14, 130 8 S 210 4, 236 9" /></svg>
   </header>
 
-  <nav class="jump" aria-label="Sections">
-    <a href="#right-word">The Right Word</a>
-    <a href="#book-reviewed">Book, reviewed</a>
-    <a href="#news-features">News &amp; features</a>
-  </nav>
-
-  <section class="shelf" id="right-word">
-    <div class="shelf-head">
-      <h2>The Right Word<span class="count">12</span></h2>
-      <p>Saying it precisely — the vocabulary for describing what you see, hear and mean.</p>
-    </div>
-    <ul class="readings">
-
-    <li>
-      <a class="card" href="Right-Word-Describing-Emotion.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Emotion</p>
-        <h2>Nine Words for a Bad Week</h2>
-        <p>Apprehensive, deflated, indignant, mortified, bittersweet — emotion words sorted
-        by the feeling underneath, plus the sentence shape that sounds fluent.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~830 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Series-and-Stage-Production.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Screen and stage</p>
-        <h2>Props, Blocking, Delivery</h2>
-        <p>Set, backdrop, score, chemistry, wooden or understated — names for everything you
-        notice in a production without being able to point at it.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~720 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Series-and-Stage-Structure.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Screen and stage</p>
-        <h2>Was That Twist Earned?</h2>
-        <p>Pilot, arc, cliffhanger, filler — the parts of a series and a play, and the one
-        pair of words that carries most English criticism.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~740 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-
-    <li>
-      <a class="card" href="Right-Word-Kleiser-Everyday.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Phrasebook</p>
-        <h2>Sheepish, Furtive, Quizzical</h2>
-        <p>The half of a 1917 phrasebook that has not aged — faces, moods and small social
-        moments — plus the single most useful habit in English.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~640 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Kleiser-at-Work.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Phrasebook</p>
-        <h2>Fifteen Thousand Phrases, Sorted</h2>
-        <p>Salient, cogent, perfunctory, tacit — what a 1917 handbook still gets right for
-        the office, and what belongs in a museum.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~740 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-
-    <li>
-      <a class="card" href="Right-Word-Italian-in-English.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Loanwords</p>
-        <h2>One Panino, Two Panini</h2>
-        <p>The plural trap, the language of music, and why a crescendo is the climb rather
-        than the summit — plus the espresso that has no x.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~740 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Latin-in-English.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Loanwords</p>
-        <h2>You Already Write Latin Every Day</h2>
-        <p>e.g. or i.e.? De facto or de jure? The Latin layer of English, sorted out —
-        including the plurals that catch people.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~760 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-
-    <li>
-      <a class="card" href="Right-Word-Extreme-Weather.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Weather</p>
-        <h2>Typhoon, Hurricane, Cyclone: One Storm</h2>
-        <p>Landfall, eyewall, storm surge and flash flood — the exact words for the storms
-        Taiwan actually gets, and for the water they leave behind.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~770 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Everyday-Weather.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Weather</p>
-        <h2>Rain Has Nine Names</h2>
-        <p>Drizzle, downpour, cloudburst, squall — and why muggy, sultry and sweltering
-        are three different kinds of hot.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~840 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-
-    <li>
-      <a class="card" href="Right-Word-Design-and-Car-Posters.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Visual communication</p>
-        <h2>Reading a Poster in One Second</h2>
-        <p>Typography, palette, whitespace and grid — plus the exact nouns for a car's
-        silhouette, stance and shoulder line, and five poster styles worth naming.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~730 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Light-and-Depth.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Visual communication</p>
-        <h2>Why Some Images Pop and Others Fall Flat</h2>
-        <p>Highlights, shadows, rim light and the four depth cues — the words for saying
-        why a picture has weight, or why it sits dead on the page.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~870 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Right-Word-Describing-Images.html" style="--accent: var(--word);">
-        <p class="eyebrow">The right word · Visual communication</p>
-        <h2>The Grammar of an Image</h2>
-        <p>Foreground, subject, composition, juxtaposition, depth of field — the parts of
-        a picture, so you can say more than "it's nice."</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~750 words</span>
-          <span class="start">Read the guide</span>
-        </div>
-      </a>
-    </li>
-
-    </ul>
-    <a class="to-top" href="#top">↑ Back to top</a>
-  </section>
-
-  <section class="shelf" id="book-reviewed">
-    <div class="shelf-head">
-      <h2>Book, reviewed<span class="count">15</span></h2>
-      <p>Classics retold in the voice of a magazine — a business weekly, a travel guide, a science journal.</p>
-    </div>
-    <ul class="readings">
-
-    <li>
-      <a class="card" href="The-Hound-of-the-Baskervilles-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Clinical-journal voice</p>
-        <h2>A Case of Fatal Fright</h2>
-        <p><em>The Hound of the Baskervilles</em> read as case notes — the moor, the
-        differential diagnosis, and the real doctor Holmes was modeled on.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~580 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Mysterious-Island-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Engineering-magazine voice</p>
-        <h2>Civilization, Built From Scratch</h2>
-        <p><em>The Mysterious Island</em> as a build log — pottery, iron, glass, explosives
-        and a telegraph, made by five men with one match.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~600 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Baron-Munchausen-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Fact-check voice</p>
-        <h2>We Rate These Claims: False</h2>
-        <p><em>Baron Munchausen</em> put through a fact-check — the cannonball ride, two
-        trips to the moon, and where "pull yourself up by your bootstraps" came from.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~600 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="A-Connecticut-Yankee-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Tech-industry voice</p>
-        <h2>Disrupting the Sixth Century</h2>
-        <p><em>A Connecticut Yankee in King Arthur's Court</em> as a startup story — the
-        rollout plan, the founder who knows best, and the crash Twain saw coming.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~640 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Kim-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Travel-literature voice</p>
-        <h2>Literature's Greatest Road</h2>
-        <p><em>Kim</em> and the Grand Trunk Road — an orphan, a Tibetan monk, a spy plot,
-        and the most crowded, generous road in English fiction.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~660 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Don-Quixote-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Culture-essay voice</p>
-        <h2>The Man Who Read Too Much</h2>
-        <p><em>Don Quixote</em> on belief and the windmills — why the first modern novel
-        makes you laugh at a man, then makes you ashamed of laughing.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~660 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Travels-of-Marco-Polo-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Profile &amp; fact-check voice</p>
-        <h2>The First Travel Influencer</h2>
-        <p><em>The Travels of Marco Polo</em> as a profile with a fact-check — paper money,
-        burning black stones, a ghostwriter, and the question of whether he ever went.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~640 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Divine-Comedy-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Destination-inspector voice</p>
-        <h2>Nine Circles, No Stars</h2>
-        <p><em>The Divine Comedy</em> inspected like a destination — the architecture of
-        Hell, the finest guide in literature, and a poet settling scores.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~600 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Odyssey-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Travel-complaint column voice</p>
-        <h2>Ten Years, One Commute</h2>
-        <p><em>The Odyssey</em> filed as a travel complaint — a 500-mile trip home that
-        took a decade, lost every passenger, and was blamed on the weather.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~650 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Gullivers-Travels-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Foreign-policy journal voice</p>
-        <h2>Four Failed States: A Diplomatic Assessment</h2>
-        <p><em>Gulliver's Travels</em> read as four country reports — tiny people, giants,
-        a flying academy, and the war fought over a boiled egg.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~620 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Journey-to-the-Center-of-the-Earth-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Adventure-magazine voice</p>
-        <h2>Expedition Report: Down the Volcano</h2>
-        <p><em>Journey to the Center of the Earth</em> assessed like a real expedition —
-        the route, the kit list, and the quiet guide who saves everyone.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~590 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Frankenstein-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Nature journal voice</p>
-        <h2>Frankenstein: A Peer Review, 200 Years Late</h2>
-        <p><em>Frankenstein</em> reviewed like a journal paper — the ethics, the
-        reanimation, and a scientist who very badly skipped peer review.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~600 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Around-the-World-in-Eighty-Days-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · Lonely Planet voice</p>
-        <h2>The 80-Day Itinerary That Started It All</h2>
-        <p><em>Around the World in Eighty Days</em> as a travel-guide feature — the
-        original bucket-list race, its clockwork plotting, and one very bad tourist.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~600 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Great-Gatsby-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · People / Cosmo voice</p>
-        <h2>He Threw the Wildest Parties in New York</h2>
-        <p><em>The Great Gatsby</em> as a glossy celebrity exposé — the doomed romance,
-        the red flags, and why a 100-year-old novel still stings.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~620 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="The-Art-of-War-review.html" style="--accent: var(--review);">
-        <p class="eyebrow">Book, reviewed · The Economist / HBR voice</p>
-        <h2>Sun Tzu, Management Consultant</h2>
-        <p><em>The Art of War</em>, reviewed like a business-press feature — sharp on
-        why it still runs boardrooms, and honest about where the hype falls apart.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~570 words</span>
-          <span class="start">Read the review</span>
-        </div>
-      </a>
-    </li>
-
-    </ul>
-    <a class="to-top" href="#top">↑ Back to top</a>
-  </section>
-
-  <section class="shelf" id="news-features">
-    <div class="shelf-head">
-      <h2>News &amp; features<span class="count">6</span></h2>
-      <p>Real reporting on the world right now, graded and glossed.</p>
-    </div>
-    <ul class="readings">
-
-    <li>
-      <a class="card" href="Euthanasia-Who-Decides.html" style="--accent: var(--dusk);">
-        <p class="eyebrow">Feature · Medicine, law and the mind</p>
-        <h2>Who Decides When Suffering Ends?</h2>
-        <p>The Dutch case of a child under twelve, the strongest arguments on both sides, and
-        the psychology that makes this debate so hard to have calmly.</p>
-        <div class="card-foot">
-          <span class="level">B2–C1 · ~2,100 words</span>
-          <span class="start">Read the feature</span>
-        </div>
-      </a>
-    </li>
-
-
-    <li>
-      <a class="card" href="InkQuest_Reading_Room_Blade_Repair.html" style="--accent: var(--wind);">
-        <p class="eyebrow">Science &amp; technology · Field report</p>
-        <h2>Blade Doctors</h2>
-        <p>Who fixes a wind turbine blade the length of a football pitch? Inside
-        Taiwan&rsquo;s offshore wind boom and the Kaohsiung school training the
-        technicians who repair the giants.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~940 words</span>
-          <span class="start">Read the article</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Food-Power-Politics-of-Taste-student.html" style="--accent: var(--lit);">
-        <p class="eyebrow">Literature &amp; ideas · Discussion</p>
-        <h2>Food, Power and the Politics of Taste</h2>
-        <p>How can a bowl of noodles carry politics? A discussion piece reading
-        <em>Taiwan Travelogue</em> alongside Mark Twain and occupied Okinawa,
-        with questions for class.</p>
-        <div class="card-foot">
-          <span class="level">A2–C1 · ~1,050 words</span>
-          <span class="start">Read the article</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="AI-Jobs-Reading-student.html" style="--accent: var(--feature);">
-        <p class="eyebrow">BBC Worklife · Reading</p>
-        <h2>The Jobs AI Won&rsquo;t Take Yet</h2>
-        <p>Which jobs are safe from AI — for now? Kate Morgan&rsquo;s BBC Worklife
-        feature on the human skills machines still can&rsquo;t replace.</p>
-        <div class="card-foot">
-          <span class="level">B2–C1 · ~930 words</span>
-          <span class="start">Read the article</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Europe-Heatwave-Reading-student.html" style="--accent: var(--climate);">
-        <p class="eyebrow">The Conversation · Reading</p>
-        <h2>Europe&rsquo;s Record-Breaking Heatwave</h2>
-        <p>What makes a heatwave so severe? A climate-science feature on heat domes,
-        humidity and El&nbsp;Ni&ntilde;o.</p>
-        <div class="card-foot">
-          <span class="level">B1–C1 · ~940 words</span>
-          <span class="start">Read the article</span>
-        </div>
-      </a>
-    </li>
-
-    <li>
-      <a class="card" href="Public_Daily_Brief_2026-06-25.html" style="--accent: var(--brief);">
-        <p class="eyebrow">Current events · Issue 25 Jun 2026</p>
-        <h2>Public Daily Brief</h2>
-        <p>Global Risks, State &amp; Corporate Power at a Glance — a weekly briefing on
-        the people, terms, and events shaping world affairs.</p>
-        <div class="card-foot">
-          <span class="level">B2–C1</span>
-          <span class="start">Read the brief</span>
-        </div>
-      </a>
-    </li>
-
-    </ul>
-    <a class="to-top" href="#top">↑ Back to top</a>
-  </section>
+  <main class="case" id="case" aria-label="The Reading Room bookcase"></main>
 
   <footer>
     <p>© 2026 Wen-Hung Fang · InkQuest English Coaching. All rights reserved.</p>
@@ -709,5 +150,188 @@
   </footer>
 
 </div>
+<script>
+/* Every reading on the bookcase. A shelf holds at most five books: the first stands face-out, the rest
+   spine-out (one cover + four spines is all a narrow phone can fit). When a topic grows past five, split it
+   into a new shelf. Newest books go first. series = the label shown before the shelf name; h and w set a spine's size. */
+const SHELVES = [
+  {series:"News & features", name:"Current affairs", sub:"The world right now", mark:"News", books:[
+    {href:"France-Protests-Limoges.html", a:"--france", eyebrow:"News & features · France · Whiteboard lesson", title:"The Night Limoges Lost Its Clock Tower", spine:"Limoges", new:true,
+     blurb:"A 143-year-old town hall burns on a night of mass protest. From a classroom near Paris to two centuries of French politics, with a whiteboard lesson.",
+     level:"B1–B2 · ~1,480 words", start:"Read the article"},
+    {href:"Euthanasia-Who-Decides.html", a:"--dusk", eyebrow:"Feature · Medicine, law and the mind", title:"Who Decides When Suffering Ends?", spine:"Who Decides?",
+     blurb:"A Dutch case of a child under twelve, the strongest arguments on both sides, and the psychology that makes this debate so hard to have calmly.",
+     level:"B2–C1 · ~2,100 words", start:"Read the feature", h:196},
+    {href:"Public_Daily_Brief_2026-06-25.html", a:"--brief", eyebrow:"Current events · Issue 25 Jun 2026", title:"Public Daily Brief", spine:"Daily Brief",
+     blurb:"Global risks, state and corporate power at a glance: a briefing on the people, terms and events shaping world affairs.",
+     level:"B2–C1", start:"Read the brief", h:172}
+  ]},
+  {series:"News & features", name:"Science, work & ideas", sub:"Features and field reports", mark:"Features", books:[
+    {href:"InkQuest_Reading_Room_Blade_Repair.html", a:"--wind", eyebrow:"Science & technology · Field report", title:"Blade Doctors",
+     blurb:"Who fixes a wind turbine blade the length of a football pitch? Inside Taiwan’s offshore wind boom and the school training its repair crews.",
+     level:"B1–C1 · ~940 words", start:"Read the article"},
+    {href:"Food-Power-Politics-of-Taste-student.html", a:"--lit", eyebrow:"Literature & ideas · Discussion", title:"Food, Power and the Politics of Taste", spine:"Food & Power",
+     blurb:"How can a bowl of noodles carry politics? Taiwan Travelogue read alongside Mark Twain and occupied Okinawa.",
+     level:"A2–C1 · ~1,050 words", start:"Read the article", h:194},
+    {href:"AI-Jobs-Reading-student.html", a:"--feature", eyebrow:"BBC Worklife · Reading", title:"The Jobs AI Won’t Take Yet", spine:"AI & Jobs",
+     blurb:"Which jobs are safe from AI, for now? Kate Morgan’s BBC Worklife feature on the human skills machines still can’t replace.",
+     level:"B2–C1 · ~930 words", start:"Read the article", h:178},
+    {href:"Europe-Heatwave-Reading-student.html", a:"--climate", eyebrow:"The Conversation · Reading", title:"Europe’s Record-Breaking Heatwave", spine:"Heatwave",
+     blurb:"What makes a heatwave so severe? A climate-science feature on heat domes, humidity and El Niño.",
+     level:"B1–C1 · ~940 words", start:"Read the article", h:186}
+  ]},
+  {series:"The Right Word", name:"People & phrases", sub:"Feelings, faces and loanwords", mark:"The Right Word", books:[
+    {href:"Right-Word-Describing-Emotion.html", a:"--w1", eyebrow:"The right word · Emotion", title:"Nine Words for a Bad Week",
+     blurb:"Apprehensive, deflated, indignant, mortified, bittersweet: emotion words sorted by the feeling underneath, plus the sentence shape that sounds fluent.",
+     level:"B1–C1 · ~830 words", start:"Read the guide"},
+    {href:"Right-Word-Kleiser-Everyday.html", a:"--w2", eyebrow:"The right word · Phrasebook", title:"Sheepish, Furtive, Quizzical", spine:"Sheepish, Furtive",
+     blurb:"The half of a 1917 phrasebook that has not aged: faces, moods and small social moments, plus the single most useful habit in English.",
+     level:"B1–C1 · ~640 words", start:"Read the guide", h:198},
+    {href:"Right-Word-Kleiser-at-Work.html", a:"--w3", eyebrow:"The right word · Phrasebook", title:"Fifteen Thousand Phrases, Sorted", spine:"15,000 Phrases",
+     blurb:"Salient, cogent, perfunctory, tacit: what a 1917 handbook still gets right for the office, and what belongs in a museum.",
+     level:"B1–C1 · ~740 words", start:"Read the guide", h:188},
+    {href:"Right-Word-Italian-in-English.html", a:"--w4", eyebrow:"The right word · Loanwords", title:"One Panino, Two Panini", spine:"One Panino",
+     blurb:"The plural trap, the language of music, and why a crescendo is the climb rather than the summit, plus the espresso that has no x.",
+     level:"B1–C1 · ~740 words", start:"Read the guide", h:176},
+    {href:"Right-Word-Latin-in-English.html", a:"--w5", eyebrow:"The right word · Loanwords", title:"You Already Write Latin Every Day", spine:"Latin Every Day",
+     blurb:"e.g. or i.e.? De facto or de jure? The Latin layer of English, sorted out, including the plurals that catch people.",
+     level:"B1–C1 · ~760 words", start:"Read the guide", h:194}
+  ]},
+  {series:"The Right Word", name:"Screen, stage & image", sub:"What you see and watch", mark:"The Right Word", books:[
+    {href:"Right-Word-Describing-Images.html", a:"--w3", eyebrow:"The right word · Visual communication", title:"The Grammar of an Image",
+     blurb:"Foreground, subject, composition, juxtaposition, depth of field: the parts of a picture, so you can say more than “it’s nice.”",
+     level:"B1–C1 · ~750 words", start:"Read the guide"},
+    {href:"Right-Word-Light-and-Depth.html", a:"--w1", eyebrow:"The right word · Visual communication", title:"Why Some Images Pop and Others Fall Flat", spine:"Pop or Flat",
+     blurb:"Highlights, shadows, rim light and the four depth cues: the words for why a picture has weight, or why it sits dead on the page.",
+     level:"B1–C1 · ~870 words", start:"Read the guide", h:182},
+    {href:"Right-Word-Design-and-Car-Posters.html", a:"--w5", eyebrow:"The right word · Visual communication", title:"Reading a Poster in One Second", spine:"Reading a Poster",
+     blurb:"Typography, palette, whitespace and grid, plus the nouns for a car’s silhouette and stance, and five poster styles worth naming.",
+     level:"B1–C1 · ~730 words", start:"Read the guide", h:198},
+    {href:"Right-Word-Series-and-Stage-Structure.html", a:"--w2", eyebrow:"The right word · Screen and stage", title:"Was That Twist Earned?", spine:"Twist Earned?",
+     blurb:"Pilot, arc, cliffhanger, filler: the parts of a series and a play, and the one pair of words that carries most English criticism.",
+     level:"B1–C1 · ~740 words", start:"Read the guide", h:180},
+    {href:"Right-Word-Series-and-Stage-Production.html", a:"--w4", eyebrow:"The right word · Screen and stage", title:"Props, Blocking, Delivery", spine:"Props, Blocking",
+     blurb:"Set, backdrop, score, chemistry, wooden or understated: names for everything you notice in a production without being able to point at it.",
+     level:"B1–C1 · ~720 words", start:"Read the guide", h:192}
+  ]},
+  {series:"The Right Word", name:"Weather", sub:"Rain, heat and storms", mark:"The Right Word", books:[
+    {href:"Right-Word-Extreme-Weather.html", a:"--w4", eyebrow:"The right word · Weather", title:"Typhoon, Hurricane, Cyclone: One Storm",
+     blurb:"Landfall, eyewall, storm surge and flash flood: the exact words for the storms Taiwan actually gets, and for the water they leave behind.",
+     level:"B1–C1 · ~770 words", start:"Read the guide"},
+    {href:"Right-Word-Everyday-Weather.html", a:"--w2", eyebrow:"The right word · Weather", title:"Rain Has Nine Names", spine:"Rain Has Nine Names",
+     blurb:"Drizzle, downpour, cloudburst, squall, and why muggy, sultry and sweltering are three different kinds of hot.",
+     level:"B1–C1 · ~840 words", start:"Read the guide", h:200}
+  ]},
+  {series:"Book, reviewed", name:"Journeys", sub:"Roads, seas and expeditions", mark:"Book, reviewed", books:[
+    {href:"Around-the-World-in-Eighty-Days-review.html", a:"--r1", eyebrow:"Book, reviewed · Travel-guide voice", title:"The 80-Day Itinerary That Started It All",
+     blurb:"Around the World in Eighty Days as a travel-guide feature: the original bucket-list race, its clockwork plotting, and one very bad tourist.",
+     level:"B1–C1 · ~600 words", start:"Read the review"},
+    {href:"The-Odyssey-review.html", a:"--r2", eyebrow:"Book, reviewed · Travel-complaint column voice", title:"Ten Years, One Commute", spine:"The Odyssey",
+     blurb:"The Odyssey filed as a travel complaint: a 500-mile trip home that took a decade, lost every passenger, and was blamed on the weather.",
+     level:"B1–C1 · ~650 words", start:"Read the review", h:186},
+    {href:"Kim-review.html", a:"--r3", eyebrow:"Book, reviewed · Travel-literature voice", title:"Literature’s Greatest Road", spine:"Kim",
+     blurb:"Kim and the Grand Trunk Road: an orphan, a Tibetan monk, a spy plot, and the most crowded, generous road in English fiction.",
+     level:"B1–C1 · ~660 words", start:"Read the review", h:166},
+    {href:"The-Travels-of-Marco-Polo-review.html", a:"--r4", eyebrow:"Book, reviewed · Profile & fact-check voice", title:"The First Travel Influencer", spine:"Marco Polo",
+     blurb:"The Travels of Marco Polo as a profile with a fact-check: paper money, burning black stones, a ghostwriter, and whether he ever went.",
+     level:"B1–C1 · ~640 words", start:"Read the review", h:192},
+    {href:"Journey-to-the-Center-of-the-Earth-review.html", a:"--r5", eyebrow:"Book, reviewed · Adventure-magazine voice", title:"Expedition Report: Down the Volcano", spine:"Journey to the Center",
+     blurb:"Journey to the Center of the Earth assessed like a real expedition: the route, the kit list, and the quiet guide who saves everyone.",
+     level:"B1–C1 · ~590 words", start:"Read the review", h:202}
+  ]},
+  {series:"Book, reviewed", name:"Science & invention", sub:"Labs, builders and machines", mark:"Book, reviewed", books:[
+    {href:"Frankenstein-review.html", a:"--r2", eyebrow:"Book, reviewed · Nature journal voice", title:"Frankenstein: A Peer Review, 200 Years Late",
+     blurb:"Frankenstein reviewed like a journal paper: the ethics, the reanimation, and a scientist who very badly skipped peer review.",
+     level:"B1–C1 · ~600 words", start:"Read the review"},
+    {href:"The-Mysterious-Island-review.html", a:"--r5", eyebrow:"Book, reviewed · Engineering-magazine voice", title:"Civilization, Built From Scratch", spine:"Mysterious Island",
+     blurb:"The Mysterious Island as a build log: pottery, iron, glass, explosives and a telegraph, made by five men with one match.",
+     level:"B1–C1 · ~600 words", start:"Read the review", h:196},
+    {href:"A-Connecticut-Yankee-review.html", a:"--r1", eyebrow:"Book, reviewed · Tech-industry voice", title:"Disrupting the Sixth Century", spine:"Connecticut Yankee",
+     blurb:"A Connecticut Yankee in King Arthur’s Court as a startup story: the rollout plan, the founder who knows best, and the crash Twain saw coming.",
+     level:"B1–C1 · ~640 words", start:"Read the review", h:200},
+    {href:"The-Hound-of-the-Baskervilles-review.html", a:"--r4", eyebrow:"Book, reviewed · Clinical-journal voice", title:"A Case of Fatal Fright", spine:"The Hound",
+     blurb:"The Hound of the Baskervilles read as case notes: the moor, the differential diagnosis, and the real doctor Holmes was modeled on.",
+     level:"B1–C1 · ~580 words", start:"Read the review", h:176}
+  ]},
+  {series:"Book, reviewed", name:"Satire & tall tales", sub:"Liars, dreamers and giants", mark:"Book, reviewed", books:[
+    {href:"Gullivers-Travels-review.html", a:"--r3", eyebrow:"Book, reviewed · Foreign-policy journal voice", title:"Four Failed States: A Diplomatic Assessment",
+     blurb:"Gulliver’s Travels read as four country reports: tiny people, giants, a flying academy, and a war fought over a boiled egg.",
+     level:"B1–C1 · ~620 words", start:"Read the review"},
+    {href:"Baron-Munchausen-review.html", a:"--r2", eyebrow:"Book, reviewed · Fact-check voice", title:"We Rate These Claims: False", spine:"Munchausen",
+     blurb:"Baron Munchausen put through a fact-check: the cannonball ride, two trips to the moon, and where “pull yourself up by your bootstraps” came from.",
+     level:"B1–C1 · ~600 words", start:"Read the review", h:184},
+    {href:"Don-Quixote-review.html", a:"--r5", eyebrow:"Book, reviewed · Culture-essay voice", title:"The Man Who Read Too Much", spine:"Don Quixote",
+     blurb:"Don Quixote on belief and the windmills: why the first modern novel makes you laugh at a man, then makes you ashamed of laughing.",
+     level:"B1–C1 · ~660 words", start:"Read the review", h:194}
+  ]},
+  {series:"Book, reviewed", name:"Ambition & its price", sub:"Power, money and sin", mark:"Book, reviewed", books:[
+    {href:"The-Great-Gatsby-review.html", a:"--r4", eyebrow:"Book, reviewed · Celebrity-magazine voice", title:"He Threw the Wildest Parties in New York",
+     blurb:"The Great Gatsby as a glossy celebrity exposé: the doomed romance, the red flags, and why a 100-year-old novel still stings.",
+     level:"B1–C1 · ~620 words", start:"Read the review"},
+    {href:"The-Art-of-War-review.html", a:"--r1", eyebrow:"Book, reviewed · Business-press voice", title:"Sun Tzu, Management Consultant", spine:"The Art of War",
+     blurb:"The Art of War reviewed like a business-press feature: sharp on why it still runs boardrooms, honest about where the hype falls apart.",
+     level:"B1–C1 · ~570 words", start:"Read the review", h:190},
+    {href:"The-Divine-Comedy-review.html", a:"--r3", eyebrow:"Book, reviewed · Destination-inspector voice", title:"Nine Circles, No Stars", spine:"Divine Comedy",
+     blurb:"The Divine Comedy inspected like a destination: the architecture of Hell, the finest guide in literature, and a poet settling scores.",
+     level:"B1–C1 · ~600 words", start:"Read the review", h:182}
+  ]}
+];
+
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const short = lv => lv.split("·")[0].trim();
+const slug = s => s.toLowerCase().replace(/[^a-z]+/g,"-").replace(/^-|-$/g,"");
+const first = {};
+const caseEl = document.getElementById("case");
+caseEl.innerHTML = SHELVES.map((s, si) => {
+  const anchor = first[s.series] ? "" : ` id="${slug(s.series)}"`; first[s.series] = 1;
+  return `
+  <section class="shelf"${anchor} aria-labelledby="sh${si}">
+    <div class="shelf-label"><h2 id="sh${si}"><span class="ser">${esc(s.series)}</span> · ${esc(s.name)}</h2><span>${esc(s.sub)}</span></div>
+    <div class="row">${s.books.map((b, bi) => {
+      const id = `b${si}-${bi}`, face = bi === 0, style = `--a: var(${b.a});${b.h && !face ? ` --h:${b.h}px;` : ""}${b.w && !face ? ` --w:${b.w}px;` : ""}`;
+      const ribbon = b.new ? `<span class="new">NEW</span>` : "";
+      const label = `${b.title}. ${b.level}.`;
+      return face
+        ? `<button class="book cover" id="${id}" data-s="${si}" data-b="${bi}" style="${style}" aria-expanded="false" aria-controls="pop" aria-label="${esc(label)}">${ribbon}
+             <span class="eb">${esc(s.mark)}</span><span class="t${b.title.length > 22 ? " long" : ""}">${esc(b.title)}</span><span class="orn"></span><span class="lv">${esc(short(b.level))}</span></button>`
+        : `<button class="book spine" id="${id}" data-s="${si}" data-b="${bi}" style="${style}" aria-expanded="false" aria-controls="pop" aria-label="${esc(label)}">${ribbon}
+             <span class="t">${esc(b.spine || b.title)}</span><span class="lv">${esc(short(b.level))}</span></button>`;
+    }).join("")}</div>
+    <div class="board" aria-hidden="true"></div>
+  </section>`; }).join("");
+
+caseEl.insertAdjacentHTML("beforeend", `<div class="pop" id="pop" role="dialog" aria-label="Book details"></div>`);
+const pop = document.getElementById("pop");
+let open = null;
+function close(){ if(!open) return; document.getElementById(open).setAttribute("aria-expanded", "false"); pop.classList.remove("open"); open = null; }
+function place(btn){
+  const c = caseEl.getBoundingClientRect(), sh = btn.closest(".shelf"), bd = sh.querySelector(".board").getBoundingClientRect(), r = btn.getBoundingClientRect();
+  const inner = caseEl.clientWidth, w = pop.offsetWidth, mid = r.left + r.width/2 - c.left - caseEl.clientLeft;
+  const left = Math.max(6, Math.min(inner - w - 6, mid - w/2));
+  pop.style.left = left + "px"; pop.style.top = (bd.bottom - c.top - caseEl.clientTop + 10) + "px";
+  pop.style.setProperty("--cx", Math.max(18, Math.min(w - 18, mid - left)) + "px");
+}
+function show(btn){
+  const sh = SHELVES[+btn.dataset.s], b = sh.books[+btn.dataset.b];
+  if(open === btn.id){ close(); return; }
+  if(open) document.getElementById(open).setAttribute("aria-expanded", "false");
+  pop.style.setProperty("--a", `var(${b.a})`);
+  pop.style.setProperty("--ad", `color-mix(in srgb, var(${b.a}) 45%, #2a1a10)`);
+  pop.innerHTML = `<span class="caret"></span><div class="ob">
+    <div class="pg l"><p class="ser">${esc(sh.series)} · ${esc(sh.name)}</p><p class="eyebrow">${esc(b.eyebrow)}</p><h3${b.title.length > 24 ? ' class="long"' : ""}>${esc(b.title).replace(/(\S+-\S+)/g, '<span class="nw">$1</span>')}</h3><span class="orn"></span>
+      <p class="level">${esc(b.level)}</p></div>
+    <div class="pg r"><button class="x" aria-label="Close">×</button><p class="blurb">${esc(b.blurb)}</p>
+      <a class="start" href="${esc(b.href)}">${esc(b.start)}</a></div></div>`;
+  pop.querySelector(".x").onclick = () => { const id = open; close(); document.getElementById(id).focus(); };
+  btn.setAttribute("aria-expanded", "true"); open = btn.id;
+  place(btn);
+  requestAnimationFrame(() => pop.classList.add("open"));
+  setTimeout(() => { const r = pop.getBoundingClientRect(); if(r.bottom > innerHeight) pop.scrollIntoView({block:"nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }, 260);
+}
+addEventListener("resize", () => { if(open) place(document.getElementById(open)); });
+document.addEventListener("click", e => { if(open && !e.target.closest(".pop, .book")) close(); });
+caseEl.addEventListener("click", e => { const btn = e.target.closest(".book"); if(btn) show(btn); });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && open){ const id = open; close(); document.getElementById(id).focus(); } });
+</script>
 </body>
 </html>
