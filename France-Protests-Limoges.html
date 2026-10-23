@@ -206,18 +206,26 @@
     .wb-top button{padding:5px 8px;font-size:12px}
     .wb-ctl{gap:10px}
   }
-  /* phone held sideways: board left, captions right */
-  @media(max-height:520px) and (orientation:landscape){
-    #wb{display:grid;grid-template-columns:60% 1fr;grid-template-rows:auto 1fr auto auto}
+  /* any screen held sideways (phones, iPads, laptops): board left, captions right.
+     Heights use dvh (the visible height) — iPad Safari's 100vh is taller than what you can see. */
+  #wb{height:100vh;height:100dvh}
+  @media(orientation:landscape) and (min-width:600px){
+    #wb{display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,440px);grid-template-rows:auto minmax(0,1fr) auto auto}
     .wb-top{grid-column:1/3;grid-row:1}
-    .wb-stage{grid-column:1;grid-row:2/5;align-items:center;padding:0 6px 8px}
-    #wbSvg{max-height:calc(100vh - 64px)}
-    #wbCapWrap{grid-column:2;grid-row:2;padding:4px 12px}
-    #wbCap{font-size:15px;line-height:1.6} #wbZh{font-size:14px}
+    .wb-stage{grid-column:1;grid-row:2/5;align-self:start;align-items:flex-start;min-height:0;padding:6px 8px 10px}
+    #wbSvg{width:100%;height:auto;max-width:none;max-height:calc(100dvh - 64px)}
+    #wbCapWrap{grid-column:2;grid-row:2;max-width:none;padding:6px 14px 4px;align-self:stretch}
+    #wbCap{margin-top:-6px}
     .wb-dotrow{grid-column:2;grid-row:3}
-    .wb-ctl{grid-column:2;grid-row:4;padding:6px;gap:8px}
+    .wb-ctl{grid-column:2;grid-row:4;padding:8px 8px calc(12px + env(safe-area-inset-bottom,0px))}
+  }
+  @media(orientation:landscape) and (max-height:520px){
+    #wbCap{font-size:15px;line-height:1.6} #wbZh{font-size:14px}
+    .wb-ctl{padding:6px;gap:8px}
     .wb-ctl button{width:40px;height:40px} #wbPlay{width:48px;height:48px}
   }
+  /* portrait: the board takes the width, captions get the rest of the visible height */
+  @media(orientation:portrait){ #wbSvg{max-height:calc(100dvh - 250px)} }
   @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -749,6 +757,11 @@ var GL={
 'bluebird movement':{t:'c',zh:'青鳥行動',d:'Large street protests outside Taiwan\'s Legislative Yuan in 2024 over bills that expanded the legislature\'s powers.',lvl:''},
 'national day':{t:'c',zh:'國慶日',d:'July 14, the anniversary of the storming of the Bastille. English speakers often call it "Bastille Day."',lvl:''},
 'imf':{t:'c',zh:'國際貨幣基金',d:'The International Monetary Fund, which publishes comparable economic figures for most economies.',lvl:''},
+'no meloni day':{t:'c',h:'No Meloni Day',zh:'「反梅洛尼日」學生抗議',d:'A day of student protests in Italy in October 2026, named after Giorgia Meloni, Italy\'s prime minister since 2022 and leader of the right-wing party Brothers of Italy. Students marched over crumbling schools and education funding.',lvl:''},
+'jd vance':{t:'c',h:'JD Vance',zh:'范斯（美國副總統）',d:'The vice president of the United States, serving under Donald Trump.',lvl:''},
+'le monde':{t:'c',h:'Le Monde',zh:'《世界報》',d:'One of France\'s leading daily newspapers, generally center-left. Its editorial board writes the paper\'s official opinions.',lvl:''},
+'puerta del sol':{t:'c',h:'Puerta del Sol',zh:'太陽門廣場',d:'The main public square in central Madrid, a traditional place for protests and celebrations.',lvl:''},
+'indignados':{t:'c',h:'Indignados',zh:'「憤怒者」運動（15-M 運動）',d:'"The outraged": a Spanish protest movement that began on May 15, 2011, when young people camped in city squares against unemployment, austerity and politicians they felt ignored them.',lvl:''},
 /* ---------- grammar ---------- */
 'the first time since':{t:'g',zh:'自……以來第一次',d:'"It is the first time since 1993 that…" Use since + a point in time, and a present-perfect or "first time" frame: This is the first time since 1993 that incomes have fallen.',lvl:'B2'},
 'had been':{t:'g',zh:'過去完成式',d:'Past perfect: an action before another past moment. "For 143 years it had stood over the square" — the standing happened before the night it fell.',lvl:'B2'}
@@ -806,7 +819,7 @@ var ARTICLE=[
  {h:'Who is in the street?',hz:'誰在街頭？',wb:8,paras:[
   {en:'So who exactly is out there? Start with the students: [[lycée]] pupils led by a high-school union, then university unions, then teachers and parents. The big labor unions, like the [[CGT]], call strikes and marches, but they did not call the riots. The yellow vests came back with a website that says "Macron must go." Fishermen blockaded ports over diesel in September, and climate campaigners marched on October 17.',
    zh:'街頭上到底是哪些人？先是學生：由高中生工會帶頭的高中生，接著是大學生工會，然後是老師和家長。CGT 等大工會號召罷工和遊行，但暴動不是他們發起的。黃背心也回來了，網站上寫著「馬克宏下台」。漁民九月時為了柴油價格封鎖港口，氣候運動者也在 10 月 17 日一起遊行。'},
-  {en:'The rioters are a smaller, harder group: masked young people at the edges of the marches. Ministers blame the [[radical left]]. Donald Trump and JD Vance blamed immigrants. The Economist\'s cover package this week sees something plainer: the riots are largely [[home-grown]] and driven by [[bread-and-butter issues]] — prices, jobs and public services. In Limoges, police have arrested two suspects over the fire. Local media describe the first, a 34-year-old, as a far-left activist, and investigators now treat the fire as attempted murder, because people were inside. Both are [[presumed innocent]].',
+  {en:'The rioters are a smaller, harder group: masked young people at the edges of the marches. Ministers blame the [[radical left]]. Donald Trump and [[JD Vance]] blamed immigrants. The Economist\'s cover package this week sees something plainer: the riots are largely [[home-grown]] and driven by [[bread-and-butter issues]] — prices, jobs and public services. In Limoges, police have arrested two suspects over the fire. Local media describe the first, a 34-year-old, as a far-left activist, and investigators now treat the fire as attempted murder, because people were inside. Both are [[presumed innocent]].',
    zh:'暴動者是人數較少、也更強硬的一群：遊行邊緣戴著面罩的年輕人。部長們歸咎於激進左派；川普和范斯則歸咎於移民。《經濟學人》本週封面專題的看法更樸素：暴動大多是「本土」的，起因是民生議題：物價、工作和公共服務。利摩日警方已就縱火案逮捕兩名嫌犯。地方媒體形容第一名嫌犯是 34 歲的極左派運動者；由於起火時建築內有人，調查已改以殺人未遂偵辦。兩人都受無罪推定保護。'}
  ]},
  {h:'The week after',hz:'一週之後',wb:9,paras:[
@@ -818,13 +831,13 @@ var ARTICLE=[
    zh:'馬克宏將在 2027 年 5 月卸任，不能再選；他的支持度已跌到約 15%。總統大選第一輪在 4 月 18 日。民調顯示極右派的瑪琳・勒朋大幅領先，得票約三分之一，而且在第二輪對上主要的中間派和左派候選人都會勝出。她目前有參選資格，但她的盜用公款判決將在四月初前做出終審；若被禁止參選，將由她所屬政黨的黨主席巴爾德拉代替參選。激進左派政黨「不屈法國」的梅朗雄排第二，中間派的菲利普第三；但在 18 到 24 歲選民中，有一份民調顯示梅朗雄排第一，得票 49%。'},
   {en:'The Economist sees a trap. In 2018, Macron calmed the yellow vests with about 10 billion euros in [[handouts]]. Today debt is around 119 percent of GDP, France pays nearly 5 percent to borrow for ten years, a level not seen since the early 2000s, and the money is not there. So, the magazine argues, the anger will last, and voters will turn to [[populists]] of the left and right who promise more spending from a "[[magic money tree]]." Its deputy editor, Robert Guest, adds a warning from riots he has covered on several continents: afterward, investors and insurers stay away, jobs vanish, and life in the burned neighborhoods gets harder.',
    zh:'《經濟學人》看到一個陷阱。2018 年，馬克宏用約 100 億歐元的補助安撫了黃背心。如今債務約占 GDP 的 119%，法國借十年期的錢要付將近 5% 的利率，是 2000 年代初以來未見的水準，錢已經不在了。所以雜誌認為，怒氣會持續，選民會轉向左右兩派的民粹政治人物，他們承諾從「搖錢樹」變出更多支出。副總編輯 Robert Guest 也從他在幾大洲採訪過的暴動中提出警告：事後投資人和保險業者都會避開，工作機會消失，被燒過的社區生活只會更難。'},
-  {en:'Others read the moment differently. Le Monde\'s editors argue that Macron has ignored social movements and sidelined unions since 2017, and that he owes young people concrete answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide which story they believe.',
+  {en:'Others read the moment differently. [[Le Monde]]\'s editors argue that Macron has ignored social movements and sidelined unions since 2017, and that he owes young people concrete answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide which story they believe.',
    zh:'也有人有不同的解讀。《世界報》的社論認為，馬克宏自 2017 年以來忽視社會運動、邊緣化工會，欠年輕人具體的答覆。勒朋和梅朗雄的支持者則說，主流政黨已經有過機會了。到了四月，選民會決定相信哪一個故事。'}
  ]},
  {h:'Not only France',hz:'不只法國',wb:11,paras:[
-  {en:'France is not alone. In Spain, the spark was one woman. Maricarmen Abascal, 87 and disabled, was [[evicted]] from her Madrid home in September after a legal fight with an investment fund. Crowds camped in the Puerta del Sol, as the Indignados did in 2011. When parliament rejected his housing decrees, Prime Minister Pedro Sánchez called a [[snap election]] for November 29. Ms. Abascal died in hospital two days later, and Spain\'s two big unions have called a general strike for November 11. The Bank of Spain says the country is short about 750,000 homes.',
+  {en:'France is not alone. In Spain, the spark was one woman. Maricarmen Abascal, 87 and disabled, was [[evicted]] from her Madrid home in September after a legal fight with an investment fund. Crowds camped in the [[Puerta del Sol]], as the [[Indignados]] did in 2011. When parliament rejected his housing decrees, Prime Minister Pedro Sánchez called a [[snap election]] for November 29. Ms. Abascal died in hospital two days later, and Spain\'s two big unions have called a general strike for November 11. The Bank of Spain says the country is short about 750,000 homes.',
    zh:'法國並不孤單。在西班牙，引爆點是一位婦人。87 歲、身障的 Maricarmen Abascal 九月時在與一家投資基金的官司後，被迫遷出她在馬德里的家。群眾在太陽門廣場紮營，就像 2011 年的「憤怒者」。國會否決他的住房緊急命令後，總理桑切斯宣布 11 月 29 日提前大選。兩天後，Abascal 在醫院過世；西班牙兩大工會已號召 11 月 11 日總罷工。西班牙央行說，全國約缺 75 萬戶住宅。'},
-  {en:'Italian students marched on "No Meloni Day" over crumbling schools, and riots broke out in Milan, Turin and Bologna. Riots also hit Liège in Belgium, and tent camps went up in Athens over rents. The Economist sees one pattern: the political center is in trouble across Europe, from Germany, where the nationalist right is rising, to Spain, where Sánchez will probably lose power. The mix is familiar: prices up, trust down, and young people who feel no one is listening.',
+  {en:'Italian students marched on "[[No Meloni Day]]" over crumbling schools, and riots broke out in Milan, Turin and Bologna. Riots also hit Liège in Belgium, and tent camps went up in Athens over rents. The Economist sees one pattern: the political center is in trouble across Europe, from Germany, where the nationalist right is rising, to Spain, where Sánchez will probably lose power. The mix is familiar: prices up, trust down, and young people who feel no one is listening.',
    zh:'義大利學生在「No Meloni Day」為破舊的校舍上街，米蘭、杜林和波隆那爆發暴動。比利時的列日也出現暴動，雅典則因房租搭起帳篷營地。《經濟學人》看到同一個模式：歐洲的政治中間派正陷入困境，從民族主義右派崛起的德國，到桑切斯可能失去政權的西班牙。組合很熟悉：物價漲、信任跌，年輕人覺得沒人在聽。'}
  ]},
  {h:'Taiwan: same blueprint, different house',hz:'台灣：同一張藍圖，不同的房子',wb:12,paras:[
@@ -1002,7 +1015,7 @@ var BOARDS=[
  {say:'The big labor unions, like the [[CGT]], call strikes and marches, but they did not call the riots. The yellow vests came back, with a website that says "Macron must go." Fishermen blockaded ports over diesel in September, and climate campaigners marched on October 17.',
   zh:'CGT 等大工會號召罷工和遊行，但暴動不是他們發起的。黃背心回來了，網站上寫著「馬克宏下台」。漁民九月時為了柴油封鎖港口，氣候運動者也在 10 月 17 日一起遊行。',
   ops:[['t',280,248,'unions (CGT, CFDT, FO…): strikes, not riots',{s:20,c:C.bl}],['t',280,284,'gilets jaunes: "Macron must go"',{s:20,c:C.or}],['t',280,318,'fishermen (diesel) · climate groups',{s:18,c:C.gy}]]},
- {say:'The rioters are a smaller, harder group: masked young people at the edges of the marches. Ministers blame the [[radical left]]. Donald Trump and JD Vance blamed immigrants. The Economist\'s view is plainer: the riots are largely [[home-grown]], about [[bread-and-butter issues]] like prices, jobs and public services.',
+ {say:'The rioters are a smaller, harder group: masked young people at the edges of the marches. Ministers blame the [[radical left]]. Donald Trump and [[JD Vance]] blamed immigrants. The Economist\'s view is plainer: the riots are largely [[home-grown]], about [[bread-and-butter issues]] like prices, jobs and public services.',
   zh:'暴動者是人數較少、也更強硬的一群：遊行邊緣戴著面罩的年輕人。部長們歸咎於激進左派；川普和范斯歸咎於移民。《經濟學人》的看法更樸素：暴動大多是本土的，關乎物價、工作和公共服務這類民生議題。',
   ops:[['t',40,400,'the rioters: masked groups at the edges',{s:20,c:C.rd}],['t',40,436,'ministers: "the radical left" · Trump, Vance: "immigrants"',{s:18}],['t',40,476,'The Economist: home-grown, bread-and-butter anger',{s:20,c:C.bl}],['hl',40,456,540,26]]},
  {say:'And Limoges? Police have arrested two suspects over the fire. Local media describe the first, a 34-year-old, as a far-left activist. Investigators now treat the fire as attempted murder, because people were inside the building. Both suspects are [[presumed innocent]].',
@@ -1033,15 +1046,15 @@ var BOARDS=[
  {say:'So, the magazine argues, the anger will last, and voters will turn to [[populists]] of the left and right who promise spending from a "[[magic money tree]]." Its deputy editor, Robert Guest, adds a warning from riots he has covered on several continents: afterward, investors and insurers stay away, jobs vanish, and life gets harder.',
   zh:'所以雜誌認為，怒氣會持續，選民會轉向左右兩派的民粹政治人物，他們承諾從「搖錢樹」變出支出。副總編輯 Robert Guest 也從他在幾大洲採訪過的暴動中提出警告：事後投資人和保險業者都會避開，工作機會消失，生活更難。',
   ops:[['moneytree',170,420],['t',320,360,'"magic money tree": spending with no way to pay',{s:20,c:C.or}],['t',320,398,'populists, left and right, promise it',{s:18}],['t',320,436,'riots → investors leave → jobs vanish (Guest)',{s:18,c:C.gy}]]},
- {say:'Others read the moment differently. Le Monde\'s editors say Macron has ignored social movements and sidelined unions, and owes young people real answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide.',
+ {say:'Others read the moment differently. [[Le Monde]]\'s editors say Macron has ignored social movements and sidelined unions, and owes young people real answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide.',
   zh:'也有人有不同的解讀。《世界報》的社論說，馬克宏忽視社會運動、邊緣化工會，欠年輕人真正的答覆。勒朋和梅朗雄的支持者則說，主流政黨已經有過機會了。到了四月，選民會做出決定。',
   ops:[['t',40,505,'Le Monde: answer the young · voters decide in April',{s:19,c:C.pu}],['hl',40,485,500,26]]}
 ]},
 {t:'Not only France',zh:'不只法國',steps:[
- {say:'Zoom out across the border. Other countries have lived through the same storms. Greece in 2008, when police killed a teenager, and again in its [[austerity]] years. Britain in 2011, after a police shooting in London. Spain\'s "Indignados" filled city squares that same year. Germany\'s farmers blocked roads with tractors in 2024, angry about cuts to diesel subsidies.',
+ {say:'Zoom out across the border. Other countries have lived through the same storms. Greece in 2008, when police killed a teenager, and again in its [[austerity]] years. Britain in 2011, after a police shooting in London. Spain\'s "[[Indignados]]" filled city squares that same year. Germany\'s farmers blocked roads with tractors in 2024, angry about cuts to diesel subsidies.',
   zh:'把鏡頭拉出國界。其他國家也經歷過類似的風暴。2008 年希臘，警察打死一名少年引發暴動，之後在撙節年代又爆發抗爭。2011 年英國，倫敦一起警察開槍事件後全國暴動。同一年，西班牙的「憤怒者」佔滿城市廣場。2024 年，德國農民開著拽引機堵路，抗議柴油補貼被砍。',
   ops:[['title','Not only France'],['t',60,165,'Greece 2008, 2010–12',{s:20,c:C.bl}],['t',300,165,'police killing → riots; austerity strikes',{s:18}],['t',60,205,'Britain 2011',{s:20,c:C.bl}],['t',300,205,'police shooting → riots in many cities',{s:18}],['t',60,245,'Spain 2011',{s:20,c:C.bl}],['t',300,245,'"Indignados" camp in city squares',{s:18}],['t',60,285,'Germany 2024',{s:20,c:C.bl}],['t',300,285,'farmers\' tractors vs diesel subsidy cuts',{s:18}]]},
- {say:'And right now, France is not alone. In Spain, an 87-year-old disabled woman, Maricarmen Abascal, was [[evicted]] from her Madrid home after a fight with an investment fund. Crowds camped in the Puerta del Sol. When parliament rejected his housing plan, Prime Minister Pedro Sánchez called a [[snap election]] for November 29, and the unions called a general strike for November 11. Italian students held a "No Meloni Day." There were riots in Liège, Milan and Tirana, and tent camps in Athens.',
+ {say:'And right now, France is not alone. In Spain, an 87-year-old disabled woman, Maricarmen Abascal, was [[evicted]] from her Madrid home after a fight with an investment fund. Crowds camped in the [[Puerta del Sol]]. When parliament rejected his housing plan, Prime Minister Pedro Sánchez called a [[snap election]] for November 29, and the unions called a general strike for November 11. Italian students held a "[[No Meloni Day]]." There were riots in Liège, Milan and Tirana, and tent camps in Athens.',
   zh:'而此刻，法國並不孤單。在西班牙，87 歲身障的 Maricarmen Abascal 在與一家投資基金纏訟後，被迫遷出馬德里的家。群眾在太陽門廣場紮營。國會否決住房方案後，總理桑切斯宣布 11 月 29 日提前大選，工會也號召 11 月 11 日總罷工。義大利學生發起「No Meloni Day」。列日、米蘭和地拉那都發生暴動，雅典則出現帳篷營地。',
   ops:[['wipe'],['title','Autumn 2026: not only France'],['t',60,160,'Spain',{s:22,c:C.or}],['t',220,160,'housing protests · election Nov. 29 · strike Nov. 11',{s:19}],['t',60,200,'Italy',{s:22,c:C.or}],['t',220,200,'"No Meloni Day" · riots in Milan, Turin',{s:19}],['t',60,240,'Belgium',{s:22,c:C.or}],['t',220,240,'student protests · riots in Liège',{s:19}],['t',60,280,'Greece',{s:22,c:C.or}],['t',220,280,'tent camps in Athens over rents',{s:19}],['t',60,320,'Portugal',{s:22,c:C.or}],['t',220,320,'housing protests',{s:19}],['t',60,360,'Albania',{s:22,c:C.or}],['t',220,360,'riots in Tirana',{s:19}]]},
  {say:'The common thread is a mix: prices go up, trust goes down, and young people feel no one is listening. The Economist adds a political warning: the center is in trouble across Europe, and Sánchez will probably lose power. What makes France different is the extra fuel: a protest script everyone knows, and a parliament that cannot decide.',
