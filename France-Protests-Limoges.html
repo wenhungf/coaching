@@ -77,7 +77,7 @@
   #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
   #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
   #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
-  #pop .tag.fr{background:#9DB8E8;color:#0f2550}
+  #pop .tag.fr{background:#9DB8E8;color:#0f2550} #pop .tag.es{background:#E8B49D;color:#4a1d0b}
   #pop .hrow{display:flex;align-items:center;gap:8px;margin-bottom:2px;padding-right:22px;flex-wrap:wrap}
   #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff}
   #pop .hrow button{flex:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;font:700 12px var(--sans);padding:2px 9px;cursor:pointer}
@@ -130,6 +130,7 @@
   .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
   .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
   .wbhead.fr{color:#2f5a96} .wbhead.fr .pip{background:var(--fr)}
+  .wbhead.es{color:#9a4a26} .wbhead.es .pip{background:#c8673a}
   .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
   .wordbank{columns:2;column-gap:26px}
   .wordbank.frbank{columns:1}
@@ -263,10 +264,11 @@
 
   <section class="bank" id="voicePanel" aria-labelledby="vp-h">
     <div class="bankhead" id="vp-h">Voices · 朗讀設定</div>
-    <p class="sub">English is read in an English voice; French names switch to a French voice. <span class="han">英文用英文語音，法文名字自動切換成法文語音。</span></p>
+    <p class="sub">English is read in an English voice; French and Spanish names switch to French and Spanish voices. <span class="han">英文用英文語音，法文和西班牙文名字自動切換成對應的語音。</span></p>
     <div class="rates" id="rates"><button type="button" data-rate="0.7">Slow 慢</button><button type="button" data-rate="0.9">Normal 中</button><button type="button" data-rate="1">Natural 正常</button></div>
     <label for="enSel">English voice 英文語音</label><select id="enSel"></select>
     <label for="frSel">French voice 法文語音</label><select id="frSel"></select>
+    <label for="esSel">Spanish voice 西班牙文語音</label><select id="esSel"></select>
     <p class="note" id="voiceNow"></p>
     <p class="note">iPhone、iPad 上的網頁只能用系統內建的語音。在電腦上用 Microsoft Edge 開這一頁，可以選到很自然的 AI 語音（名稱有 Natural 的那幾個），法文也有。</p>
     <button type="button" class="totop" id="toTop">↑ Back to top 回到頂端</button>
@@ -348,6 +350,7 @@ function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 var $=function(id){ return document.getElementById(id); };
 
 /* ---------- glossary markup ---------- */
+function isPron(e){ return !!e&&(e.t==='fr'||e.t==='es'); }
 var MARK=/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
 var SHOWN={};   /* first exact-case display of each key, used as its headword */
 function keyOf(a,b){ return (b||a).toLowerCase(); }
@@ -361,8 +364,8 @@ function collectShown(s){ s.replace(MARK,function(m,a,b){ var k=keyOf(a,b); if(!
 
 /* ---------- speech ---------- */
 var TTS=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window);
-var sayRate=parseFloat(lsGet('iqn-rate'))||0.9, enId=lsGet('iqn-en')||'', frId=lsGet('iqn-fr')||'';
-var EN=[], FR=[], ENV=null, FRV=null, sayTok=0, sayBtn=null;
+var sayRate=parseFloat(lsGet('iqn-rate'))||0.9, enId=lsGet('iqn-en')||'', frId=lsGet('iqn-fr')||'', esId=lsGet('iqn-es')||'';
+var EN=[], FR=[], ES=[], ENV=null, FRV=null, ESV=null, sayTok=0, sayBtn=null;
 var NOVELTY=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley|Jacques/i;
 function vq(v){ var t=(v.voiceURI||'')+' '+v.name; if(/premium|高品質|優質/i.test(t)) return 2; if(/enhanced|增強|加強|Natural|Neural|Online/i.test(t)) return 1; return 0; }
 var QLABEL=['一般音質','增強音質','高品質'];
@@ -374,6 +377,10 @@ function loadVoices(){
   FR=all.filter(function(v){ return /^fr/i.test(v.lang)&&!NOVELTY.test(v.name); }).sort(function(a,b){ return ff(a)-ff(b)||vq(b)-vq(a); });
   ENV=EN.filter(function(v){ return vid(v)===enId; })[0]||EN.filter(function(v){ return us(v)===0&&/Samantha|Google US English|Aria|Jenny|Ava|Allison/i.test(v.name); })[0]||EN[0]||null;
   FRV=FR.filter(function(v){ return vid(v)===frId; })[0]||FR.filter(function(v){ return ff(v)===0&&/Denise|Henri|Vivienne|Remy|Google français|Thomas|Amélie|Audrey|Aurélie|Marie/i.test(v.name); })[0]||FR[0]||null;
+  var se=function(v){ return /^es[-_]ES/i.test(v.lang)?0:1; };
+  ES=all.filter(function(v){ return /^es/i.test(v.lang)&&!NOVELTY.test(v.name); }).sort(function(a,b){ return se(a)-se(b)||vq(b)-vq(a); });
+  ESV=ES.filter(function(v){ return vid(v)===esId; })[0]||ES.filter(function(v){ return se(v)===0&&/Elvira|Alvaro|Álvaro|Google español|Mónica|Monica|Jorge|Marisol|Lucia/i.test(v.name); })[0]||ES[0]||null;
+  fillSel($('esSel'),ES,ESV,'（沒有西班牙文語音：西班牙文名字會用英文近似音朗讀）');
   fillSel($('enSel'),EN,ENV,'（這個瀏覽器沒有英文語音）'); fillSel($('frSel'),FR,FRV,'（沒有法文語音：法文名字會用英文近似音朗讀）');
   voiceNote();
 }
@@ -381,7 +388,7 @@ function fillSel(sel,list,cur,none){ if(!sel) return;
   if(!list.length){ sel.innerHTML='<option>'+none+'</option>'; sel.disabled=true; return; }
   sel.disabled=false; sel.innerHTML=list.map(function(v){ return '<option value="'+esc(vid(v))+'"'+(v===cur?' selected':'')+'>'+esc(v.name)+' · '+esc(v.lang)+' · '+QLABEL[vq(v)]+'</option>'; }).join(''); }
 function voiceNote(){ var n=$('voiceNow'); if(!n) return;
-  n.innerHTML=(ENV?'英文：<b>'+esc(ENV.name)+'</b>　':'')+(FRV?'法文：<b>'+esc(FRV.name)+'</b>':'<b>這個裝置沒有法文語音</b>，法文名字會改用英文拼音近似朗讀；發音表的音標和中文提示仍然可以參考。'); }
+  n.innerHTML=(ENV?'英文：<b>'+esc(ENV.name)+'</b>　':'')+(FRV?'法文：<b>'+esc(FRV.name)+'</b>　':'<b>這個裝置沒有法文語音</b>，法文名字會改用英文拼音近似朗讀。')+(ESV?'西班牙文：<b>'+esc(ESV.name)+'</b>':'<b>這個裝置沒有西班牙文語音</b>，西班牙文名字會改用英文拼音近似朗讀。'); }
 var unlocked=false;
 function unlock(){ if(unlocked||!TTS) return; unlocked=true; try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
 ['touchend','click','keydown'].forEach(function(t){ document.addEventListener(t,unlock,true); });
@@ -400,24 +407,24 @@ function segs(s){
     add('en',s.slice(last,m.index)); var k=keyOf(m[1],m[2]), e=GL[k];
     /* a French entry is spoken in French when the shown text is part of the French headword
        ("Macron" for Emmanuel Macron); an English gloss like "Paris Commune" stays English */
-    if(e&&e.t==='fr'&&(m[1].toLowerCase()===k||k.indexOf(m[1].toLowerCase())>=0||FR_EXTRA[m[1]]===k)) add('fr',m[1],e); else add('en',m[1]);
+    if(isPron(e)&&(m[1].toLowerCase()===k||k.indexOf(m[1].toLowerCase())>=0||FR_EXTRA[m[1]]===k)) add(e.t,m[1],e); else add('en',m[1]);
     last=MARK.lastIndex; }
   add('en',s.slice(last));
-  var res=[]; out.forEach(function(p){ if(p.lang==='fr'){ res.push(p); return; }
+  var res=[]; out.forEach(function(p){ if(p.lang!=='en'){ res.push(p); return; }
     p.text.split(/(?<=[.!?]["”]?)\s+/).forEach(function(x){
       /* French names left unmarked in the text still get the French voice */
-      x.split(frAuto()).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:'fr',text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
+      x.split(frAuto()).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:GL[FR_KEY[y]].t,text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
   return res;
 }
 var FR_KEY={Macron:'emmanuel macron',Lecornu:'sébastien lecornu',Barnier:'michel barnier',Bayrou:'françois bayrou',Attal:'gabriel attal','Le Pen':'marine le pen','Mélenchon':'jean-luc mélenchon','Guérin':'guillaume guérin','Nuñez':'laurent nuñez',Limoges:'limoges','Créteil':'créteil',Marseille:'marseille',Mulhouse:'mulhouse',Nanterre:'nanterre','de Gaulle':'charles de gaulle',Bastille:'bastille','Juppé':'alain juppé'};
 /* built on first use (after the page has collected headwords): every French glossary headword, plus
    surnames and plurals, so a French word left unmarked in the text still gets the French voice.
    "Lens" is left out because it is also an English word. */
-var FR_AUTO=null, FR_EXTRA={mairies:'mairie','lycées':'lycée'};
+var FR_AUTO=null, FR_EXTRA={mairies:'mairie','lycées':'lycée','Sánchez':'pedro sánchez','Abascal':'maricarmen abascal'};
 function frAuto(){
   if(FR_AUTO) return FR_AUTO;
   Object.keys(FR_EXTRA).forEach(function(w){ FR_KEY[w]=FR_EXTRA[w]; });
-  Object.keys(GL).forEach(function(k){ var e=GL[k]; if(e.t!=='fr'||k==='lens') return;
+  Object.keys(GL).forEach(function(k){ var e=GL[k]; if(!isPron(e)||k==='lens') return;
     var h=(e.h||SHOWN[k]||k).replace(/\s*\(.*\)$/,''); if(!FR_KEY[h]) FR_KEY[h]=k; });
   var words=Object.keys(FR_KEY).sort(function(a,b){ return b.length-a.length; }).map(function(w){ return w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); });
   FR_AUTO=new RegExp('(?<![\\wÀ-ÿ])('+words.join('|')+')(?![\\wÀ-ÿ])');
@@ -425,8 +432,9 @@ function frAuto(){
 }
 function makeUtt(p,slow){
   var u;
-  if(p.lang==='fr'&&FRV){ u=new SpeechSynthesisUtterance(p.text); u.voice=FRV; u.lang=FRV.lang; u.rate=slow?0.45:Math.min(sayRate,0.95); return u; }
-  if(p.lang==='fr'){ u=new SpeechSynthesisUtterance(p.e&&p.e.en?p.e.en:p.text); }
+  var XV=p.lang==='fr'?FRV:p.lang==='es'?ESV:null;
+  if(XV){ u=new SpeechSynthesisUtterance(p.text); u.voice=XV; u.lang=XV.lang; u.rate=slow?0.45:Math.min(sayRate,0.95); return u; }
+  if(p.lang!=='en'){ u=new SpeechSynthesisUtterance(p.e&&p.e.en?p.e.en:p.text); }
   else u=new SpeechSynthesisUtterance(cleanEn(p.text));
   if(ENV){ u.voice=ENV; u.lang=ENV.lang; } else u.lang='en-US';
   u.rate=slow?0.55:sayRate; return u;
@@ -457,17 +465,17 @@ function sayMarked(s,btn){
 }
 function sayEntry(k,slow){ var e=GL[k]; if(!e) return;
   var text=e.say||(e.h||SHOWN[k]||k).replace(/\s*\(.*\)$/,'');
-  stopSay(); speakRuns([{lang:e.t==='fr'?'fr':'en',text:text,e:e}],null,slow); }
+  stopSay(); speakRuns([{lang:isPron(e)?e.t:'en',text:text,e:e}],null,slow); }
 
 /* ---------- popover ---------- */
-var LABEL={v:'Word 單字',p:'Phrase / idiom 片語 · 慣用語',c:'Culture / context 文化補充',g:'Grammar 文法',fr:'French · 法語發音'};
+var LABEL={v:'Word 單字',p:'Phrase / idiom 片語 · 慣用語',c:'Culture / context 文化補充',g:'Grammar 文法',fr:'French · 法語發音',es:'Spanish · 西班牙語發音'};
 var pop=null, popFor=null;
 function closePop(){ if(!pop) return; pop.classList.remove('show'); $('scrim').classList.remove('show'); if(popFor){ popFor.setAttribute('aria-expanded','false'); popFor=null; } }
 function openPop(el){
   var k=el.getAttribute('data-k'), e=GL[k]; if(!e) return;
   if(popFor===el){ closePop(); return; }
   closePop();
-  var fr=e.t==='fr';
+  var fr=isPron(e);
   $('pop-tag').className='tag '+GCLASS[e.t]; $('pop-tag').textContent=LABEL[e.t]||'';
   $('pop-h').textContent=head(k);
   $('pop-ipa').innerHTML=fr?'<span class="ipa">'+esc(e.ipa)+'</span><span class="resp">'+esc(e.resp)+'</span>':'';
@@ -599,7 +607,7 @@ function wbList(){ var L=$('wbList');
   Array.prototype.forEach.call(L.querySelectorAll('button'),function(btn){ btn.onclick=function(){ L.hidden=true; WB.b=+btn.getAttribute('data-b'); WB.k=0; WB.playing=true; wbRender(); }; }); }
 
 /* ---------- page ---------- */
-var GCLASS={v:'v',p:'p',g:'c',c:'f',fr:'fr'};
+var GCLASS={v:'v',p:'p',g:'c',c:'f',fr:'fr',es:'es'};
 var SAYTEXT={};
 function wbLinks(w){ return [].concat(w).map(function(b){ return '<button type="button" class="wblink" data-open="'+b+'">▶ Whiteboard '+(b+1)+'</button>'; }).join(''); }
 function buildPage(){
@@ -619,19 +627,19 @@ function buildPage(){
   $('wbCount').textContent=BOARDS.length+' boards drawn step by step, with narration · about '+Math.round(mins/850+BOARDS.length*0.4)+' min · 白板課';
   $('boardList').innerHTML=BOARDS.map(function(B,i){ return '<li><button type="button" data-open="'+i+'">'+esc(B.t)+'</button><small>'+esc(B.zh)+'</small></li>'; }).join('');
   var n=0;
-  $('disc').innerHTML='<div class="wbrow" style="margin:0 0 6px">'+wbLinks(BOARDS.length-1)+'</div>'+QGROUPS.map(function(G,gi){ return '<div class="qgroup">'+esc(G.h)+' <span class="zh">'+esc(G.zh)+'</span></div><ol class="q" start="'+(n+1)+'">'+
+  $('disc').innerHTML='<div class="wbrow" style="margin:0 0 6px">'+wbLinks(BOARDS.length-1)+'</div>'+QGROUPS.map(function(G,gi){ return (G.h?'<div class="qgroup">'+esc(G.h)+' <span class="zh">'+esc(G.zh)+'</span></div>':'')+'<ol class="q" start="'+(n+1)+'">'+
     G.qs.map(function(q,qi){ n++; SAYTEXT['q'+gi+'-'+qi]=q.en; return '<li><button type="button" class="say mini" data-say="q'+gi+'-'+qi+'" aria-label="Listen">🔊</button>'+markup(q.en)+'<span class="zhp" hidden>'+esc(q.zh)+'</span></li>'; }).join('')+'</ol>'; }).join('');
   /* word bank: only terms that appear on the page or the boards, in order of first appearance */
   var order=[], seen={};
   function scan(s){ s.replace(MARK,function(m,a,b){ var k=keyOf(a,b); if(GL[k]&&!seen[k]){ seen[k]=1; order.push(k); } return m; }); }
   ARTICLE.forEach(function(S){ S.paras.forEach(function(p){ scan(p.en); }); }); BOARDS.forEach(function(B){ B.steps.forEach(function(s){ scan(s.say); }); }); QGROUPS.forEach(function(G){ G.qs.forEach(function(q){ scan(q.en); }); });
-  var GROUPS=[['fr','fr','French names & words','法語發音'],['v','v','Words','單字'],['p','p','Phrases & grammar','片語 · 文法'],['c','f','Culture & context','文化補充']];
+  var GROUPS=[['fr','fr','French names & words','法語發音'],['es','es','Spanish names','西班牙語發音'],['v','v','Words','單字'],['p','p','Phrases & grammar','片語 · 文法'],['c','f','Culture & context','文化補充']];
   $('wordbank').innerHTML=GROUPS.map(function(G){
     var items=order.filter(function(k){ var t=GL[k].t; return G[0]==='p'?(t==='p'||t==='g'):t===G[0]; });
     var cards=items.map(function(k){ var e=GL[k];
-      if(e.t==='fr') return '<div class="wb fr"><div class="pr-btns"><button type="button" class="pbtn" data-pk="'+esc(k)+'" aria-label="Say it">🔊</button></div><div><span class="t">'+esc(head(k))+'</span> · <span class="z">'+esc(e.zh)+'</span><span class="pr"><span class="ipa">'+esc(e.ipa)+'</span> <span class="resp">'+esc(e.resp)+'</span></span><span class="x">'+esc(e.d)+'</span><span class="tip">'+esc(e.tip)+'</span></div></div>';
+      if(isPron(e)) return '<div class="wb fr"><div class="pr-btns"><button type="button" class="pbtn" data-pk="'+esc(k)+'" aria-label="Say it">🔊</button></div><div><span class="t">'+esc(head(k))+'</span> · <span class="z">'+esc(e.zh)+'</span><span class="pr"><span class="ipa">'+esc(e.ipa)+'</span> <span class="resp">'+esc(e.resp)+'</span></span><span class="x">'+esc(e.d)+'</span><span class="tip">'+esc(e.tip)+'</span></div></div>';
       return '<div class="wb"><span class="t">'+esc(head(k))+'</span>'+(e.lvl?' <span class="lv">'+e.lvl+'</span>':'')+' · <span class="z">'+esc(e.zh)+'</span><span class="x">'+esc(e.d)+'</span></div>'; }).join('');
-    return '<div class="wbhead '+G[1]+'"><span class="pip"></span>'+G[2]+' <span class="zh">'+G[3]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank'+(G[0]==='fr'?' frbank':'')+'">'+cards+'</div>'; }).join('');
+    return '<div class="wbhead '+G[1]+'"><span class="pip"></span>'+G[2]+' <span class="zh">'+G[3]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank'+(G[0]==='fr'||G[0]==='es'?' frbank':'')+'">'+cards+'</div>'; }).join('');
 }
 function textFor(id){ return SAYTEXT[id]||''; }
 function setPageZh(on){ Array.prototype.forEach.call(document.querySelectorAll('.zhp'),function(p){ p.hidden=!on; }); var b=$('zhAll'); b.classList.toggle('on',on); b.textContent=on?'Hide 中譯':'Show 中譯'; lsSet('iqn-pzh',on?'1':'0'); }
@@ -759,9 +767,12 @@ var GL={
 'imf':{t:'c',zh:'國際貨幣基金',d:'The International Monetary Fund, which publishes comparable economic figures for most economies.',lvl:''},
 'no meloni day':{t:'c',h:'No Meloni Day',zh:'「反梅洛尼日」學生抗議',d:'A day of student protests in Italy in October 2026, named after Giorgia Meloni, Italy\'s prime minister since 2022 and leader of the right-wing party Brothers of Italy. Students marched over crumbling schools and education funding.',lvl:''},
 'jd vance':{t:'c',h:'JD Vance',zh:'范斯（美國副總統）',d:'The vice president of the United States, serving under Donald Trump.',lvl:''},
-'le monde':{t:'c',h:'Le Monde',zh:'《世界報》',d:'One of France\'s leading daily newspapers, generally center-left. Its editorial board writes the paper\'s official opinions.',lvl:''},
-'puerta del sol':{t:'c',h:'Puerta del Sol',zh:'太陽門廣場',d:'The main public square in central Madrid, a traditional place for protests and celebrations.',lvl:''},
-'indignados':{t:'c',h:'Indignados',zh:'「憤怒者」運動（15-M 運動）',d:'"The outraged": a Spanish protest movement that began on May 15, 2011, when young people camped in city squares against unemployment, austerity and politicians they felt ignored them.',lvl:''},
+'le monde':{t:'fr',h:'Le Monde',zh:'《世界報》',d:'One of France\'s leading daily newspapers, generally center-left. Its editorial board writes the paper\'s official opinions.',ipa:'/lə mɔ̃d/',resp:'luh MOHND',tip:'Monde 的 on 是鼻音，n 不完整發出，結尾 d 輕輕帶過；不要讀成英文的 Monday 或「夢德」。',en:'luh mond'},
+/* ---------- Spanish: spoken with a Spanish voice ---------- */
+'pedro sánchez':{t:'es',h:'Pedro Sánchez',zh:'佩德羅・桑切斯',d:'Spain\'s Socialist prime minister since 2018. He called a snap election for November 29, 2026.',ipa:'/ˈpe.ðɾo ˈsan.tʃeθ/',resp:'PEH-droh SAHN-cheth',tip:'重音在 á（SAHN）。z 在西班牙本土讀咬舌的 th，在拉丁美洲讀 s。Pedro 的 d 很輕，像英文 the 的 th。',en:'peh droh sahn cheth'},
+'maricarmen abascal':{t:'es',h:'Maricarmen Abascal',zh:'瑪麗卡門・阿巴斯卡爾',d:'An 87-year-old disabled woman evicted from her Madrid home in September 2026. Her case set off Spain\'s housing protests. She died on October 7.',ipa:'/ma.ɾiˈkaɾ.men a.βasˈkal/',resp:'mah-ree-KAR-men ah-bahs-KAHL',tip:'r 是輕輕彈一下舌頭；b 夾在母音中間時很輕，嘴唇不完全閉上。',en:'mah ree kar men ah bahs kahl'},
+'puerta del sol':{t:'es',h:'Puerta del Sol',zh:'太陽門廣場',d:'The main public square in central Madrid, a traditional place for protests and celebrations.',ipa:'/ˈpweɾ.ta ðel ˈsol/',resp:'PWEHR-tah del SOHL',tip:'Puerta 讀「普唉-ㄦ他」，r 輕彈舌；del 的 d 很輕。sol 是「太陽」。',en:'pwehr tah del sole'},
+'indignados':{t:'es',h:'Indignados',zh:'「憤怒者」運動（15-M 運動）',d:'"The outraged": a Spanish protest movement that began on May 15, 2011, when young people camped in city squares against unemployment, austerity and politicians they felt ignored them.',ipa:'/in.diɣˈna.ðos/',resp:'een-deeg-NAH-dohs',tip:'重音在 NA。g 和 d 夾在母音中間都讀得很輕；結尾 s 要發音。',en:'een deeg nah dohs'},
 /* ---------- grammar ---------- */
 'the first time since':{t:'g',zh:'自……以來第一次',d:'"It is the first time since 1993 that…" Use since + a point in time, and a present-perfect or "first time" frame: This is the first time since 1993 that incomes have fallen.',lvl:'B2'},
 'had been':{t:'g',zh:'過去完成式',d:'Past perfect: an action before another past moment. "For 143 years it had stood over the square" — the standing happened before the night it fell.',lvl:'B2'}
@@ -831,14 +842,14 @@ var ARTICLE=[
    zh:'馬克宏將在 2027 年 5 月卸任，不能再選；他的支持度已跌到約 15%。總統大選第一輪在 4 月 18 日。民調顯示極右派的瑪琳・勒朋大幅領先，得票約三分之一，而且在第二輪對上主要的中間派和左派候選人都會勝出。她目前有參選資格，但她的盜用公款判決將在四月初前做出終審；若被禁止參選，將由她所屬政黨的黨主席巴爾德拉代替參選。激進左派政黨「不屈法國」的梅朗雄排第二，中間派的菲利普第三；但在 18 到 24 歲選民中，有一份民調顯示梅朗雄排第一，得票 49%。'},
   {en:'The Economist sees a trap. In 2018, Macron calmed the yellow vests with about 10 billion euros in [[handouts]]. Today debt is around 119 percent of GDP, France pays nearly 5 percent to borrow for ten years, a level not seen since the early 2000s, and the money is not there. So, the magazine argues, the anger will last, and voters will turn to [[populists]] of the left and right who promise more spending from a "[[magic money tree]]." Its deputy editor, Robert Guest, adds a warning from riots he has covered on several continents: afterward, investors and insurers stay away, jobs vanish, and life in the burned neighborhoods gets harder.',
    zh:'《經濟學人》看到一個陷阱。2018 年，馬克宏用約 100 億歐元的補助安撫了黃背心。如今債務約占 GDP 的 119%，法國借十年期的錢要付將近 5% 的利率，是 2000 年代初以來未見的水準，錢已經不在了。所以雜誌認為，怒氣會持續，選民會轉向左右兩派的民粹政治人物，他們承諾從「搖錢樹」變出更多支出。副總編輯 Robert Guest 也從他在幾大洲採訪過的暴動中提出警告：事後投資人和保險業者都會避開，工作機會消失，被燒過的社區生活只會更難。'},
-  {en:'Others read the moment differently. [[Le Monde]]\'s editors argue that Macron has ignored social movements and sidelined unions since 2017, and that he owes young people concrete answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide which story they believe.',
+  {en:'Others read the moment differently. The editors of [[Le Monde]] argue that Macron has ignored social movements and sidelined unions since 2017, and that he owes young people concrete answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide which story they believe.',
    zh:'也有人有不同的解讀。《世界報》的社論認為，馬克宏自 2017 年以來忽視社會運動、邊緣化工會，欠年輕人具體的答覆。勒朋和梅朗雄的支持者則說，主流政黨已經有過機會了。到了四月，選民會決定相信哪一個故事。'}
  ]},
  {h:'Not only France',hz:'不只法國',wb:11,paras:[
-  {en:'France is not alone. In Spain, the spark was one woman. Maricarmen Abascal, 87 and disabled, was [[evicted]] from her Madrid home in September after a legal fight with an investment fund. Crowds camped in the [[Puerta del Sol]], as the [[Indignados]] did in 2011. When parliament rejected his housing decrees, Prime Minister Pedro Sánchez called a [[snap election]] for November 29. Ms. Abascal died in hospital two days later, and Spain\'s two big unions have called a general strike for November 11. The Bank of Spain says the country is short about 750,000 homes.',
+  {en:'France is not alone. In Spain, the spark was one woman. [[Maricarmen Abascal]], 87 and disabled, was [[evicted]] from her Madrid home in September after a legal fight with an investment fund. Crowds camped in the [[Puerta del Sol]], as the [[Indignados]] did in 2011. When parliament rejected his housing decrees, Prime Minister [[Pedro Sánchez]] called a [[snap election]] for November 29. Ms. Abascal died in hospital two days later, and Spain\'s two big unions have called a general strike for November 11. The Bank of Spain says the country is short about 750,000 homes.',
    zh:'法國並不孤單。在西班牙，引爆點是一位婦人。87 歲、身障的 Maricarmen Abascal 九月時在與一家投資基金的官司後，被迫遷出她在馬德里的家。群眾在太陽門廣場紮營，就像 2011 年的「憤怒者」。國會否決他的住房緊急命令後，總理桑切斯宣布 11 月 29 日提前大選。兩天後，Abascal 在醫院過世；西班牙兩大工會已號召 11 月 11 日總罷工。西班牙央行說，全國約缺 75 萬戶住宅。'},
   {en:'Italian students marched on "[[No Meloni Day]]" over crumbling schools, and riots broke out in Milan, Turin and Bologna. Riots also hit Liège in Belgium, and tent camps went up in Athens over rents. The Economist sees one pattern: the political center is in trouble across Europe, from Germany, where the nationalist right is rising, to Spain, where Sánchez will probably lose power. The mix is familiar: prices up, trust down, and young people who feel no one is listening.',
-   zh:'義大利學生在「No Meloni Day」為破舊的校舍上街，米蘭、杜林和波隆那爆發暴動。比利時的列日也出現暴動，雅典則因房租搭起帳篷營地。《經濟學人》看到同一個模式：歐洲的政治中間派正陷入困境，從民族主義右派崛起的德國，到桑切斯可能失去政權的西班牙。組合很熟悉：物價漲、信任跌，年輕人覺得沒人在聽。'}
+   zh:'義大利學生在「反梅洛尼日」為破舊的校舍上街，米蘭、杜林和波隆那爆發暴動。比利時的列日也出現暴動，雅典則因房租搭起帳篷營地。《經濟學人》看到同一個模式：歐洲的政治中間派正陷入困境，從民族主義右派崛起的德國，到桑切斯可能失去政權的西班牙。組合很熟悉：物價漲、信任跌，年輕人覺得沒人在聽。'}
  ]},
  {h:'Taiwan: same blueprint, different house',hz:'台灣：同一張藍圖，不同的房子',wb:12,paras:[
   {en:'Taiwan knows this design. Its 1997 constitutional reform let the president name the [[premier]] without a vote in the [[Legislative Yuan]], and gave lawmakers a no-confidence vote — a [[semi-presidential]] system close to France\'s. Yet only one no-confidence motion has ever reached a vote, in 1999, and it failed; lawmakers who topple a premier may face a snap election. When Taiwan cut pensions in 2017 and 2018, the ruling party had a majority and passed the bills by normal vote.',
@@ -854,22 +865,35 @@ var ARTICLE=[
  ]}
 ];
 var PULL={after:9,en:'"This time, with public debt perilously high, he cannot meet their demands." — The Economist',zh:'「這一次，公共債務已高到危險的地步，他無法滿足他們的要求。」——《經濟學人》'};
-var QGROUPS=[
- {h:'Close-ups',zh:'近景',qs:[
-  {en:'The students\' list began with teachers and buildings, not politics. Which of their complaints would Taiwanese students share? Would a [[blocus]] work in Taiwan?',zh:'學生的清單從老師和校舍開始，而不是政治。他們的不滿中，哪些是台灣學生也會有的？blocus 在台灣行得通嗎？'},
-  {en:'Should a government hold fuel prices down, as Taiwan\'s [[CPC]] does, or let them rise, as in France? Who pays in each case?',zh:'政府應該像台灣中油那樣壓住油價，還是像法國那樣讓它上漲？兩種做法各是誰在付錢？'}]},
- {h:'Wide shots',zh:'遠景',qs:[
-  {en:'De Gaulle designed the Fifth Republic to stop governments from falling. Why is it failing at that now? What would you change?',zh:'戴高樂設計第五共和是為了讓政府不再一直倒台。為什麼現在做不到了？你會改什麼？'},
-  {en:'France spends 57 percent of GDP through the state; Taiwan spends about 15 percent. Which model would you choose, and what would you give up?',zh:'法國的政府支出占 GDP 的 57%，台灣大約 15%。你會選擇哪一種模式？又願意放棄什麼？'}]},
- {h:'The crowd',zh:'人群',qs:[
-  {en:'[[Margaux Eude]] supports the cause but says the troublemakers hurt it. Do riots help or hurt a protest movement? Can you think of examples?',zh:'Margaux Eude 支持這場運動，但說搗亂的人傷害了它。暴力會幫助還是傷害一場抗議運動？你能舉出例子嗎？'},
-  {en:'Why do you think rioters attacked town halls, and not only shops or banks? What does a [[mairie]] stand for in France, and what does a district office stand for in Taiwan?',zh:'你覺得暴動者為什麼攻擊市政廳，而不只是商店或銀行？在法國，mairie 代表什麼？在台灣，區公所又代表什麼？'}]},
- {h:'After Macron',zh:'馬克宏之後',qs:[
-  {en:'Robert Guest doubts that rioters will build a fairer society, and says life gets worse where riots happen. Do you agree? Can you think of a protest that made things better?',zh:'Robert Guest 懷疑暴動者能打造更公平的社會，並說暴動過後當地生活只會更糟。你同意嗎？你能想到哪一場抗議讓情況變好了？'},
-  {en:'If you were France\'s next president, with no money to hand out, what would you do first for young people?',zh:'如果你是法國下一任總統，手上沒有錢可以發，你會先為年輕人做什麼？'}]},
- {h:'Taiwan',zh:'台灣',qs:[
-  {en:'Taiwan borrowed part of France\'s [[semi-presidential]] design and now has a divided government. What could Taiwan learn from France?',zh:'台灣借用了法國半總統制的部分設計，現在也是分立政府。台灣可以從法國學到什麼？'}]}
+/* Discussion questions: ONE list for both the article and the whiteboard's last board, so they always match.
+   en/zh = the article's (slightly longer) wording; board = the whiteboard's shorter narration, translation and card lines. */
+var QUESTIONS=[
+ {en:'The students\' list began with teachers and buildings, not politics. Which of their complaints would Taiwanese students share? Would a [[blocus]] work in Taiwan?',
+  zh:'學生的清單從老師和校舍開始，而不是政治。他們的不滿中，哪些是台灣學生也會有的？blocus 在台灣行得通嗎？',
+  board:{say:'the students\' list began with teachers and buildings, not politics. Which complaints would Taiwanese students share? Would a [[blocus]] work here?',zh:'學生的清單從老師和校舍開始，而不是政治。哪些不滿是台灣學生也會有的？blocus 在台灣行得通嗎？',l1:'The students\' list: which complaints',l2:'would Taiwanese students share?'}},
+ {en:'Should a government hold fuel prices down, as Taiwan\'s [[CPC]] does, or let them rise, as in France? Who pays in each case?',
+  zh:'政府應該像台灣中油那樣壓住油價，還是像法國那樣讓它上漲？兩種做法各是誰在付錢？',
+  board:{say:'should a government hold fuel prices down, like Taiwan, or let them rise, like France? Who pays either way?',zh:'政府應該像台灣一樣壓住油價，還是像法國一樣讓它漲？兩種做法各是誰付錢？',l1:'Hold fuel prices down (Taiwan) or let them',l2:'rise (France)? Who pays either way?'}},
+ {en:'De Gaulle designed the Fifth Republic to stop governments from falling. Why is it failing at that now? What would you change?',
+  zh:'戴高樂設計第五共和是為了讓政府不再一直倒台。為什麼現在做不到了？你會改什麼？',
+  board:{say:'de Gaulle built the Fifth Republic to stop governments from falling. Why is it failing at that now, and what would you change?',zh:'戴高樂設計第五共和是為了讓政府不再一直倒台。為什麼現在做不到了？你會改什麼？',l1:'De Gaulle built the system to stop falling',l2:'governments. Why is it failing? What would you change?'}},
+ {en:'France spends 57 percent of GDP through the state; Taiwan spends about 15 percent. Which model would you choose, and what would you give up?',
+  zh:'法國的政府支出占 GDP 的 57%，台灣大約 15%。你會選擇哪一種模式？又願意放棄什麼？',
+  board:{say:'France spends 57 percent of GDP through the state; Taiwan, about 15. Which would you choose, and what would you give up?',zh:'法國政府支出占 GDP 的 57%，台灣約 15%。你會選哪一種？又願意放棄什麼？',l1:'57% of GDP (France) or 15% (Taiwan)?',l2:'Which would you choose, and what would you give up?'}},
+ {en:'[[Margaux Eude]] supports the cause but says the troublemakers hurt it. Do riots help or hurt a protest movement? Can you think of examples?',
+  zh:'Margaux Eude 支持這場運動，但說搗亂的人傷害了它。暴力會幫助還是傷害一場抗議運動？你能舉出例子嗎？',
+  board:{say:'[[Margaux Eude]] supports the cause but says the troublemakers hurt it. Do riots help or hurt a protest movement?',zh:'Margaux Eude 支持這場運動，但說搗亂的人傷害了它。暴力會幫助還是傷害一場抗議運動？',l1:'Do riots help or hurt a protest movement?',l2:'Think of Margaux Eude — and other examples.'}},
+ {en:'Taiwan borrowed part of France\'s [[semi-presidential]] design and now has a divided government. What could Taiwan learn from France?',
+  zh:'台灣借用了法國半總統制的部分設計，現在也是分立政府。台灣可以從法國學到什麼？',
+  board:{say:'Taiwan borrowed part of France\'s design and now has a divided government too. What could Taiwan learn from France?',zh:'台灣借用了法國的部分設計，現在也是分立政府。台灣可以從法國學到什麼？',l1:'Taiwan has a divided government too.',l2:'What could Taiwan learn from France?'}},
+ {en:'Robert Guest doubts that rioters will build a fairer society, and says life gets worse where riots happen. Do you agree? Can you think of a protest that made things better?',
+  zh:'Robert Guest 懷疑暴動者能打造更公平的社會，並說暴動過後當地生活只會更糟。你同意嗎？你能想到哪一場抗議讓情況變好了？',
+  board:{say:'Robert Guest of The Economist doubts that rioters will build a fairer society. Do you agree?',zh:'《經濟學人》的 Robert Guest 懷疑暴動者能打造更公平的社會。你同意嗎？',l1:'Can riots build a fairer society?',l2:'The Economist says no. Do you agree?'}},
+ {en:'If you were France\'s next president, with no money to hand out, what would you do first for young people?',
+  zh:'如果你是法國下一任總統，手上沒有錢可以發，你會先為年輕人做什麼？',
+  board:{say:'if you were France\'s next president, with no money to hand out, what would you do first for young people?',zh:'如果你是法國下一任總統，手上沒有錢可以發，你會先為年輕人做什麼？',l1:'France\'s next president, with no money:',l2:'what would you do first for young people?'}}
 ];
+var QGROUPS=[{h:'',zh:'',qs:QUESTIONS}];
 
 /* Whiteboard boards. ops: ['title',str] ['t',x,y,str,{s,c}] ['l',x1,y1,x2,y2,{c,w,dash}] ['r',x,y,w,h,{c}]
    ['e',cx,cy,rx,ry] ['a',x1,y1,x2,y2,{c}] ['circ',cx,cy,rx,ry,{c}] ['hl',x,y,w,h] ['wipe'] + ICON names below.
@@ -1046,7 +1070,7 @@ var BOARDS=[
  {say:'So, the magazine argues, the anger will last, and voters will turn to [[populists]] of the left and right who promise spending from a "[[magic money tree]]." Its deputy editor, Robert Guest, adds a warning from riots he has covered on several continents: afterward, investors and insurers stay away, jobs vanish, and life gets harder.',
   zh:'所以雜誌認為，怒氣會持續，選民會轉向左右兩派的民粹政治人物，他們承諾從「搖錢樹」變出支出。副總編輯 Robert Guest 也從他在幾大洲採訪過的暴動中提出警告：事後投資人和保險業者都會避開，工作機會消失，生活更難。',
   ops:[['moneytree',170,420],['t',320,360,'"magic money tree": spending with no way to pay',{s:20,c:C.or}],['t',320,398,'populists, left and right, promise it',{s:18}],['t',320,436,'riots → investors leave → jobs vanish (Guest)',{s:18,c:C.gy}]]},
- {say:'Others read the moment differently. [[Le Monde]]\'s editors say Macron has ignored social movements and sidelined unions, and owes young people real answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide.',
+ {say:'Others read the moment differently. The editors of [[Le Monde]] say Macron has ignored social movements and sidelined unions, and owes young people real answers. Supporters of Le Pen and Mélenchon say the mainstream has had its chance. In April, voters will decide.',
   zh:'也有人有不同的解讀。《世界報》的社論說，馬克宏忽視社會運動、邊緣化工會，欠年輕人真正的答覆。勒朋和梅朗雄的支持者則說，主流政黨已經有過機會了。到了四月，選民會做出決定。',
   ops:[['t',40,505,'Le Monde: answer the young · voters decide in April',{s:19,c:C.pu}],['hl',40,485,500,26]]}
 ]},
@@ -1054,8 +1078,8 @@ var BOARDS=[
  {say:'Zoom out across the border. Other countries have lived through the same storms. Greece in 2008, when police killed a teenager, and again in its [[austerity]] years. Britain in 2011, after a police shooting in London. Spain\'s "[[Indignados]]" filled city squares that same year. Germany\'s farmers blocked roads with tractors in 2024, angry about cuts to diesel subsidies.',
   zh:'把鏡頭拉出國界。其他國家也經歷過類似的風暴。2008 年希臘，警察打死一名少年引發暴動，之後在撙節年代又爆發抗爭。2011 年英國，倫敦一起警察開槍事件後全國暴動。同一年，西班牙的「憤怒者」佔滿城市廣場。2024 年，德國農民開著拽引機堵路，抗議柴油補貼被砍。',
   ops:[['title','Not only France'],['t',60,165,'Greece 2008, 2010–12',{s:20,c:C.bl}],['t',300,165,'police killing → riots; austerity strikes',{s:18}],['t',60,205,'Britain 2011',{s:20,c:C.bl}],['t',300,205,'police shooting → riots in many cities',{s:18}],['t',60,245,'Spain 2011',{s:20,c:C.bl}],['t',300,245,'"Indignados" camp in city squares',{s:18}],['t',60,285,'Germany 2024',{s:20,c:C.bl}],['t',300,285,'farmers\' tractors vs diesel subsidy cuts',{s:18}]]},
- {say:'And right now, France is not alone. In Spain, an 87-year-old disabled woman, Maricarmen Abascal, was [[evicted]] from her Madrid home after a fight with an investment fund. Crowds camped in the [[Puerta del Sol]]. When parliament rejected his housing plan, Prime Minister Pedro Sánchez called a [[snap election]] for November 29, and the unions called a general strike for November 11. Italian students held a "[[No Meloni Day]]." There were riots in Liège, Milan and Tirana, and tent camps in Athens.',
-  zh:'而此刻，法國並不孤單。在西班牙，87 歲身障的 Maricarmen Abascal 在與一家投資基金纏訟後，被迫遷出馬德里的家。群眾在太陽門廣場紮營。國會否決住房方案後，總理桑切斯宣布 11 月 29 日提前大選，工會也號召 11 月 11 日總罷工。義大利學生發起「No Meloni Day」。列日、米蘭和地拉那都發生暴動，雅典則出現帳篷營地。',
+ {say:'And right now, France is not alone. In Spain, an 87-year-old disabled woman, [[Maricarmen Abascal]], was [[evicted]] from her Madrid home after a fight with an investment fund. Crowds camped in the [[Puerta del Sol]]. When parliament rejected his housing plan, Prime Minister [[Pedro Sánchez]] called a [[snap election]] for November 29, and the unions called a general strike for November 11. Italian students held a "[[No Meloni Day]]." There were riots in Liège, Milan and Tirana, and tent camps in Athens.',
+  zh:'而此刻，法國並不孤單。在西班牙，87 歲身障的 Maricarmen Abascal 在與一家投資基金纏訟後，被迫遷出馬德里的家。群眾在太陽門廣場紮營。國會否決住房方案後，總理桑切斯宣布 11 月 29 日提前大選，工會也號召 11 月 11 日總罷工。義大利學生發起「反梅洛尼日」。列日、米蘭和地拉那都發生暴動，雅典則出現帳篷營地。',
   ops:[['wipe'],['title','Autumn 2026: not only France'],['t',60,160,'Spain',{s:22,c:C.or}],['t',220,160,'housing protests · election Nov. 29 · strike Nov. 11',{s:19}],['t',60,200,'Italy',{s:22,c:C.or}],['t',220,200,'"No Meloni Day" · riots in Milan, Turin',{s:19}],['t',60,240,'Belgium',{s:22,c:C.or}],['t',220,240,'student protests · riots in Liège',{s:19}],['t',60,280,'Greece',{s:22,c:C.or}],['t',220,280,'tent camps in Athens over rents',{s:19}],['t',60,320,'Portugal',{s:22,c:C.or}],['t',220,320,'housing protests',{s:19}],['t',60,360,'Albania',{s:22,c:C.or}],['t',220,360,'riots in Tirana',{s:19}]]},
  {say:'The common thread is a mix: prices go up, trust goes down, and young people feel no one is listening. The Economist adds a political warning: the center is in trouble across Europe, and Sánchez will probably lose power. What makes France different is the extra fuel: a protest script everyone knows, and a parliament that cannot decide.',
   zh:'共同點是這樣的組合：物價上漲、信任下降、年輕人覺得沒人在聽。《經濟學人》也提出政治警告：整個歐洲的中間派都陷入困境，桑切斯很可能失去政權。法國不同的地方在於多了額外的燃料：一套人人都會的抗爭劇本，加上一個做不了決定的國會。',
@@ -1094,22 +1118,22 @@ var BOARDS=[
  {say:'Back to the square in Limoges, and to our puzzle. France shows that money alone does not buy calm. When prices jump, parliament is stuck in [[gridlock]], and people feel unheard — all at the same time — the anger finds the street. In Limoges, two suspects have been arrested, and the investigation goes on.',
   zh:'回到利摩日的廣場，也回到一開始的謎題。法國的例子說明，光靠花錢買不到平靜。當物價飆漲、國會卡住、人民覺得沒人在聽，這些事同時發生時，怒氣就會湧上街頭。利摩日已有兩名嫌犯被捕，調查仍在進行。',
   ops:[['wipe'],['title','Back to the square'],['t',120,190,'Money alone does not buy calm.',{s:36,c:C.or}],['t',120,270,'prices ↑  +  parliament stuck  +  people unheard',{s:24}],['a',470,300,470,360,{c:C.ink}],['t',300,410,'= anger in the street',{s:32,c:C.rd}],['t',120,490,'Limoges: two suspects arrested, investigation goes on',{s:20,c:C.gy}]]}
-]},
-{t:'Talk about it',zh:'一起討論',steps:[
- {say:'Let\'s talk. Question one: the students\' list began with teachers and buildings, not politics. Which complaints would Taiwanese students share? Would a [[blocus]] work here? Question two: should a government hold fuel prices down, like Taiwan, or let them rise, like France? Who pays either way?',
-  zh:'第一題：學生的清單從老師和校舍開始，而不是政治。哪些不滿是台灣學生也會有的？blocus 在台灣行得通嗎？第二題：政府應該像台灣一樣壓住油價，還是像法國一樣讓它漲？兩種做法各是誰付錢？',
-  ops:[['title','Talk about it'],['qbox',40,110,'1','The students\' list: which complaints','would Taiwanese students share?'],['qbox',40,320,'2','Hold fuel prices down (Taiwan) or let them','rise (France)? Who pays either way?']]},
- {say:'Question three: de Gaulle built the Fifth Republic to stop governments from falling. Why is it failing at that now, and what would you change? Question four: France spends 57 percent of GDP through the state; Taiwan, about 15. Which would you choose, and what would you give up?',
-  zh:'第三題：戴高樂設計第五共和是為了讓政府不再一直倒台。為什麼現在做不到了？你會改什麼？第四題：法國政府支出占 GDP 的 57%，台灣約 15%。你會選哪一種？又願意放棄什麼？',
-  ops:[['wipe'],['title','Talk about it'],['qbox',40,110,'3','De Gaulle built the system to stop falling','governments. Why is it failing? What would you change?'],['qbox',40,320,'4','57% of GDP (France) or 15% (Taiwan)?','Which would you choose, and what would you give up?']]},
- {say:'Question five: [[Margaux Eude]] supports the cause but says the troublemakers hurt it. Do riots help or hurt a protest movement? Question six: Taiwan borrowed part of France\'s design and now has a divided government too. What could Taiwan learn from France?',
-  zh:'第五題：Margaux Eude 支持這場運動，但說搗亂的人傷害了它。暴力會幫助還是傷害一場抗議運動？第六題：台灣借用了法國的部分設計，現在也是分立政府。台灣可以從法國學到什麼？',
-  ops:[['wipe'],['title','Talk about it'],['qbox',40,110,'5','Do riots help or hurt a protest movement?','Think of Margaux Eude — and other examples.'],['qbox',40,320,'6','Taiwan has a divided government too.','What could Taiwan learn from France?']]},
- {say:'Question seven: Robert Guest of The Economist doubts that rioters will build a fairer society. Do you agree? Question eight: if you were France\'s next president, with no money to hand out, what would you do first for young people?',
-  zh:'第七題：《經濟學人》的 Robert Guest 懷疑暴動者能打造更公平的社會。你同意嗎？第八題：如果你是法國下一任總統，手上沒有錢可以發，你會先為年輕人做什麼？',
-  ops:[['wipe'],['title','Talk about it'],['qbox',40,110,'7','Can riots build a fairer society?','The Economist says no. Do you agree?'],['qbox',40,320,'8','France\'s next president, with no money:','what would you do first for young people?']]}
 ]}
 ];
+/* The last board is built from QUESTIONS in content.js (the board wording), two questions per step,
+   so it always matches the list after the article: same order and numbering. */
+(function(){
+  var W=['one','two','three','four','five','six','seven','eight','nine','ten'], Z='一二三四五六七八九十', steps=[];
+  for(var i=0;i<QUESTIONS.length;i+=2){
+    var say=i?'':'Let\'s talk. ', zh='', ops=i?[['wipe']]:[];
+    ops.push(['title','Talk about it']);
+    QUESTIONS.slice(i,i+2).forEach(function(q,j){ var n=i+j, b=q.board;
+      say+='Question '+W[n]+': '+b.say+' '; zh+='第'+Z[n]+'題：'+b.zh;
+      ops.push(['qbox',40,j?320:110,String(n+1),b.l1,b.l2]); });
+    steps.push({say:say.trim(),zh:zh,ops:ops});
+  }
+  BOARDS.push({t:'Talk about it',zh:'一起討論',steps:steps});
+})();
 
 /* ---------- icons and custom drawings ---------- */
 var ICON={
@@ -1227,6 +1251,7 @@ var CUSTOM={
         Array.prototype.forEach.call(document.querySelectorAll('#rates button'),function(x){ x.classList.toggle('on',x===b); });
         sayMarked('This is how fast I will read. Next stop: [[Limoges]].'); }; });
     $('enSel').onchange=function(){ enId=this.value; lsSet('iqn-en',enId); loadVoices(); sayMarked('Hello. This is my reading voice.'); };
+    $('esSel').onchange=function(){ esId=this.value; lsSet('iqn-es',esId); loadVoices(); sayEntry('pedro sánchez'); };
     $('frSel').onchange=function(){ frId=this.value; lsSet('iqn-fr',frId); loadVoices(); sayEntry('limoges'); };
     loadVoices();
     if(speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged',loadVoices); else speechSynthesis.onvoiceschanged=loadVoices;
