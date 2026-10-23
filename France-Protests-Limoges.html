@@ -393,7 +393,28 @@ var unlocked=false;
 function unlock(){ if(unlocked||!TTS) return; unlocked=true; try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
 ['touchend','click','keydown'].forEach(function(t){ document.addEventListener(t,unlock,true); });
 
+/* say years the way people do: 1789 -> "seventeen eighty-nine", 2008 -> "two thousand eight",
+   2026 -> "twenty twenty-six", 1800s -> "eighteen hundreds". Some voices read a bare 1789 as
+   "one thousand seven hundred...", so years are spelled out before they reach the voice. */
+var ONES=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'],
+    TENS=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function two(n){ return n<20?ONES[n]:TENS[Math.floor(n/10)]+(n%10?'-'+ONES[n%10]:''); }
+function yearWords(y){
+  var hi=Math.floor(y/100), lo=y%100;
+  if(y>=2000&&y<2010) return 'two thousand'+(lo?' '+ONES[lo]:'');
+  if(lo===0) return two(hi)+' hundred';
+  return two(hi)+' '+(lo<10?'oh '+ONES[lo]:two(lo));
+}
+function decadeWords(y){ var s=yearWords(y); if(/hundred$/.test(s)) return s+'s'; if(y===2000) return 'two thousands';
+  return s.replace(/(\w+)$/,function(w){ return w.replace(/y$/,'ie')+'s'; }); }
+function sayYears(t){
+  return t.replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})\s*[–-]\s*(1[0-9]\d{2}|20\d{2})(?!\d|[.,]\d)/g,function(m,p,a,b){ return p+yearWords(+a)+' to '+yearWords(+b); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]|20)(\d{2})\s*[–-]\s*(\d{2})(?!\d|[.,]\d)/g,function(m,p,c,y1,y2){ return p+yearWords(+(c+y1))+' to '+yearWords(+(c+y2)); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})s\b/g,function(m,p,y){ return p+decadeWords(+y); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})(?!\d|[.,]\d)/g,function(m,p,y){ return p+yearWords(+y); });
+}
 function cleanEn(t){
+  t=sayYears(t);
   return t.replace(/\bS&P\b/g,'S and P').replace(/NT\$\s?([\d.]+)/g,'$1 New Taiwan dollars').replace(/\$(\d+)/g,'$1 dollars')
     .replace(/€\s?([\d.]+)\s?(bn|billion)/g,'$1 billion euros').replace(/\s—\s/g,', ').replace(/—/g,', ').replace(/\bOct\./g,'October')
     .replace(/(\d)–(\d)/g,'$1 to $2').replace(/\s+/g,' ').trim();
