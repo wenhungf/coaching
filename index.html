@@ -20,7 +20,7 @@
     /* Book, reviewed: violets and mulberry */
     --r1: #b3a3e6; --r2: #c79ee0; --r3: #a99be0; --r4: #d4a5c8; --r5: #9f9ed8;
     /* News & features */
-    --france: #9fb0d6; --dusk: #a7b0c4; --brief: #8fa9de; --wind: #9db6d6; --feature: #d99a55; --climate: #79b9a6; --lit: #cc8fae;
+    --kpop: #e79ab4; --france: #9fb0d6; --dusk: #a7b0c4; --brief: #8fa9de; --wind: #9db6d6; --feature: #d99a55; --climate: #79b9a6; --lit: #cc8fae;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { background: var(--ink) !important; }
@@ -156,7 +156,10 @@
    into a new shelf. Newest books go first. series = the label shown before the shelf name; h and w set a spine's size. */
 const SHELVES = [
   {series:"News & features", name:"Current affairs", sub:"The world right now", mark:"News", books:[
-    {href:"France-Protests-Limoges.html", a:"--france", eyebrow:"News & features · France · Whiteboard lesson", title:"The Night Limoges Lost Its Clock Tower", spine:"Limoges", new:true,
+    {href:"Kpop-Young-Idols.html", a:"--kpop", eyebrow:"News & features · South Korea · Whiteboard lesson", title:"Thirteen, and Already on Stage", spine:"Thirteen", new:true,
+     blurb:"Three members of a new K-pop girl group are 13. Are girls pushed younger than boys, and who is really watching? The ages, the fans and the law, with a whiteboard lesson.",
+     level:"B1–B2 · ~1,700 words", start:"Read the article"},
+    {href:"France-Protests-Limoges.html", a:"--france", eyebrow:"News & features · France · Whiteboard lesson", title:"The Night Limoges Lost Its Clock Tower", spine:"Limoges", h:200,
      blurb:"A 143-year-old town hall burns on a night of mass protest. From a classroom near Paris to two centuries of French politics, with a whiteboard lesson.",
      level:"B1–B2 · ~2,100 words", start:"Read the article"},
     {href:"Euthanasia-Who-Decides.html", a:"--dusk", eyebrow:"Feature · Medicine, law and the mind", title:"Who Decides When Suffering Ends?", spine:"Who Decides?",

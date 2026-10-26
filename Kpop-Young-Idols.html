@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Thirteen, and Already on Stage — InkQuest Reading Room</title>
+<style>
+  :root{
+    /* warm palette for this article: blush paper, rose accent, plum ink */
+    --paper:#FBF3EE; --panel:#FFFDFB; --ink:#2E1F24; --soft-ink:#5E4A4F; --rule:#EBD8D1;
+    --accent:#B83B66; --accent-deep:#7A2343; --accent-tint:rgba(184,59,102,.08);
+    --word:#C0602A; --phrase:#8A4FB0; --gram:#3F7D54; --cult:#B8863B; --fr:#3B6FB6; --ko:#C2405F; --zhn:#2A8A7E;
+    --gl-line:#C49AA6; --gl-line-hover:#8A4D60;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,Georgia,"Songti TC","Noto Serif TC",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+    --han:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;color-scheme:light;background:var(--paper)}
+  html,body{background:var(--paper)!important}
+  body{margin:0;background:var(--paper)!important;color:var(--ink)!important;font-family:var(--serif);line-height:1.72;
+    font-size:19px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+
+  .masthead{border-bottom:2px solid var(--ink);margin-top:26px;padding-bottom:10px;display:flex;align-items:center;gap:12px}
+  .masthead .brand{font-family:var(--sans);font-weight:800;letter-spacing:.02em;font-size:15px}
+  .masthead .brand span{color:var(--accent)}
+  a.brand{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent} a.brand:hover{border-bottom-color:var(--accent)}
+  .masthead .sec{font-family:var(--sans);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft-ink);margin-left:auto}
+
+  header.article{margin:30px 0 6px}
+  .kicker{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  h1{font-family:var(--sans);font-weight:800;letter-spacing:-.02em;line-height:1.08;font-size:40px;margin:0 0 16px}
+  .deck{font-size:21px;line-height:1.5;color:var(--soft-ink);font-style:italic;margin:0 0 20px}
+  .byline{font-family:var(--sans);font-size:12.5px;color:var(--soft-ink);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:11px 0;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .byline b{color:var(--ink);font-weight:700}
+  .byline .dot{color:var(--accent)}
+  .tools{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:14px 0 0;font-family:var(--sans);font-size:13px}
+  .tlink{background:none;border:0;padding:0;font:600 13px var(--sans);color:var(--accent);cursor:pointer;border-bottom:1px solid transparent}
+  .tlink:hover{border-bottom-color:var(--accent)}
+  .tlink.on{color:var(--accent-deep);font-weight:800}
+
+  article{margin-top:26px}
+  article p{margin:0 0 20px}
+  .lead::first-letter{font-family:var(--sans);font-weight:800;float:left;font-size:64px;line-height:.82;padding:6px 10px 0 0;color:var(--accent)}
+  .masthead{border-bottom-color:var(--accent-deep)}
+  .pull{background:linear-gradient(90deg,rgba(247,198,212,.35),transparent);border-radius:0 12px 12px 0}
+  h2{font-family:var(--sans);font-weight:800;font-size:16px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+    margin:36px 0 14px;padding-top:18px;border-top:1px solid var(--rule);display:flex;align-items:baseline;gap:10px}
+  h2::before{content:"✦";color:var(--accent);font-size:13px}
+  h2 .h2t{flex:1}
+  .pull{font-family:var(--sans);font-weight:700;font-size:23px;line-height:1.35;color:var(--accent-deep);
+    border-left:4px solid var(--accent);padding:6px 0 6px 20px;margin:30px 0}
+  p.zhp{font-family:var(--han);font-size:16px;line-height:1.8;color:var(--soft-ink);border-left:2px solid var(--rule);padding:0 0 0 14px;margin:-8px 0 22px}
+  h2 .zh2{display:block;font-family:var(--han);font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:none;color:var(--soft-ink);margin-top:3px}
+  h2 .zh2[hidden],.pull .zpull[hidden]{display:none}
+  .pull .zpull{display:block;font-family:var(--han);font-size:19px;font-weight:600;color:var(--soft-ink);margin-top:6px}
+  .totop{margin-top:14px;background:none;border:1px solid var(--rule);border-radius:6px;padding:7px 14px;font:600 13px var(--sans);color:var(--accent);cursor:pointer}
+  .totop:hover{border-color:var(--accent)}
+  .kicker .zk{font-family:var(--han);letter-spacing:.06em;text-transform:none;font-weight:600}
+  p.zhp.zh1{font-family:var(--han);font-weight:700;font-size:22px;line-height:1.4;color:var(--soft-ink);border:0;padding:0;margin:-8px 0 16px}
+  p.zhp.zdeck{border:0;padding:0;margin:-12px 0 20px;font-size:17px}
+  .say{flex:none;background:none;border:0;padding:0 2px;font:600 12px var(--sans);letter-spacing:0;text-transform:none;color:var(--soft-ink);cursor:pointer}
+  .say:hover,.say.on{color:var(--accent)}
+  .say.mini{position:absolute;right:0;top:2px}
+  body.nosay .say,body.nosay .pbtn,body.nosay #pop-say,body.nosay #voicePanel{display:none!important}
+  .wbrow{display:flex;flex-wrap:wrap;gap:4px 16px;margin:-8px 0 8px}
+  .wblink{background:none;border:0;padding:0;font:600 12.5px var(--sans);color:var(--accent);cursor:pointer;text-align:left}
+  .wblink:hover{text-decoration:underline}
+
+  .gl{cursor:pointer;border-bottom:1.5px dotted var(--gl-line);transition:background .12s,border-color .12s;-webkit-tap-highlight-color:transparent}
+  .gl:hover,.gl[aria-expanded="true"]{background:rgba(184,59,102,.08);border-bottom-color:var(--gl-line-hover)}
+  :focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+  #pop{position:fixed;z-index:400;max-width:360px;background:#3A2530;color:#F7EEF0;border-radius:12px;
+    padding:15px 17px;box-shadow:0 18px 40px -12px rgba(30,27,22,.55);display:none;font-family:var(--sans)}
+  #pop.show{display:block}
+  #pop .tag{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:3px 7px;border-radius:5px;margin-bottom:8px}
+  #pop .tag.v{background:#5FC6D0;color:#04333a} #pop .tag.p{background:#C79EE0;color:#3a1f4a}
+  #pop .tag.c{background:#8FCBA1;color:#123521} #pop .tag.f{background:var(--cult);color:#2b1f08}
+  #pop .tag.fr{background:#9DB8E8;color:#0f2550} #pop .tag.es{background:#E8B49D;color:#4a1d0b}
+  #pop .tag.ko{background:#F4B6C8;color:#5a1027} #pop .tag.zhn{background:#9FDCCF;color:#0d3b34}
+  #pop .tag.v{background:#F2B48E;color:#4a1d0b}
+  .nat{font-family:var(--han);font-weight:700;font-size:17px;color:#fff;margin-right:8px}
+  .wordbank .wb.fr .nat{color:var(--ink);font-size:16px}
+  #pop .hrow{display:flex;align-items:center;gap:8px;margin-bottom:2px;padding-right:22px;flex-wrap:wrap}
+  #pop .h{font-weight:800;font-size:15.5px;letter-spacing:-.01em;color:#fff}
+  #pop .hrow button{flex:none;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:999px;font:700 12px var(--sans);padding:2px 9px;cursor:pointer}
+  #pop .hrow button:hover{background:#F4B6C8;color:#2b1f08}
+  #pop .pipa{margin:3px 0 6px;font-size:13.5px}
+  .ipa{font-family:"Charis SIL","Doulos SIL","Gentium Plus","Lucida Sans Unicode","Segoe UI",var(--sans);color:#9DB8E8}
+  .resp{font-weight:800;letter-spacing:.03em;color:#F4B6C8;margin-left:6px}
+  #pop .zh{font-family:var(--han);font-size:14px;color:#F4B6C8;margin-bottom:9px;font-weight:600}
+  #pop .d{font-size:13.5px;line-height:1.58;color:#DCD6C9}
+  #pop .lit{font-family:var(--han);font-size:13.5px;line-height:1.7;color:#F3EEE3;margin-top:9px;padding-top:9px;border-top:1px solid #3a352c}
+  #pop .lit b{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:#F4B6C8;margin-bottom:3px}
+  #pop .lvl{display:inline-block;margin-top:9px;font-size:10.5px;font-weight:700;color:#A9A296;letter-spacing:.06em}
+  #pop .arrow{position:absolute;width:14px;height:14px;background:#3A2530;transform:rotate(45deg)}
+  #pop .close{position:absolute;top:8px;right:10px;background:none;border:0;color:#9a948a;font-size:20px;cursor:pointer;line-height:1;display:none}
+  #scrim{position:fixed;inset:0;z-index:390;display:none} #scrim.show{display:block}
+
+  /* end-of-article sections: rule + small caps head, like the Nine Words word bank */
+  .bank{margin:46px 0 0;border-top:2px solid var(--ink);padding-top:8px}
+  .bank .bankhead{font-family:var(--sans);font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--soft-ink);margin:16px 0 14px}
+  .bank .sub{font-family:var(--sans);font-size:13.5px;color:var(--soft-ink);margin:0 0 16px;line-height:1.6}
+  .bank .sub .han{font-family:var(--han)}
+
+  .wbentry{display:flex;align-items:center;gap:14px;width:100%;margin:22px 0 4px;padding:12px 16px;text-align:left;cursor:pointer;
+    background:var(--panel);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;color:var(--ink);font-family:var(--sans)}
+  .wbentry:hover{background:#FFF6F3}
+  .wbentry{background:linear-gradient(90deg,#FFF0F3,var(--panel))}
+  .wbentry .ic{font-size:20px;color:var(--accent)}
+  .wbentry b{display:block;font-size:15px}
+  .wbentry small{display:block;font-size:12.5px;color:var(--soft-ink);margin-top:1px}
+  details.boards{margin:6px 0 0;font-family:var(--sans)}
+  details.boards summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--soft-ink);padding:4px 0}
+  #boardList{margin:6px 0 0;padding:0 0 0 22px;font-size:14px;line-height:1.5}
+  #boardList li{margin:0 0 4px}
+  #boardList button{background:none;border:0;padding:0;cursor:pointer;text-align:left;font:600 14px var(--sans);color:var(--accent)}
+  #boardList button:hover{text-decoration:underline}
+  #boardList small{font-family:var(--han);font-weight:400;color:var(--soft-ink);margin-left:6px;font-size:12.5px}
+
+  .qgroup{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:20px 0 10px}
+  .qgroup .zh{font-family:var(--han);letter-spacing:0;font-weight:600;color:var(--soft-ink);margin-left:4px}
+  ol.q{margin:0;padding:0;counter-reset:q;list-style:none}
+  ol.q[start="3"]{counter-reset:q 2} ol.q[start="5"]{counter-reset:q 4} ol.q[start="7"]{counter-reset:q 6}
+  ol.q li{position:relative;padding:0 34px 16px 32px;font-size:17.5px;line-height:1.55}
+  ol.q li::before{counter-increment:q;content:counter(q) ".";position:absolute;left:0;top:0;font-family:var(--sans);font-weight:800;font-size:15px;color:var(--accent)}
+  ol.q .zhp{display:block;font-family:var(--han);font-size:15px;color:var(--soft-ink);margin-top:6px}
+  ol.q .zhp[hidden]{display:none}
+
+  .wbhead{font-family:var(--sans);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+  .wbhead .pip{width:10px;height:10px;border-radius:3px;flex:none}
+  .wbhead .zh{font-family:var(--han);font-weight:600;letter-spacing:0}
+  .wbhead.v{color:#9a4a1e} .wbhead.v .pip{background:var(--word)}
+  .wbhead.p{color:#6E4488} .wbhead.p .pip{background:var(--phrase)}
+  .wbhead.f{color:#8a6420} .wbhead.f .pip{background:var(--cult)}
+  .wbhead.fr{color:#2f5a96} .wbhead.fr .pip{background:var(--fr)}
+  .wbhead.es{color:#9a4a26} .wbhead.es .pip{background:#c8673a}
+  .wbhead.ko{color:#9b2b47} .wbhead.ko .pip{background:var(--ko)}
+  .wbhead.zhn{color:#1f6b62} .wbhead.zhn .pip{background:var(--zhn)}
+  .wbhead .n{margin-left:auto;font-weight:600;color:var(--soft-ink);letter-spacing:0;text-transform:none;font-size:12px}
+  .wordbank{columns:2;column-gap:26px}
+  .wordbank.frbank{columns:1}
+  @media(max-width:560px){.wordbank{columns:1}}
+  .wordbank .wb{break-inside:avoid;margin:0 0 13px;font-size:14.5px;line-height:1.42}
+  .wordbank .wb .t{font-family:var(--sans);font-weight:700}
+  .wordbank .wb .lv{font:600 10.5px var(--sans);color:var(--soft-ink)}
+  .wordbank .wb .z{font-family:var(--han);color:var(--accent-deep);font-size:14px}
+  .wordbank .wb .x{display:block;color:var(--soft-ink);font-size:13px;margin-top:2px}
+  .wordbank .wb.fr{display:flex;gap:12px;align-items:flex-start;border-bottom:1px solid var(--rule);padding-bottom:11px}
+  .wordbank .wb.fr .pr{display:block;margin-top:2px;font-family:var(--sans);font-size:14px}
+  .wordbank .wb.fr .ipa{color:#8a4d60} .wordbank .wb.fr .resp{color:#b0602a}
+  .wordbank .wb.fr .tip{display:block;font-family:var(--han);font-size:13.5px;color:var(--ink);margin-top:4px;line-height:1.65}
+  .pr-btns{display:flex;flex-direction:column;gap:5px;flex:none}
+  .pbtn{width:34px;height:28px;border-radius:7px;border:1px solid var(--rule);background:var(--panel);cursor:pointer;font-size:14px;line-height:1}
+  .pbtn:hover{border-color:var(--accent)}
+
+  #voicePanel .rates{display:flex;gap:8px;margin-bottom:10px}
+  #voicePanel .rates button{flex:1;font:13px var(--sans);padding:8px 6px;border:1px solid var(--rule);background:none;border-radius:6px;cursor:pointer;color:var(--ink)}
+  #voicePanel .rates button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  #voicePanel label{display:block;font:700 12px var(--sans);color:var(--soft-ink);margin:10px 0 4px;letter-spacing:.04em}
+  #voicePanel select{width:100%;font:14px var(--sans);padding:7px;border-radius:6px;border:1px solid var(--rule);background:var(--panel);color:var(--ink)}
+  .note{font-family:var(--han);font-size:13px;line-height:1.7;color:var(--soft-ink);margin:10px 0 0}
+  details.facts summary{cursor:pointer;font:700 13.5px var(--sans);color:var(--accent);padding:2px 0 12px}
+  .facts ul{margin:0 0 14px;padding-left:20px;font-size:15px;line-height:1.6}
+  .facts li{margin-bottom:9px}
+  .facts .ok,.facts .fix,.facts .unv{font-weight:800;font-family:var(--sans);font-size:10.5px;letter-spacing:.08em;color:var(--soft-ink)}
+  .sources{font-family:var(--sans);font-size:13px;line-height:1.55;padding-left:18px;margin:0 0 16px}
+  .sources li{margin-bottom:6px} .sources a{color:var(--accent-deep)}
+
+  footer{margin:46px 0 60px;border-top:2px solid var(--ink);padding-top:14px;font-family:var(--sans);font-size:12px;color:var(--soft-ink);line-height:1.6}
+  footer .strong{color:var(--ink);font-weight:700} footer .han{font-family:var(--han)}
+
+  /* ---------- whiteboard (from the Paper Reader) ---------- */
+  body.wbopen{overflow:hidden}
+  #wb{position:fixed;inset:0;z-index:200;background:#2F2228;display:flex;flex-direction:column;color:#F7EEF0}
+  #wb[hidden]{display:none}
+  .wb-top{display:flex;align-items:center;gap:8px;padding:8px 10px;flex:none;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+  .wb-top button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#f3eee3;border-radius:8px;padding:6px 10px;font:600 13px var(--sans);cursor:pointer;white-space:nowrap}
+  .wb-top button.off{opacity:.65} .wb-top button.on{background:#F4B6C8;color:#2b1f08}
+  #wbTitle{flex:1;min-width:0;font:700 15px var(--sans);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #wbClose{font-size:18px!important;padding:3px 11px!important}
+  .wb-stage{flex:none;display:flex;justify-content:center;padding:0 8px}
+  #wbSvg{width:100%;max-width:1100px;max-height:calc(100vh - 250px);aspect-ratio:16/9;background:#FFF8F2;border-radius:14px;
+    background-image:radial-gradient(#F0D3C8 1.2px,transparent 1.3px);background-size:22px 22px;box-shadow:0 6px 28px rgba(20,0,10,.45)}
+  #wbCapWrap{flex:1;min-height:0;overflow:auto;max-width:1100px;width:100%;margin:0 auto;padding:10px 14px 4px}
+  #wbCap{font:18px/1.7 var(--serif);color:#f3eee3}
+  #wbCap span.gl{border-bottom-color:rgba(244,182,200,.75)}
+  #wbCap span.gl:hover,#wbCap span.gl[aria-expanded="true"]{background:rgba(255,255,255,.12)}
+  #wbZh{font:15.5px/1.8 var(--han);color:#cfc8b8;margin-top:6px;padding-top:6px;border-top:1px dashed rgba(255,255,255,.18)}
+  #wbNextB{margin-top:8px;background:none;border:1px solid rgba(244,182,200,.6);color:#F4B6C8;border-radius:999px;padding:4px 12px;font:600 13px var(--sans);cursor:pointer}
+  .wb-ctl{flex:none;display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 10px calc(14px + env(safe-area-inset-bottom,0px))}
+  .wb-ctl button{width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:17px;cursor:pointer}
+  #wbPlay{width:58px;height:58px;background:#D6457A;font-size:20px}
+  .wb-dotrow{display:flex;justify-content:center;gap:6px;padding:6px 0 0}
+  #wbDots{display:flex;gap:6px}
+  #wbDots span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25)}
+  #wbDots span.done{background:rgba(244,182,200,.6)} #wbDots span.cur{background:#F4B6C8;width:20px;border-radius:5px}
+  #wbList{position:absolute;top:52px;left:10px;z-index:5;background:#43303A;border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:2px;box-shadow:0 8px 30px rgba(0,0,0,.5);max-height:72vh;overflow:auto;max-width:calc(100vw - 20px)}
+  #wbList[hidden]{display:none}
+  #wbList button{background:none;border:0;color:#f3eee3;text-align:left;padding:8px 12px;border-radius:8px;font:15px var(--sans);cursor:pointer}
+  #wbList button small{display:block;font:12.5px var(--han);color:#bdb6a5;margin-left:22px}
+  #wbList button.on,#wbList button:hover{background:rgba(244,182,200,.18)}
+  #wbList b{color:#F4B6C8;margin-right:6px}
+
+  @media(max-width:600px){
+    body{font-size:18px}
+    h1{font-size:31px}
+    .deck{font-size:18px}
+    #pop{left:0!important;right:0;bottom:0;top:auto!important;max-width:none;border-radius:16px 16px 0 0;padding:20px 20px calc(26px + env(safe-area-inset-bottom,0px));max-height:72vh;overflow-y:auto}
+    #pop .arrow{display:none}
+    #pop .close{display:block}
+    #wbCap{font-size:16.5px}
+    .wb-top button{padding:5px 8px;font-size:12px}
+    .wb-ctl{gap:10px}
+  }
+  /* any screen held sideways (phones, iPads, laptops): board left, captions right.
+     Heights use dvh (the visible height) — iPad Safari's 100vh is taller than what you can see. */
+  #wb{height:100vh;height:100dvh}
+  @media(orientation:landscape) and (min-width:600px){
+    #wb{display:grid;grid-template-columns:minmax(0,1fr) clamp(280px,32vw,440px);grid-template-rows:auto minmax(0,1fr) auto auto}
+    .wb-top{grid-column:1/3;grid-row:1}
+    .wb-stage{grid-column:1;grid-row:2/5;align-self:start;align-items:flex-start;min-height:0;padding:6px 8px 10px}
+    #wbSvg{width:100%;height:auto;max-width:none;max-height:calc(100dvh - 64px)}
+    #wbCapWrap{grid-column:2;grid-row:2;max-width:none;padding:6px 14px 4px;align-self:stretch}
+    #wbCap{margin-top:-6px}
+    .wb-dotrow{grid-column:2;grid-row:3}
+    .wb-ctl{grid-column:2;grid-row:4;padding:8px 8px calc(12px + env(safe-area-inset-bottom,0px))}
+  }
+  @media(orientation:landscape) and (max-height:520px){
+    #wbCap{font-size:15px;line-height:1.6} #wbZh{font-size:14px}
+    .wb-ctl{padding:6px;gap:8px}
+    .wb-ctl button{width:40px;height:40px} #wbPlay{width:48px;height:48px}
+  }
+  /* portrait: the board takes the width, captions get the rest of the visible height */
+  @media(orientation:portrait){ #wbSvg{max-height:calc(100dvh - 250px)} }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <a class="brand" href="index.html" title="Back to the Reading Room bookshelf">Ink<span>Quest</span> · Reading Room</a>
+    <span class="sec">News &amp; Features</span>
+  </div>
+
+  <header class="article">
+    <div class="kicker">News &amp; features · South Korea<span class="zhp zk" hidden> · 時事專題・韓國</span></div>
+    <h1>Thirteen, and Already on Stage</h1>
+    <p class="zhp zh1" hidden>十三歲，已經站上舞台</p>
+    <p class="deck">Three members of a new K-pop girl group are 13. How young is too young to be an idol? Are girls pushed younger than boys, and who is really watching? We looked at the ages, the fans and the law.</p>
+    <p class="zhp zdeck" hidden>一個新的 K-pop 女團裡，有三名成員只有 13 歲。幾歲當偶像算太小？女孩真的比男孩更早被推上台嗎？到底是誰在看？我們查了年齡、粉絲和法律。</p>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>News &amp; Features</b> · South Korea</span><span class="dot">◆</span><span>Level B1–B2</span><span class="dot">◆</span><span>~13 min read</span></div>
+    <div class="tools"><button type="button" class="tlink" id="zhAll">Show 中譯</button><button type="button" class="tlink" id="voiceLink">🔊 Voices</button></div>
+    <button type="button" class="wbentry" id="startBtn"><span class="ic">▶</span><span><b>Whiteboard lesson</b><small id="wbCount"></small></span></button>
+    <details class="boards"><summary>Choose a board · 選擇單元</summary><ol id="boardList"></ol></details>
+  </header>
+
+  <article id="article"></article>
+
+  <section class="bank" aria-labelledby="disc-h">
+    <div class="bankhead" id="disc-h">Discussion questions · 討論問題</div>
+    <div id="disc"></div>
+  </section>
+
+  <section class="bank" aria-labelledby="wbk-h">
+    <div class="bankhead" id="wbk-h">Word bank · 詞彙表</div>
+    <p class="sub">Tap 🔊 to hear a Korean or Mandarin name. <span class="han">韓文、華語名字附原文、音標與發音提示。</span></p>
+    <div id="wordbank"></div>
+  </section>
+
+  <section class="bank" id="voicePanel" aria-labelledby="vp-h">
+    <div class="bankhead" id="vp-h">Voices · 朗讀設定</div>
+    <p class="sub">English is read in an English voice; Korean and Mandarin names switch to Korean and Mandarin voices. <span class="han">英文用英文語音，韓文和華語名字自動切換成對應的語音。</span></p>
+    <div class="rates" id="rates"><button type="button" data-rate="0.7">Slow 慢</button><button type="button" data-rate="0.9">Normal 中</button><button type="button" data-rate="1">Natural 正常</button></div>
+    <div id="voiceSels"></div>
+    <p class="note" id="voiceNow"></p>
+    <p class="note">iPhone、iPad 上的網頁只能用系統內建的語音。在電腦上用 Microsoft Edge 開這一頁，可以選到很自然的 AI 語音（名稱有 Natural 的那幾個），韓文和華語也有。</p>
+    <button type="button" class="totop" id="toTop">↑ Back to top 回到頂端</button>
+  </section>
+
+  <section class="bank" aria-labelledby="src-h">
+    <div class="bankhead" id="src-h">Sources · 資料來源</div>
+    <ol class="sources">
+      <li><a href="https://www.koreatimes.co.kr/entertainment/k-pop/20261022/cover-story-kids-on-stage-how-young-is-too-young-to-debut-in-k-pop">The Korea Times — "Kids on stage: How young is too young to debut in K-pop?" (Oct. 22, 2026)</a></li>
+      <li><a href="https://kagit.kr/en/posts/sm-entertainment-controversy">Kagit — A2O LITE outfits, album cover and Lee Soo-man's response</a></li>
+      <li><a href="https://www.koreaboo.com/news/lee-soo-man-comments-underage-idols-amid-a2o-lite-debut-disgust/">Koreaboo — Lee Soo-man video on debut ages resurfaces (Oct. 22, 2026)</a></li>
+      <li><a href="https://kprofiles.com/a2o-lite-members-profile/">Kprofiles (fan site) — A2O LITE member birth dates</a></li>
+      <li><a href="https://kprofiles.com/a2o-soul-members-profile/">Kprofiles (fan site) — A2O SOUL member birth dates</a></li>
+      <li><a href="https://www.koreajoongangdaily.com/lifestyle/after-10-years-boa-still-carves-out-her-own-path/11089341">Korea JoongAng Daily — BoA: found at 11, debut at 13</a></li>
+      <li><a href="https://scmp.com/magazines/style/celebrity/article/3097614/bigbangs-g-dragon-certifiable-og-k-pop-genius-what-was">South China Morning Post — G-Dragon: trainee at 8</a></li>
+      <li><a href="https://www.cheatsheet.com/entertainment/how-old-blackpink-members-when-they-debuted.html">Cheat Sheet — Blackpink members' training and debut ages</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Tzuyu">Wikipedia — Tzuyu</a></li>
+      <li><a href="https://www.koreatimes.co.kr/entertainment/k-pop/20251201/why-teen-k-pop-trainee-numbers-are-dropping-despite-greater-investment">The Korea Times — trainee numbers, schedules, health and quitting (Dec. 2025)</a></li>
+      <li><a href="https://www.newspim.com/news/view/20260123000674">Newspim — 2025 Popular Culture and Arts Industry Survey: 963 trainees in 2024</a></li>
+      <li><a href="https://www.statista.com/statistics/937615/south-korea-entertainment-industry-trainee-share-by-gender/">Statista — trainees by gender, 2024</a></li>
+      <li><a href="https://kvia.com/news/business-technology/cnn-business-consumer/2026/02/01/her-agency-crushed-her-k-pop-idol-dreams-her-reinvention-brought-them-back-to-life-and-won-her-a-grammy/">CNN — EJAE: from SM trainee to a Grammy</a></li>
+      <li><a href="https://www.koreaherald.com/article/10552221">The Korea Herald — EJAE and "Golden"</a></li>
+      <li><a href="https://www.koreaboo.com/lists/kpop-idols-really-getting-younger-average-debut-ages-last-15-years/">Koreaboo — average debut ages of 77 groups, 2008–2023 (averages by InkQuest)</a></li>
+      <li><a href="https://www.koreajoongangdaily.com/korea/under-15-canceled-in-wake-of-child-sexualization-exploitation-claims/12408173">Korea JoongAng Daily — "Under 15" canceled (March 2025)</a></li>
+      <li><a href="https://www.koreatimes.co.kr/opinion/20220716/who-likes-bts">The Korea Times — "Who likes BTS?" (2022 ARMY census)</a></li>
+      <li><a href="https://www.forbes.com/sites/jeffbenjamin/2026/01/09/koreas-top-chart-reveals-stray-kids-earn-biggest-kpop-album-of-2025/">Forbes — Circle Chart: best-selling albums of 2025</a></li>
+      <li><a href="https://www.koreaboo.com/lists/kpop-girl-groups-massively-different-gender-ratios-fans-buying-albums/">Koreaboo — Aladin data: who buys 27 girl groups' albums (2022)</a></li>
+      <li><a href="https://www.allkpop.com/article/2023/02/large-female-fandom-nearly-90-of-fans-who-purchased-newjeans-bluebook-album-were-female">allkpop — NewJeans album buyers 88.6% female</a></li>
+      <li><a href="https://www.seoul.co.kr/news/life/pop-culture/2022/10/09/20221009500050">Seoul Shinmun — Genie data: girl-group listeners by gender (Oct. 2022)</a></li>
+      <li><a href="https://www.khan.co.kr/en/article/202608042309127/">Kyunghyang Shinmun — study of 1,182 idol groups (Aug. 2026)</a></li>
+      <li><a href="https://www.koreatimes.co.kr/entertainment/k-pop/20260813/fewer-than-4-in-100-k-pop-groups-ever-sell-300000-of-an-album-study">The Korea Times — the same study: sales and survival</a></li>
+      <li><a href="https://www.soompi.com/article/1810840wpp/melon-announces-top-100-songs-of-2025-year-end-chart">Soompi — Melon year-end Top 100, 2025</a></li>
+      <li><a href="https://blog.104.com.tw/precautions-for-employing-child-labor/">104 人力銀行 — Taiwan Labor Standards Act rules for young workers</a></li>
+    </ol>
+  </section>
+
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>News &amp; Features</em>. Figures reflect reporting through October 26, 2026. Ages are at debut unless stated. <br><span class="han">數據截至 2026 年 10 月 26 日；年齡除另有說明外，皆為出道時的年齡。</span><br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+</div>
+
+<div id="scrim"></div>
+<div id="pop" role="dialog" aria-live="polite">
+  <button class="close" id="popclose" aria-label="Close">×</button>
+  <span class="tag" id="pop-tag"></span>
+  <div class="hrow"><span class="h" id="pop-h"></span><button type="button" id="pop-say" aria-label="Say it">🔊</button></div>
+  <div class="pipa" id="pop-ipa"></div>
+  <div class="zh" id="pop-zh"></div>
+  <div class="d" id="pop-d"></div>
+  <div class="lit" id="pop-x"></div>
+  <div class="lvl" id="pop-lvl"></div>
+  <div class="arrow" id="pop-arrow"></div>
+</div>
+
+<div id="wb" hidden role="dialog" aria-label="Whiteboard lesson">
+  <div class="wb-top"><button type="button" id="wbMenu">☰ Boards</button><span id="wbTitle"></span>
+    <button type="button" id="wbZhBtn">中譯</button><button type="button" id="wbVoice">🔊 Voice</button><button type="button" id="wbClose" aria-label="Close">×</button></div>
+  <div id="wbList" hidden></div>
+  <div class="wb-stage"><svg id="wbSvg" viewBox="0 0 960 540" preserveAspectRatio="xMidYMid meet"><g id="wbLayer"></g></svg></div>
+  <div class="wb-dotrow"><div id="wbDots"></div></div>
+  <div id="wbCapWrap"><div id="wbCap"></div><div id="wbZh" hidden></div><button type="button" id="wbNextB" hidden></button></div>
+  <div class="wb-ctl"><button type="button" id="wbPrev" aria-label="Previous step">&#9198;</button><button type="button" id="wbReplay" aria-label="Replay this step">&#8635;</button><button type="button" id="wbPlay" aria-label="Play">&#9654;</button><button type="button" id="wbNext" aria-label="Next step">&#9197;</button></div>
+</div>
+
+<script>
+/* =========================================================
+   INKQUEST READING ROOM — news whiteboard engine
+   Drawing primitives and step player adapted from the Paper Reader
+   whiteboard (engine/whiteboard.js). Narration is English; glossary
+   names in other languages (LANGS below) are spoken with that language's
+   voice. Korean and Mandarin entries carry a `native` spelling (Hangul /
+   Chinese characters) for the voice to read.
+   ========================================================= */
+/* warm marker palette for this article */
+var C={ink:'#3b2a30',pu:'#8f55b8',or:'#e0782f',pk:'#d6457a',te:'#2a9488',bl:'#4a6cc0',rd:'#d23e3a',gr:'#4f9a5a',gy:'#a08f86',yl:'#f2b632',rose:'#f7c6d4',peach:'#fbd8bf',lilac:'#e2d2f3',mint:'#cdeee3',sky:'#d3e0f7',skin:'#f8dccb',hair:'#3a2a2a'};
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+var $=function(id){ return document.getElementById(id); };
+
+/* ---------- glossary markup ---------- */
+function isPron(e){ return !!e&&!!LANGS[e.t]; }
+var MARK=/\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/g;
+var SHOWN={};   /* first exact-case display of each key, used as its headword */
+function keyOf(a,b){ return (b||a).toLowerCase(); }
+function head(k){ var e=GL[k]; return (e&&e.h)||SHOWN[k]||k; }
+function markup(s){
+  return esc(s).replace(MARK,function(m,a,b){ var k=keyOf(a,b), e=GL[k];
+    if(!e){ if(window.console) console.warn('glossary: no entry for',k); return a; }
+    return '<span class="gl '+GCLASS[e.t]+'" role="button" tabindex="0" aria-expanded="false" data-k="'+esc(k)+'">'+a+'</span>'; });
+}
+function collectShown(s){ s.replace(MARK,function(m,a,b){ var k=keyOf(a,b); if(!SHOWN[k]&&a.toLowerCase()===k) SHOWN[k]=a; return m; }); }
+
+/* ---------- speech ---------- */
+var TTS=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window);
+/* one row per spoken language: which system voices qualify, which to prefer, and labels */
+var LANGS={
+ fr:{re:/^fr/i,home:/^fr[-_]FR/i,good:/Denise|Henri|Vivienne|Remy|Google français|Thomas|Amélie|Audrey|Aurélie|Marie/i,en:'French',zh:'法文',bank:'French names & words',bankzh:'法語發音',tag:'French · 法語發音'},
+ es:{re:/^es/i,home:/^es[-_]ES/i,good:/Elvira|Alvaro|Álvaro|Google español|Mónica|Monica|Jorge|Marisol|Lucia/i,en:'Spanish',zh:'西班牙文',bank:'Spanish names',bankzh:'西班牙語發音',tag:'Spanish · 西班牙語發音'},
+ ko:{re:/^ko/i,home:/^ko[-_]KR/i,good:/Yuna|SunHi|InJoon|Hyunsu|Google 한국|Heami|Jian|Minjung|Sora/i,en:'Korean',zh:'韓文',bank:'Korean names & words',bankzh:'韓語發音',tag:'Korean · 韓語發音'},
+ zh:{re:/^(zh|cmn)/i,home:/^(zh|cmn)[-_](TW|Hant)/i,good:/Mei-?Jia|HsiaoChen|HsiaoYu|YunJhe|Yating|Zhiwei|Hanhan|Google 國語/i,en:'Mandarin',zh:'華語',bank:'Mandarin names',bankzh:'華語發音',tag:'Mandarin · 華語發音'}
+};
+var sayRate=parseFloat(lsGet('iqn-rate'))||0.9, enId=lsGet('iqn-en')||'';
+var EN=[], ENV=null, VOX={}, sayTok=0, sayBtn=null;
+Object.keys(LANGS).forEach(function(l){ VOX[l]={list:[],cur:null,id:lsGet('iqn-'+l)||''}; });
+var NOVELTY=/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Junior|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Ralph|Fred|Kathy|Princess|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley|Jacques/i;
+function vq(v){ var t=(v.voiceURI||'')+' '+v.name; if(/premium|高品質|優質/i.test(t)) return 2; if(/enhanced|增強|加強|Natural|Neural|Online/i.test(t)) return 1; return 0; }
+var QLABEL=['一般音質','增強音質','高品質'];
+function vid(v){ return v.voiceURI||v.name; }
+/* the languages this page actually uses (any glossary entry of that type) */
+function usedLangs(){ var u={}; Object.keys(GL).forEach(function(k){ if(LANGS[GL[k].t]) u[GL[k].t]=1; }); return Object.keys(LANGS).filter(function(l){ return u[l]; }); }
+function buildVoiceSels(){ var box=$('voiceSels'); if(!box||box.childNodes.length) return;
+  box.innerHTML='<label for="enSel">English voice 英文語音</label><select id="enSel"></select>'+usedLangs().map(function(l){ var L=LANGS[l];
+    return '<label for="sel-'+l+'">'+L.en+' voice '+L.zh+'語音</label><select id="sel-'+l+'" data-lang="'+l+'"></select>'; }).join(''); }
+function loadVoices(){
+  if(!TTS) return; var all=speechSynthesis.getVoices(); buildVoiceSels();
+  var us=function(v){ return /^en[-_]US/i.test(v.lang)?0:1; };
+  EN=all.filter(function(v){ return /^en/i.test(v.lang)&&!NOVELTY.test(v.name); }).sort(function(a,b){ return us(a)-us(b)||vq(b)-vq(a); });
+  ENV=EN.filter(function(v){ return vid(v)===enId; })[0]||EN.filter(function(v){ return us(v)===0&&/Samantha|Google US English|Aria|Jenny|Ava|Allison/i.test(v.name); })[0]||EN[0]||null;
+  fillSel($('enSel'),EN,ENV,'（這個瀏覽器沒有英文語音）');
+  usedLangs().forEach(function(l){ var L=LANGS[l], X=VOX[l], hm=function(v){ return L.home.test(v.lang)?0:1; };
+    X.list=all.filter(function(v){ return L.re.test(v.lang)&&!NOVELTY.test(v.name); }).sort(function(a,b){ return hm(a)-hm(b)||vq(b)-vq(a); });
+    X.cur=X.list.filter(function(v){ return vid(v)===X.id; })[0]||X.list.filter(function(v){ return hm(v)===0&&L.good.test(v.name); })[0]||X.list[0]||null;
+    fillSel($('sel-'+l),X.list,X.cur,'（沒有'+L.zh+'語音：'+L.zh+'名字會用英文近似音朗讀）'); });
+  voiceNote();
+}
+function fillSel(sel,list,cur,none){ if(!sel) return;
+  if(!list.length){ sel.innerHTML='<option>'+none+'</option>'; sel.disabled=true; return; }
+  sel.disabled=false; sel.innerHTML=list.map(function(v){ return '<option value="'+esc(vid(v))+'"'+(v===cur?' selected':'')+'>'+esc(v.name)+' · '+esc(v.lang)+' · '+QLABEL[vq(v)]+'</option>'; }).join(''); }
+function voiceNote(){ var n=$('voiceNow'); if(!n) return;
+  n.innerHTML=(ENV?'英文：<b>'+esc(ENV.name)+'</b>　':'')+usedLangs().map(function(l){ var L=LANGS[l], v=VOX[l].cur;
+    return v?L.zh+'：<b>'+esc(v.name)+'</b>':'<b>這個裝置沒有'+L.zh+'語音</b>，'+L.zh+'名字會改用英文拼音近似朗讀。'; }).join('　'); }
+var unlocked=false;
+function unlock(){ if(unlocked||!TTS) return; unlocked=true; try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; speechSynthesis.speak(u); }catch(e){} }
+['touchend','click','keydown'].forEach(function(t){ document.addEventListener(t,unlock,true); });
+
+/* say years the way people do: 1789 -> "seventeen eighty-nine", 2008 -> "two thousand eight",
+   2026 -> "twenty twenty-six", 1800s -> "eighteen hundreds". Some voices read a bare 1789 as
+   "one thousand seven hundred...", so years are spelled out before they reach the voice. */
+var ONES=['','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'],
+    TENS=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+function two(n){ return n<20?ONES[n]:TENS[Math.floor(n/10)]+(n%10?'-'+ONES[n%10]:''); }
+function yearWords(y){
+  var hi=Math.floor(y/100), lo=y%100;
+  if(y>=2000&&y<2010) return 'two thousand'+(lo?' '+ONES[lo]:'');
+  if(lo===0) return two(hi)+' hundred';
+  return two(hi)+' '+(lo<10?'oh '+ONES[lo]:two(lo));
+}
+function decadeWords(y){ var s=yearWords(y); if(/hundred$/.test(s)) return s+'s'; if(y===2000) return 'two thousands';
+  return s.replace(/(\w+)$/,function(w){ return w.replace(/y$/,'ie')+'s'; }); }
+function sayYears(t){
+  return t.replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})\s*[–-]\s*(1[0-9]\d{2}|20\d{2})(?!\d|[.,]\d)/g,function(m,p,a,b){ return p+yearWords(+a)+' to '+yearWords(+b); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]|20)(\d{2})\s*[–-]\s*(\d{2})(?!\d|[.,]\d)/g,function(m,p,c,y1,y2){ return p+yearWords(+(c+y1))+' to '+yearWords(+(c+y2)); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})s\b/g,function(m,p,y){ return p+decadeWords(+y); })
+          .replace(/(^|[^\d,.$€£])(1[0-9]\d{2}|20\d{2})(?!\d|[.,]\d)/g,function(m,p,y){ return p+yearWords(+y); });
+}
+function cleanEn(t){
+  t=sayYears(t);
+  if(window.SAY_FIX) SAY_FIX.forEach(function(f){ t=t.replace(f[0],f[1]); });
+  t=t.replace(/\bNo\.\s?(\d)/g,'number $1');
+  return t.replace(/\bS&P\b/g,'S and P').replace(/NT\$\s?([\d.]+)/g,'$1 New Taiwan dollars').replace(/\$(\d+)/g,'$1 dollars')
+    .replace(/€\s?([\d.]+)\s?(bn|billion)/g,'$1 billion euros').replace(/\s—\s/g,', ').replace(/—/g,', ').replace(/\bOct\./g,'October')
+    .replace(/(\d)–(\d)/g,'$1 to $2').replace(/\s+/g,' ').trim();
+}
+/* split marked-up text into voice runs: English text, and French glossary terms */
+function segs(s){
+  var out=[], last=0, m; MARK.lastIndex=0;
+  function add(lang,text,e){ if(!text||!text.replace(/[\s,.;:—"'()]/g,'')) { if(out.length&&lang==='en'&&out[out.length-1].lang==='en') out[out.length-1].text+=text; return; }
+    var p=out[out.length-1]; if(lang==='en'&&p&&p.lang==='en') p.text+=text; else out.push({lang:lang,text:text,e:e}); }
+  while((m=MARK.exec(s))){
+    add('en',s.slice(last,m.index)); var k=keyOf(m[1],m[2]), e=GL[k];
+    /* a French entry is spoken in French when the shown text is part of the French headword
+       ("Macron" for Emmanuel Macron); an English gloss like "Paris Commune" stays English */
+    if(isPron(e)&&(m[1].toLowerCase()===k||k.indexOf(m[1].toLowerCase())>=0||FR_EXTRA[m[1]]===k||(e.forms&&e.forms[m[1]]))) add(e.t,m[1],e); else add('en',m[1]);
+    last=MARK.lastIndex; }
+  add('en',s.slice(last));
+  var res=[]; out.forEach(function(p){ if(p.lang!=='en'){ res.push(p); return; }
+    p.text.split(/(?<=[.!?]["”]?)\s+/).forEach(function(x){
+      /* French names left unmarked in the text still get the French voice */
+      x.split(frAuto()).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:GL[FR_KEY[y]].t,text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
+  return res;
+}
+/* short forms that should still get the foreign voice when left unmarked (filled per article) */
+var FR_KEY={};
+/* built on first use (after the page has collected headwords): every French glossary headword, plus
+   surnames and plurals, so a foreign name left unmarked in the text still gets its own voice.
+   Headwords that are also English words go in NO_AUTO. Entries may list extra shown forms in
+   `forms` ({'Tzuyu':'子瑜'}: shown text -> what the voice reads). */
+var FR_AUTO=null, FR_EXTRA={}, NO_AUTO={};
+function frAuto(){
+  if(FR_AUTO) return FR_AUTO;
+  Object.keys(FR_EXTRA).forEach(function(w){ FR_KEY[w]=FR_EXTRA[w]; });
+  Object.keys(GL).forEach(function(k){ var e=GL[k]; if(!isPron(e)||NO_AUTO[k]) return;
+    var h=(e.h||SHOWN[k]||k).replace(/\s*\(.*\)$/,''); if(!FR_KEY[h]) FR_KEY[h]=k;
+    if(e.forms) Object.keys(e.forms).forEach(function(f){ if(!FR_KEY[f]&&!NO_AUTO[f.toLowerCase()]) FR_KEY[f]=k; }); });
+  if(!Object.keys(FR_KEY).length) return (FR_AUTO=/(?!)/);
+  var words=Object.keys(FR_KEY).sort(function(a,b){ return b.length-a.length; }).map(function(w){ return w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); });
+  FR_AUTO=new RegExp('(?<![\\wÀ-ÿ-])('+words.join('|')+')(?![\\wÀ-ÿ])');
+  return FR_AUTO;
+}
+function makeUtt(p,slow){
+  var u;
+  var XV=VOX[p.lang]?VOX[p.lang].cur:null;
+  if(XV){ u=new SpeechSynthesisUtterance(nativeOf(p)); u.voice=XV; u.lang=XV.lang; u.rate=slow?0.45:Math.min(sayRate,0.95); return u; }
+  if(p.lang!=='en'){ u=new SpeechSynthesisUtterance(p.e&&p.e.en?p.e.en:p.text); }
+  else u=new SpeechSynthesisUtterance(cleanEn(p.text));
+  if(ENV){ u.voice=ENV; u.lang=ENV.lang; } else u.lang='en-US';
+  u.rate=slow?0.55:sayRate; return u;
+}
+/* what the foreign voice reads: a listed short form, or the native spelling when the whole headword is shown */
+function nativeOf(p){ var e=p.e; if(!e||!e.native) return p.text;
+  if(e.forms&&e.forms[p.text]) return e.forms[p.text];
+  if(p.full||p.text.toLowerCase()===(e.h||'').toLowerCase()) return e.native; return p.text; }
+var LIVE=[];
+function stopSay(){ sayTok++; if(TTS) speechSynthesis.cancel(); if(sayBtn){ sayBtn.classList.remove('on'); sayBtn=null; } }
+/* speak runs in order; done() fires once when all finish (or are cancelled by a newer call) */
+function speakRuns(runs,done,slow){
+  if(!TTS||!runs.length){ done&&done(false); return; }
+  var tok=++sayTok, left=runs.length, fired=false;
+  function fin(){ if(fired) return; fired=true; if(tok===sayTok) done&&done(true); }
+  speechSynthesis.cancel();
+  /* keep the utterances referenced: Chrome may garbage-collect them and never fire onend */
+  LIVE=runs.map(function(p){ var u=makeUtt(p,slow); u.onstart=function(){ started=true; }; u.onend=u.onerror=function(){ if(--left<=0) fin(); }; return u; });
+  var started=false, t0=Date.now();
+  LIVE.forEach(function(u){ speechSynthesis.speak(u); });
+  /* backup for engines that drop onend: when nothing is speaking or queued any more, we are done */
+  var poll=setInterval(function(){
+    if(fired||tok!==sayTok){ clearInterval(poll); return; }
+    var busy=speechSynthesis.speaking||speechSynthesis.pending;
+    if(!busy&&(started||Date.now()-t0>1500)){ clearInterval(poll); fin(); }
+  },250);
+}
+function sayMarked(s,btn){
+  if(btn&&sayBtn===btn){ stopSay(); return; }
+  stopSay(); if(btn){ sayBtn=btn; btn.classList.add('on'); }
+  speakRuns(segs(s),function(){ if(btn&&sayBtn===btn){ btn.classList.remove('on'); sayBtn=null; } });
+}
+function sayEntry(k,slow){ var e=GL[k]; if(!e) return;
+  var text=e.say||(e.h||SHOWN[k]||k).replace(/\s*\(.*\)$/,'');
+  stopSay(); speakRuns([{lang:isPron(e)?e.t:'en',text:text,e:e,full:true}],null,slow); }
+
+/* ---------- popover ---------- */
+var LABEL={v:'Word 單字',p:'Phrase / idiom 片語 · 慣用語',c:'Culture / context 文化補充',g:'Grammar 文法'}; Object.keys(LANGS).forEach(function(l){ LABEL[l]=LANGS[l].tag; });
+var pop=null, popFor=null;
+function closePop(){ if(!pop) return; pop.classList.remove('show'); $('scrim').classList.remove('show'); if(popFor){ popFor.setAttribute('aria-expanded','false'); popFor=null; } }
+function openPop(el){
+  var k=el.getAttribute('data-k'), e=GL[k]; if(!e) return;
+  if(popFor===el){ closePop(); return; }
+  closePop();
+  var fr=isPron(e);
+  $('pop-tag').className='tag '+GCLASS[e.t]; $('pop-tag').textContent=LABEL[e.t]||'';
+  $('pop-h').textContent=head(k);
+  $('pop-ipa').innerHTML=fr?(e.native?'<span class="nat">'+esc(e.native)+'</span>':'')+'<span class="ipa">'+esc(e.ipa)+'</span><span class="resp">'+esc(e.resp)+'</span>':'';
+  $('pop-ipa').hidden=!fr;
+  $('pop-zh').textContent=e.zh||''; $('pop-d').textContent=e.d||'';
+  var x=fr?e.tip:e.x; $('pop-x').innerHTML=x?'<b>'+(fr?'發音提示':'白話說明')+'</b>'+esc(x):''; $('pop-x').hidden=!x;
+  $('pop-lvl').textContent=e.lvl?('CEFR '+e.lvl):''; $('pop-lvl').hidden=!e.lvl;
+  pop.setAttribute('data-k',k); pop.classList.add('show'); el.setAttribute('aria-expanded','true'); popFor=el;
+  var arr=$('pop-arrow');
+  if(window.matchMedia('(max-width:600px)').matches){ pop.style.left=''; pop.style.top=''; arr.style.display='none'; $('scrim').classList.add('show'); return; }
+  arr.style.display='block';
+  var r=el.getBoundingClientRect(), pw=pop.offsetWidth, ph=pop.offsetHeight, vw=document.documentElement.clientWidth, vh=window.innerHeight;
+  var left=Math.max(10,Math.min(r.left+r.width/2-pw/2,vw-pw-10)), top=r.bottom+12, below=true;
+  if(top+ph>vh-8&&r.top-12-ph>8){ top=r.top-ph-12; below=false; }
+  pop.style.left=left+'px'; pop.style.top=Math.max(8,top)+'px';
+  var ax=Math.max(12,Math.min(r.left+r.width/2-left-7,pw-26)); arr.style.left=ax+'px'; arr.style.top=below?'-7px':(ph-7)+'px';
+}
+
+/* ---------- drawing primitives (from the Paper Reader whiteboard) ---------- */
+var WB={b:0,k:0,playing:false,token:0,voiceOn:true,zhOn:lsGet('iqn-zh')==='1'};
+var NS='http://www.w3.org/2000/svg';
+var wbSvg=null, wbLayer=null, seed=1;
+function rnd(){ seed=(seed*16807)%2147483647; return (seed-1)/2147483646; }
+function jit(a){ return (rnd()-0.5)*2*a; }
+function mk(tag,attrs,parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); (parent||wbLayer).appendChild(e); return e; }
+var FONT='"Bradley Hand","Segoe Print","Chalkboard SE","Comic Sans MS","Kaiti TC","STKaiti","BiauKai","DFKai-SB","KaiTi","PingFang TC","Microsoft JhengHei",cursive';
+var Q=[], qRaf=0, qInstant=false, qRush=false;
+function enqueue(dur,f){ if(qInstant){ f(1); return; } Q.push({dur:dur,f:f}); f(0); }
+function runQueue(tok,onDone){
+  var i=0, t0=performance.now();
+  function frame(now){
+    if(tok!==WB.token) return;
+    while(i<Q.length){ var it=Q[i], t=qRush?1:Math.max(0,Math.min(1,(now-t0)*1.5/it.dur)); it.f(t);
+      if(t<1){ qRaf=requestAnimationFrame(frame); return; } i++; t0=now; }
+    Q=[]; onDone&&onDone();
+  }
+  qRaf=requestAnimationFrame(frame);
+}
+function strokePath(d,c,w,dur,dash){
+  var p=mk('path',{d:d,fill:'none',stroke:c||C.ink,'stroke-width':w||3,'stroke-linecap':'round','stroke-linejoin':'round'});
+  var L=p.getTotalLength?p.getTotalLength():500;
+  if(dash){ p.setAttribute('stroke-dasharray','10 9'); enqueue(dur||500,function(t){ p.style.opacity=t; }); return p; }
+  p.style.strokeDasharray=L+' '+L;
+  enqueue(dur||Math.min(900,250+L*1.2),function(t){ p.style.strokeDashoffset=L*(1-t); if(t>=1) p.style.strokeDasharray=''; });
+  return p;
+}
+function wline(x1,y1,x2,y2){ var mx=(x1+x2)/2+jit(2), my=(y1+y2)/2+jit(2);
+  return 'M'+(x1+jit(1.5))+' '+(y1+jit(1.5))+' Q'+mx+' '+my+' '+(x2+jit(1.5))+' '+(y2+jit(1.5)); }
+function wellipse(cx,cy,rx,ry){ var d='',n=26,a0=rnd()*6.28;
+  for(var i=0;i<=n+2;i++){ var a=a0+i/n*6.283, r=1+jit(0.04); d+=(i?'L':'M')+(cx+Math.cos(a)*rx*r).toFixed(1)+' '+(cy+Math.sin(a)*ry*r).toFixed(1); }
+  return d; }
+function OP_l(x1,y1,x2,y2,o){ strokePath(wline(x1,y1,x2,y2),o&&o.c,o&&o.w,null,o&&o.dash); }
+function OP_r(x,y,w,h,o){ var c=o&&o.c; strokePath(wline(x,y,x+w,y)+wline(x+w,y,x+w,y+h)+wline(x+w,y+h,x,y+h)+wline(x,y+h,x,y),c,2.5,900); }
+function OP_e(cx,cy,rx,ry,o){ strokePath(wellipse(cx,cy,rx,ry),o&&o.c,o&&o.w||3); }
+function OP_circ(cx,cy,rx,ry,o){ strokePath(wellipse(cx,cy,rx+6,ry+6),(o&&o.c)||C.rd,3.5,700); }
+function OP_a(x1,y1,x2,y2,o){ var c=(o&&o.c)||C.ink, mx=(x1+x2)/2-(y2-y1)*0.15, my=(y1+y2)/2+(x2-x1)*0.15;
+  strokePath('M'+x1+' '+y1+' Q'+mx+' '+my+' '+x2+' '+y2,c,3,450);
+  var ang=Math.atan2(y2-my,x2-mx), L=14;
+  strokePath('M'+(x2-L*Math.cos(ang-0.45))+' '+(y2-L*Math.sin(ang-0.45))+' L'+x2+' '+y2+' L'+(x2-L*Math.cos(ang+0.45))+' '+(y2-L*Math.sin(ang+0.45)),c,3,200); }
+function OP_t(x,y,str,o){ o=o||{}; var s=o.s||24;
+  var g=mk('g',{}), cp=mk('clipPath',{id:'cp'+(++seed%1e9)},g), r=mk('rect',{x:x-4,y:y-s*1.2,width:0,height:s*1.6},cp);
+  var t=mk('text',{x:x,y:y,'font-size':s,fill:o.c||C.ink,'font-family':FONT,'clip-path':'url(#'+cp.id+')'},g); t.textContent=str;
+  var w=0; try{ w=t.getBBox().width+10; }catch(e){ w=str.length*s; }
+  enqueue(Math.min(1300,350+str.length*45),function(k){ r.setAttribute('width',w*k); }); }
+function OP_title(str){ OP_t(36,62,str,{s:34,c:C.ink}); strokePath(wline(36,76,36+Math.min(860,str.length*30+20),78),C.or,4,500); }
+function OP_hl(x,y,w,h){ var r=mk('rect',{x:x-4,y:y,width:0,height:h,fill:'rgba(255,205,120,.6)',rx:4});
+  wbLayer.insertBefore(r,wbLayer.firstChild); enqueue(450,function(t){ r.setAttribute('width',(w+8)*t); }); }
+function OP_wipe(){ var old=Array.prototype.slice.call(wbLayer.childNodes);
+  enqueue(500,function(t){ old.forEach(function(n){ if(n.style) n.style.opacity=1-t; }); if(t>=1) old.forEach(function(n){ n.remove(); }); }); }
+function fillShape(d,fill,stroke){ var p=mk('path',{d:d,fill:fill,stroke:stroke||'none','stroke-width':2.5}); p.style.opacity=0; enqueue(300,function(t){ p.style.opacity=t; }); return p; }
+function doOp(op){
+  var k=op[0], a=op.slice(1);
+  if(k==='title') return OP_title(a[0]);
+  if(k==='t') return OP_t.apply(null,a);
+  if(k==='l') return OP_l.apply(null,a);
+  if(k==='r') return OP_r.apply(null,a);
+  if(k==='e') return OP_e.apply(null,a);
+  if(k==='a') return OP_a.apply(null,a);
+  if(k==='circ') return OP_circ.apply(null,a);
+  if(k==='hl') return OP_hl.apply(null,a);
+  if(k==='wipe') return OP_wipe();
+  if(ICON[k]) return ICON[k].apply(null,a);
+  if(CUSTOM[k]) return CUSTOM[k].apply(null,a);
+  if(window.console) console.warn('unknown op',k);
+}
+
+/* ---------- player ---------- */
+var wbTimers=[];
+function wbStopAll(){ qRush=false; WB.token++; cancelAnimationFrame(qRaf); Q=[]; wbTimers.forEach(clearTimeout); wbTimers=[]; stopSay(); }
+function drawUpTo(B,k,instantAll){
+  wbLayer.innerHTML=''; seed=1000+WB.b*97;
+  qInstant=true; for(var i=0;i<k;i++) B.steps[i].ops.forEach(doOp);
+  if(instantAll) B.steps[k].ops.forEach(doOp);
+  qInstant=false;
+}
+function wbCaption(B,st){
+  $('wbTitle').textContent=(WB.b+1)+'. '+B.t;
+  $('wbCap').innerHTML=markup(st.say);
+  $('wbZh').textContent=st.zh; $('wbZh').hidden=!WB.zhOn;
+  var dots=''; B.steps.forEach(function(s,i){ dots+='<span class="'+(i<WB.k?'done':i===WB.k?'cur':'')+'"></span>'; });
+  $('wbDots').innerHTML=dots;
+  var nb=$('wbNextB');
+  if(WB.k===B.steps.length-1&&WB.b<BOARDS.length-1){ nb.hidden=false; nb.textContent='Next: '+BOARDS[WB.b+1].t+' →'; } else nb.hidden=true;
+  $('wbCapWrap').scrollTop=0;
+}
+function wbRender(){
+  var B=BOARDS[WB.b], st=B.steps[WB.k];
+  wbStopAll(); var tok=WB.token;
+  drawUpTo(B,WB.k,false); wbCaption(B,st); wbPlayBtn();
+  var drawn=false, spoke=!WB.playing;
+  function maybe(){ if(drawn&&spoke&&WB.playing&&tok===WB.token){
+      wbTimers.push(setTimeout(function(){ if(tok!==WB.token) return;
+        if(WB.k<B.steps.length-1){ WB.k++; wbRender(); } else { WB.playing=false; wbPlayBtn(); } },700)); } }
+  st.ops.forEach(doOp);
+  runQueue(tok,function(){ drawn=true; qRush=false; maybe(); });
+  if(WB.playing){
+    if(TTS&&WB.voiceOn) speakRuns(segs(st.say),function(ok){ if(tok===WB.token){ spoke=true; if(!drawn) qRush=true; maybe(); } });
+    else wbTimers.push(setTimeout(function(){ spoke=true; if(!drawn) qRush=true; maybe(); },st.say.length*60+1500));
+  }
+}
+/* pause: stop sound and timers, show the current step fully drawn */
+function wbPause(){ if(!WB.playing) return; WB.playing=false; wbStopAll(); var B=BOARDS[WB.b]; drawUpTo(B,WB.k,true); wbPlayBtn(); }
+function wbPlayBtn(){ var b=$('wbPlay'); b.innerHTML=WB.playing?'&#10074;&#10074;':'&#9654;'; b.setAttribute('aria-label',WB.playing?'Pause':'Play'); }
+function wbOpen(b){ stopSay(); closePop(); WB.b=b||0; WB.k=0; WB.playing=true; $('wb').hidden=false; document.body.classList.add('wbopen'); $('wbList').hidden=true; wbRender(); }
+function wbClose(){ wbStopAll(); WB.playing=false; closePop(); $('wb').hidden=true; document.body.classList.remove('wbopen'); }
+function wbList(){ var L=$('wbList');
+  L.innerHTML=BOARDS.map(function(B,i){ return '<button type="button" data-b="'+i+'"'+(i===WB.b?' class="on"':'')+'><b>'+(i+1)+'</b> '+esc(B.t)+'<small>'+esc(B.zh)+'</small></button>'; }).join('');
+  L.hidden=!L.hidden;
+  Array.prototype.forEach.call(L.querySelectorAll('button'),function(btn){ btn.onclick=function(){ L.hidden=true; WB.b=+btn.getAttribute('data-b'); WB.k=0; WB.playing=true; wbRender(); }; }); }
+
+/* ---------- page ---------- */
+var GCLASS={v:'v',p:'p',g:'c',c:'f',fr:'fr',es:'es',ko:'ko',zh:'zhn'};
+var SAYTEXT={};
+function wbLinks(w){ return [].concat(w).map(function(b){ return '<button type="button" class="wblink" data-open="'+b+'">▶ Whiteboard '+(b+1)+'</button>'; }).join(''); }
+function buildPage(){
+  BOARDS.forEach(function(B){ B.steps.forEach(function(st){ collectShown(st.say); }); });
+  ARTICLE.forEach(function(S){ S.paras.forEach(function(p){ collectShown(p.en); }); });
+  QGROUPS.forEach(function(G){ G.qs.forEach(function(q){ collectShown(q.en); }); });
+  var h='';
+  ARTICLE.forEach(function(S,si){
+    SAYTEXT['s'+si]=S.paras.map(function(p){ return p.en; }).join(' ');
+    if(S.h) h+='<h2><span class="h2t">'+esc(S.h)+(S.hz?'<span class="zhp zh2" hidden>'+esc(S.hz)+'</span>':'')+'</span><button type="button" class="say" data-say="s'+si+'" aria-label="Listen to this section">🔊</button></h2>';
+    S.paras.forEach(function(p,pi){ h+='<p'+(si===0&&pi===0?' class="lead"':'')+'>'+markup(p.en)+'</p><p class="zhp" hidden>'+esc(p.zh)+'</p>'; });
+    h+='<div class="wbrow">'+wbLinks(S.wb)+'</div>';
+    if(si===PULL.after) h+='<div class="pull">'+esc(PULL.en)+(PULL.zh?'<span class="zhp zpull" hidden>'+esc(PULL.zh)+'</span>':'')+'</div>';
+  });
+  $('article').innerHTML=h;
+  var mins=0; BOARDS.forEach(function(B){ B.steps.forEach(function(s){ mins+=s.say.length; }); });
+  $('wbCount').textContent=BOARDS.length+' boards drawn step by step, with narration · about '+Math.round(mins/850+BOARDS.length*0.4)+' min · 白板課';
+  $('boardList').innerHTML=BOARDS.map(function(B,i){ return '<li><button type="button" data-open="'+i+'">'+esc(B.t)+'</button><small>'+esc(B.zh)+'</small></li>'; }).join('');
+  var n=0;
+  $('disc').innerHTML='<div class="wbrow" style="margin:0 0 6px">'+wbLinks(BOARDS.length-1)+'</div>'+QGROUPS.map(function(G,gi){ return (G.h?'<div class="qgroup">'+esc(G.h)+' <span class="zh">'+esc(G.zh)+'</span></div>':'')+'<ol class="q" start="'+(n+1)+'">'+
+    G.qs.map(function(q,qi){ n++; SAYTEXT['q'+gi+'-'+qi]=q.en; return '<li><button type="button" class="say mini" data-say="q'+gi+'-'+qi+'" aria-label="Listen">🔊</button>'+markup(q.en)+'<span class="zhp" hidden>'+esc(q.zh)+'</span></li>'; }).join('')+'</ol>'; }).join('');
+  /* word bank: only terms that appear on the page or the boards, in order of first appearance */
+  var order=[], seen={};
+  function scan(s){ s.replace(MARK,function(m,a,b){ var k=keyOf(a,b); if(GL[k]&&!seen[k]){ seen[k]=1; order.push(k); } return m; }); }
+  ARTICLE.forEach(function(S){ S.paras.forEach(function(p){ scan(p.en); }); }); BOARDS.forEach(function(B){ B.steps.forEach(function(s){ scan(s.say); }); }); QGROUPS.forEach(function(G){ G.qs.forEach(function(q){ scan(q.en); }); });
+  var GROUPS=Object.keys(LANGS).map(function(l){ return [l,GCLASS[l],LANGS[l].bank,LANGS[l].bankzh]; }).concat([['v','v','Words','單字'],['p','p','Phrases & grammar','片語 · 文法'],['c','f','Culture & context','文化補充']]);
+  $('wordbank').innerHTML=GROUPS.filter(function(G){ return order.some(function(k){ var t=GL[k].t; return G[0]==='p'?(t==='p'||t==='g'):t===G[0]; }); }).map(function(G){
+    var items=order.filter(function(k){ var t=GL[k].t; return G[0]==='p'?(t==='p'||t==='g'):t===G[0]; });
+    var cards=items.map(function(k){ var e=GL[k];
+      if(isPron(e)) return '<div class="wb fr"><div class="pr-btns"><button type="button" class="pbtn" data-pk="'+esc(k)+'" aria-label="Say it">🔊</button></div><div><span class="t">'+esc(head(k))+'</span> · <span class="z">'+esc(e.zh)+'</span><span class="pr">'+(e.native?'<span class="nat">'+esc(e.native)+'</span> ':'')+'<span class="ipa">'+esc(e.ipa)+'</span> <span class="resp">'+esc(e.resp)+'</span></span><span class="x">'+esc(e.d)+'</span><span class="tip">'+esc(e.tip)+'</span></div></div>';
+      return '<div class="wb"><span class="t">'+esc(head(k))+'</span>'+(e.lvl?' <span class="lv">'+e.lvl+'</span>':'')+' · <span class="z">'+esc(e.zh)+'</span><span class="x">'+esc(e.d)+'</span></div>'; }).join('');
+    return '<div class="wbhead '+G[1]+'"><span class="pip"></span>'+G[2]+' <span class="zh">'+G[3]+'</span><span class="n">'+items.length+'</span></div><div class="wordbank'+(LANGS[G[0]]?' frbank':'')+'">'+cards+'</div>'; }).join('');
+}
+function textFor(id){ return SAYTEXT[id]||''; }
+function setPageZh(on){ Array.prototype.forEach.call(document.querySelectorAll('.zhp'),function(p){ p.hidden=!on; }); var b=$('zhAll'); b.classList.toggle('on',on); b.textContent=on?'Hide 中譯':'Show 中譯'; lsSet('iqn-pzh',on?'1':'0'); }
+
+
+/* Glossary. Types: v word · p phrase · g grammar · c culture/context · ko Korean name/word · zh Mandarin name.
+   ko/zh entries: native = what the Korean/Mandarin voice reads; ipa + resp + tip shown in the card;
+   en = English-voice fallback when the device has no voice for that language;
+   forms = other shown spellings -> what the voice reads. */
+var GL={
+/* ---------- Korean names & words ---------- */
+'lee soo-man':{t:'ko',h:'Lee Soo-man',native:'이수만',forms:{'Lee':'이'},zh:'李秀滿',d:'Founder of SM Entertainment, one of South Korea\'s biggest music agencies, and the man who made BoA a star. In 2026 he launched two new groups, A2O LITE and A2O SOUL, through his company A2O Entertainment.',ipa:'/i.su.man/',resp:'ee soo-MAHN',tip:'韓文的姓「이」讀「伊」，不是英文的 Lee（里）。三個音節平平地唸，韓語沒有英文那種重音。',en:'ee soo mahn'},
+'melon':{t:'ko',h:'Melon',native:'멜론',zh:'韓國最大的音樂串流平台',d:'South Korea\'s biggest music-streaming service. Its Top 100 chart is the one Korean fans watch most closely.',ipa:'/mel.lon/',resp:'mel-LOHN',tip:'韓文寫成 멜론，兩個 l 連在一起，聽起來像「メロン」加一點捲舌。',en:'mel lohn'},
+'boa':{t:'ko',h:'BoA',native:'보아',zh:'寶兒',d:'Korean singer discovered at 11 and launched by Lee Soo-man at 13, in 2000. Her 2002 album "Listen to My Heart" was the first by a Korean artist to debut at No. 1 on Japan\'s main album chart.',ipa:'/po.a/',resp:'BOH-ah',tip:'兩個音節：「波-阿」。英文常唸成 "boa"（蟒蛇），韓文裡是 보아。',en:'boh ah'},
+'taemin':{t:'ko',h:'Taemin',native:'태민',zh:'泰民',d:'Singer and dancer who debuted with the boy group SHINee in 2008, at 14.',ipa:'/tʰɛ.min/',resp:'TEH-min',tip:'태 的 ae 讀「ㄝ」，不是英文的 "tay"。',en:'teh min'},
+'jang won-young':{t:'ko',h:'Jang Won-young',native:'장원영',zh:'張員瑛',d:'Singer who debuted with IZ*ONE in 2018 at 14 and later became the center of IVE.',ipa:'/tɕaŋ.wʌn.jʌŋ/',resp:'jahng wuhn-YUHNG',tip:'원、영 的 eo 是嘴巴張開的「ㄛ」，介於「ㄛ」和「ㄜ」之間，不是英文的 "young"。',en:'jahng wuhn yuhng'},
+'lim seo-won':{t:'ko',h:'Lim Seo-won',native:'임서원',zh:'韓國女團 UNIS 成員',d:'Youngest member of the girl group UNIS, formed on a TV audition show. She was 13 when UNIS debuted in March 2024.',ipa:'/im.sʌ.wʌn/',resp:'eem suh-WUHN',tip:'林 這個姓在韓文裡是 임，開頭不發 L 的音，讀「伊姆」。',en:'eem suh wuhn'},
+'jung duk-hyun':{t:'ko',h:'Jung Duk-hyun',native:'정덕현',zh:'韓國流行文化評論家',d:'A Korean culture critic who writes about TV and pop music.',ipa:'/tɕʌŋ.dʌk.çʌn/',resp:'juhng duhk-HYUHN',tip:'정 的 eo 讀「ㄛ／ㄜ」之間；현 讀「hyon」，h 很輕。',en:'juhng duhk hyuhn'},
+'kim jeong-seop':{t:'ko',h:'Kim Jeong-seop',native:'김정섭',zh:'韓國誠信女子大學文化產業研究所教授',d:'Professor at Sungshin Women\'s University in Seoul. In 2026 he published a study of every idol group that debuted from 1996 to 2025.',ipa:'/kim.dʑʌŋ.sʌp/',resp:'kim juhng-SUHP',tip:'섭 結尾的 p 只閉嘴、不送氣，像台語「十」的收尾。',en:'kim juhng suhp'},
+'kim doo-na':{t:'ko',h:'Kim Doo-na',native:'김두나',zh:'韓國律師（公益律師團體「希望與法」）',d:'A lawyer with the public-interest group Hope and Law who studies the rights of young performers.',ipa:'/kim.du.na/',resp:'kim doo-NAH',tip:'三個音節都很短，平平地唸。',en:'kim doo nah'},
+'samchon fan':{t:'ko',h:'samchon fan',native:'삼촌팬',zh:'大叔粉絲',d:'"Uncle fan": Korean slang for a grown man who is a fan of a girl group. Samchon (삼촌) means "uncle."',ipa:'/sam.tɕʰon.pʰɛn/',resp:'SAHM-chon pen',tip:'삼촌 是「叔叔」，팬 是英文 fan 的韓文寫法，韓國人唸成「pen」。',en:'sahm chon pen'},
+/* ---------- Mandarin names ---------- */
+'tzuyu':{t:'zh',h:'Tzuyu',native:'周子瑜',forms:{'Tzuyu':'子瑜'},zh:'周子瑜',d:'Singer from Tainan, Taiwan. Scouted at 13, she trained in Seoul and debuted with the girl group TWICE in 2015, at 16. In 2023 she passed Jay Chou as the most-followed Taiwanese star on social media.',ipa:'/tsɨ˨˩˦ y˧˥/',resp:'dzuh-YOO',tip:'Tzuyu 是韓國公司用的拼法（漢語拼音是 Zǐyú）。英文裡多半唸成 "chew-yoo"，華語就是「子瑜」。',en:'dzuh yoo'},
+/* ---------- culture & context ---------- */
+'a2o lite':{t:'c',h:'A2O LITE',zh:'A2O LITE（李秀滿新女團）',d:'A nine-member girl group from A2O Entertainment, launched October 12–13, 2026. At debut its members were 13 to 17, from Korea, China, Japan, Thailand and the United States.'},
+'k-pop':{t:'c',h:'K-pop',zh:'韓國流行音樂',d:'Korean pop music, especially the idol groups trained and managed by entertainment agencies.'},
+'idol':{t:'c',zh:'偶像（韓國流行樂）',d:'In K-pop, a singer trained by an agency to sing, dance, act and appear on TV, usually as part of a group.'},
+'g-dragon':{t:'c',h:'G-Dragon',zh:'權志龍',d:'Leader of the boy group Big Bang, which debuted in 2006, and a solo star. He became a trainee at 8. His 2025 song "Home Sweet Home" was No. 2 on the Melon chart for the year.'},
+'twice':{t:'c',h:'TWICE',zh:'韓國女團 TWICE',d:'A JYP Entertainment girl group formed on a TV audition show in 2015. Its members come from South Korea, Japan and Taiwan.'},
+'kpop demon hunters':{t:'c',h:'KPop Demon Hunters',zh:'《KPop獵魔女團》',d:'A 2025 Netflix animated film about a K-pop girl group that secretly fights demons. Its song "Golden" became a worldwide hit.'},
+'aladin':{t:'c',h:'Aladin',zh:'阿拉丁書店（韓國網路書店）',d:'A big South Korean online bookstore that also sells albums and shares data about who buys them.'},
+'popular culture and arts industry development act':{t:'c',h:'Popular Culture and Arts Industry Development Act',zh:'《大眾文化藝術產業發展法》',d:'The South Korean law that sets working-hour limits and other protections for entertainers under 19.'},
+'labor standards act':{t:'c',h:'Labor Standards Act',zh:'《勞動基準法》',d:'Taiwan\'s main labor law. Articles 44 to 48 set special rules for young workers.'},
+'outcry':{t:'v',zh:'公憤、強烈抗議',d:'A strong public protest against something people think is wrong.',lvl:'C1'},
+/* ---------- words ---------- */
+'showcase':{t:'v',zh:'（新歌／出道）發表會',d:'An event where a new group or album is shown to the press and fans for the first time.',lvl:'B2'},
+'debut':{t:'v',zh:'出道',d:'A performer\'s first public performance or release. In K-pop, "debut" is also a verb: She debuted at 14.',lvl:'B1'},
+'trainee':{t:'v',zh:'練習生',d:'In K-pop, a young person who lives and trains at an agency, hoping to be chosen for a group.',lvl:'B2'},
+'crop top':{t:'v',zh:'短版上衣（露腰）',d:'A short top that shows part of the stomach.',lvl:'B2'},
+'inappropriate':{t:'v',zh:'不恰當的',d:'Not suitable for a person, an age or a situation.',lvl:'B2'},
+'agency':{t:'v',zh:'經紀公司',d:'A company that finds, trains and manages performers.',lvl:'B1'},
+'spotted':{t:'v',zh:'發現、看中',d:'Noticed someone or something, often by chance. "A scout spotted her in Tainan."',lvl:'B2'},
+'talent scouts':{t:'v',zh:'星探',d:'People whose job is to find young people with talent.',lvl:'B2'},
+'peak':{t:'v',zh:'巔峰',d:'The time when someone is at their best or most successful.',lvl:'B2'},
+'went viral':{t:'p',zh:'在網路上爆紅',d:'Spread very fast online, shared by huge numbers of people.',lvl:'B2'},
+'irregular':{t:'v',zh:'不規律的',d:'Not happening at the normal, regular times.',lvl:'B2'},
+'isolation':{t:'v',zh:'孤立、與人隔絕',d:'Being alone and cut off from other people.',lvl:'C1'},
+'taboo':{t:'v',zh:'禁忌',d:'Something people avoid doing or talking about because it is seen as wrong.',lvl:'C1'},
+'census':{t:'v',zh:'普查',d:'A count of a whole group of people, with questions about who they are.',lvl:'C1'},
+'formula':{t:'v',zh:'公式、固定模式',d:'A fixed way of doing something that people expect to work.',lvl:'B2'},
+'shakier':{t:'v',zh:'比較站不住腳',d:'Less certain or less true. "Shaky" means not firm.',lvl:'C1'},
+'loyal':{t:'v',zh:'忠實的',d:'Staying with someone or something for a long time.',lvl:'B2'},
+'streaming':{t:'v',zh:'串流（線上收聽）',d:'Listening to music over the internet instead of buying a copy.',lvl:'B1'},
+'consent':{t:'v',zh:'同意',d:'Permission. "With a parent\'s consent" means a parent agrees.',lvl:'C1'},
+'penalty':{t:'v',zh:'罰則、處罰',d:'A punishment, often a fine, for breaking a rule.',lvl:'B2'},
+'employees':{t:'v',zh:'受僱者、員工',d:'People who work for a company and are paid by it. The law protects employees in special ways.',lvl:'B1'},
+'license':{t:'v',zh:'許可證、執照',d:'An official paper that says you are allowed to do something.',lvl:'B2'},
+'outnumber':{t:'v',zh:'人數多於',d:'To be more in number than another group.',lvl:'C1'},
+'minors':{t:'v',zh:'未成年人',d:'People under the legal adult age (in South Korea and Taiwan, under 19 and 18).',lvl:'B2'},
+'backlash':{t:'v',zh:'強烈反彈',d:'A strong negative reaction from many people.',lvl:'C1'},
+/* ---------- phrases ---------- */
+'lost sleep over':{t:'p',zh:'為……煩惱到睡不著',d:'"I haven\'t lost sleep over it" means "I haven\'t worried much about it."',lvl:'B2'},
+'buys them more of that time':{t:'p',zh:'替他們多爭取一些時間',d:'"Buy time" means to get more time. Here: starting young gives idols more years at their best.',lvl:'B2'},
+'on paper':{t:'p',zh:'書面上、理論上',d:'According to the rules or the plan, though real life may be different.',lvl:'B2'},
+'adult tastes':{t:'p',zh:'成人的口味、喜好',d:'What grown-ups like or want to see.',lvl:'B2'},
+/* ---------- grammar ---------- */
+'too young to':{t:'g',zh:'too + 形容詞 + to + 動詞：太……而不能……',d:'"Too young to debut" means so young that debuting is not right. Compare: "old enough to debut."',lvl:'B1'},
+'the younger the debut, the more years':{t:'g',zh:'the + 比較級……，the + 比較級……：越……就越……',d:'Two comparatives linked: when one thing grows, the other grows too. "The earlier you start, the longer you can stay."',lvl:'B2'},
+'used to':{t:'g',zh:'used to + 動詞：過去常常、以前會',d:'Something that was true in the past but may not be now. "Agencies used to pick trainees at 10 to 12."',lvl:'B1'}
+};
+var NO_AUTO={'melon':1};
+var VOICE_SAMPLE={ko:'lee soo-man',zh:'tzuyu'};
+var RATE_SAMPLE='This is how fast I will read. Our story starts with [[Lee Soo-man]] in Seoul.';
+/* how the English voice should say some group names */
+var SAY_FIX=[[/IZ\*ONE/g,'Izone'],[/\bIVE\b/g,"I've"],[/\bSTAYC\b/g,'Stay C'],[/fromis_9/g,'fromis nine'],[/NI-KI/g,'Niki'],[/\bEJAE\b/g,'Ee-jay'],[/\bA2O\b/g,'A two O']];
+
+/* Article text (Nine Words layout). It opens on one stage, widens to the industry, the fans and the law,
+   then comes back to the stage. wb = whiteboard board index (or list). */
+var ARTICLE=[
+ {h:'',hz:'',wb:0,paras:[
+  {en:'The lights hit the stage at KINTEX, a giant exhibition hall outside Seoul, and nine girls snap into their first pose. It is Monday, October 12, 2026: the [[showcase]] for a new [[K-pop]] girl group, [[A2O LITE]]. The next day their first single, "Neon," comes out. Twenty-nine hours later it is No. 1 on [[Melon]], South Korea\'s biggest music-streaming chart. Three of the nine singers were born in 2013. They are 13 — the age of an eighth grader in Taiwan.',
+   zh:'燈光打上舞台。這裡是首爾近郊的大型展覽館 KINTEX，九個女孩擺出第一個定格動作。這天是 2026 年 10 月 12 日星期一，新 K-pop 女團 A2O LITE 的出道發表會。隔天，她們的第一首單曲〈Neon〉推出，29 個小時後登上韓國最大的音樂串流排行榜 Melon 第一名。九名成員裡，有三人是 2013 年出生的。她們 13 歲，在台灣是國二生的年紀。'},
+  {en:'The cheers did not last long, and the [[backlash]] came fast. Within a week, photos of a 13-year-old member in a [[crop top]] and short shorts were all over Korean websites, and many people called the album cover [[inappropriate]]. The group was created by [[Lee Soo-man]], the man who built SM Entertainment, one of the biggest music agencies in Korea. At a forum in Seoul on October 21, he spoke about the worries. "I will handle it well," he said. Then he added: "I haven\'t [[lost sleep over]] it yet."',
+   zh:'歡呼沒有持續太久，反彈來得很快。不到一週，一名 13 歲成員穿著短版上衣和短褲的照片傳遍韓國網站，很多人也批評專輯封面不恰當。這個團體由李秀滿打造，他是韓國最大經紀公司之一 SM 娛樂的創辦人。10 月 21 日在首爾的一場論壇上，他談到外界的擔憂。「我會處理好的，」他說。接著又補了一句：「我還沒有為這件事失眠。」'},
+  {en:'So how young is [[too young to]] be an [[idol]]? Are girls pushed onto the stage younger than boys? And who is really watching them? The numbers do not always give the answers people expect.',
+   zh:'那麼，幾歲當偶像才算太小？女孩真的比男孩更早被推上舞台嗎？到底是誰在看她們？數字給的答案，不一定是大家以為的那樣。'}
+ ]},
+ {h:'Thirteen is not new',hz:'十三歲並不新鮮',wb:[1,2],paras:[
+  {en:'Lee Soo-man has done this before. In the late 1990s, he [[spotted]] an 11-year-old girl who had come along to her brother\'s audition. Two years later, at 13, she made her [[debut]] as [[BoA]]. In 2002 she became the first Korean singer to reach No. 1 on Japan\'s main album chart, and her story became a model for the whole industry.',
+   zh:'李秀滿不是第一次這樣做。1990 年代末，他看中一個陪哥哥去試鏡的 11 歲女孩。兩年後，她 13 歲，以「寶兒」之名出道。2002 年，她成為第一位登上日本主要專輯排行榜冠軍的韓國歌手，她的故事也成了整個產業的範本。'},
+  {en:'In an old video that [[went viral]] again this month, Lee explains his thinking. Debut between 13 and 15, he says, and you reach your [[peak]] at 16 to 18. Agencies [[used to]] pick trainees at 10 to 12. "We thought even 9- or 7-year-olds were fine."',
+   zh:'這個月，一段舊影片又在網路上瘋傳。影片裡，李秀滿說明他的想法：13 到 15 歲出道，16 到 18 歲就能達到巔峰。經紀公司以前會挑 10 到 12 歲的練習生。「我們當時覺得，就算 9 歲、7 歲也沒關係。」'},
+  {en:'Many stars followed the same path. [[Taemin]] of SHINee and HyunA of Wonder Girls debuted at 14. So did [[Jang Won-young]] of IZ*ONE, NI-KI of ENHYPEN and Chiquita of BABYMONSTER. In 2024, [[Lim Seo-won]] of UNIS was 13. Even the most famous names started early. [[G-Dragon]] of Big Bang became a [[trainee]] at 8 and debuted at 18. Jennie of Blackpink started training at 14 and debuted at 20.',
+   zh:'許多明星都走過同一條路。SHINee 的泰民、Wonder Girls 的泫雅都在 14 歲出道，IZ*ONE 的張員瑛、ENHYPEN 的 NI-KI 和 BABYMONSTER 的 Chiquita 也是。2024 年，UNIS 的 Lim Seo-won 出道時只有 13 歲。就連最有名的人也很早起步：BIGBANG 的權志龍 8 歲就當練習生，18 歲出道；BLACKPINK 的 Jennie 14 歲開始受訓，20 歲出道。'},
+  {en:'Taiwan has its own story. In 2012, [[talent scouts]] spotted a 13-year-old girl at a performing-arts school in Tainan. She moved to Seoul to train, and three years later she debuted with [[TWICE]] at 16. In 2023, [[Tzuyu]] passed Jay Chou as the most-followed Taiwanese star on social media. Why start so young? Culture critic [[Jung Duk-hyun]] says an idol\'s best years are short, and debuting early "[[buys them more of that time]]."',
+   zh:'台灣也有自己的故事。2012 年，星探在台南一間表演藝術學校發現一個 13 歲的女孩。她搬到首爾受訓，三年後以 16 歲之齡隨 TWICE 出道。2023 年，周子瑜超越周杰倫，成為社群媒體上追蹤人數最多的台灣明星。為什麼要這麼早開始？文化評論家 Jung Duk-hyun 說，偶像的黃金期很短，早一點出道，「能替他們多爭取一些時間」。'}
+ ]},
+ {h:'Inside the practice room',hz:'練習室裡',wb:3,paras:[
+  {en:'Before the stage comes the practice room. South Korea\'s culture ministry counted 963 trainees at entertainment agencies in 2024, down from 1,895 in 2020. At one big [[agency]], the day starts at 9 a.m. and often ends around 10 p.m.',
+   zh:'上台之前，先是練習室。韓國文化部統計，2024 年各經紀公司共有 963 名練習生，比 2020 年的 1,895 人少了將近一半。在一家大型經紀公司，一天從早上 9 點開始，常常到晚上 10 點左右才結束。'},
+  {en:'On September 30, a children\'s rights group told lawmakers what it had heard from 16 former trainees and idols. On average, they had started training at 15.9. They described strict diets, fainting, [[isolation]], and trouble keeping up at school. In one study, 7 or 8 out of 10 teenage girl trainees had [[irregular]] periods. "Because they are young," one trainee said, "they do not fully understand how serious it is when their period stops."',
+   zh:'9 月 30 日，一個兒少人權團體在國會論壇上，報告他們訪問 16 名前練習生和偶像的結果。這些人平均 15.9 歲開始受訓。他們描述了嚴格的節食、昏倒、孤立，以及跟不上學校課業。一份研究發現，每 10 名青少女練習生中，有 7 到 8 人月經不規律。「因為她們年紀小，」一名練習生說，「不完全明白月經停了有多嚴重。」'},
+  {en:'Many never make it. About one in three trainees quits. "Once they pass 20," an industry insider told The Korea Times, "many start feeling they are considered too old." Some find another road. EJAE joined SM Entertainment at 11, trained for more than ten years and never debuted. In 2025 she co-wrote "Golden" for the animated film [[KPop Demon Hunters]] and sang it as the voice of its heroine. The song went to No. 1 in the United States and Britain, and in February 2026 it won a Grammy.',
+   zh:'很多人始終沒能出道。大約每三名練習生就有一人放棄。「一過 20 歲，」一位業界人士告訴《韓國時報》，「很多人就開始覺得自己被當成太老了。」也有人走出另一條路。EJAE 11 歲進入 SM 娛樂，當了十多年練習生，始終沒有出道。2025 年，她為動畫電影《KPop獵魔女團》共同創作〈Golden〉，並為女主角獻聲演唱。這首歌登上美國和英國排行榜冠軍，2026 年 2 月還拿下葛萊美獎。'}
+ ]},
+ {h:'Are girls younger than boys?',hz:'女孩比男孩小嗎？',wb:[4,5],paras:[
+  {en:'It is easy to assume that girls are pushed onto the stage younger than boys. The numbers say: not really. We took a list of 77 well-known groups that debuted between 2008 and 2023, compiled by the fan site Koreaboo, and compared each group\'s average age at debut. Girl groups averaged 18.5. Boy groups averaged 18.7. The youngest group on the list was a boy group, NCT DREAM, at 15.6.',
+   zh:'很容易以為女孩比男孩更早被推上舞台。數字的答案是：其實沒有。我們拿粉絲網站 Koreaboo 整理的 77 個知名團體（2008 到 2023 年出道），比較每個團體出道時的平均年齡。女團平均 18.5 歲，男團平均 18.7 歲。名單上最年輕的團體反而是男團 NCT DREAM，平均 15.6 歲。'},
+  {en:'Lee Soo-man launched a boy group, A2O SOUL, on the same day as A2O LITE. Its 15 members are 14 to 19, according to fan profile sites, with an average age of about 16. The girls average about 15, so they are a little younger, but the gap is small. Trainee numbers are close too: girls slightly [[outnumber]] boys, but not by much.',
+   zh:'李秀滿在 A2O LITE 出道同一天，也推出了男團 A2O SOUL。根據粉絲整理的成員資料，15 名成員年齡在 14 到 19 歲之間，平均約 16 歲。女團成員平均約 15 歲，稍微年輕一點，但差距不大。練習生人數也很接近：女生比男生多一些，但沒多多少。'},
+  {en:'So the age gap is small. The difference is in how the children are presented. The outfit complaints were about the girls. In 2025, a TV audition show called Under 15 put 59 girls aged 15 and under in heavy makeup and posted their photos with bar codes, which critics said made them look like products. After a public [[outcry]], it was canceled three days before its first episode. Jung Duk-hyun puts it this way: starting young is no longer [[taboo]], but the trouble begins when children are shaped to fit [[adult tastes]].',
+   zh:'所以年齡差距不大，差別在於孩子被呈現的方式。這次被批評的服裝都是女孩的。2025 年，一個叫《Under 15》的選秀節目讓 59 名 15 歲以下的女孩畫上濃妝，還在她們的照片上加了條碼，批評者說這讓她們看起來像商品。在一片撻伐聲中，節目在首播前三天停播。Jung Duk-hyun 這樣說：年紀小就出道已經不是禁忌，問題出在把孩子塑造成符合成人口味的樣子。'}
+ ]},
+ {h:'Who is watching?',hz:'誰在看？',wb:[6,7],paras:[
+  {en:'Many people believe an old [[formula]]: boy groups for girls, girl groups for men. The first half is clearly true. In a 2022 online [[census]] of BTS fans, more than 96 percent of the 562,000 people who answered were female. Boy groups also sell the albums. Of the ten best-selling albums in South Korea in 2025, nine were by boy groups. The top seller, Stray Kids, sold almost 3.4 million copies of one album.',
+   zh:'很多人相信一個老公式：男團給女生看，女團給男生看。前半句顯然成立。2022 年一份 BTS 粉絲的網路普查中，56 萬多名填答者有超過 96% 是女性。專輯也是男團在賣：2025 年韓國最暢銷的十張專輯，有九張是男團的。冠軍 Stray Kids 的一張專輯賣出將近 340 萬張。'},
+  {en:'The second half is [[shakier]]. When the Korean online bookstore [[Aladin]] looked at who bought girl-group albums in 2022, women were the majority for 17 of 27 groups: 77 percent for STAYC and 59 percent for Blackpink. About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of listeners to the NewJeans song "Attention" were women. In 2022 a Seoul newspaper reported that the old rule no longer held. Many girl groups now sell an image young women want to copy.',
+   zh:'後半句就沒那麼站得住腳了。韓國網路書店阿拉丁 2022 年分析女團專輯的買家，27 個女團中有 17 個以女性買家為主：STAYC 77%，BLACKPINK 59%。NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，NewJeans〈Attention〉有 65% 的聽眾是女性。首爾一家報紙在 2022 年報導，這條老規則已經不成立了。許多女團現在賣的，是年輕女生想模仿的形象。'},
+  {en:'Male fans have not disappeared. Some groups still sell mostly to men: 89 percent of Brave Girls album buyers were men, and 77 percent of fromis_9 buyers. Koreans even have a word for grown men who follow girl groups: [[samchon fan]], or "uncle fan." So the audience is mixed, and it changes from group to group. That leaves a fair question: when a 13-year-old wears a crop top on stage, whose taste is it for?',
+   zh:'男粉並沒有消失。有些團體的買家仍以男性為主：Brave Girls 的專輯買家 89% 是男性，fromis_9 是 77%。韓國甚至有個詞專門形容追女團的成年男性：「삼촌팬」，也就是「大叔粉」。所以觀眾是混合的，而且每個團體都不一樣。這就留下一個值得問的問題：一個 13 歲的孩子穿短版上衣上台，是為了迎合誰的口味？'}
+ ]},
+ {h:'Two clocks',hz:'兩個時鐘',wb:8,paras:[
+  {en:'Boys and girls may debut at the same age, but their careers do not run on the same clock. [[Kim Jeong-seop]], a professor at Sungshin Women\'s University in Seoul, studied all 1,182 idol groups that debuted from 1996 to 2025, about half girls and half boys. On average, 39 new groups appeared every year. Boy groups stayed active for 5.1 years. Girl groups lasted only 3.1.',
+   zh:'男孩和女孩也許在同樣的年紀出道，但他們的職業生涯走的是不同的時鐘。首爾誠信女子大學教授 Kim Jeong-seop 研究了 1996 到 2025 年出道的全部 1,182 個偶像團體，男女團大約各半。平均每年有 39 個新團出道。男團平均活動 5.1 年，女團只有 3.1 年。'},
+  {en:'Why? Boy groups, Kim says, build [[loyal]] fans who buy albums, concert tickets and goods again and again. Girl groups depend more on general popularity, [[streaming]] and events. That is where they shine. On the Melon chart for the whole of 2025, aespa came third and IVE eighth, and Rosé of Blackpink was seventh with Bruno Mars on "APT." "Golden," the song EJAE sang, was sixth. Number two was a name you may know: G-Dragon.',
+   zh:'為什麼？Kim 教授說，男團會培養出忠實的粉絲，一再購買專輯、演唱會門票和周邊商品。女團則比較依賴大眾人氣、串流和活動。而這正是女團發光的地方。在 Melon 的 2025 年度榜上，aespa 第三、IVE 第八，BLACKPINK 的 Rosé 和火星人布魯諾合唱的〈APT.〉第七，EJAE 演唱的〈Golden〉第六。第二名是你可能聽過的名字：權志龍。'},
+  {en:'But only a few groups ever make it big. Just 19 of the 1,182 groups sold a million copies of a single album. A shorter clock may also help explain why agencies like to start early: [[the younger the debut, the more years]] an idol has before people call her "too old."',
+   zh:'但真正大紅的團體很少。1,182 個團體中，只有 19 個曾經單張專輯賣破百萬。時鐘走得比較快，或許也能解釋為什麼經紀公司喜歡早早開始：越早出道，偶像在被說「太老」之前就有越多年可以發光。'}
+ ]},
+ {h:'What the law says',hz:'法律怎麼說',wb:9,paras:[
+  {en:'South Korea does have rules. Under the [[Popular Culture and Arts Industry Development Act]], performers under 15 may work no more than 35 hours a week and not between 10 p.m. and 6 a.m. (with their own and a parent\'s [[consent]], they can work until midnight before a school holiday). Performers from 15 to 18 have a 40-hour limit. Since August 2025, agencies may not force [[minors]] to skip school, demand extreme changes to their looks, or abuse them, and each agency must name a youth protection officer.',
+   zh:'韓國其實有規定。根據《大眾文化藝術產業發展法》，未滿 15 歲的表演者每週工作不得超過 35 小時，晚上 10 點到早上 6 點不得工作（本人和家長同意的話，隔天放假可以工作到半夜 12 點）。15 到 18 歲的上限是每週 40 小時。2025 年 8 月起，經紀公司不得強迫未成年人缺課、過度要求外貌管理或施加暴力，每家公司也必須指定一名青少年保護負責人。'},
+  {en:'Critics see gaps. Breaking the hour limits brings no direct [[penalty]]. The limits cover broadcasts and recordings, not the long years of training. And courts usually do not treat idols as [[employees]], so the main labor law does not protect them. A 2023 bill would have limited children under 12 to 25 hours a week, but it died when parliament\'s term ended in 2024. Korea still has no minimum age for a debut. Lawyer [[Kim Doo-na]] says little has changed since 2025, and some agencies do not seem to know the new rules. In England, by comparison, a child performer needs a [[license]] from the local council.',
+   zh:'批評者看到了漏洞。違反工時上限沒有直接的罰則。這些上限只涵蓋節目和錄音，不包括漫長的練習生歲月。而且法院通常不把偶像當成受僱者，所以主要的勞動法保護不到他們。2023 年曾有法案要把 12 歲以下兒童的工時限制在每週 25 小時，但在 2024 年國會任期結束時胎死腹中。韓國至今沒有出道的最低年齡。律師 Kim Doo-na 說，2025 年以來改變不大，有些經紀公司甚至似乎不知道新規定。相較之下，英國的兒童表演者必須先取得地方政府核發的許可證。'}
+ ]},
+ {h:'Taiwan: stricter on paper',hz:'台灣：紙上更嚴格',wb:10,paras:[
+  {en:'Taiwan\'s [[Labor Standards Act]] draws harder lines. Employers may not hire anyone under 15 without government approval. Workers aged 15 may work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
+   zh:'台灣的《勞動基準法》劃的線更硬。雇主不得僱用未滿 15 歲的人，除非經主管機關核准。15 歲的童工每天最多工作 8 小時、每週 40 小時，例假日不得工作，晚上 8 點到早上 6 點也不行。'},
+  {en:'[[On paper]], then, a Taiwanese employer could not give a 13-year-old an idol\'s schedule. But Korea shows why that is only half the story: a labor law helps a child only if the child counts as a worker. Meanwhile, Taiwanese teenagers who dream of K-pop still pack their bags for Seoul, as Tzuyu did at 13.',
+   zh:'所以在書面上，台灣的雇主不可能讓一個 13 歲的孩子過偶像那樣的行程。但韓國的例子說明，這只是故事的一半：勞動法要能保護孩子，前提是孩子被算作勞工。與此同時，懷抱 K-pop 夢的台灣青少年，仍然會像 13 歲的周子瑜一樣，打包行李前往首爾。'}
+ ]},
+ {h:'Back on stage',hz:'回到舞台',wb:11,paras:[
+  {en:'A week after the showcase, A2O LITE went on TV again, this time in different outfits. Fans argued about whether that was enough. The album cover stayed the same.',
+   zh:'發表會一週後，A2O LITE 再次上電視，這次換了不同的服裝。粉絲爭論這樣夠不夠。專輯封面則沒有改。'},
+  {en:'The numbers show that boys and girls start at about the same age, that girl groups have more female fans than many people think, and that a girl group\'s clock runs fast. They cannot tell us the right age for a child to sign a contract, put on stage makeup and sing for millions. That question belongs to parents, lawmakers and fans — and to anyone reading this.',
+   zh:'數字告訴我們：男孩和女孩出道的年紀差不多；女團的女粉絲比很多人以為的多；女團的時鐘走得很快。但數字無法告訴我們，一個孩子幾歲才適合簽約、化上舞台妝、為幾百萬人唱歌。這個問題屬於家長、立法者和粉絲，也屬於正在讀這篇文章的你。'}
+ ]}
+];
+var PULL={after:4,en:'“I haven’t lost sleep over it yet.” — Lee Soo-man, Oct. 21',zh:'「我還沒有為這件事失眠。」——李秀滿，10 月 21 日'};
+/* Discussion questions: ONE list for both the article and the whiteboard's last board, so they always match.
+   en/zh = the article's wording; board = the whiteboard's shorter narration, translation and card lines. */
+var QUESTIONS=[
+ {en:'Should South Korea set a minimum age for an idol debut? If so, what age would you choose, and why?',
+  zh:'韓國應該設定偶像出道的最低年齡嗎？如果要，你會訂幾歲？為什麼？',
+  board:{say:'Should Korea set a minimum debut age? What age?',zh:'韓國該設出道最低年齡嗎？幾歲？',l1:'A minimum debut age?',l2:'If yes, what age, and why?'}},
+ {en:'Boys and girls debut at about the same age, yet the girls drew most of the criticism. Why do you think that is?',
+  zh:'男孩和女孩出道的年紀差不多，但批評大多落在女孩身上。你覺得為什麼？',
+  board:{say:'Boys and girls debut at about the same age. Why do the girls get most of the criticism?',zh:'男女出道年齡差不多，為什麼批評多半落在女孩身上？',l1:'Same age, more criticism',l2:'Why the girls?'}},
+ {en:'Lee Soo-man says an early debut gives idols more years at their peak. Is that a good reason to start at 13?',
+  zh:'李秀滿說，早出道能讓偶像多幾年巔峰期。這是 13 歲出道的好理由嗎？',
+  board:{say:'An early debut means more peak years. Is that a good reason to start at 13?',zh:'早出道等於多幾年巔峰期。這是 13 歲出道的好理由嗎？',l1:'More peak years',l2:'A good reason to start at 13?'}},
+ {en:'Most buyers of many girl-group albums are women. Does that change how you see the styling of very young members?',
+  zh:'許多女團專輯的買家以女性為主。這會改變你對年幼成員造型的看法嗎？',
+  board:{say:'Many girl-group albums are bought mostly by women. Does that change how you see the styling?',zh:'許多女團專輯主要是女性在買。這會改變你對造型的看法嗎？',l1:'Women buy the albums',l2:'Does that change the styling debate?'}},
+ {en:'Boy groups stay active about five years on average, girl groups about three. What do you think explains the gap?',
+  zh:'男團平均活動約五年，女團約三年。你覺得差距的原因是什麼？',
+  board:{say:'Boy groups last about five years, girl groups about three. Why?',zh:'男團約五年，女團約三年。為什麼？',l1:'5 years vs. 3 years',l2:'What explains the gap?'}},
+ {en:'Taiwan\'s labor law is stricter on paper. Should a 13-year-old be allowed to work as a singer at all? Under what rules?',
+  zh:'台灣的勞基法在書面上更嚴格。13 歲的孩子應該可以當歌手工作嗎？要在什麼規則下？',
+  board:{say:'Should a 13-year-old be allowed to work as a singer at all? Under what rules?',zh:'13 歲可以當歌手工作嗎？要有什麼規則？',l1:'A 13-year-old at work?',l2:'Under what rules?'}},
+ {en:'EJAE trained for more than ten years and never debuted, then co-wrote a Grammy-winning hit. What does her story say about the trainee system?',
+  zh:'EJAE 當了十多年練習生沒出道，後來卻共同創作了一首拿下葛萊美獎的熱門歌曲。她的故事說明了練習生制度的什麼？',
+  board:{say:'EJAE trained for more than ten years, never debuted, then wrote a Grammy-winning hit. What does that tell us?',zh:'EJAE 練了十多年沒出道，後來寫出葛萊美得獎歌曲。這告訴我們什麼？',l1:'10+ years, no debut, a Grammy',l2:'What does her story tell us?'}},
+ {en:'If a talented 12-year-old in your family wanted to become a trainee in Seoul, what would you say? What rules would you set?',
+  zh:'如果你家裡一個有天分的 12 歲孩子想去首爾當練習生，你會怎麼說？你會訂什麼規則？',
+  board:{say:'A talented 12-year-old in your family wants to train in Seoul. What would you say?',zh:'家裡有天分的 12 歲孩子想去首爾當練習生，你會怎麼說？',l1:'Your 12-year-old wants to go',l2:'What would you say? What rules?'}}
+];
+var QGROUPS=[{h:'',zh:'',qs:QUESTIONS}];
+
+/* Whiteboard boards. ops: ['title',str] ['t',x,y,str,{s,c}] ['l',x1,y1,x2,y2,{c,w,dash}] ['r',x,y,w,h,{c}]
+   ['e',cx,cy,rx,ry] ['a',x1,y1,x2,y2,{c}] ['circ',cx,cy,rx,ry,{c}] ['hl',x,y,w,h] ['wipe'] + ICON / CUSTOM names below.
+   say: English narration; [[shown]] or [[shown|key]] opens a glossary card. zh: 中譯. */
+var LITE=[13,13,13,15,15,15,16,17,17], SOUL=[14,14,14,14,15,15,15,15,16,16,17,17,18,19,19];
+var BOARDS=[
+{t:'One night at KINTEX',zh:'KINTEX 的那一夜',steps:[
+ {say:'Monday, October 12, 2026. KINTEX, a giant exhibition hall outside Seoul. Nine girls step onto the stage for the [[showcase]] of a new girl group, [[A2O LITE]]. The next day their first single, "Neon," comes out. Twenty-nine hours later it is No. 1 on [[Melon]], Korea\'s biggest streaming chart.',
+  zh:'2026 年 10 月 12 日星期一，首爾近郊的大型展覽館 KINTEX。九個女孩走上舞台，這是新女團 A2O LITE 的出道發表會。隔天，她們的第一首單曲〈Neon〉推出，29 個小時後登上韓國最大的串流排行榜 Melon 第一名。',
+  ops:[['title','One night at KINTEX'],['stage',275,470,450],['nine',275,452],['t',570,165,'Oct. 12, 2026 · KINTEX',{s:24,c:C.pk}],['t',570,205,'debut showcase: A2O LITE',{s:20}],['t',570,245,'"Neon" → No. 1 on Melon',{s:20,c:C.pu}],['t',570,277,'in 29 hours',{s:18,c:C.gy}]]},
+ {say:'Three of the nine members were born in 2013. They are 13 years old: the age of an eighth grader in Taiwan. The oldest member is 17.',
+  zh:'九名成員中有三人是 2013 年出生的。她們 13 歲，在台灣是國二生的年紀。年紀最大的成員 17 歲。',
+  ops:[['t',570,335,'3 of 9 members: age 13',{s:22,c:C.rd}],['t',570,368,'the oldest: 17',{s:18,c:C.gy}],['cake',830,505,'13'],['hl',570,314,250,28]]},
+ {say:'Within a week, photos of a 13-year-old member in a [[crop top]] and short shorts were all over Korean websites. Many people called the album cover [[inappropriate]]. The group was created by [[Lee Soo-man]], the founder of SM Entertainment. On October 21 he said: "I will handle it well." And then: "I haven\'t [[lost sleep over]] it yet."',
+  zh:'不到一週，一名 13 歲成員穿短版上衣和短褲的照片傳遍韓國網站，很多人也批評專輯封面不恰當。這個團體由 SM 娛樂創辦人李秀滿打造。10 月 21 日他說：「我會處理好的。」接著又說：「我還沒有為這件事失眠。」',
+  ops:[['wipe'],['title','The backlash'],['phone',140,300],['bubble',250,130,330,62,C.rd],['t',272,170,'a crop top at 13?',{s:22,c:C.rd}],['bubble',300,215,330,62,C.pk],['t',322,255,'the album cover: inappropriate?',{s:19,c:C.pk}],
+       ['t',300,350,'Lee Soo-man (ee soo-MAHN), Oct. 21:',{s:20,c:C.pu}],['t',320,392,'"I will handle it well."',{s:24}],['t',320,436,'"I haven\'t lost sleep over it yet."',{s:24,c:C.rd}],['hl',320,414,430,30]]},
+ {say:'So, how young is [[too young to]] be an [[idol]]? Are girls pushed onto the stage younger than boys? And who is really watching? Let\'s look at the numbers.',
+  zh:'那麼，幾歲當偶像才算太小？女孩真的比男孩更早被推上舞台嗎？到底是誰在看？我們來看數字。',
+  ops:[['wipe'],['title','Three questions'],['card',60,130,'1','How young is too young?',C.pk],['card',60,260,'2','Are girls younger than boys?',C.pu],['card',60,390,'3','Who is really watching?',C.te],['star',840,170,30,C.yl],['heart',860,330,1.4,C.pk],['star',800,460,22,C.or]]}
+]},
+{t:'Thirteen is not new',zh:'十三歲並不新鮮',steps:[
+ {say:'Lee Soo-man has done this before. In the late 1990s he spotted an 11-year-old girl at her brother\'s audition. In 2000, at 13, she debuted as [[BoA]]. Two years later she was No. 1 in Japan.',
+  zh:'李秀滿不是第一次這樣做。1990 年代末，他在一場試鏡上看中一個陪哥哥去的 11 歲女孩。2000 年，她 13 歲，以「寶兒」之名出道。兩年後，她登上日本排行榜冠軍。',
+  ops:[['title','Thirteen is not new'],['l',50,290,920,290,{c:C.ink}],['tick',110,'2000','BoA (BOH-ah)','debut at 13',0,C.pk]]},
+ {say:'Many stars followed. HyunA debuted at 14 in 2007, and [[Taemin]] of SHINee at 14 in 2008. [[Jang Won-young]] was 14 when IZ*ONE debuted in 2018.',
+  zh:'許多明星跟著走上這條路。泫雅 2007 年 14 歲出道，SHINee 的泰民 2008 年 14 歲出道。IZ*ONE 在 2018 年出道時，張員瑛 14 歲。',
+  ops:[['tick',250,'2007','HyunA','14',1,C.or],['tick',390,'2008','Taemin (TEH-min)','14',0,C.bl],['tick',530,'2018','Jang Won-young','14',1,C.pu]]},
+ {say:'In 2024, [[Lim Seo-won]] of UNIS was 13. And in October 2026, three members of A2O LITE are 13 too.',
+  zh:'2024 年，UNIS 的 Lim Seo-won 13 歲。2026 年 10 月，A2O LITE 也有三名成員是 13 歲。',
+  ops:[['tick',680,'2024','Lim Seo-won','13',0,C.te],['tick',840,'2026','A2O LITE','13, 13, 13',1,C.rd]]},
+ {say:'Boys too: the youngest members of NCT DREAM were 14 at their debut in 2016, and NI-KI of ENHYPEN was 14 in 2020. Thirteen and fourteen are not new in K-pop. What is new this year is the size of the debate.',
+  zh:'男生也是：NCT DREAM 2016 年出道時，最小的成員 14 歲；ENHYPEN 的 NI-KI 2020 年出道時也是 14 歲。13、14 歲出道在 K-pop 並不新鮮，今年不同的是爭議的規模。',
+  ops:[['t',60,475,'boys too: NCT DREAM 2016 (14) · NI-KI 2020 (14)',{s:21,c:C.bl}],['hl',60,454,560,28]]}
+]},
+{t:'Starting early',zh:'從小開始',steps:[
+ {say:'How early does it start? Look at the years before the debut. BoA was found at 11 and debuted at 13. [[G-Dragon]] became a trainee at 8, and debuted with Big Bang at 18.',
+  zh:'到底多早開始？看看出道前的那些年。寶兒 11 歲被發掘，13 歲出道。權志龍 8 歲當練習生，18 歲隨 BIGBANG 出道。',
+  ops:[['title','Starting early'],['ageaxis'],['trainbar',0,'BoA',11,13,C.pk],['trainbar',1,'G-Dragon',8,18,C.bl]]},
+ {say:'Jennie of Blackpink started training at 14 and debuted at 20. And from Taiwan: [[Tzuyu]] was scouted in Tainan at 13 and debuted with [[TWICE]] at 16.',
+  zh:'BLACKPINK 的 Jennie 14 歲開始受訓，20 歲出道。還有台灣的周子瑜：13 歲在台南被星探發掘，16 歲隨 TWICE 出道。',
+  ops:[['trainbar',2,'Jennie',14,20,C.pu],['trainbar',3,'Tzuyu',13,16,C.te]]},
+ {say:'Why so early? In an old video that [[went viral]] this month, Lee Soo-man explains: debut at 13 to 15, and you reach your [[peak]] at 16 to 18. Agencies [[used to]] pick trainees at 10 to 12. "We thought even 9- or 7-year-olds were fine."',
+  zh:'為什麼這麼早？這個月一段爆紅的舊影片裡，李秀滿解釋：13 到 15 歲出道，16 到 18 歲就能達到巔峰。經紀公司以前會挑 10 到 12 歲的練習生。「我們當時覺得，就算 9 歲、7 歲也沒關係。」',
+  ops:[['t',60,462,'Lee Soo-man: debut at 13–15 → peak at 16–18',{s:21,c:C.or}],['t',60,502,'"We thought even 9- or 7-year-olds were fine."',{s:21,c:C.rd}],['hl',60,481,560,28]]},
+ {say:'Culture critic [[Jung Duk-hyun]] puts it simply. An idol\'s best years are short, so an early debut "[[buys them more of that time]]."',
+  zh:'文化評論家 Jung Duk-hyun 說得很直接：偶像的黃金期很短，所以早出道「能替他們多爭取一些時間」。',
+  ops:[['wipe'],['title','Why start early?'],['hourglass',170,300],['t',310,240,'an idol\'s best years are short',{s:26}],['t',310,300,'start early → "buys them more of that time"',{s:22,c:C.or}],['t',310,345,'— Jung Duk-hyun, culture critic',{s:18,c:C.gy}]]}
+]},
+{t:'Inside the practice room',zh:'練習室裡',steps:[
+ {say:'Before the stage comes the practice room. In 2024, Korean agencies had 963 trainees, about half as many as in 2020. At one big agency, the day starts at 9 a.m. and often ends around 10 p.m.',
+  zh:'上台之前，先是練習室。2024 年，韓國各經紀公司共有 963 名練習生，大約只有 2020 年的一半。在一家大型經紀公司，一天從早上 9 點開始，常常到晚上 10 點左右才結束。',
+  ops:[['title','Inside the practice room'],['clock',140,240,66,C.pu],['t',235,215,'9 a.m. → 10 p.m.',{s:28,c:C.pu}],['t',235,250,'a day at one big agency',{s:17,c:C.gy}],
+       ['t',560,160,'trainees in Korea',{s:19,c:C.gy}],['nbar',560,205,'2020',1895,C.lilac],['nbar',560,250,'2024',963,C.rose]]},
+ {say:'On September 30, a children\'s rights group told lawmakers about 16 former trainees and idols. On average, they started training at 15.9. They described strict diets, fainting, [[isolation]] and trouble at school.',
+  zh:'9 月 30 日，一個兒少人權團體向國會報告他們訪問 16 名前練習生和偶像的結果。他們平均 15.9 歲開始受訓，描述了嚴格的節食、昏倒、孤立，以及跟不上學校課業。',
+  ops:[['t',60,370,'16 former trainees: started at 15.9 on average',{s:21}],['t',60,405,'strict diets · fainting · isolation · trouble at school',{s:18,c:C.rd}]]},
+ {say:'In one study, 7 or 8 out of 10 teenage girl trainees had [[irregular]] periods. About one in three trainees quits. "Once they pass 20," one insider said, "many start feeling they are considered too old."',
+  zh:'一份研究發現，每 10 名青少女練習生中有 7 到 8 人月經不規律。大約每三名練習生就有一人放棄。一位業界人士說：「一過 20 歲，很多人就開始覺得自己被當成太老了。」',
+  ops:[['tenof',70,478,7.5],['t',400,470,'7–8 of 10 teen girl trainees: irregular periods',{s:17}],['t',400,505,'1 in 3 quits · "too old" at 20',{s:17,c:C.gy}]]},
+ {say:'Some find another road. EJAE joined SM Entertainment at 11 and trained for more than ten years, but never debuted. In 2025 she co-wrote "Golden" for [[KPop Demon Hunters]] and sang it as the voice of the heroine. It went to No. 1 in America and Britain, and won a Grammy.',
+  zh:'也有人走出另一條路。EJAE 11 歲進入 SM 娛樂，當了十多年練習生，始終沒有出道。2025 年，她為《KPop獵魔女團》共同創作〈Golden〉，並為女主角獻聲。這首歌登上美國和英國冠軍，還拿下葛萊美獎。',
+  ops:[['wipe'],['title','Another road'],['star',170,290,78,C.yl],['mic',170,300],['t',300,200,'EJAE: trainee at 11, 10+ years, no debut',{s:24}],['t',300,255,'2025: co-wrote and sang "Golden"',{s:24,c:C.or}],['t',300,292,'(KPop Demon Hunters)',{s:18,c:C.gy}],['t',300,360,'→ No. 1 in the US and UK',{s:26,c:C.pk}],['t',300,405,'→ a Grammy (2026)',{s:26,c:C.pk}],['heart',780,440,1.2,C.pk],['heart',840,400,0.8,C.rose]]}
+]},
+{t:'Are girls younger than boys?',zh:'女孩比男孩小嗎？',steps:[
+ {say:'Are girls pushed onto the stage younger than boys? We compared 77 well-known groups that debuted from 2008 to 2023. Girl groups: 18.5 on average. Boy groups: 18.7. Almost the same.',
+  zh:'女孩真的比男孩更早被推上舞台嗎？我們比較了 2008 到 2023 年出道的 77 個知名團體。女團平均 18.5 歲，男團平均 18.7 歲，幾乎一樣。',
+  ops:[['title','Are girls younger than boys?'],['idol',110,330,{c:C.rose}],['idol',210,330,{c:C.sky,boy:1}],['agebar',330,190,'girl groups',18.5,C.pk],['agebar',330,250,'boy groups',18.7,C.bl],['t',330,300,'77 groups, 2008–2023 (Koreaboo list) · average debut age',{s:15,c:C.gy}]]},
+ {say:'And the youngest group on the list? A boy group, NCT DREAM, with an average debut age of 15.6.',
+  zh:'名單上最年輕的團體呢？是男團 NCT DREAM，平均出道年齡 15.6 歲。',
+  ops:[['t',330,360,'youngest group: NCT DREAM (boys), 15.6',{s:21,c:C.bl}],['hl',330,339,470,28]]},
+ {say:'Now look at the two groups Lee Soo-man launched on the same day. A2O LITE: nine girls, 13 to 17, about 15 on average. A2O SOUL: fifteen boys, 14 to 19, about 16 on average.',
+  zh:'再看看李秀滿同一天推出的兩個團體。A2O LITE：九個女孩，13 到 17 歲，平均約 15 歲。A2O SOUL：十五個男孩，14 到 19 歲，平均約 16 歲。',
+  ops:[['wipe'],['title','Same day, two groups'],['ageline2'],['ageline',210,'A2O LITE (girls)','avg. 15',LITE,C.pk],['ageline',340,'A2O SOUL (boys)','avg. 16',SOUL,C.bl]]},
+ {say:'Trainees too: girls slightly [[outnumber]] boys, but not by much. So the age gap between boys and girls is small.',
+  zh:'練習生也一樣：女生比男生多一些，但沒多多少。所以男女之間的年齡差距不大。',
+  ops:[['t',60,488,'trainees: slightly more girls, but not by much',{s:19}],['t',60,526,'→ the age gap is small',{s:24,c:C.or}]]}
+]},
+{t:'Not just the age',zh:'問題不只是年齡',steps:[
+ {say:'So what is different? How the children are presented. This month, the complaints were about the girls\' outfits and an album cover, not the boys.',
+  zh:'那麼差別在哪裡？在於孩子被呈現的方式。這個月的批評，針對的是女孩的服裝和一張專輯封面，而不是男孩。',
+  ops:[['title','Not just the age'],['idol',150,430,{c:C.rose,s:1.5}],['t',290,140,'the complaints: girls\' outfits + an album cover',{s:20}]]},
+ {say:'In 2025, a TV audition show called Under 15 put 59 girls aged 15 and under in heavy makeup, and showed their photos with bar codes. Critics said it made them look like products in a shop. After a public [[outcry]], it was canceled three days before it began.',
+  zh:'2025 年，一個叫《Under 15》的選秀節目讓 59 名 15 歲以下的女孩畫上濃妝，照片上還加了條碼。批評者說，這讓她們看起來像店裡的商品。在一片撻伐聲中，節目在開播前三天停播。',
+  ops:[['barcode',350,290],['t',500,270,'"Under 15" (2025)',{s:24,c:C.rd}],['t',500,306,'59 girls · heavy makeup · bar codes',{s:18}],['t',500,340,'canceled 3 days before airing',{s:18,c:C.gy}]]},
+ {say:'Critic Jung Duk-hyun puts it this way: starting young is no longer [[taboo]]. The trouble begins when children are shaped to fit [[adult tastes]].',
+  zh:'評論家 Jung Duk-hyun 這樣說：年紀小就出道已經不是禁忌。問題出在把孩子塑造成符合成人口味的樣子。',
+  ops:[['t',290,440,'Jung Duk-hyun: starting young is no longer taboo;',{s:19,c:C.pu}],['t',290,476,'the trouble: shaping children to fit adult tastes',{s:19,c:C.pu}],['hl',290,456,500,28]]}
+]},
+{t:'Who buys boy groups?',zh:'誰買男團專輯？',steps:[
+ {say:'Who is watching? Many people believe an old [[formula]]: boy groups for girls, girl groups for men. Let\'s test it, half by half.',
+  zh:'誰在看？很多人相信一個老公式：男團給女生看，女團給男生看。我們一半一半來檢驗。',
+  ops:[['title','An old formula'],['t',100,210,'boy groups → girl fans',{s:32,c:C.bl}],['t',100,280,'girl groups → men',{s:32,c:C.pk}],['t',740,265,'?',{s:90,c:C.rd}]]},
+ {say:'The first half holds up. In a 2022 online [[census]] of BTS fans, more than 96 percent of the 562,000 people who answered were female.',
+  zh:'前半句成立。2022 年一份 BTS 粉絲網路普查中，56 萬多名填答者有超過 96% 是女性。',
+  ops:[['wipe'],['title','Boy groups: mostly women'],['grid25',80,140,24],['t',300,180,'BTS fan census, 2022',{s:22,c:C.bl}],['t',300,220,'562,000 answers · over 96% female',{s:22,c:C.pk}]]},
+ {say:'Boy groups also sell the albums. Of the ten best-selling albums in Korea in 2025, nine were by boy groups. Stray Kids sold almost 3.4 million copies of one album. The only girl group in the top ten was IVE, at number seven.',
+  zh:'專輯也是男團在賣。2025 年韓國最暢銷的十張專輯，有九張是男團的。Stray Kids 一張專輯賣出將近 340 萬張。前十名唯一的女團是第七名的 IVE。',
+  ops:[['t',300,272,'No. 1: Stray Kids, 3.4 million copies',{s:20}],['albums10',70,390],['t',70,505,'2025 top 10 albums: 9 boy groups · 1 girl group (IVE, No. 7)',{s:19}]]}
+]},
+{t:'Who buys girl groups?',zh:'誰買女團專輯？',steps:[
+ {say:'The second half is [[shakier]]. In 2022 the online bookstore [[Aladin]] checked who bought girl-group albums. Women were the majority for 17 of 27 groups. STAYC: 77 percent women. Blackpink: 59 percent.',
+  zh:'後半句就沒那麼站得住腳了。2022 年，網路書店阿拉丁分析女團專輯的買家，27 個女團中有 17 個以女性為主。STAYC 77% 是女性，BLACKPINK 59%。',
+  ops:[['title','Girl groups: who buys?'],['legend',600,112],['sbar',150,'STAYC',77],['sbar',195,'Blackpink',59]]},
+ {say:'About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of the people streaming "Attention" by NewJeans were women. In 2022 a Seoul newspaper reported that the old rule no longer held.',
+  zh:'NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，串流 NewJeans〈Attention〉的人有 65% 是女性。首爾一家報紙在 2022 年報導，這條老規則已經不成立了。',
+  ops:[['sbar',240,'NewJeans album',89],['sbar',285,'"Attention" streams',65]]},
+ {say:'But men have not disappeared. 89 percent of Brave Girls album buyers were men, and 77 percent of fromis_9 buyers. Koreans even have a word for grown men who follow girl groups: [[samchon fan]], or "uncle fan."',
+  zh:'但男粉並沒有消失。Brave Girls 的專輯買家 89% 是男性，fromis_9 是 77%。韓國甚至有個詞專門形容追女團的成年男性：「삼촌팬」，大叔粉。',
+  ops:[['sbar',330,'fromis_9',23],['sbar',375,'Brave Girls',11],['t',60,438,'samchon fan (삼촌팬) = "uncle fan"',{s:22,c:C.bl}]]},
+ {say:'So the audience is mixed, and it changes from group to group. That leaves a fair question: when a 13-year-old wears a crop top on stage, whose taste is it for?',
+  zh:'所以觀眾是混合的，而且每個團體都不一樣。這就留下一個值得問的問題：一個 13 歲的孩子穿短版上衣上台，是為了迎合誰的口味？',
+  ops:[['t',60,500,'a mixed audience → a crop top at 13: for whose taste?',{s:21,c:C.or}],['hl',60,479,600,28]]}
+]},
+{t:'Two clocks',zh:'兩個時鐘',steps:[
+ {say:'Boys and girls may debut at the same age, but their careers run on different clocks. Professor [[Kim Jeong-seop]] studied all 1,182 idol groups that debuted from 1996 to 2025. About 39 new groups appear every year.',
+  zh:'男孩和女孩也許同樣年紀出道，但職業生涯走的是不同的時鐘。Kim Jeong-seop 教授研究了 1996 到 2025 年出道的全部 1,182 個偶像團體。平均每年有 39 個新團出道。',
+  ops:[['title','Two clocks'],['t',60,145,'1,182 groups (1996–2025) · about 39 new groups a year',{s:19,c:C.gy}]]},
+ {say:'Boy groups stay active for 5.1 years on average. Girl groups: just 3.1 years.',
+  zh:'男團平均活動 5.1 年，女團只有 3.1 年。',
+  ops:[['clock',140,285,64,C.bl],['t',225,270,'boy groups',{s:22,c:C.bl}],['t',225,312,'5.1 years',{s:34,c:C.bl}],['clock',560,285,64,C.pk],['t',645,270,'girl groups',{s:22,c:C.pk}],['t',645,312,'3.1 years',{s:34,c:C.pk}]]},
+ {say:'Why? Boy groups build [[loyal]] fans who buy albums, tickets and goods again and again. Girl groups depend more on general popularity, [[streaming]] and events.',
+  zh:'為什麼？男團會培養出忠實的粉絲，一再購買專輯、門票和周邊。女團則比較依賴大眾人氣、串流和活動。',
+  ops:[['t',60,425,'boys: loyal fans buy again and again',{s:19,c:C.bl}],['t',500,425,'girls: popularity, streaming, events',{s:19,c:C.pk}]]},
+ {say:'And streaming is where girl groups shine. On the Melon chart for the whole of 2025, aespa was third, Rosé and Bruno Mars were seventh, and IVE was eighth. "Golden" was sixth. And number two? G-Dragon.',
+  zh:'而串流正是女團發光的地方。在 Melon 的 2025 年度榜上，aespa 第三，Rosé 和火星人布魯諾第七，IVE 第八。〈Golden〉第六。那第二名呢？權志龍。',
+  ops:[['wipe'],['title','Melon: the whole of 2025'],['t',70,160,'No. 2   G-Dragon · "Home Sweet Home"',{s:22,c:C.bl}],['t',70,205,'No. 3   aespa · "Whiplash"',{s:22,c:C.pk}],['t',70,250,'No. 6   HUNTR/X · "Golden"',{s:22,c:C.or}],['t',70,295,'No. 7   Rosé & Bruno Mars · "APT."',{s:22,c:C.pk}],['t',70,340,'No. 8   IVE · "Rebel Heart"',{s:22,c:C.pk}],['phone',820,250]]},
+ {say:'But very few groups get rich. Only 19 of the 1,182 ever sold a million copies of one album. A shorter clock may also explain the rush to start: [[the younger the debut, the more years]] before people call an idol "too old."',
+  zh:'但真正大紅的團體很少。1,182 個團體中，只有 19 個曾經單張專輯賣破百萬。時鐘走得快，或許也解釋了為什麼急著開始：越早出道，偶像在被說「太老」之前就有越多年可以發光。',
+  ops:[['t',70,425,'a million copies of one album: only 19 of 1,182 groups',{s:19}],['t',70,470,'the younger the debut, the more years before "too old"',{s:20,c:C.or}],['hl',70,449,600,28]]}
+]},
+{t:'What the law says',zh:'法律怎麼說',steps:[
+ {say:'South Korea does have rules. Performers under 15 may work no more than 35 hours a week, and not from 10 p.m. to 6 a.m., except until midnight before a school holiday, with their own and a parent\'s [[consent]]. From 15 to 18, the limit is 40 hours a week.',
+  zh:'韓國其實有規定。未滿 15 歲的表演者每週工作不得超過 35 小時，晚上 10 點到早上 6 點不得工作；本人和家長同意的話，隔天放假可以工作到半夜 12 點。15 到 18 歲每週上限 40 小時。',
+  ops:[['title','What the law says'],['scales',140,330],['t',290,160,'under 15: max 35 hours a week',{s:22}],['t',290,195,'no work 10 p.m.–6 a.m. (midnight before a holiday, with consent)',{s:15,c:C.gy}],['t',290,240,'15–18: max 40 hours a week',{s:22}]]},
+ {say:'Since August 2025, agencies may not make [[minors]] skip school, demand extreme changes to their looks, or abuse them. Each agency needs a youth protection officer.',
+  zh:'2025 年 8 月起，經紀公司不得要求未成年人缺課、過度要求外貌，或施加暴力。每家公司也必須指定一名青少年保護負責人。',
+  ops:[['t',290,295,'since Aug. 2025: no skipping school,',{s:20,c:C.gr}],['t',290,328,'no extreme looks rules, no abuse · a youth protection officer',{s:16,c:C.gr}]]},
+ {say:'Critics see gaps. Breaking the hour limits brings no direct [[penalty]]. The limits do not cover the years of training. Courts usually do not treat idols as [[employees]]. And there is still no minimum age for a debut.',
+  zh:'批評者看到了漏洞：違反工時上限沒有直接罰則；這些上限不包括練習生的歲月；法院通常不把偶像當成受僱者；而且至今仍沒有出道最低年齡。',
+  ops:[['wipe'],['title','The gaps'],['t',70,160,'✗  no direct penalty for too many hours',{s:22,c:C.rd}],['t',70,210,'✗  training years are not covered',{s:22,c:C.rd}],['t',70,260,'✗  idols usually not "employees" in court',{s:22,c:C.rd}],['t',70,310,'✗  no minimum age for a debut',{s:22,c:C.rd}]]},
+ {say:'A 2023 bill would have limited children under 12 to 25 hours a week, but it died in 2024. In England, by comparison, a child performer needs a [[license]] from the local council.',
+  zh:'2023 年曾有法案要把 12 歲以下兒童限制在每週 25 小時，但在 2024 年胎死腹中。相較之下，英國的兒童表演者必須先取得地方政府的許可證。',
+  ops:[['t',70,385,'2023 bill: under 12 → max 25 hours a week (died in 2024)',{s:18,c:C.gy}],['t',70,440,'England: a child performer needs a license',{s:22,c:C.bl}],['hl',70,419,470,28]]}
+]},
+{t:'Taiwan: stricter on paper',zh:'台灣：紙上更嚴格',steps:[
+ {say:'Taiwan\'s [[Labor Standards Act]] draws harder lines. Employers may not hire anyone under 15 without government approval.',
+  zh:'台灣的《勞動基準法》劃的線更硬：雇主不得僱用未滿 15 歲的人，除非經主管機關核准。',
+  ops:[['title','Taiwan: stricter on paper'],['l',480,115,480,325,{c:C.gy,dash:1}],['t',150,150,'Korea',{s:28,c:C.bl}],['t',620,150,'Taiwan',{s:28,c:C.gr}],['t',40,205,'under 15: up to 35 hours a week',{s:18}],['t',500,205,'under 15: no hiring without approval',{s:18}]]},
+ {say:'Workers aged 15 may work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
+  zh:'15 歲的童工每天最多工作 8 小時、每週 40 小時，例假日不得工作，晚上 8 點到早上 6 點也不行。',
+  ops:[['t',40,255,'15–18: 40 hours (+ up to 6 more)',{s:18}],['t',500,255,'age 15: 8 hours a day, 40 a week',{s:18}],['t',40,300,'under 15: no work 10 p.m.–6 a.m.',{s:18}],['t',500,300,'no work 8 p.m.–6 a.m. · no rest days',{s:18}]]},
+ {say:'[[On paper]], then, a Taiwanese employer could not give a 13-year-old an idol\'s schedule. But Korea shows the catch: a labor law helps a child only if the child counts as a worker.',
+  zh:'所以在書面上，台灣的雇主不可能讓一個 13 歲的孩子過偶像那樣的行程。但韓國的例子點出了關鍵：勞動法要能保護孩子，前提是孩子被算作勞工。',
+  ops:[['t',40,385,'On paper: stricter in Taiwan.',{s:24,c:C.gr}],['t',40,428,'The catch: does a child performer count as a "worker"?',{s:20,c:C.rd}]]},
+ {say:'Meanwhile, Taiwanese teenagers who dream of K-pop still pack their bags for Seoul, as Tzuyu did at 13.',
+  zh:'與此同時，懷抱 K-pop 夢的台灣青少年，仍然像 13 歲的周子瑜一樣，打包行李前往首爾。',
+  ops:[['t',40,495,'Tainan → Seoul: Tzuyu, age 13 (2012)',{s:20,c:C.te}],['plane',800,470]]}
+]},
+{t:'Back on stage',zh:'回到舞台',steps:[
+ {say:'Back to A2O LITE. A week after the showcase, they went on TV in different outfits. Fans argued about whether that was enough. The album cover stayed the same.',
+  zh:'回到 A2O LITE。發表會一週後，她們換了不同的服裝上電視。粉絲爭論這樣夠不夠。專輯封面則沒有改。',
+  ops:[['title','Back on stage'],['stage',250,470,400],['five',250,452],['t',510,190,'a week later: new outfits on TV',{s:21}],['t',510,228,'the album cover: unchanged',{s:19,c:C.gy}]]},
+ {say:'Here is what the numbers show. Boys and girls debut at about the same age. Many girl groups have more female buyers than male. And a girl group\'s clock runs fast.',
+  zh:'數字告訴我們：男孩和女孩出道的年紀差不多；許多女團的女性買家比男性多；而且女團的時鐘走得很快。',
+  ops:[['wipe'],['title','What the numbers show'],['t',60,170,'① boys and girls debut at about the same age',{s:22}],['t',60,225,'② many girl groups: mostly female buyers',{s:22}],['t',60,280,'③ a girl group\'s clock runs fast (3.1 years)',{s:22}]]},
+ {say:'What the numbers cannot tell us is the right age for a child to sign a contract, put on stage makeup, and sing for millions. That question belongs to parents, lawmakers and fans, and to you.',
+  zh:'數字無法告訴我們的，是一個孩子幾歲才適合簽約、化上舞台妝、為幾百萬人唱歌。這個問題屬於家長、立法者和粉絲，也屬於你。',
+  ops:[['heart',150,430,2,C.pk],['t',260,410,'The right age? The numbers can\'t decide.',{s:26,c:C.pk}],['t',260,455,'parents · lawmakers · fans · you',{s:22,c:C.or}]]}
+]}
+];
+/* The last board is built from QUESTIONS in content.js (the board wording), two questions per step,
+   so it always matches the list after the article: same order and numbering. */
+(function(){
+  var W=['one','two','three','four','five','six','seven','eight','nine','ten'], Z='一二三四五六七八九十', steps=[];
+  for(var i=0;i<QUESTIONS.length;i+=2){
+    var say=i?'':'Let\'s talk. ', zh='', ops=i?[['wipe']]:[];
+    ops.push(['title','Talk about it']);
+    QUESTIONS.slice(i,i+2).forEach(function(q,j){ var n=i+j, b=q.board;
+      say+='Question '+W[n]+': '+b.say+' '; zh+='第'+Z[n]+'題：'+b.zh;
+      ops.push(['qbox',40,j?320:110,String(n+1),b.l1,b.l2]); });
+    steps.push({say:say.trim(),zh:zh,ops:ops});
+  }
+  BOARDS.push({t:'Talk about it',zh:'一起討論',steps:steps});
+})();
+
+/* ---------- drawings: soft fills with a marker outline ---------- */
+function blob(d,fill,stroke,w){ fillShape(d,fill); strokePath(d,stroke||C.ink,w||2.5); }
+function starD(x,y,r){ var d=''; for(var i=0;i<10;i++){ var a=-Math.PI/2+i*Math.PI/5, rr=i%2?r*0.45:r; d+=(i?'L':'M')+(x+Math.cos(a)*rr).toFixed(1)+' '+(y+Math.sin(a)*rr).toFixed(1); } return d+'Z'; }
+function heartD(x,y,s){ return 'M'+x+' '+(y+18*s)+' C'+(x-30*s)+' '+(y-2*s)+' '+(x-22*s)+' '+(y-26*s)+' '+x+' '+(y-12*s)+' C'+(x+22*s)+' '+(y-26*s)+' '+(x+30*s)+' '+(y-2*s)+' '+x+' '+(y+18*s)+' Z'; }
+var OUTFIT=[C.rose,C.lilac,C.peach,C.mint,C.sky];
+var ICON={
+ /* a stage seen from the front: x = centre, y = front edge, w = width; spotlights from above */
+ stage:function(x,y,w){
+   [[-0.32,'rgba(255,214,120,.32)'],[0.32,'rgba(255,190,210,.32)']].forEach(function(s){ var sx=x+s[0]*w;
+     fillShape('M'+(sx-10)+' 96 L'+(sx+10)+' 96 L'+(sx+s[0]*w*0.15+110)+' '+(y-24)+' L'+(sx+s[0]*w*0.15-110)+' '+(y-24)+' Z',s[1]); });
+   blob('M'+(x-w/2)+' '+y+' L'+(x+w/2)+' '+y+' L'+(x+w/2-30)+' '+(y-26)+' L'+(x-w/2+30)+' '+(y-26)+' Z','rgba(251,216,191,.9)');
+   OP_l(x-w/2,y+12,x+w/2,y+12,{c:C.ink,w:2});
+   ICON.star(x-w/2+20,128,12,C.yl); ICON.star(x+w/2-24,140,10,C.pk); },
+ /* one singer: x = centre, y = feet; o = {c: outfit colour, boy: 1, s: scale} */
+ idol:function(x,y,o){ o=o||{}; var s=o.s||1, c=o.c||C.rose, P=function(n){ return (n*s).toFixed(1); };
+   var hy=y-112*s;
+   if(o.boy){ OP_l(x-6*s,y-46*s,x-8*s,y,{c:C.ink,w:4*s}); OP_l(x+6*s,y-46*s,x+8*s,y,{c:C.ink,w:4*s});
+     blob('M'+(x-17*s)+' '+(y-94*s)+' L'+(x+17*s)+' '+(y-94*s)+' L'+(x+16*s)+' '+(y-44*s)+' L'+(x-16*s)+' '+(y-44*s)+' Z',c,C.ink,2.2); }
+   else { OP_l(x-6*s,y-42*s,x-8*s,y,{c:C.ink,w:2.4}); OP_l(x+6*s,y-42*s,x+8*s,y,{c:C.ink,w:2.4});
+     blob('M'+(x-13*s)+' '+(y-94*s)+' L'+(x+13*s)+' '+(y-94*s)+' L'+(x+24*s)+' '+(y-40*s)+' L'+(x-24*s)+' '+(y-40*s)+' Z',c,C.ink,2.2); }
+   OP_l(x-14*s,y-90*s,x-26*s,y-58*s,{c:C.ink,w:2.2}); OP_l(x+14*s,y-90*s,x+24*s,y-118*s,{c:C.ink,w:2.2});
+   fillShape('M'+(x+21*s)+' '+(y-124*s)+' a'+P(5)+' '+P(5)+' 0 1 0 0.1 0 Z',C.ink);
+   if(!o.boy) fillShape('M'+(x-17*s)+' '+(hy-2*s)+' Q'+x+' '+(hy-26*s)+' '+(x+17*s)+' '+(hy-2*s)+' L'+(x+19*s)+' '+(hy+28*s)+' L'+(x-19*s)+' '+(hy+28*s)+' Z',C.hair);
+   blob('M'+(x-14*s)+' '+hy+' a'+P(14)+' '+P(15)+' 0 1 0 '+P(28)+' 0 a'+P(14)+' '+P(15)+' 0 1 0 -'+P(28)+' 0 Z',C.skin,C.ink,2);
+   fillShape('M'+(x-15*s)+' '+(hy-4*s)+' Q'+x+' '+(hy-24*s)+' '+(x+15*s)+' '+(hy-4*s)+' Q'+x+' '+(hy-11*s)+' '+(x-15*s)+' '+(hy-4*s)+' Z',C.hair); },
+ /* nine small singers in a row on a stage */
+ nine:function(x,y){ for(var i=0;i<9;i++) ICON.idol(x-176+i*44,y,{c:OUTFIT[i%5],s:0.62}); },
+ five:function(x,y){ for(var i=0;i<5;i++) ICON.idol(x-140+i*70,y,{c:OUTFIT[(i+2)%5],s:0.72}); },
+ star:function(x,y,r,c){ fillShape(starD(x,y,r),c||C.yl,C.or); },
+ heart:function(x,y,s,c){ blob(heartD(x,y,s||1),c||C.pk,C.pk,2); },
+ /* birthday cake with a number: x = centre, y = plate */
+ cake:function(x,y,label){ OP_l(x-70,y,x+70,y,{c:C.ink,w:2});
+   blob('M'+(x-58)+' '+y+' L'+(x+58)+' '+y+' L'+(x+58)+' '+(y-44)+' L'+(x-58)+' '+(y-44)+' Z',C.rose);
+   blob('M'+(x-44)+' '+(y-44)+' L'+(x+44)+' '+(y-44)+' L'+(x+44)+' '+(y-80)+' L'+(x-44)+' '+(y-80)+' Z',C.peach);
+   strokePath('M'+(x-58)+' '+(y-30)+' q12 10 24 0 t24 0 t24 0 t24 0 t24 0',C.pk,2.5,400);
+   [-24,0,24].forEach(function(dx){ OP_l(x+dx,y-80,x+dx,y-104,{c:C.pu,w:4}); fillShape('M'+(x+dx)+' '+(y-122)+' q7 10 0 15 q-7 -5 0 -15 Z',C.yl,C.or); });
+   OP_t(x-22,y-52,label,{s:28,c:C.pk}); },
+ phone:function(x,y){ blob('M'+(x-48)+' '+(y-90)+' h96 v180 h-96 Z','#fff');
+   OP_l(x-20,y-78,x+20,y-78,{c:C.gy,w:2});
+   [[-30,40,C.pk],[-5,70,C.pu],[20,25,C.or]].forEach(function(b){ fillShape('M'+(x+b[0])+' '+(y+60)+' h20 v-'+b[1]+' h-20 Z',b[2]); });
+   ICON.heart(x+20,y-40,0.6,C.pk); },
+ bubble:function(x,y,w,h,c){ blob('M'+(x+14)+' '+y+' h'+(w-28)+' q14 0 14 14 v'+(h-28)+' q0 14 -14 14 h-'+(w-60)+' l-22 18 l4 -18 h-'+10+' q-14 0 -14 -14 v-'+(h-28)+' q0 -14 14 -14 Z','#fff',c||C.ink,2.5); },
+ card:function(x,y,n,txt,c){ blob('M'+x+' '+y+' h640 v96 h-640 Z','rgba(255,255,255,.85)',c,2.5);
+   fillShape('M'+(x+20)+' '+(y+20)+' h56 v56 h-56 Z',c===C.pk?C.rose:c===C.pu?C.lilac:C.mint); OP_t(x+38,y+60,n,{s:30,c:c}); OP_t(x+100,y+60,txt,{s:28,c:C.ink}); },
+ clock:function(x,y,r,c){ blob('M'+(x-r)+' '+y+' a'+r+' '+r+' 0 1 0 '+(2*r)+' 0 a'+r+' '+r+' 0 1 0 -'+(2*r)+' 0 Z','#fff',c||C.ink,3);
+   for(var i=0;i<12;i++){ var a=i*Math.PI/6; OP_l(x+Math.cos(a)*r*0.82,y+Math.sin(a)*r*0.82,x+Math.cos(a)*r*0.92,y+Math.sin(a)*r*0.92,{c:C.gy,w:2}); }
+   OP_l(x,y,x,y-r*0.6,{c:C.ink,w:3.5}); OP_l(x,y,x+r*0.45,y+r*0.2,{c:c||C.ink,w:3}); },
+ hourglass:function(x,y){ blob('M'+(x-55)+' '+(y-100)+' h110 l-45 100 l45 100 h-110 l45 -100 Z','rgba(255,255,255,.9)',C.ink,3);
+   fillShape('M'+(x-36)+' '+(y-58)+' h72 l-28 50 h-16 Z',C.yl); fillShape('M'+(x-48)+' '+(y+95)+' h96 l-20 -38 h-56 Z',C.peach);
+   OP_l(x,y-8,x,y+60,{c:C.or,w:2,dash:1}); },
+ mic:function(x,y){ blob('M'+(x-14)+' '+(y-40)+' a14 14 0 1 1 28 0 v8 a14 14 0 0 1 -28 0 Z','#e7e2ea',C.ink,2.5); OP_l(x,y-18,x,y+30,{c:C.ink,w:5}); },
+ barcode:function(x,y){ blob('M'+(x-120)+' '+(y-80)+' h240 v170 h-240 Z','#fff',C.ink,2.5);
+   var px=x-100, w=[3,1,2,1,4,1,1,3,2,1,3,1,2,4,1,2,1,3,1,2,2,1,3,1];
+   w.forEach(function(k,i){ if(i%2===0) fillShape('M'+px+' '+(y-60)+' h'+(k*3)+' v115 h-'+(k*3)+' Z',C.ink); px+=k*3+2; });
+   OP_t(x-70,y+80,'15 · 59 · 2025',{s:14,c:C.gy}); },
+ scales:function(x,y){ OP_l(x,y-130,x,y+60,{c:C.ink,w:4}); OP_l(x-80,y-110,x+80,y-110,{c:C.ink,w:4}); OP_l(x-50,y+60,x+50,y+60,{c:C.ink,w:4});
+   [-80,80].forEach(function(dx){ OP_l(x+dx,y-110,x+dx-30,y-40,{c:C.gy,w:2}); OP_l(x+dx,y-110,x+dx+30,y-40,{c:C.gy,w:2});
+     blob('M'+(x+dx-36)+' '+(y-40)+' q36 30 72 0 Z',dx<0?C.rose:C.sky); });
+   ICON.star(x,y-138,12,C.yl); },
+ plane:function(x,y){ blob('M'+(x-90)+' '+y+' q60 -18 160 -10 q20 4 0 14 q-100 10 -160 -4 Z','#fff',C.te,2.5);
+   blob('M'+(x-10)+' '+(y-8)+' l-30 -42 h18 l42 40 Z',C.mint,C.te,2); blob('M'+(x-10)+' '+(y+6)+' l-26 34 h18 l38 -32 Z',C.mint,C.te,2);
+   strokePath('M'+(x-120)+' '+(y+30)+' q-40 10 -90 -6',C.gy,2.5,500,1); }
+};
+var CUSTOM={
+ /* timeline tick on the line at y=290: x, year, label lines, row (0 above / 1 below), colour */
+ tick:function(x,yr,l1,l2,row,c){ OP_l(x,278,x,302,{c:c,w:3}); fillShape('M'+(x-7)+' 290 a7 7 0 1 0 14 0 a7 7 0 1 0 -14 0 Z',c);
+   OP_t(x-26,row?335:262,yr,{s:24,c:c});
+   var y1=row?362:200, y2=row?385:223; OP_t(x-l1.length*4.3,row?y1:(l2?y1:y2),l1,{s:16,c:C.ink}); if(l2) OP_t(x-l2.length*4.3,y2,l2,{s:16,c:C.gy}); },
+ /* age axis for training bars: ages 6–22 from x=230 to x=742 */
+ ageaxis:function(){ OP_l(230,392,760,392,{c:C.ink,w:2}); for(var a=6;a<=22;a+=2){ var x=230+(a-6)*32; OP_l(x,386,x,398,{c:C.ink,w:2}); OP_t(x-(a<10?5:10),420,String(a),{s:15,c:C.gy}); } OP_t(780,420,'age',{s:15,c:C.gy}); },
+ trainbar:function(row,name,a,b,c){ var y=150+row*62, x1=230+(a-6)*32, x2=230+(b-6)*32;
+   OP_t(60,y+8,name,{s:22,c:c}); blob('M'+x1+' '+(y-14)+' h'+(x2-x1)+' v28 h-'+(x2-x1)+' Z',c===C.pk?C.rose:c===C.bl?C.sky:c===C.pu?C.lilac:C.mint,c,2.2);
+   ICON.star(x2,y,13,C.yl); OP_t(x2+22,y+8,a+' → '+b,{s:18,c:c}); },
+ /* trainee count bar: x, y, label, number, fill colour; 1,895 = 300 px */
+ nbar:function(x,y,label,n,fill){ var w=Math.round(300*n/1895); OP_t(x,y,label,{s:18,c:C.gy}); blob('M'+(x+60)+' '+(y-20)+' h'+w+' v26 h-'+w+' Z',fill,C.ink,2); OP_t(x+70,y,n.toLocaleString('en-US'),{s:18,c:C.ink}); },
+ /* ten small heads, k of them coloured (a half for .5) */
+ tenof:function(x,y,k){ for(var i=0;i<10;i++){ var px=x+i*30;
+     if(i===Math.floor(k)&&k%1){ fillShape('M'+(px-11)+' '+y+' a11 11 0 0 1 22 0 Z',C.pk); blob('M'+(px-11)+' '+y+' a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0 Z','rgba(247,198,212,.6)',C.pk,2); }
+     else blob('M'+(px-11)+' '+y+' a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0 Z',i<k?C.pk:'rgba(247,198,212,.6)',C.pk,2); } },
+ /* average debut age bar on a 14–20 scale: x, y, label, value, colour */
+ agebar:function(x,y,label,v,c){ var w=Math.round((v-14)*70); OP_t(x,y,label,{s:20,c:c});
+   blob('M'+(x+150)+' '+(y-20)+' h'+w+' v26 h-'+w+' Z',c===C.pk?C.rose:C.sky,c,2.2); OP_t(x+160+w,y,String(v),{s:22,c:c}); },
+ /* member ages on a 12–20 line (x 300–860) */
+ ageline2:function(){ OP_l(300,410,880,410,{c:C.ink,w:2}); for(var a=12;a<=20;a++){ var x=300+(a-12)*70; OP_l(x,404,x,416,{c:C.ink,w:2}); OP_t(x-10,437,String(a),{s:16,c:C.gy}); } OP_t(895,437,'age',{s:15,c:C.gy}); },
+ ageline:function(y,label,avg,ages,c){ OP_t(40,y,label,{s:19,c:c}); OP_t(40,y+28,avg,{s:16,c:C.gy}); OP_l(300,y,860,y,{c:C.gy,w:1.5,dash:1});
+   var seen={}; ages.forEach(function(a){ var n=seen[a]=(seen[a]||0)+1, px=300+(a-12)*70, py=y-(n-1)*22;
+     blob('M'+(px-9)+' '+py+' a9 9 0 1 0 18 0 a9 9 0 1 0 -18 0 Z',c===C.pk?C.rose:C.sky,c,2); }); },
+ /* women/men share bar: y, label, women % */
+ legend:function(x,y){ fillShape('M'+x+' '+(y-14)+' h16 v16 h-16 Z','rgba(214,69,122,.55)'); OP_t(x+22,y,'women',{s:16,c:C.pk});
+   fillShape('M'+(x+110)+' '+(y-14)+' h16 v16 h-16 Z','rgba(74,108,192,.4)'); OP_t(x+132,y,'men',{s:16,c:C.bl}); },
+ sbar:function(y,label,w){ var W=420, a=Math.round(W*w/100), x=300;
+   OP_t(60,y,label,{s:19,c:C.ink}); fillShape('M'+x+' '+(y-20)+' h'+a+' v26 h-'+a+' Z','rgba(214,69,122,.55)'); fillShape('M'+(x+a)+' '+(y-20)+' h'+(W-a)+' v26 h-'+(W-a)+' Z','rgba(74,108,192,.4)');
+   OP_r(x,y-20,W,26,{c:C.ink}); OP_t(x+W+14,y,w+'% women',{s:18,c:w>=50?C.pk:C.bl}); },
+ /* 25 dots, n of them pink */
+ grid25:function(x,y,n){ for(var i=0;i<25;i++){ var px=x+(i%5)*34, py=y+Math.floor(i/5)*34;
+     blob('M'+(px-11)+' '+py+' a11 11 0 1 0 22 0 a11 11 0 1 0 -22 0 Z',i<n?C.rose:C.sky,i<n?C.pk:C.bl,2); } },
+ /* the 2025 top ten albums: rank 7 is the only girl group */
+ albums10:function(x,y){ for(var i=0;i<10;i++){ var px=x+i*80, g=i===6, c=g?C.pk:C.bl;
+     blob('M'+px+' '+(y-60)+' h60 v60 h-60 Z',g?C.rose:C.sky,c,2.2); blob('M'+(px+16)+' '+(y-30)+' a14 14 0 1 0 28 0 a14 14 0 1 0 -28 0 Z','#fff',c,1.8);
+     OP_t(px+(i<9?24:18),y+28,String(i+1),{s:18,c:c}); } },
+ qbox:function(x,y,n,l1,l2){ blob('M'+x+' '+y+' h880 v190 h-880 Z','rgba(255,255,255,.7)',C.pu,2.5); blob('M'+(x+22)+' '+(y+62)+' a28 28 0 1 0 56 0 a28 28 0 1 0 -56 0 Z',C.lilac,C.pu,2.5); OP_t(x+40,y+74,n,{s:32,c:C.pu});
+   OP_t(x+100,y+75,l1,{s:24,c:C.ink}); OP_t(x+100,y+125,l2,{s:22,c:C.pk}); }
+};
+
+/* first paint and event wiring (runs after the lesson data) */
+(function(){
+  pop=$('pop'); wbSvg=$('wbSvg'); wbLayer=$('wbLayer');
+  buildPage();
+  /* clicks */
+  document.addEventListener('click',function(ev){
+    var t=ev.target, g=t.closest?t.closest('.gl'):null;
+    if(g){ ev.preventDefault(); openPop(g); return; }
+    if(t.closest&&t.closest('#pop')){
+      if(t.id==='pop-say'){ if(!$('wb').hidden) wbPause(); sayEntry(pop.getAttribute('data-k')); }
+      if(t.id==='popclose') closePop(); return; }
+    closePop();
+    var s=t.closest?t.closest('.say'):null; if(s){ sayMarked(textFor(s.getAttribute('data-say')),s); return; }
+    var pb=t.closest?t.closest('.pbtn'):null; if(pb){ sayEntry(pb.getAttribute('data-pk')); return; }
+    var ob=t.closest?t.closest('[data-open]'):null; if(ob){ wbOpen(+ob.getAttribute('data-open')); return; }
+  });
+  document.addEventListener('keydown',function(ev){
+    var g=ev.target.closest?ev.target.closest('.gl'):null;
+    if(g&&(ev.key==='Enter'||ev.key===' ')){ ev.preventDefault(); openPop(g); return; }
+    if(ev.key==='Escape'&&pop.classList.contains('show')){ closePop(); ev.stopPropagation(); return; }
+    if($('wb').hidden) return;
+    if(ev.key==='Escape') wbClose(); else if(ev.key==='ArrowRight') $('wbNext').click(); else if(ev.key==='ArrowLeft') $('wbPrev').click(); else if(ev.key===' '&&ev.target.tagName!=='BUTTON'){ ev.preventDefault(); $('wbPlay').click(); }
+  },true);
+  window.addEventListener('resize',closePop); window.addEventListener('scroll',function(){ if(!window.matchMedia('(max-width:600px)').matches) closePop(); },{passive:true}); $('wbCapWrap').addEventListener('scroll',closePop);
+  $('startBtn').onclick=function(){ wbOpen(0); }; $('toTop').onclick=function(){ window.scrollTo({top:0,behavior:'smooth'}); }; $('voiceLink').onclick=function(){ $('voicePanel').scrollIntoView({behavior:'smooth'}); };
+  $('zhAll').onclick=function(){ setPageZh(!this.classList.contains('on')); }; if(lsGet('iqn-pzh')==='1') setPageZh(true);
+  /* whiteboard controls */
+  $('wbClose').onclick=wbClose; $('wbMenu').onclick=wbList;
+  $('wbPlay').onclick=function(){ if(WB.playing) wbPause(); else { WB.playing=true; wbRender(); } };
+  $('wbPrev').onclick=function(){ if(WB.k>0) WB.k--; else if(WB.b>0){ WB.b--; WB.k=BOARDS[WB.b].steps.length-1; } WB.playing=true; wbRender(); };
+  $('wbNext').onclick=function(){ if(WB.k<BOARDS[WB.b].steps.length-1) WB.k++; else if(WB.b<BOARDS.length-1){ WB.b++; WB.k=0; } WB.playing=true; wbRender(); };
+  $('wbNextB').onclick=function(){ WB.b++; WB.k=0; WB.playing=true; wbRender(); };
+  $('wbReplay').onclick=function(){ WB.playing=true; wbRender(); };
+  var zb=$('wbZhBtn'); function zhBtn(){ zb.classList.toggle('on',WB.zhOn); zb.textContent=WB.zhOn?'中譯 ✓':'中譯'; } zhBtn();
+  zb.onclick=function(){ WB.zhOn=!WB.zhOn; lsSet('iqn-zh',WB.zhOn?'1':'0'); $('wbZh').hidden=!WB.zhOn; zhBtn(); };
+  var vb=$('wbVoice');
+  vb.onclick=function(){ WB.voiceOn=!WB.voiceOn; vb.classList.toggle('off',!WB.voiceOn); vb.textContent=WB.voiceOn?'🔊 Voice':'🔇 Captions'; if(!WB.voiceOn) stopSay(); if(WB.playing) wbRender(); };
+  /* voice settings */
+  if(!TTS){ document.body.classList.add('nosay'); WB.voiceOn=false; vb.hidden=true; }
+  else {
+    Array.prototype.forEach.call(document.querySelectorAll('#rates button'),function(b){
+      b.classList.toggle('on',parseFloat(b.getAttribute('data-rate'))===sayRate);
+      b.onclick=function(){ sayRate=parseFloat(b.getAttribute('data-rate')); lsSet('iqn-rate',sayRate);
+        Array.prototype.forEach.call(document.querySelectorAll('#rates button'),function(x){ x.classList.toggle('on',x===b); });
+        sayMarked(RATE_SAMPLE); }; });
+    loadVoices();
+    /* voice pickers are built by loadVoices(); one listener handles them all */
+    $('voiceSels').addEventListener('change',function(ev){ var sel=ev.target; if(sel.tagName!=='SELECT') return;
+      if(sel.id==='enSel'){ enId=sel.value; lsSet('iqn-en',enId); loadVoices(); sayMarked('Hello. This is my reading voice.'); return; }
+      var l=sel.getAttribute('data-lang'); VOX[l].id=sel.value; lsSet('iqn-'+l,sel.value); loadVoices();
+      var k=VOICE_SAMPLE[l]||Object.keys(GL).filter(function(x){ return GL[x].t===l; })[0]; if(k) sayEntry(k); });
+    if(speechSynthesis.addEventListener) speechSynthesis.addEventListener('voiceschanged',loadVoices); else speechSynthesis.onvoiceschanged=loadVoices;
+  }
+})();
+
+</script>
+</body>
+</html>
