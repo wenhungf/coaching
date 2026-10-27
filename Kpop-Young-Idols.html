@@ -253,7 +253,7 @@
     <p class="zhp zh1" hidden>十三歲，已經站上舞台</p>
     <p class="deck">Three members of a new K-pop girl group are 13. How young is too young to be an idol? Are girls pushed younger than boys, and who is really watching? We looked at the ages, the fans and the law.</p>
     <p class="zhp zdeck" hidden>一個新的 K-pop 女團裡，有三名成員只有 13 歲。幾歲當偶像算太小？女孩真的比男孩更早被推上台嗎？到底是誰在看？我們查了年齡、粉絲和法律。</p>
-    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>News &amp; Features</b> · South Korea</span><span class="dot">◆</span><span>Level B1–B2</span><span class="dot">◆</span><span>~13 min read</span></div>
+    <div class="byline"><span>InkQuest Reading Room</span><span class="dot">◆</span><span><b>News &amp; Features</b> · South Korea</span><span class="dot">◆</span><span>Level B1–B2</span><span class="dot">◆</span><span>~15 min read</span></div>
     <div class="tools"><button type="button" class="tlink" id="zhAll">Show 中譯</button><button type="button" class="tlink" id="voiceLink">🔊 Voices</button></div>
     <button type="button" class="wbentry" id="startBtn"><span class="ic">▶</span><span><b>Whiteboard lesson</b><small id="wbCount"></small></span></button>
     <details class="boards"><summary>Choose a board · 選擇單元</summary><ol id="boardList"></ol></details>
@@ -310,10 +310,18 @@
       <li><a href="https://www.koreatimes.co.kr/entertainment/k-pop/20260813/fewer-than-4-in-100-k-pop-groups-ever-sell-300000-of-an-album-study">The Korea Times — the same study: sales and survival</a></li>
       <li><a href="https://www.soompi.com/article/1810840wpp/melon-announces-top-100-songs-of-2025-year-end-chart">Soompi — Melon year-end Top 100, 2025</a></li>
       <li><a href="https://blog.104.com.tw/precautions-for-employing-child-labor/">104 人力銀行 — Taiwan Labor Standards Act rules for young workers</a></li>
+      <li><a href="https://www.today.com/today/amp/rcna188762">TODAY — At what age should kids wear crop tops? The internet is divided</a></li>
+      <li><a href="https://pudding.cool/2019/02/dress-code-sexualization/">The Pudding — 481 US high-school dress codes analyzed (2019)</a></li>
+      <li><a href="https://www.edweek.org/leadership/school-dress-codes-arent-fair-to-everyone-federal-study-finds/2022/10">Education Week — GAO review of school dress codes (Oct. 2022)</a></li>
+      <li><a href="https://view.asiae.co.kr/article/2021031011262371814">Asia Economy — 31 Seoul girls’ schools regulated underwear color (2021)</a></li>
+      <li><a href="https://www.apa.org/monitor/apr07/apatask">APA Monitor — Task Force on the Sexualization of Girls (2007)</a></li>
+      <li><a href="https://v.daum.net/v/fGqBGle43D?f=p">Daum News — 2025 law bans forcing minors into excessive exposure; no penalty clause</a></li>
+      <li><a href="https://www.koreatimes.co.kr/amp/business/companies/20120925/ban-on-overexposure">The Korea Times — "Ban on overexposure" for minors on TV (2012)</a></li>
+      <li><a href="https://www.thejakartapost.com/life/2017/10/19/girls-generations-stylist-reveals-hidden-side-of-entertainment-agencies">The Jakarta Post / Korea Herald — a K-pop stylist on dressing idols</a></li>
     </ol>
   </section>
 
-  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>News &amp; Features</em>. Figures reflect reporting through October 26, 2026. Ages are at debut unless stated. <br><span class="han">數據截至 2026 年 10 月 26 日；年齡除另有說明外，皆為出道時的年齡。</span><br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
+  <footer><span class="strong">An original InkQuest reading</span> &mdash; part of <em>News &amp; Features</em>. Figures reflect reporting through October 27, 2026. Ages are at debut unless stated. <br><span class="han">數據截至 2026 年 10 月 27 日；年齡除另有說明外，皆為出道時的年齡。</span><br><span class="strong">For internal, non-commercial classroom study only. 僅供校內教學參考之用。</span></footer>
 </div>
 
 <div id="scrim"></div>
@@ -375,7 +383,7 @@ var LANGS={
  fr:{re:/^fr/i,home:/^fr[-_]FR/i,good:/Denise|Henri|Vivienne|Remy|Google français|Thomas|Amélie|Audrey|Aurélie|Marie/i,en:'French',zh:'法文',bank:'French names & words',bankzh:'法語發音',tag:'French · 法語發音'},
  es:{re:/^es/i,home:/^es[-_]ES/i,good:/Elvira|Alvaro|Álvaro|Google español|Mónica|Monica|Jorge|Marisol|Lucia/i,en:'Spanish',zh:'西班牙文',bank:'Spanish names',bankzh:'西班牙語發音',tag:'Spanish · 西班牙語發音'},
  ko:{re:/^ko/i,home:/^ko[-_]KR/i,good:/Yuna|SunHi|InJoon|Hyunsu|Google 한국|Heami|Jian|Minjung|Sora/i,en:'Korean',zh:'韓文',bank:'Korean names & words',bankzh:'韓語發音',tag:'Korean · 韓語發音'},
- zh:{re:/^(zh|cmn)/i,home:/^(zh|cmn)[-_](TW|Hant)/i,good:/Mei-?Jia|HsiaoChen|HsiaoYu|YunJhe|Yating|Zhiwei|Hanhan|Google 國語/i,en:'Mandarin',zh:'華語',bank:'Mandarin names',bankzh:'華語發音',tag:'Mandarin · 華語發音'}
+ zh:{re:/^(zh|cmn)/i,home:/^(zh|cmn)[-_](TW|Hant)/i,prefer:/Google 國語|Mei-?Jia|HsiaoChen/i,good:/Mei-?Jia|HsiaoChen|HsiaoYu|YunJhe|Yating|Zhiwei|Hanhan|Google 國語/i,en:'Mandarin',zh:'華語',bank:'Mandarin names',bankzh:'華語發音',tag:'Mandarin · 華語發音'}
 };
 var sayRate=parseFloat(lsGet('iqn-rate'))||0.9, enId=lsGet('iqn-en')||'';
 var EN=[], ENV=null, VOX={}, sayTok=0, sayBtn=null;
@@ -397,7 +405,8 @@ function loadVoices(){
   fillSel($('enSel'),EN,ENV,'（這個瀏覽器沒有英文語音）');
   usedLangs().forEach(function(l){ var L=LANGS[l], X=VOX[l], hm=function(v){ return L.home.test(v.lang)?0:1; };
     X.list=all.filter(function(v){ return L.re.test(v.lang)&&!NOVELTY.test(v.name); }).sort(function(a,b){ return hm(a)-hm(b)||vq(b)-vq(a); });
-    X.cur=X.list.filter(function(v){ return vid(v)===X.id; })[0]||X.list.filter(function(v){ return hm(v)===0&&L.good.test(v.name); })[0]||X.list[0]||null;
+    /* saved choice first; then a voice the language prefers (L.prefer), then any good home-region voice */
+    X.cur=X.list.filter(function(v){ return vid(v)===X.id; })[0]||(L.prefer&&X.list.filter(function(v){ return L.prefer.test(v.name); })[0])||X.list.filter(function(v){ return hm(v)===0&&L.good.test(v.name); })[0]||X.list[0]||null;
     fillSel($('sel-'+l),X.list,X.cur,'（沒有'+L.zh+'語音：'+L.zh+'名字會用英文近似音朗讀）'); });
   voiceNote();
 }
@@ -434,7 +443,7 @@ function sayYears(t){
 function cleanEn(t){
   t=sayYears(t);
   if(window.SAY_FIX) SAY_FIX.forEach(function(f){ t=t.replace(f[0],f[1]); });
-  t=t.replace(/\bNo\.\s?(\d)/g,'number $1');
+  t=preNorm(t);
   return t.replace(/\bS&P\b/g,'S and P').replace(/NT\$\s?([\d.]+)/g,'$1 New Taiwan dollars').replace(/\$(\d+)/g,'$1 dollars')
     .replace(/€\s?([\d.]+)\s?(bn|billion)/g,'$1 billion euros').replace(/\s—\s/g,', ').replace(/—/g,', ').replace(/\bOct\./g,'October')
     .replace(/(\d)–(\d)/g,'$1 to $2').replace(/\s+/g,' ').trim();
@@ -452,13 +461,22 @@ function segs(s){
     last=MARK.lastIndex; }
   add('en',s.slice(last));
   var res=[]; out.forEach(function(p){ if(p.lang!=='en'){ res.push(p); return; }
-    p.text.split(/(?<=[.!?]["”]?)\s+/).forEach(function(x){
+    preNorm(p.text).split(/(?<=[.!?]["”]?)\s+/).forEach(function(x){
       /* French names left unmarked in the text still get the French voice */
       x.split(frAuto()).forEach(function(y,i){ if(!y||!y.replace(/[\s,.;:—"'()]/g,'')) return; res.push(i%2?{lang:GL[FR_KEY[y]].t,text:y,e:GL[FR_KEY[y]]}:{lang:'en',text:y}); }); }); });
   return res;
 }
 /* short forms that should still get the foreign voice when left unmarked (filled per article) */
 var FR_KEY={};
+/* before splitting into sentences: periods inside abbreviations are not sentence ends.
+   "No. 1" -> "number 1"; "8 p.m." -> "8 PM" (keeps a full stop only if a new sentence follows);
+   "under 15 may" would be read as a date ("the 15th of May"), so a number before "may" takes "can". */
+function preNorm(t){
+  return t.replace(/\bNo\.\s?(\d)/g,'number $1')
+    .replace(/\b([ap])\.m\.(\s+[A-Z])/g,function(m,x,rest){ return x.toUpperCase()+'M.'+rest; })
+    .replace(/\b([ap])\.m\./g,function(m,x){ return x.toUpperCase()+'M'; })
+    .replace(/\bOct\.\s/g,'October ').replace(/\bU\.S\./g,'US').replace(/(\d) may\b/g,'$1 can');
+}
 /* built on first use (after the page has collected headwords): every French glossary headword, plus
    surnames and plurals, so a foreign name left unmarked in the text still gets its own voice.
    Headwords that are also English words go in NO_AUTO. Entries may list extra shown forms in
@@ -710,10 +728,12 @@ var GL={
 'kim jeong-seop':{t:'ko',h:'Kim Jeong-seop',native:'김정섭',zh:'韓國誠信女子大學文化產業研究所教授',d:'Professor at Sungshin Women\'s University in Seoul. In 2026 he published a study of every idol group that debuted from 1996 to 2025.',ipa:'/kim.dʑʌŋ.sʌp/',resp:'kim juhng-SUHP',tip:'섭 結尾的 p 只閉嘴、不送氣，像台語「十」的收尾。',en:'kim juhng suhp'},
 'kim doo-na':{t:'ko',h:'Kim Doo-na',native:'김두나',zh:'韓國律師（公益律師團體「希望與法」）',d:'A lawyer with the public-interest group Hope and Law who studies the rights of young performers.',ipa:'/kim.du.na/',resp:'kim doo-NAH',tip:'三個音節都很短，平平地唸。',en:'kim doo nah'},
 'samchon fan':{t:'ko',h:'samchon fan',native:'삼촌팬',zh:'大叔粉絲',d:'"Uncle fan": Korean slang for a grown man who is a fan of a girl group. Samchon (삼촌) means "uncle."',ipa:'/sam.tɕʰon.pʰɛn/',resp:'SAHM-chon pen',tip:'삼촌 是「叔叔」，팬 是英文 fan 的韓文寫法，韓國人唸成「pen」。',en:'sahm chon pen'},
+'hyuna':{t:'ko',h:'HyunA',native:'현아',zh:'泫雅',d:'Singer who debuted with the girl group Wonder Girls in 2007, at 14, and later became a solo star.',ipa:'/çʌ.na/',resp:'HYUH-nah',tip:'兩個音節：현（hyon）＋아（a），連起來像「hyo-na」，h 很輕。',en:'hyuh nah'},
+'ive':{t:'ko',h:'IVE',native:'아이브',zh:'韓國女團 IVE',d:'A Starship Entertainment girl group that debuted in 2021. The name is said like "I\'ve."',ipa:'/a.i.bɯ/',resp:'I\'ve (Korean: ah-ee-beu)',tip:'英文唸成 I\'ve；韓國人寫成 아이브，唸「阿-伊-布」。',en:'eye-v'},
 /* ---------- Mandarin names ---------- */
 'tzuyu':{t:'zh',h:'Tzuyu',native:'周子瑜',forms:{'Tzuyu':'子瑜'},zh:'周子瑜',d:'Singer from Tainan, Taiwan. Scouted at 13, she trained in Seoul and debuted with the girl group TWICE in 2015, at 16. In 2023 she passed Jay Chou as the most-followed Taiwanese star on social media.',ipa:'/tsɨ˨˩˦ y˧˥/',resp:'dzuh-YOO',tip:'Tzuyu 是韓國公司用的拼法（漢語拼音是 Zǐyú）。英文裡多半唸成 "chew-yoo"，華語就是「子瑜」。',en:'dzuh yoo'},
 /* ---------- culture & context ---------- */
-'a2o lite':{t:'c',h:'A2O LITE',zh:'A2O LITE（李秀滿新女團）',d:'A nine-member girl group from A2O Entertainment, launched October 12–13, 2026. At debut its members were 13 to 17, from Korea, China, Japan, Thailand and the United States.'},
+'a2o lite':{t:'c',h:'A2O LITE',say:'A-2-O Lite',zh:'A2O LITE（李秀滿新女團）',d:'A nine-member girl group from A2O Entertainment, launched October 12–13, 2026. At debut its members were 13 to 17, from Korea, China, Japan, Thailand and the United States.'},
 'k-pop':{t:'c',h:'K-pop',zh:'韓國流行音樂',d:'Korean pop music, especially the idol groups trained and managed by entertainment agencies.'},
 'idol':{t:'c',zh:'偶像（韓國流行樂）',d:'In K-pop, a singer trained by an agency to sing, dance, act and appear on TV, usually as part of a group.'},
 'g-dragon':{t:'c',h:'G-Dragon',zh:'權志龍',d:'Leader of the boy group Big Bang, which debuted in 2006, and a solo star. He became a trainee at 8. His 2025 song "Home Sweet Home" was No. 2 on the Melon chart for the year.'},
@@ -749,11 +769,17 @@ var GL={
 'outnumber':{t:'v',zh:'人數多於',d:'To be more in number than another group.',lvl:'C1'},
 'minors':{t:'v',zh:'未成年人',d:'People under the legal adult age (in South Korea and Taiwan, under 19 and 18).',lvl:'B2'},
 'backlash':{t:'v',zh:'強烈反彈',d:'A strong negative reaction from many people.',lvl:'C1'},
+'midriffs':{t:'v',zh:'腹部（上腹、腰部）',d:'The middle part of the body, between the chest and the waist. A crop top shows the midriff.',lvl:'C1'},
+'dress codes':{t:'v',zh:'服裝規定',d:'Rules about what people may wear at a school, office or event.',lvl:'B2'},
+'stylists':{t:'v',zh:'造型師',d:'People whose job is to choose clothes, hair and makeup for performers.',lvl:'B2'},
+'sexualization':{t:'v',zh:'性化',d:'Treating someone, especially a child, mainly as a sexual object, or giving them a sexual image they did not choose.',lvl:'C1'},
+'imposed':{t:'v',zh:'強加的',d:'Forced on someone by another person, not chosen.',lvl:'C1'},
+'watchdog':{t:'v',zh:'監督機構',d:'An organization that checks that companies or the media follow the rules.',lvl:'C1'},
 /* ---------- phrases ---------- */
 'lost sleep over':{t:'p',zh:'為……煩惱到睡不著',d:'"I haven\'t lost sleep over it" means "I haven\'t worried much about it."',lvl:'B2'},
 'buys them more of that time':{t:'p',zh:'替他們多爭取一些時間',d:'"Buy time" means to get more time. Here: starting young gives idols more years at their best.',lvl:'B2'},
 'on paper':{t:'p',zh:'書面上、理論上',d:'According to the rules or the plan, though real life may be different.',lvl:'B2'},
-'adult tastes':{t:'p',zh:'成人的口味、喜好',d:'What grown-ups like or want to see.',lvl:'B2'},
+'adult tastes':{t:'p',zh:'成人的口味、喜好',d:'What grown-ups like or want to see. Critics have a name for media shaped around what men want to see: the "male gaze," a term from 1970s film criticism.',x:'「男性凝視」（male gaze）：英國影評人蘿拉・莫薇（Laura Mulvey）在 1975 年提出的概念，指電影和媒體常常從男性想看的角度來呈現女性。',lvl:'B2'},
 /* ---------- grammar ---------- */
 'too young to':{t:'g',zh:'too + 形容詞 + to + 動詞：太……而不能……',d:'"Too young to debut" means so young that debuting is not right. Compare: "old enough to debut."',lvl:'B1'},
 'the younger the debut, the more years':{t:'g',zh:'the + 比較級……，the + 比較級……：越……就越……',d:'Two comparatives linked: when one thing grows, the other grows too. "The earlier you start, the longer you can stay."',lvl:'B2'},
@@ -763,7 +789,7 @@ var NO_AUTO={'melon':1};
 var VOICE_SAMPLE={ko:'lee soo-man',zh:'tzuyu'};
 var RATE_SAMPLE='This is how fast I will read. Our story starts with [[Lee Soo-man]] in Seoul.';
 /* how the English voice should say some group names */
-var SAY_FIX=[[/IZ\*ONE/g,'Izone'],[/\bIVE\b/g,"I've"],[/\bSTAYC\b/g,'Stay C'],[/fromis_9/g,'fromis nine'],[/NI-KI/g,'Niki'],[/\bEJAE\b/g,'Ee-jay'],[/\bA2O\b/g,'A two O']];
+var SAY_FIX=[[/IZ\*ONE/g,'Izone'],[/\bSTAYC\b/g,'Stay C'],[/fromis_9/g,'fromis nine'],[/NI-KI/g,'Niki'],[/\bEJAE\b/g,'Ee-jay'],[/\bA2O LITE\b/g,'A-2-O Lite'],[/\bA2O SOUL\b/g,'A-2-O Soul'],[/\bA2O\b/g,'A-2-O']];
 
 /* Article text (Nine Words layout). It opens on one stage, widens to the industry, the fans and the law,
    then comes back to the stage. wb = whiteboard board index (or list). */
@@ -781,7 +807,7 @@ var ARTICLE=[
    zh:'李秀滿不是第一次這樣做。1990 年代末，他看中一個陪哥哥去試鏡的 11 歲女孩。兩年後，她 13 歲，以「寶兒」之名出道。2002 年，她成為第一位登上日本主要專輯排行榜冠軍的韓國歌手，她的故事也成了整個產業的範本。'},
   {en:'In an old video that [[went viral]] again this month, Lee explains his thinking. Debut between 13 and 15, he says, and you reach your [[peak]] at 16 to 18. Agencies [[used to]] pick trainees at 10 to 12. "We thought even 9- or 7-year-olds were fine."',
    zh:'這個月，一段舊影片又在網路上瘋傳。影片裡，李秀滿說明他的想法：13 到 15 歲出道，16 到 18 歲就能達到巔峰。經紀公司以前會挑 10 到 12 歲的練習生。「我們當時覺得，就算 9 歲、7 歲也沒關係。」'},
-  {en:'Many stars followed the same path. [[Taemin]] of SHINee and HyunA of Wonder Girls debuted at 14. So did [[Jang Won-young]] of IZ*ONE, NI-KI of ENHYPEN and Chiquita of BABYMONSTER. In 2024, [[Lim Seo-won]] of UNIS was 13. Even the most famous names started early. [[G-Dragon]] of Big Bang became a [[trainee]] at 8 and debuted at 18. Jennie of Blackpink started training at 14 and debuted at 20.',
+  {en:'Many stars followed the same path. [[Taemin]] of SHINee and [[HyunA]] of Wonder Girls debuted at 14. So did [[Jang Won-young]] of IZ*ONE, NI-KI of ENHYPEN and Chiquita of BABYMONSTER. In 2024, [[Lim Seo-won]] of UNIS was 13. Even the most famous names started early. [[G-Dragon]] of Big Bang became a [[trainee]] at 8 and debuted at 18. Jennie of Blackpink started training at 14 and debuted at 20.',
    zh:'許多明星都走過同一條路。SHINee 的泰民、Wonder Girls 的泫雅都在 14 歲出道，IZ*ONE 的張員瑛、ENHYPEN 的 NI-KI 和 BABYMONSTER 的 Chiquita 也是。2024 年，UNIS 的 Lim Seo-won 出道時只有 13 歲。就連最有名的人也很早起步：BIGBANG 的權志龍 8 歲就當練習生，18 歲出道；BLACKPINK 的 Jennie 14 歲開始受訓，20 歲出道。'},
   {en:'Taiwan has its own story. In 2012, [[talent scouts]] spotted a 13-year-old girl at a performing-arts school in Tainan. She moved to Seoul to train, and three years later she debuted with [[TWICE]] at 16. In 2023, [[Tzuyu]] passed Jay Chou as the most-followed Taiwanese star on social media. Why start so young? Culture critic [[Jung Duk-hyun]] says an idol\'s best years are short, and debuting early "[[buys them more of that time]]."',
    zh:'台灣也有自己的故事。2012 年，星探在台南一間表演藝術學校發現一個 13 歲的女孩。她搬到首爾受訓，三年後以 16 歲之齡隨 TWICE 出道。2023 年，周子瑜超越周杰倫，成為社群媒體上追蹤人數最多的台灣明星。為什麼要這麼早開始？文化評論家 Jung Duk-hyun 說，偶像的黃金期很短，早一點出道，「能替他們多爭取一些時間」。'}
@@ -805,12 +831,24 @@ var ARTICLE=[
  {h:'Who is watching?',hz:'誰在看？',wb:[6,7],paras:[
   {en:'Many people believe an old [[formula]]: boy groups for girls, girl groups for men. The first half is clearly true. In a 2022 online [[census]] of BTS fans, more than 96 percent of the 562,000 people who answered were female. Boy groups also sell the albums. Of the ten best-selling albums in South Korea in 2025, nine were by boy groups. The top seller, Stray Kids, sold almost 3.4 million copies of one album.',
    zh:'很多人相信一個老公式：男團給女生看，女團給男生看。前半句顯然成立。2022 年一份 BTS 粉絲的網路普查中，56 萬多名填答者有超過 96% 是女性。專輯也是男團在賣：2025 年韓國最暢銷的十張專輯，有九張是男團的。冠軍 Stray Kids 的一張專輯賣出將近 340 萬張。'},
-  {en:'The second half is [[shakier]]. When the Korean online bookstore [[Aladin]] looked at who bought girl-group albums in 2022, women were the majority for 17 of 27 groups: 77 percent for STAYC and 59 percent for Blackpink. About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of listeners to the NewJeans song "Attention" were women. In 2022 a Seoul newspaper reported that the old rule no longer held. Many girl groups now sell an image young women want to copy.',
-   zh:'後半句就沒那麼站得住腳了。韓國網路書店阿拉丁 2022 年分析女團專輯的買家，27 個女團中有 17 個以女性買家為主：STAYC 77%，BLACKPINK 59%。NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，NewJeans〈Attention〉有 65% 的聽眾是女性。首爾一家報紙在 2022 年報導，這條老規則已經不成立了。許多女團現在賣的，是年輕女生想模仿的形象。'},
+  {en:'The second half is [[shakier]]. When the Korean online bookstore [[Aladin]] looked at who bought girl-group albums in 2022, women were the majority for 17 of 27 groups: 77 percent for STAYC and 59 percent for Blackpink. About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of listeners to the NewJeans song "Attention" were women. In 2022 a Seoul newspaper reported that the old rule, girl groups for male fans, no longer held. Many girl groups now sell an image young women want to copy.',
+   zh:'後半句就沒那麼站得住腳了。韓國網路書店阿拉丁 2022 年分析女團專輯的買家，27 個女團中有 17 個以女性買家為主：STAYC 77%，BLACKPINK 59%。NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，NewJeans〈Attention〉有 65% 的聽眾是女性。首爾一家報紙在 2022 年報導，「女團給男粉」這條老規則已經不成立了。許多女團現在賣的，是年輕女生想模仿的形象。'},
   {en:'Male fans have not disappeared. Some groups still sell mostly to men: 89 percent of Brave Girls album buyers were men, and 77 percent of fromis_9 buyers. Koreans even have a word for grown men who follow girl groups: [[samchon fan]], or "uncle fan." So the audience is mixed, and it changes from group to group. That leaves a fair question: when a 13-year-old wears a crop top on stage, whose taste is it for?',
    zh:'男粉並沒有消失。有些團體的買家仍以男性為主：Brave Girls 的專輯買家 89% 是男性，fromis_9 是 77%。韓國甚至有個詞專門形容追女團的成年男性：「삼촌팬」，也就是「大叔粉」。所以觀眾是混合的，而且每個團體都不一樣。這就留下一個值得問的問題：一個 13 歲的孩子穿短版上衣上台，是為了迎合誰的口味？'}
  ]},
- {h:'Two clocks',hz:'兩個時鐘',wb:8,paras:[
+ {h:'Same top, different stage',hz:'同一件上衣，不同的舞台',wb:8,paras:[
+  {en:'Crop tops are everywhere outside Korea too. In a viral TikTok video, an Iowa mother filmed the girls\' section of a Target store, full of short tops, and said it should not be this hard to find a full-length shirt for her 6-year-old. American parents argued about it online. One let her daughter start wearing crop tops at 10 and said there is nothing sexual about a child in a crop top unless adults bring it. Another made a deal: a tank top underneath as a tween, and a little skin at 14.',
+   zh:'在韓國以外，短版上衣也到處都是。一支爆紅的 TikTok 影片裡，一位愛荷華州的媽媽拍下 Target 賣場女童區滿滿的短版上衣，說要幫 6 歲女兒找一件正常長度的衣服，不該這麼難。美國家長在網路上吵成一團。一位媽媽讓女兒 10 歲就開始穿短版上衣，說孩子穿短版上衣本身沒有任何性意味，除非大人自己往那裡想。另一位媽媽和女兒談好條件：小學高年級時裡面要加一件背心，14 歲才可以露一點肚子。'},
+  {en:'American schools are not relaxed about bare stomachs, either. A 2019 study of 481 public high schools found that 71 percent banned bare [[midriffs]], more than any other part of the body. A U.S. government review in 2022 found that more than 90 percent of school [[dress codes]] ban clothes mostly worn by girls, and critics say the rules fall hardest on girls. Korean schools can be stricter still: in 2021, 31 girls\' middle and high schools in Seoul had rules on the color of students\' underwear.',
+   zh:'美國學校對露肚子也不寬鬆。2019 年一份研究分析 481 所公立高中，發現 71% 禁止露出腹部，是被禁最多的身體部位。美國政府在 2022 年的調查發現，九成以上的學校服裝規定，禁止的是主要由女生穿的衣服；批評者說，這些規定對女生最嚴苛。韓國的學校可能更嚴：2021 年，首爾有 31 所女子國高中，校規甚至規定學生內衣的顏色。'},
+  {en:'So the shirt is not the difference. The difference is who chooses it, and for whom. An American girl picks her top at the mall, sometimes after an argument with her mother, and wears it to see her friends. In K-pop, stage outfits are usually chosen by the agency and its [[stylists]], for a camera, a dance and millions of viewers, and her image is part of what the company sells. In 2007 the American Psychological Association drew that line. [[Sexualization]], its task force said, includes sexuality that is [[imposed]] on a girl rather than chosen by her. The same report also blamed American companies, for selling things like thongs sized for grade-school girls.',
+   zh:'所以差別不在衣服本身，而在於是誰選的、為了誰而穿。美國女孩在購物中心自己挑上衣，有時還得先跟媽媽吵一架，穿去跟朋友見面。在 K-pop，舞台服裝通常由經紀公司和造型師決定，是為了鏡頭、舞蹈和幾百萬名觀眾，而她的形象就是公司販賣的商品的一部分。美國心理學會在 2007 年就劃過這條線：該會的專案小組說，「性化」包括把性強加在女孩身上，而不是由她自己選擇。同一份報告也批評了美國企業，例如販售小學女生尺寸的丁字褲。'},
+  {en:'There is a practical side too. Singing and dancing at full speed under stage lights is hot, hard work. A guide from the American Council on Exercise tells people exercising in the heat to wear "minimal clothing" so the skin can lose heat, or clothes that are light and loose. Street dancers know both answers: some dance in tank tops, others in baggy T-shirts. And sometimes idols choose for themselves. When [[IVE]] performed at an outdoor football match in July 2025 and some fans called the outfits too revealing, member Rei said the members had asked for their uniforms to be remade the way each of them wanted. Comfort and choice are real reasons. Whether they explain a crop top on a 13-year-old is a fair question.',
+   zh:'這件事也有實際的一面。在舞台燈光下全力唱跳，又熱又累。美國運動委員會的指南建議，在高溫下運動的人要穿「越少越好」，讓皮膚散熱，或者穿輕薄寬鬆的衣服。街舞舞者兩種做法都有：有人穿背心，有人穿寬大的 T 恤。偶像有時也會自己選擇。2025 年 7 月，IVE 在一場戶外足球賽表演，有些粉絲批評服裝太暴露，成員 Rei 說，是成員們請人依照各自的喜好改製球衣的。舒適和自主都是真實的理由，但它們能不能解釋一個 13 歲孩子身上的短版上衣，是值得問的問題。'},
+  {en:'Korea has written a version of that line into law. Since August 2025, agencies may not force child performers into "excessive exposure or overly suggestive expression." As far back as 2012, the Korean broadcast [[watchdog]] said minors should not appear on TV in excessively revealing clothing. The hard part is the word "excessive." Who decides how much is too much? And the 2025 law has no penalty for breaking it.',
+   zh:'韓國已經把類似的界線寫進法律。2025 年 8 月起，經紀公司不得強迫兒少表演者「過度暴露或做出過於煽情的表現」。早在 2012 年，韓國廣播審議機構就表示，未成年人不應穿著過度暴露的服裝上電視。難處在於「過度」這兩個字：多少才算太多，由誰決定？而且 2025 年的法律對違規者沒有罰則。'}
+ ]},
+ {h:'Two clocks',hz:'兩個時鐘',wb:9,paras:[
   {en:'Boys and girls may debut at the same age, but their careers do not run on the same clock. [[Kim Jeong-seop]], a professor at Sungshin Women\'s University in Seoul, studied all 1,182 idol groups that debuted from 1996 to 2025, about half girls and half boys. On average, 39 new groups appeared every year. Boy groups stayed active for 5.1 years. Girl groups lasted only 3.1.',
    zh:'男孩和女孩也許在同樣的年紀出道，但他們的職業生涯走的是不同的時鐘。首爾誠信女子大學教授 Kim Jeong-seop 研究了 1996 到 2025 年出道的全部 1,182 個偶像團體，男女團大約各半。平均每年有 39 個新團出道。男團平均活動 5.1 年，女團只有 3.1 年。'},
   {en:'Why? Boy groups, Kim says, build [[loyal]] fans who buy albums, concert tickets and goods again and again. Girl groups depend more on general popularity, [[streaming]] and events. That is where they shine. On the Melon chart for the whole of 2025, aespa came third and IVE eighth, and Rosé of Blackpink was seventh with Bruno Mars on "APT." "Golden," the song EJAE sang, was sixth. Number two was a name you may know: G-Dragon.',
@@ -818,19 +856,19 @@ var ARTICLE=[
   {en:'But only a few groups ever make it big. Just 19 of the 1,182 groups sold a million copies of a single album. A shorter clock may also help explain why agencies like to start early: [[the younger the debut, the more years]] an idol has before people call her "too old."',
    zh:'但真正大紅的團體很少。1,182 個團體中，只有 19 個曾經單張專輯賣破百萬。時鐘走得比較快，或許也能解釋為什麼經紀公司喜歡早早開始：越早出道，偶像在被說「太老」之前就有越多年可以發光。'}
  ]},
- {h:'What the law says',hz:'法律怎麼說',wb:9,paras:[
-  {en:'South Korea does have rules. Under the [[Popular Culture and Arts Industry Development Act]], performers under 15 may work no more than 35 hours a week and not between 10 p.m. and 6 a.m. (with their own and a parent\'s [[consent]], they can work until midnight before a school holiday). Performers from 15 to 18 have a 40-hour limit. Since August 2025, agencies may not force [[minors]] to skip school, demand extreme changes to their looks, or abuse them, and each agency must name a youth protection officer.',
+ {h:'What the law says',hz:'法律怎麼說',wb:10,paras:[
+  {en:'South Korea does have rules. Under the [[Popular Culture and Arts Industry Development Act]], performers under 15 can work no more than 35 hours a week and not between 10 p.m. and 6 a.m. (with their own and a parent\'s [[consent]], they can work until midnight before a school holiday). Performers from 15 to 18 have a 40-hour limit. Since August 2025, agencies may not force [[minors]] to skip school, demand extreme changes to their looks, or abuse them, and each agency must name a youth protection officer.',
    zh:'韓國其實有規定。根據《大眾文化藝術產業發展法》，未滿 15 歲的表演者每週工作不得超過 35 小時，晚上 10 點到早上 6 點不得工作（本人和家長同意的話，隔天放假可以工作到半夜 12 點）。15 到 18 歲的上限是每週 40 小時。2025 年 8 月起，經紀公司不得強迫未成年人缺課、過度要求外貌管理或施加暴力，每家公司也必須指定一名青少年保護負責人。'},
   {en:'Critics see gaps. Breaking the hour limits brings no direct [[penalty]]. The limits cover broadcasts and recordings, not the long years of training. And courts usually do not treat idols as [[employees]], so the main labor law does not protect them. A 2023 bill would have limited children under 12 to 25 hours a week, but it died when parliament\'s term ended in 2024. Korea still has no minimum age for a debut. Lawyer [[Kim Doo-na]] says little has changed since 2025, and some agencies do not seem to know the new rules. In England, by comparison, a child performer needs a [[license]] from the local council.',
    zh:'批評者看到了漏洞。違反工時上限沒有直接的罰則。這些上限只涵蓋節目和錄音，不包括漫長的練習生歲月。而且法院通常不把偶像當成受僱者，所以主要的勞動法保護不到他們。2023 年曾有法案要把 12 歲以下兒童的工時限制在每週 25 小時，但在 2024 年國會任期結束時胎死腹中。韓國至今沒有出道的最低年齡。律師 Kim Doo-na 說，2025 年以來改變不大，有些經紀公司甚至似乎不知道新規定。相較之下，英國的兒童表演者必須先取得地方政府核發的許可證。'}
  ]},
- {h:'Taiwan: stricter on paper',hz:'台灣：紙上更嚴格',wb:10,paras:[
-  {en:'Taiwan\'s [[Labor Standards Act]] draws harder lines. Employers may not hire anyone under 15 without government approval. Workers aged 15 may work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
+ {h:'Taiwan: stricter on paper',hz:'台灣：紙上更嚴格',wb:11,paras:[
+  {en:'Taiwan\'s [[Labor Standards Act]] draws harder lines. Employers may not hire anyone under 15 without government approval. Workers aged 15 can work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
    zh:'台灣的《勞動基準法》劃的線更硬。雇主不得僱用未滿 15 歲的人，除非經主管機關核准。15 歲的童工每天最多工作 8 小時、每週 40 小時，例假日不得工作，晚上 8 點到早上 6 點也不行。'},
   {en:'[[On paper]], then, a Taiwanese employer could not give a 13-year-old an idol\'s schedule. But Korea shows why that is only half the story: a labor law helps a child only if the child counts as a worker. Meanwhile, Taiwanese teenagers who dream of K-pop still pack their bags for Seoul, as Tzuyu did at 13.',
    zh:'所以在書面上，台灣的雇主不可能讓一個 13 歲的孩子過偶像那樣的行程。但韓國的例子說明，這只是故事的一半：勞動法要能保護孩子，前提是孩子被算作勞工。與此同時，懷抱 K-pop 夢的台灣青少年，仍然會像 13 歲的周子瑜一樣，打包行李前往首爾。'}
  ]},
- {h:'Back on stage',hz:'回到舞台',wb:11,paras:[
+ {h:'Back on stage',hz:'回到舞台',wb:12,paras:[
   {en:'A week after the showcase, A2O LITE went on TV again, this time in different outfits. Fans argued about whether that was enough. The album cover stayed the same.',
    zh:'發表會一週後，A2O LITE 再次上電視，這次換了不同的服裝。粉絲爭論這樣夠不夠。專輯封面則沒有改。'},
   {en:'The numbers show that boys and girls start at about the same age, that girl groups have more female fans than many people think, and that a girl group\'s clock runs fast. They cannot tell us the right age for a child to sign a contract, put on stage makeup and sing for millions. That question belongs to parents, lawmakers and fans — and to anyone reading this.',
@@ -853,6 +891,12 @@ var QUESTIONS=[
  {en:'Most buyers of many girl-group albums are women. Does that change how you see the styling of very young members?',
   zh:'許多女團專輯的買家以女性為主。這會改變你對年幼成員造型的看法嗎？',
   board:{say:'Many girl-group albums are bought mostly by women. Does that change how you see the styling?',zh:'許多女團專輯主要是女性在買。這會改變你對造型的看法嗎？',l1:'Women buy the albums',l2:'Does that change the styling debate?'}},
+ {en:'An American girl may pick a crop top herself; a trainee\'s stage outfit is picked by her agency. Does who chooses change whether it is OK?',
+  zh:'美國女孩可能自己挑短版上衣；練習生的舞台服裝則由經紀公司決定。由誰來選，會改變這件事妥不妥當嗎？',
+  board:{say:'A girl picks her own crop top; a trainee wears what the agency picks. Does who chooses matter?',zh:'女孩自己挑短版上衣；練習生穿公司選的。誰來選重要嗎？',l1:'She picks it, or the agency does',l2:'Does who chooses matter?'}},
+ {en:'Dancers often wear tank tops or baggy clothes to stay cool. How much of a stage outfit is about comfort, and how much is about image? If comfort were the only reason, would boys and girls dress the same?',
+  zh:'舞者常穿背心或寬鬆的衣服來散熱。舞台服裝有多少是為了舒適，有多少是為了形象？如果只是為了舒適，男生和女生會穿得一樣嗎？',
+  board:{say:'Dancers dress to stay cool. How much of a stage outfit is comfort, and how much is image? Would boys and girls dress the same?',zh:'舞者為了涼快而這樣穿。舞台服裝有多少是舒適、多少是形象？男女會穿得一樣嗎？',l1:'Comfort or image?',l2:'Would boys and girls dress the same?'}},
  {en:'Boy groups stay active about five years on average, girl groups about three. What do you think explains the gap?',
   zh:'男團平均活動約五年，女團約三年。你覺得差距的原因是什麼？',
   board:{say:'Boy groups last about five years, girl groups about three. Why?',zh:'男團約五年，女團約三年。為什麼？',l1:'5 years vs. 3 years',l2:'What explains the gap?'}},
@@ -892,7 +936,7 @@ var BOARDS=[
  {say:'Lee Soo-man has done this before. In the late 1990s he spotted an 11-year-old girl at her brother\'s audition. In 2000, at 13, she debuted as [[BoA]]. Two years later she was No. 1 in Japan.',
   zh:'李秀滿不是第一次這樣做。1990 年代末，他在一場試鏡上看中一個陪哥哥去的 11 歲女孩。2000 年，她 13 歲，以「寶兒」之名出道。兩年後，她登上日本排行榜冠軍。',
   ops:[['title','Thirteen is not new'],['l',50,290,920,290,{c:C.ink}],['tick',110,'2000','BoA (BOH-ah)','debut at 13',0,C.pk]]},
- {say:'Many stars followed. HyunA debuted at 14 in 2007, and [[Taemin]] of SHINee at 14 in 2008. [[Jang Won-young]] was 14 when IZ*ONE debuted in 2018.',
+ {say:'Many stars followed. [[HyunA]] debuted at 14 in 2007, and [[Taemin]] of SHINee at 14 in 2008. [[Jang Won-young]] was 14 when IZ*ONE debuted in 2018.',
   zh:'許多明星跟著走上這條路。泫雅 2007 年 14 歲出道，SHINee 的泰民 2008 年 14 歲出道。IZ*ONE 在 2018 年出道時，張員瑛 14 歲。',
   ops:[['tick',250,'2007','HyunA','14',1,C.or],['tick',390,'2008','Taemin (TEH-min)','14',0,C.bl],['tick',530,'2018','Jang Won-young','14',1,C.pu]]},
  {say:'In 2024, [[Lim Seo-won]] of UNIS was 13. And in October 2026, three members of A2O LITE are 13 too.',
@@ -963,7 +1007,7 @@ var BOARDS=[
  {say:'The first half holds up. In a 2022 online [[census]] of BTS fans, more than 96 percent of the 562,000 people who answered were female.',
   zh:'前半句成立。2022 年一份 BTS 粉絲網路普查中，56 萬多名填答者有超過 96% 是女性。',
   ops:[['wipe'],['title','Boy groups: mostly women'],['grid25',80,140,24],['t',300,180,'BTS fan census, 2022',{s:22,c:C.bl}],['t',300,220,'562,000 answers · over 96% female',{s:22,c:C.pk}]]},
- {say:'Boy groups also sell the albums. Of the ten best-selling albums in Korea in 2025, nine were by boy groups. Stray Kids sold almost 3.4 million copies of one album. The only girl group in the top ten was IVE, at number seven.',
+ {say:'Boy groups also sell the albums. Of the ten best-selling albums in Korea in 2025, nine were by boy groups. Stray Kids sold almost 3.4 million copies of one album. The only girl group in the top ten was [[IVE]], at number seven.',
   zh:'專輯也是男團在賣。2025 年韓國最暢銷的十張專輯，有九張是男團的。Stray Kids 一張專輯賣出將近 340 萬張。前十名唯一的女團是第七名的 IVE。',
   ops:[['t',300,272,'No. 1: Stray Kids, 3.4 million copies',{s:20}],['albums10',70,390],['t',70,505,'2025 top 10 albums: 9 boy groups · 1 girl group (IVE, No. 7)',{s:19}]]}
 ]},
@@ -971,8 +1015,8 @@ var BOARDS=[
  {say:'The second half is [[shakier]]. In 2022 the online bookstore [[Aladin]] checked who bought girl-group albums. Women were the majority for 17 of 27 groups. STAYC: 77 percent women. Blackpink: 59 percent.',
   zh:'後半句就沒那麼站得住腳了。2022 年，網路書店阿拉丁分析女團專輯的買家，27 個女團中有 17 個以女性為主。STAYC 77% 是女性，BLACKPINK 59%。',
   ops:[['title','Girl groups: who buys?'],['legend',600,112],['sbar',150,'STAYC',77],['sbar',195,'Blackpink',59]]},
- {say:'About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of the people streaming "Attention" by NewJeans were women. In 2022 a Seoul newspaper reported that the old rule no longer held.',
-  zh:'NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，串流 NewJeans〈Attention〉的人有 65% 是女性。首爾一家報紙在 2022 年報導，這條老規則已經不成立了。',
+ {say:'About 89 percent of the buyers of one NewJeans album were women. On the music app Genie, 65 percent of the people streaming "Attention" by NewJeans were women. In 2022 a Seoul newspaper reported that the old rule, girl groups for male fans, no longer held.',
+  zh:'NewJeans 的一張專輯，約 89% 的買家是女性。在音樂平台 Genie 上，串流 NewJeans〈Attention〉的人有 65% 是女性。首爾一家報紙在 2022 年報導，「女團給男粉」這條老規則已經不成立了。',
   ops:[['sbar',240,'NewJeans album',89],['sbar',285,'"Attention" streams',65]]},
  {say:'But men have not disappeared. 89 percent of Brave Girls album buyers were men, and 77 percent of fromis_9 buyers. Koreans even have a word for grown men who follow girl groups: [[samchon fan]], or "uncle fan."',
   zh:'但男粉並沒有消失。Brave Girls 的專輯買家 89% 是男性，fromis_9 是 77%。韓國甚至有個詞專門形容追女團的成年男性：「삼촌팬」，大叔粉。',
@@ -980,6 +1024,28 @@ var BOARDS=[
  {say:'So the audience is mixed, and it changes from group to group. That leaves a fair question: when a 13-year-old wears a crop top on stage, whose taste is it for?',
   zh:'所以觀眾是混合的，而且每個團體都不一樣。這就留下一個值得問的問題：一個 13 歲的孩子穿短版上衣上台，是為了迎合誰的口味？',
   ops:[['t',60,500,'a mixed audience → a crop top at 13: for whose taste?',{s:21,c:C.or}],['hl',60,479,600,28]]}
+]},
+{t:'Same top, different stage',zh:'同一件上衣，不同的舞台',steps:[
+ {say:'Crop tops are not just a K-pop thing. In a viral TikTok video, an Iowa mother showed the girls\' section of a Target store, full of short tops. She said it should not be this hard to find a full-length shirt for her 6-year-old.',
+  zh:'短版上衣不只出現在 K-pop。一支爆紅的 TikTok 影片裡，一位愛荷華州的媽媽拍下 Target 賣場女童區滿滿的短版上衣，說要幫 6 歲女兒找一件正常長度的衣服，不該這麼難。',
+  ops:[['title','Same top, different stage'],['croptop',170,260,C.rose],['t',300,180,'Iowa: a mom films the girls\' section at Target',{s:19}],['t',300,214,'her point: few full-length shirts for a 6-year-old',{s:17,c:C.gy}]]},
+ {say:'American parents split. One let her daughter start at 10, and said there is nothing sexual about a child in a crop top unless adults bring it. Another made a deal: a tank top underneath as a tween, and a little skin at 14.',
+  zh:'美國家長意見分歧。一位讓女兒 10 歲就開始穿，說孩子穿短版上衣沒有任何性意味，除非大人自己往那裡想。另一位和女兒談好條件：小學高年級時裡面加一件背心，14 歲才能露一點肚子。',
+  ops:[['t',300,268,'mom A: from age 10 · nothing sexual about it',{s:17,c:C.pu}],['t',300,302,'mom B: a tank top underneath until 14',{s:17,c:C.pu}]]},
+ {say:'And American schools push back. In a study of 481 public high schools, 71 percent banned bare [[midriffs]]. A government review found that more than 90 percent of [[dress codes]] ban clothes mostly worn by girls.',
+  zh:'美國學校也有規定。一份研究分析 481 所公立高中，71% 禁止露出腹部。美國政府的調查發現，九成以上的學校服裝規定，禁止的是主要由女生穿的衣服。',
+  ops:[['t',60,410,'481 US high schools: 71% ban bare midriffs',{s:21,c:C.rd}],['t',60,450,'90%+ of dress codes ban clothes mostly worn by girls',{s:18,c:C.gy}],['hl',60,389,470,28]]},
+ {say:'So the shirt is not the difference. The question is who chooses it, and for whom. A girl at the mall chooses for herself and her friends. A trainee on stage wears what the agency and its [[stylists]] choose, for a camera and millions of viewers.',
+  zh:'所以差別不在衣服本身，而在於是誰選的、為了誰而穿。購物中心裡的女孩，是為自己和朋友挑衣服；舞台上的練習生，穿的是經紀公司和造型師選的衣服，為的是鏡頭和幾百萬名觀眾。',
+  ops:[['wipe'],['title','Who chooses?'],['l',480,120,480,340,{c:C.gy,dash:1}],['bag',90,168],['t',150,175,'a girl at the mall',{s:23,c:C.te}],['star',550,165,16,C.yl],['t',580,175,'a trainee on stage',{s:23,c:C.pk}],
+       ['t',60,240,'chosen by: herself (and Mom)',{s:19}],['t',520,240,'chosen by: the agency, stylists',{s:19}],['t',60,285,'for: friends, school',{s:19}],['t',520,285,'for: a camera, millions',{s:19}],['t',60,330,'part of: her life',{s:19}],['t',520,330,'part of: a product',{s:19}]]},
+ {say:'In 2007 the American Psychological Association drew the same line. [[Sexualization]], it said, includes sexuality [[imposed]] on a girl rather than chosen by her. Korea\'s 2025 law bans forcing child performers into "excessive exposure." But who decides what is excessive? And the law has no penalty.',
+  zh:'美國心理學會在 2007 年就劃過同樣的線：「性化」包括把性強加在女孩身上，而不是由她自己選擇。韓國 2025 年的法律禁止強迫兒少表演者「過度暴露」。但「過度」由誰決定？而且這條法律沒有罰則。',
+  ops:[['t',60,400,'APA (2007): sexualization = imposed, not chosen',{s:20,c:C.pu}],['t',60,440,'Korea (2025): no forced "excessive exposure"',{s:20,c:C.bl}],['t',60,480,'but who decides "excessive"? · no penalty',{s:20,c:C.rd}],['hl',60,459,420,28]]},
+ {say:'There is a practical side too. Dancing at full speed under stage lights is hot work. Fitness experts tell people exercising in the heat to wear minimal clothing, or light, loose clothes. Street dancers know both answers: tank tops or baggy T-shirts. And sometimes idols choose: in 2025, IVE asked for their outfits to be remade the way each member wanted.',
+  zh:'這件事也有實際的一面。在舞台燈光下全力跳舞很熱。運動專家建議，在高溫下運動要穿得越少越好，或穿輕薄寬鬆的衣服。街舞舞者兩種都有：背心或寬大的 T 恤。偶像有時也自己選擇：2025 年，IVE 的成員請人依照各自的喜好改製演出服。',
+  ops:[['wipe'],['title','Comfort, too?'],['thermo',120,300],['tank',300,215,C.mint],['tee',450,215,C.sky],['t',560,190,'tank top or baggy tee:',{s:19,c:C.te}],['t',560,222,'both help a dancer stay cool',{s:19,c:C.te}],
+       ['t',220,330,'exercise in heat: minimal clothing, or light and loose (ACE)',{s:17,c:C.gy}],['t',220,365,'IVE (2025): members asked for their own remakes',{s:19,c:C.pu}]]}
 ]},
 {t:'Two clocks',zh:'兩個時鐘',steps:[
  {say:'Boys and girls may debut at the same age, but their careers run on different clocks. Professor [[Kim Jeong-seop]] studied all 1,182 idol groups that debuted from 1996 to 2025. About 39 new groups appear every year.',
@@ -999,7 +1065,7 @@ var BOARDS=[
   ops:[['t',70,425,'a million copies of one album: only 19 of 1,182 groups',{s:19}],['t',70,470,'the younger the debut, the more years before "too old"',{s:20,c:C.or}],['hl',70,449,600,28]]}
 ]},
 {t:'What the law says',zh:'法律怎麼說',steps:[
- {say:'South Korea does have rules. Performers under 15 may work no more than 35 hours a week, and not from 10 p.m. to 6 a.m., except until midnight before a school holiday, with their own and a parent\'s [[consent]]. From 15 to 18, the limit is 40 hours a week.',
+ {say:'South Korea does have rules. Performers under 15 can work no more than 35 hours a week, and not from 10 p.m. to 6 a.m., except until midnight before a school holiday, with their own and a parent\'s [[consent]]. From 15 to 18, the limit is 40 hours a week.',
   zh:'韓國其實有規定。未滿 15 歲的表演者每週工作不得超過 35 小時，晚上 10 點到早上 6 點不得工作；本人和家長同意的話，隔天放假可以工作到半夜 12 點。15 到 18 歲每週上限 40 小時。',
   ops:[['title','What the law says'],['scales',140,330],['t',290,160,'under 15: max 35 hours a week',{s:22}],['t',290,195,'no work 10 p.m.–6 a.m. (midnight before a holiday, with consent)',{s:15,c:C.gy}],['t',290,240,'15–18: max 40 hours a week',{s:22}]]},
  {say:'Since August 2025, agencies may not make [[minors]] skip school, demand extreme changes to their looks, or abuse them. Each agency needs a youth protection officer.',
@@ -1016,7 +1082,7 @@ var BOARDS=[
  {say:'Taiwan\'s [[Labor Standards Act]] draws harder lines. Employers may not hire anyone under 15 without government approval.',
   zh:'台灣的《勞動基準法》劃的線更硬：雇主不得僱用未滿 15 歲的人，除非經主管機關核准。',
   ops:[['title','Taiwan: stricter on paper'],['l',480,115,480,325,{c:C.gy,dash:1}],['t',150,150,'Korea',{s:28,c:C.bl}],['t',620,150,'Taiwan',{s:28,c:C.gr}],['t',40,205,'under 15: up to 35 hours a week',{s:18}],['t',500,205,'under 15: no hiring without approval',{s:18}]]},
- {say:'Workers aged 15 may work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
+ {say:'Workers aged 15 can work at most 8 hours a day and 40 a week, never on rest days, and never between 8 p.m. and 6 a.m.',
   zh:'15 歲的童工每天最多工作 8 小時、每週 40 小時，例假日不得工作，晚上 8 點到早上 6 點也不行。',
   ops:[['t',40,255,'15–18: 40 hours (+ up to 6 more)',{s:18}],['t',500,255,'age 15: 8 hours a day, 40 a week',{s:18}],['t',40,300,'under 15: no work 10 p.m.–6 a.m.',{s:18}],['t',500,300,'no work 8 p.m.–6 a.m. · no rest days',{s:18}]]},
  {say:'[[On paper]], then, a Taiwanese employer could not give a 13-year-old an idol\'s schedule. But Korea shows the catch: a labor law helps a child only if the child counts as a worker.',
@@ -1112,6 +1178,14 @@ var ICON={
    [-80,80].forEach(function(dx){ OP_l(x+dx,y-110,x+dx-30,y-40,{c:C.gy,w:2}); OP_l(x+dx,y-110,x+dx+30,y-40,{c:C.gy,w:2});
      blob('M'+(x+dx-36)+' '+(y-40)+' q36 30 72 0 Z',dx<0?C.rose:C.sky); });
    ICON.star(x,y-138,12,C.yl); },
+ croptop:function(x,y,c){ var d='M'+(x-62)+' '+(y-60)+' l26 -18 h28 q8 14 16 0 h28 l26 18 l22 40 l-26 12 l-14 -20 v50 h-92 v-50 l-14 20 l-26 -12 Z';
+   blob(d,c||C.rose,C.pk,2.5); strokePath('M'+(x-46)+' '+(y+6)+' h92',C.pk,2,300,1); ICON.heart(x,y-30,0.5,C.pk); },
+ bag:function(x,y){ blob('M'+(x-30)+' '+(y-20)+' h60 l6 70 h-72 Z',C.mint,C.te,2.5); strokePath('M'+(x-14)+' '+(y-20)+' q14 -30 28 0',C.te,2.5,300); },
+ thermo:function(x,y){ blob('M'+(x-14)+' '+(y-120)+' a14 14 0 0 1 28 0 v110 a26 26 0 1 1 -28 0 Z','#fff',C.ink,2.5);
+   fillShape('M'+(x-6)+' '+(y-70)+' h12 v62 a18 18 0 1 1 -12 0 Z',C.rd); for(var i=0;i<4;i++) OP_l(x+16,y-110+i*22,x+26,y-110+i*22,{c:C.gy,w:2});
+   ICON.star(x+46,y-130,10,C.yl); },
+ tank:function(x,y,c){ blob('M'+(x-34)+' '+(y-58)+' q8 30 18 30 q16 0 16 -30 q0 30 16 30 q10 0 18 -30 q8 26 -2 50 v62 h-64 v-62 q-10 -24 -2 -50 Z',c||C.mint,C.te,2.5); },
+ tee:function(x,y,c){ blob('M'+(x-40)+' '+(y-58)+' h22 q18 14 36 0 h22 l34 26 l-18 26 l-18 -10 v72 h-76 v-72 l-18 10 l-18 -26 Z',c||C.sky,C.bl,2.5); },
  plane:function(x,y){ blob('M'+(x-90)+' '+y+' q60 -18 160 -10 q20 4 0 14 q-100 10 -160 -4 Z','#fff',C.te,2.5);
    blob('M'+(x-10)+' '+(y-8)+' l-30 -42 h18 l42 40 Z',C.mint,C.te,2); blob('M'+(x-10)+' '+(y+6)+' l-26 34 h18 l38 -32 Z',C.mint,C.te,2);
    strokePath('M'+(x-120)+' '+(y+30)+' q-40 10 -90 -6',C.gy,2.5,500,1); }
