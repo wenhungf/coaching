@@ -250,9 +250,9 @@ section{margin-top:42px;scroll-margin-top:110px}
   <div class="card">
     <p style="font-weight:800">先填入自己的內容，講稿會自動更新：</p>
     <div class="slots">
-      <label for="sYears">在百貨公司工作幾年？<input id="sYears" placeholder="e.g. three"></label>
-      <label for="sPlace">最喜歡的高雄地點<input id="sPlace" placeholder="the harbor at sunset"></label>
-      <label for="sWhy">為什麼喜歡？（because…）<input id="sWhy" placeholder="the sky turns pink and the ships light up"></label>
+      <label for="sYears">在百貨公司工作幾年？<input id="sYears" placeholder="two"></label>
+      <label for="sPlace">最喜歡的高雄地點<input id="sPlace" placeholder="Sizihwan"></label>
+      <label for="sWhy">在那裡做什麼？<input id="sWhy" placeholder="I like to buy some street food, sit by the sea, listen to the waves, and enjoy the breeze"></label>
     </div>
     <div class="script" id="script"></div>
     <div class="meter">
@@ -412,18 +412,20 @@ $("#timeline").innerHTML=TL.map(([d,t,who,f])=>`<div class="ev ${who==="us"?"us"
 /* ---------- video script ---------- */
 const S=[
  ["Hi, I'm Wendy! I live in Kaohsiung, and I love my city.","嗨，我是 Wendy！我住在高雄，我很愛我的城市。"],
- ["For {Y} years, I worked at a department store. I talked with customers every day, and I used English with my [[foreign coworkers|外國同事]].","我在百貨公司工作了 {Y} 年，每天和客人聊天，也用英文和外國同事溝通。"],
+ ["For {Y} years, I worked at a department store. I talked with customers every day, and I used English with my [[foreign coworkers|外國同事]].","我在百貨公司工作了{Y}年，每天和客人聊天，也用英文和外國同事溝通。"],
  ["My favorite part was helping people and telling them the stories behind things.","我最喜歡的部分，是幫助別人，告訴他們東西背後的故事。"],
  ["That's why I want to join Like It Formosa. I want to walk with travelers through Hamasen and around Lotus Pond, and share the stories of my city.","所以我想加入 Like It Formosa，陪旅客走過哈瑪星、繞著蓮池潭，分享這座城市的故事。"],
- ["My favorite place is {P}, because {W}.","我最喜歡的地方是 {P}，因為 {W}。"],
+ ["My favorite place is {P}. {W}.","我最喜歡的地方是{P}。{W}。"],
  ["I'm friendly, I'm not afraid to speak, and I learn fast. I hope to see you on the tour. Thank you!","我很親切、敢開口，而且學得很快。希望在導覽的路上見到你。謝謝！"]
 ];
 const slotIn={Y:$("#sYears"),P:$("#sPlace"),W:$("#sWhy")};
-for(const k in slotIn){slotIn[k].value=store.get("slot"+k,"");slotIn[k].addEventListener("input",()=>{store.set("slot"+k,slotIn[k].value);renderScript()})}
+for(const k in slotIn){{const sv=store.get("slot"+k,null);slotIn[k].value=sv===null?slotIn[k].placeholder:sv;}slotIn[k].addEventListener("input",()=>{store.set("slot"+k,slotIn[k].value);renderScript()})}
 function renderScript(){
   const v=k=>slotIn[k].value.trim();
-  const fill=(s,raw)=>s.replace(/\{([YPW])\}/g,(m,k)=>{const t=v(k)||slotIn[k].placeholder.replace(/^e\.g\. /,"");return raw?t:`<mark class="slot">${esc(t)}</mark>`});
-  $("#script").innerHTML=S.map(([en,zh])=>`<div class="ln"><div>${fill(fmt(en))}</div><div class="zh">${fill(esc(zh))}</div></div>`).join("");
+  const ZHD={"Sizihwan":"西子灣","I like to buy some street food, sit by the sea, listen to the waves, and enjoy the breeze":"我喜歡買些街頭小吃，坐在海邊，聽海浪、吹海風"};
+  const NUMZ={one:"一",two:"兩",three:"三",four:"四",five:"五",six:"六",seven:"七",eight:"八",nine:"九",ten:"十"};
+  const fill=(s,raw,zh)=>s.replace(/\{([YPW])\}/g,(m,k)=>{let t=(v(k)||slotIn[k].placeholder).replace(/[.。]\s*$/,"");if(zh)t=(k==="Y"?NUMZ[t.toLowerCase()]:ZHD[t])||t;return raw?t:`<mark class="slot">${esc(t)}</mark>`});
+  $("#script").innerHTML=S.map(([en,zh])=>`<div class="ln"><div>${fill(fmt(en))}</div><div class="zh">${fill(esc(zh),false,true)}</div></div>`).join("");
   const words=S.map(([en])=>fill(en.replace(/\[\[([^|\]]+)\|[^\]]+\]\]/g,"$1"),true)).join(" ").split(/\s+/).filter(Boolean).length;
   const lo=Math.round(words/130*60),hi=Math.round(words/110*60);
   $("#vEst").textContent=`共 ${words} 個字，用平穩的速度大約 ${lo}–${hi} 秒。超過 60 秒就刪一句。`;
@@ -445,13 +447,13 @@ timer($("#vGo"),$("#vTrack"),$("#vSec"),60);
 const QA=[
  {cat:"About you 關於你"},
  {q:"Tell me a little about yourself.",qz:"請簡單介紹你自己。",
-  a:"Sure! I'm Wendy, and I live in Kaohsiung. I worked at a department store for {{three}} years. There, I often used simple English with my foreign coworkers, including some from France. Now I take English lessons every week, because I want to use English in my work. I love meeting new people and sharing stories about my city.",
-  az:"好的！我是 Wendy，住在高雄。我在百貨公司工作了三年，常用簡單的英文和外國同事溝通，其中有幾位是法國人。現在我每週上英文課，因為我想在工作上用英文。我喜歡認識新朋友，分享我城市的故事。",
+  a:"Sure! I'm Wendy, and I live in Kaohsiung. I worked at a department store for {{two}} years. There, I often used simple English with my foreign coworkers, including some from France. Now I take English lessons every week, because I want to use English in my work. I love meeting new people and sharing stories about my city.",
+  az:"好的！我是 Wendy，住在高雄。我在百貨公司工作了兩年，常用簡單的英文和外國同事溝通，其中有幾位是法國人。現在我每週上英文課，因為我想在工作上用英文。我喜歡認識新朋友，分享我城市的故事。",
   n:"30–45 秒就好。不必把履歷念一遍，只挑跟導覽有關的：接觸人群、用英文、喜歡分享。"},
  {q:"Why do you want to be a tour guide with us?",qz:"為什麼想加入我們當導覽員？",o:1,
-  a:"I want to be a guide because I love talking with people. At the department store, my favorite part of the job was chatting with customers. For example, {{my French coworkers asked me about Taiwanese food, and I loved explaining it to them}}. So guiding is a great [[fit|適合的事]] for me. I can meet people and share Taiwan every day.",
-  az:"我想當導覽員，因為我喜歡和人聊天。在百貨公司，我最喜歡的就是和客人聊天。例如，法國同事常問我台灣食物，我很喜歡解釋給他們聽。所以導覽很適合我，每天都能認識人、分享台灣。",
-  n:"這題一定會問。黃底的例子要換成真的發生過的事，面試官很容易追問細節。"},
+  a:"I want to be a guide because I love talking with people. For example, at the department store, my favorite part of the job was chatting with customers. {{My French coworkers asked me about Taiwanese food, and I loved explaining it to them}}. So guiding is a great [[fit|適合的事]] for me. I can meet people and share Taiwan every day.",
+  az:"我想當導覽員，因為我喜歡和人聊天。例如在百貨公司，我最喜歡的就是和客人聊天。法國同事常問我台灣食物，我很喜歡解釋給他們聽。所以導覽很適合我，每天都能認識人、分享台灣。",
+  n:"這題一定會問。黃底的例子要換成真的發生過的事，面試官很容易追問細節，例如法國同事問過哪些台灣食物、怎麼解釋。"},
  {q:"What do you know about Like It Formosa?",qz:"你對 Like It Formosa 了解多少？",
   a:"You started in 2015, and you're the biggest English walking tour company in Taiwan. Your guides tell Taiwan's stories to travelers from about 70 countries. On your free walking tours, guests join for free and [[pay what they want|自由決定付多少]] at the end. I joined your online [[briefing|說明會]] on October 22, and I liked how you turn history into stories.",
   az:"你們 2015 年成立，是台灣最大的英語步行導覽公司，導覽員為來自約 70 個國家的旅客說台灣故事。免費步行導覽讓旅客免費參加，結束後自由決定付多少。我參加了 10/22 的線上說明會，很喜歡你們把歷史變成故事的方式。",
